@@ -11,80 +11,81 @@
 10,Benzo(a)pyrene,Benzo[a]pyrene,0,Benzo(a)pyrene
 11,Benzo[b]fluoranthene,Benzo(b)fluoranthene,1,"Benzo(b)fluoranthene 3,4"
 12,beta-BHC,.beta.-Hexachlorocyclohexane,1,BHC Beta
-13,Bis(2-ethylhexyl)phthalate,,,
-14,Bromoform,,,
-15,Butylbenzylphthalate,,,
-16,Carbon Tetrachloride,,,
-17,Chloroethyl Ether bis 2,,,
-18,Chloroisopropyl Ether bis 2,,,
-19,"Chloromethyl ether, bis",,,
-20,Chloronaphthalene 2,,,
-21,Chlorophenol 2,,,
-22,"Chlorophenoxy Herbicide (2,4,5,-TP)",,,
-23,"Copper, Total recoverable",,,
-24,"Dichlorobenzene(m) 1,3",,,
-25,"Dichlorobenzene(o) 1,2",,,
-26,"Dichlorobenzene(p) 1,4",,,
-27,"Dichlorobenzidine 3,3'",,,
-28,"Dichloroethane 1,2",,,
-29,"Dichloroethylene 1,1",,,
-30,"Dichloroethylene trans 1,2",,,
-31,"Dichlorophenol 2,4",,,
-32,"Dichloropropane 1,2",,,
-33,"Dichloropropene 1,3",,,
-34,Diethylphthalate,,,
-35,"Dimethylphenol 2,4",,,
-36,Dimethylphthalate,,,
-37,Di-n-butyl Phthalate,,,
-38,"Dinitrophenol 2,4",,,
-39,Dinitrophenols,,,
-40,"Dioxin (2,3,7,8-TCDD)",,,
-41,"Diphenylhydrazine 1,2",,,
-42,Endosulfan I,,,
-43,Endosulfan II,,,
-44,Endosulfan Sulfate,,,
-45,Endrin Aldehyde,,,
-46,Heptachlor Epoxide,,,
-47,Hexachlorocyclo-hexane-Technical,,,
-48,Methyl Bromide,,,
-49,"Methyl-4,6-dinitrophenol 2",,,
-50,Methylene Chloride,,,
-51,"Nickel, Total recoverable",,,
-52,Nitrates,,,
-53,Nitrosamines,,,
-54,"Nitrosodibutylamine, N",,,
-55,"Nitrosodiethylamine, N",,,
-56,"Nitrosodimethylamine, N",,,
-57,"Nitrosodi-n-propylamine, N",,,
-58,"Nitrosodiphenylamine, N",,,
-59,"Nitrosopyrrolidine, N",,,
-60,Polychlorinated Biphenyls (PCBs),,,
-61,"Selenium, Total recoverable",,,
-62,"Tetrachlorobenzene, 1,2,4,5-",,,
-63,"Tetrachloroethane 1,1,2,2",,,
-64,"Thallium, Total recoverable",,,
-65,"Trichlorobenzene 1,2,4",,,
-66,"Trichloroethane 1,1,2",,,
-67,"Trichlorophenol 2,4,6",,,
-68,"Trichlorophenol, 2, 4, 5-",,,
-69,Vinyl Chloride,,,
-70,"Zinc, Total recoverable",,,
-71,"Arsenic, Dissolved",,,
-72,Chlorpyrifos (Dursban),,,
-73,"Chromium, Dissolved",,,
-74,Chromium (Tri),,,
-75,Tributyltin,,,
-76,Total DDT,,,
-77,Azinphos methyl,,,
-78,Guthion,,,
-79,"Iron, Total recoverable",,,
-80,"Silver, Dissolved",,,
-81,Sulfide Hydrogen Sulfide,,,
-82,"Selenium, Dissolved",,,
-83,"Lead, Dissolved",,,
-84,"Zinc, Dissolved",,,
-85,"Nickel, Dissolved",,,
-86,"Cadmium, Dissolved",,,
-87,"Copper, Dissolved",,,
-88,Phosphorus Elemental,,,
-89,"Manganese, Total recoverable",,,
+13,Bis(2-ethylhexyl)phthalate,Di(2-ethylhexyl) phthalate,0,Ethylhexyl Phthalate bis 2
+14,Bromoform,Tribromomethane,0,Bromoform
+15,Butylbenzylphthalate,Butyl benzyl phthalate,0,Butylbenzyl Phthalate
+16,Carbon Tetrachloride,Carbon tetrachloride,0,Carbon Tetrachloride
+17,Chloroethyl Ether bis 2,Bis(2-chloroethyl) ether,0,Chloroethyl Ether bis 2
+18,Chloroisopropyl Ether bis 2,Bis(2-chloroisopropyl) ether,0,Chloroisopropyl Ether bis 2
+19,"Chloromethyl ether, bis",Bis(chloromethyl) ether,0,"Chloromethyl ether, bis"
+20,Chloronaphthalene 2,2-Chloronaphthalene,0,Chloronaphthalene 2
+21,Chlorophenol 2,2-Chloronaphthalene,0,Chlorophenol 2
+22,"Chlorophenoxy Herbicide (2,4,5,-TP)",Silvex,0,"Chlorophenoxy Herbicide (2,4,5,-TP)"
+23,"Copper, Total recoverable",Copper,0,Copper
+24,"Dichlorobenzene(m) 1,3",m-Dichlorobenzene,0,"Dichlorobenzene(m) 1,3"
+25,"Dichlorobenzene(o) 1,2",o-Dichlorobenzene,0,"Dichlorobenzene(o) 1,2"
+26,"Dichlorobenzene(p) 1,4",p-Dichlorobenzene,0,"Dichlorobenzene(p) 1,4"
+27,"Dichlorobenzidine 3,3'","3,3'-Dichlorobenzidine",0,"Dichlorobenzidine 3,3'"
+28,"Dichloroethane 1,2","1,2-Dichloroethane",0,"Dichloroethane 1,2"
+29,"Dichloroethylene 1,1","1,1-Dichloroethylene",0,"Dichloroethylene 1,1"
+30,"Dichloroethylene trans 1,2","trans-1,2-Dichloroethylene",0,"Dichloroethylene trans 1,2"
+31,"Dichlorophenol 2,4","2,4-Dichlorophenol",0,"Dichlorophenol 2,4"
+32,"Dichloropropane 1,2","1,2-Dichloropropane",0,"Dichloropropane 1,2"
+33,"Dichloropropene 1,3","1,3-Dichloropropene",0,"Dichloropropene 1,3"
+34,Diethylphthalate,Diethyl phthalate,0,Diethyl Phthalate
+35,"Dimethylphenol 2,4","2,4-Dimethylphenol",0,"Dimethylphenol 2,4"
+36,Dimethylphthalate,Dimethyl phthalate,0,Dimethyl Phthalate
+37,Di-n-butyl Phthalate,Dibutyl phthalate,0,Di-n-butyl Phthalate
+38,"Dinitrophenol 2,4","2,4-Dinitrophenol",0,"Dinitrophenol 2,4"
+39,Dinitrophenols,Dinitrophenol,1,Dinitrophenols
+40,"Dioxin (2,3,7,8-TCDD)","2,3,7,8-Tetrachlorodibenzo-p-dioxin",0,"Dioxin (2,3,7,8-TCDD)"
+41,"Diphenylhydrazine 1,2","1,2-Diphenylhydrazine",0,"Diphenylhydrazine 1,2"
+42,Endosulfan I,.alpha.-Endosulfan,1,Endosulfan Alpha
+43,Endosulfan II,.beta.-Endosulfan,1,Endosulfan Beta
+44,Endosulfan Sulfate,Endosulfan sulfate,1,Endosulfan Sulfate
+45,Endrin Aldehyde,Endrin aldehyde,0,Endrin Aldehyde
+46,Heptachlor Epoxide,Heptachlor epoxide,0,Heptachlor Epoxide
+47,Hexachlorocyclo-hexane-Technical,"1,2,3,4,5,6-Hexachlorocyclohexane",0,Hexachlorocyclo-hexane-Technical
+48,Methyl Bromide,Methyl bromide,0,Methyl Bromide
+49,"Methyl-4,6-dinitrophenol 2","4,6-Dinitro-o-cresol",0,"Methyl-4,6-dinitrophenol 2"
+50,Methylene Chloride,Methylene chloride,0,Methylene Chloride
+51,"Nickel, Total recoverable",Nickel,0,Nickel
+52,Nitrates,Nitrate,0,Nitrates
+53,Nitrosamines,Nitrosamine,1,Nitrosamines
+54,"Nitrosodibutylamine, N",N-Nitrosodi-n-butylamine,0,"Nitrosodibutylamine, N"
+55,"Nitrosodiethylamine, N",N-Nitrosodiethylamine,0,"Nitrosodiethylamine, N"
+56,"Nitrosodimethylamine, N",N-Nitrosodimethylamine,0,"Nitrosodimethylamine, N"
+57,"Nitrosodi-n-propylamine, N",N-Nitrosodi-n-propylamine,0,"Nitrosodi-n-propylamine, N"
+58,"Nitrosodiphenylamine, N",N-Nitrosodiphenylamine,0,"Nitrosodiphenylamine, N"
+59,"Nitrosopyrrolidine, N",N-Nitrosopyrrolidine,0,"Nitrosopyrrolidine, N"
+60,Polychlorinated Biphenyls (PCBs),,1,Polychlorinated Biphenyls (PCBs)
+61,"Selenium, Total recoverable",Selenium,0,Selenium
+62,"Tetrachlorobenzene, 1,2,4,5-","1,2,4,5-Tetrachlorobenzene",0,"Tetrachlorobenzene, 1,2,4,5-"
+63,"Tetrachloroethane 1,1,2,2","1,1,2,2-Tetrachloroethane",0,"Tetrachloroethane 1,1,2,2"
+64,"Thallium, Total recoverable",Thallium,0,Thallium
+65,"Trichlorobenzene 1,2,4","1,2,4-Trichlorobenzene",0,"Trichlorobenzene 1,2,4"
+66,"Trichloroethane 1,1,2","1,1,2-Trichloroethane",0,"Trichloroethane 1,1,2"
+67,"Trichlorophenol 2,4,6","2,4,6-Trichlorophenol",0,"Trichlorophenol 2,4,6"
+68,"Trichlorophenol, 2, 4, 5-","2,4,5-Trichlorophenol",0,"Trichlorophenol, 2, 4, 5-"
+69,Vinyl Chloride,Vinyl chloride,0,Vinyl Chloride
+70,"Zinc, Total recoverable",Zinc,0,Zinc
+71,"Arsenic, Dissolved",Arsenic,1,Arsenic
+72,Chlorpyrifos (Dursban),Chlorpyrifos,0,Chlorpyrifos
+73,"Chromium, Dissolved",Chromium,1,Chromium
+74,Chromium (Tri),Chromium(III),1,Chromium III
+75,Tributyltin,Tributlytin,1,Tributyltin (TBT)
+76,Total DDT,"DDT/DDD/DDE, sum of p,p' isomers",1,"DDT 4,4'"
+77,Azinphos methyl,Azinphos-methyl,0,Guthion
+78,Guthion,Azinphos-methyl,0,Guthion
+79,"Iron, Total recoverable",Iron,0,Iron
+80,"Silver, Dissolved",Silver,0,Silver
+81,Sulfide Hydrogen Sulfide,Hydrogen sulfide,1,Sulfide Hydrogen Sulfide
+82,"Selenium, Dissolved",Selenium,0,Selenium
+83,"Lead, Dissolved",Lead,0,Lead 
+84,"Zinc, Dissolved",Zinc,0,Zinc
+85,"Nickel, Dissolved",Nickel,0,Nickel
+86,"Cadmium, Dissolved",Cadmium,0,Cadmium
+87,"Copper, Dissolved",Copper,0,Copper
+88,Phosphorus Elemental,Phosphorus,1,Phosphorus Elemental
+89,"Manganese, Total recoverable",Manganese,0,Manganese
+90,,Chromium(VI),1,Chromium VI 

@@ -36,7 +36,7 @@ siteType = 'Stream%3BLake%2C+Reservoir%2C+Impoundment'
 wqp.sampleMedia <- WQP.domain.get('samplemedia')
 
 #Separate each value you want to query with the URL encoded semi-colon '%3B'.
-sampleMedia <- 'water'
+sampleMedia <- 'Water'
 
 #### Define characteristics to query ####
 #First get the list of Characteristic names from the WQP. These names are consistent with EPA's SRS. 
@@ -55,6 +55,15 @@ deq.pollutants <- criteria.values.melted.applicable[criteria.values.melted.appli
                                                         'Table 30 Toxic Substances - Saltwater Acute',
                                                         'Table 30 Toxic Substances - Saltwater Chronic'),]
 
+#trying a the Levenshtein distance algorithm to find matches
+#string.compare <- adist(deq.pollutants$Pollutant, wqp.characteristics$value)
+#
+#matches <- data.frame(wqp = character(), deq = character(), stringsAsFactors = FALSE)
+#for (i in 1:nrow(string.compare)) {
+#  matches[i,'deq'] <- deq.pollutants[i,'Pollutant']
+#  matches[i,'wqp'] <- wqp.characteristics[which.min(string.compare[i,]),'value']
+#}
+
 #look for matching names in the Water Quality Portal
 matched <- deq.pollutants[deq.pollutants$Pollutant %in% xml.df$value,]
 
@@ -64,8 +73,21 @@ not.matched <- deq.pollutants[!deq.pollutants$Pollutant %in% xml.df$value,]
 #output DEQ table pollutants that we do not have a match for
 #write.csv(unique(not.matched$Pollutant),'//deqhq1/wqassessment/2012_WQAssessment/ToxicsRedo/WQPNameMatch.csv')
 
+#once the matches have been identified
+to.match <- read.csv('//deqhq1/wqassessment/2012_WQAssessment/ToxicsRedo/WQPNameMatch.csv')
+
+#for PCBs the standard is a total of all aroclors and congeners and so is a many to one. No comparison is done to individual compounds.
+#given that I'll list out all the aroclor and pcb names to include in the wqp query after taking out the blank match.
+to.match[to.match$Criteria.Name != 'Polychlorinated Biphenyls (PCBs)',]
+aroclors <- wqp.characteristics[grep('[Aa]roclor',wqp.characteristics$value),'value']
+pcbs <- wqp.characteristics[grep('[Pp][Cc][Bb]',wqp.characteristics$value),'value']
+
+#then we put the characterisitic names together
+to.query <- c(to.match$WQP.Name, aroclors, pcbs)
+
 #now put you characteristics in the characteristicName variable for use in the query
-characteristicName <- 'pH'
+#characteristicName <- 'pH'
+characteristicName <- URLencode(paste(to.query,collapse=';'),reserved = TRUE)
 
 #### Define start and end date ####
 #The expected format is mm-dd-yyyy
