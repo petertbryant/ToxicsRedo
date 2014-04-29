@@ -2,15 +2,15 @@
 1,"4,4`-DDD","p,p'-DDT",1,"DDD 4,4'"
 2,"4,4`-DDE","p,p'-DDE",1,"DDE 4,4'"
 3,"4,4`-DDT","p,p'-DDD",1,"DDT 4,4'"
-4,alpha-BHC,.alpha.-Hexachlorocyclohexane,1,BHC Alpha
+4,alpha-BHC,.alpha.-Hexachlorocyclohexane,0,BHC Alpha
 5,"Antimony, Total recoverable",Antimony,0,Antimony
-6,"Arsenic, Total inorganic",Arsenic,1,Arsenic
-7,"Arsenic, Total recoverable",Arsenic,1,Arsenic
+6,"Arsenic, Total inorganic",Arsenic,0,Arsenic
+7,"Arsenic, Total recoverable",Arsenic,0,Arsenic
 8,"Barium, Total recoverable",Barium,0,Barium
 9,Benzo(a)anthracene,Benz[a]anthracene,0,Benz(a)anthracene
 10,Benzo(a)pyrene,Benzo[a]pyrene,0,Benzo(a)pyrene
-11,Benzo[b]fluoranthene,Benzo(b)fluoranthene,1,"Benzo(b)fluoranthene 3,4"
-12,beta-BHC,.beta.-Hexachlorocyclohexane,1,BHC Beta
+11,Benzo[b]fluoranthene,Benzo(b)fluoranthene,0,"Benzo(b)fluoranthene 3,4"
+12,beta-BHC,.beta.-Hexachlorocyclohexane,0,BHC Beta
 13,Bis(2-ethylhexyl)phthalate,Di(2-ethylhexyl) phthalate,0,Ethylhexyl Phthalate bis 2
 14,Bromoform,Tribromomethane,0,Bromoform
 15,Butylbenzylphthalate,Butyl benzyl phthalate,0,Butylbenzyl Phthalate
@@ -37,12 +37,12 @@
 36,Dimethylphthalate,Dimethyl phthalate,0,Dimethyl Phthalate
 37,Di-n-butyl Phthalate,Dibutyl phthalate,0,Di-n-butyl Phthalate
 38,"Dinitrophenol 2,4","2,4-Dinitrophenol",0,"Dinitrophenol 2,4"
-39,Dinitrophenols,Dinitrophenol,1,Dinitrophenols
+39,Dinitrophenols,Dinitrophenol,0,Dinitrophenols
 40,"Dioxin (2,3,7,8-TCDD)","2,3,7,8-Tetrachlorodibenzo-p-dioxin",0,"Dioxin (2,3,7,8-TCDD)"
 41,"Diphenylhydrazine 1,2","1,2-Diphenylhydrazine",0,"Diphenylhydrazine 1,2"
-42,Endosulfan I,.alpha.-Endosulfan,1,Endosulfan Alpha
-43,Endosulfan II,.beta.-Endosulfan,1,Endosulfan Beta
-44,Endosulfan Sulfate,Endosulfan sulfate,1,Endosulfan Sulfate
+42,Endosulfan I,.alpha.-Endosulfan,0,Endosulfan Alpha
+43,Endosulfan II,.beta.-Endosulfan,0,Endosulfan Beta
+44,Endosulfan Sulfate,Endosulfan sulfate,0,Endosulfan Sulfate
 45,Endrin Aldehyde,Endrin aldehyde,0,Endrin Aldehyde
 46,Heptachlor Epoxide,Heptachlor epoxide,0,Heptachlor Epoxide
 47,Hexachlorocyclo-hexane-Technical,"1,2,3,4,5,6-Hexachlorocyclohexane",0,Hexachlorocyclo-hexane-Technical
@@ -58,7 +58,7 @@
 57,"Nitrosodi-n-propylamine, N",N-Nitrosodi-n-propylamine,0,"Nitrosodi-n-propylamine, N"
 58,"Nitrosodiphenylamine, N",N-Nitrosodiphenylamine,0,"Nitrosodiphenylamine, N"
 59,"Nitrosopyrrolidine, N",N-Nitrosopyrrolidine,0,"Nitrosopyrrolidine, N"
-60,Polychlorinated Biphenyls (PCBs),,1,Polychlorinated Biphenyls (PCBs)
+60,Polychlorinated Biphenyls (PCBs),,0,Polychlorinated Biphenyls (PCBs)
 61,"Selenium, Total recoverable",Selenium,0,Selenium
 62,"Tetrachlorobenzene, 1,2,4,5-","1,2,4,5-Tetrachlorobenzene",0,"Tetrachlorobenzene, 1,2,4,5-"
 63,"Tetrachloroethane 1,1,2,2","1,1,2,2-Tetrachloroethane",0,"Tetrachloroethane 1,1,2,2"
@@ -69,23 +69,25 @@
 68,"Trichlorophenol, 2, 4, 5-","2,4,5-Trichlorophenol",0,"Trichlorophenol, 2, 4, 5-"
 69,Vinyl Chloride,Vinyl chloride,0,Vinyl Chloride
 70,"Zinc, Total recoverable",Zinc,0,Zinc
-71,"Arsenic, Dissolved",Arsenic,1,Arsenic
+71,"Arsenic, Dissolved",Arsenic,0,Arsenic
 72,Chlorpyrifos (Dursban),Chlorpyrifos,0,Chlorpyrifos
-73,"Chromium, Dissolved",Chromium,1,Chromium
-74,Chromium (Tri),Chromium(III),1,Chromium III
+73,"Chromium, Dissolved",Chromium,0,Chromium
+74,Chromium (Tri),Chromium(III),0,Chromium III
 75,Tributyltin,Tributlytin,1,Tributyltin (TBT)
 76,Total DDT,"DDT/DDD/DDE, sum of p,p' isomers",1,"DDT 4,4'"
 77,Azinphos methyl,Azinphos-methyl,0,Guthion
 78,Guthion,Azinphos-methyl,0,Guthion
 79,"Iron, Total recoverable",Iron,0,Iron
 80,"Silver, Dissolved",Silver,0,Silver
-81,Sulfide Hydrogen Sulfide,Hydrogen sulfide,1,Sulfide Hydrogen Sulfide
+81,Sulfide Hydrogen Sulfide,Hydrogen sulfide,0,Sulfide Hydrogen Sulfide
 82,"Selenium, Dissolved",Selenium,0,Selenium
 83,"Lead, Dissolved",Lead,0,Lead 
 84,"Zinc, Dissolved",Zinc,0,Zinc
 85,"Nickel, Dissolved",Nickel,0,Nickel
 86,"Cadmium, Dissolved",Cadmium,0,Cadmium
 87,"Copper, Dissolved",Copper,0,Copper
-88,Phosphorus Elemental,Phosphorus,1,Phosphorus Elemental
+88,Phosphorus Elemental,Phosphorus,0,Phosphorus Elemental
 89,"Manganese, Total recoverable",Manganese,0,Manganese
-90,,Chromium(VI),1,Chromium VI 
+90,Chromium (Hex),Chromium(VI),0,Chromium VI 
+91,"Arsenic, Dissolved",Arsenic ion (3+),0,Arsenic
+92,"Arsenic, Dissolved",Arsenic ion (5+),0,Arsenic
