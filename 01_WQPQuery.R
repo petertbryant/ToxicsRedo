@@ -16,6 +16,27 @@ WQP.domain.get <- function(value) {
   return(tmp.df)
 }
 
+URLencode.PTB <- function (URL, reserved = FALSE) 
+{
+  OK <- "[^-ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvywxyz0-9']"
+  x <- strsplit(URL, "")[[1L]]
+  z <- grep(OK, x)
+  if (length(z)) {
+    y <- sapply(x[z], function(x) {if(x == ' ') {
+      '+'
+    } else if (x == '('){
+      '('
+    } else if (x == ')'){
+      ')'
+    } else {
+      paste0("%", as.character(charToRaw(x)), collapse = "")
+    }
+    })
+   x[z] <- y
+  }
+  paste(x, collapse = "")
+}
+
 #This function takes a string as the value argument and retrieves domains in XML format and converts them to dataframes in R
 #for the domains for the available search terms go to http://www.waterqualitydata.us/webservices_documentation.jsp#Domain
 #As of 4/8/2014 the available parameter names include: countrycode, statecode, countycode, Sitetype, Organization, Samplemedia,
@@ -65,16 +86,16 @@ deq.pollutants <- criteria.values.melted.applicable[criteria.values.melted.appli
 #}
 
 #look for matching names in the Water Quality Portal
-matched <- deq.pollutants[deq.pollutants$Pollutant %in% xml.df$value,]
+matched <- deq.pollutants[deq.pollutants$Pollutant %in% wqp.characteristics$value,]
 
 #Identify the parameters we need to resolve for naming issues.
-not.matched <- deq.pollutants[!deq.pollutants$Pollutant %in% xml.df$value,]
+not.matched <- deq.pollutants[!deq.pollutants$Pollutant %in% wqp.characteristics$value,]
 
 #output DEQ table pollutants that we do not have a match for
 #write.csv(unique(not.matched$Pollutant),'//deqhq1/wqassessment/2012_WQAssessment/ToxicsRedo/WQPNameMatch.csv')
 
 #once the matches have been identified
-to.match <- read.csv('//deqhq1/wqassessment/2012_WQAssessment/ToxicsRedo/WQPNameMatch.csv')
+to.match <- read.csv('//deqhq1/wqassessment/2012_WQAssessment/ToxicsRedo/WQPNameMatch.csv', stringsAsFactors = FALSE)
 
 #for PCBs the standard is a total of all aroclors and congeners and so is a many to one. No comparison is done to individual compounds.
 #given that I'll list out all the aroclor and pcb names to include in the wqp query after taking out the blank match.
@@ -83,11 +104,19 @@ aroclors <- wqp.characteristics[grep('[Aa]roclor',wqp.characteristics$value),'va
 pcbs <- wqp.characteristics[grep('[Pp][Cc][Bb]',wqp.characteristics$value),'value']
 
 #then we put the characterisitic names together
-to.query <- c(to.match$WQP.Name, aroclors, pcbs)
+to.query <- c(to.match$WQP.Name, 
+              aroclors, 
+              pcbs, 
+              matched$Pollutant, 
+              c('pH','Temperature, water','Temperature','Hardness, Ca, Mg','Hardness, Ca, Mg as CaCO3',
+                'Hardness, Calcium','Hardness, carbonate','Hardness, carbonate as CaCO3','Hardness, magnesium',
+                'Total Hardness','Calcium','Magnesium','Calcium as CaCO3','Magnesium as CaCO3'))
+to.query <- to.query[!to.query %in% c('Dinitrophenol','','Nitrosamine')]
 
 #now put you characteristics in the characteristicName variable for use in the query
 #characteristicName <- 'pH'
-characteristicName <- URLencode(paste(to.query,collapse=';'),reserved = TRUE)
+characteristicName1 <- URLencode.PTB(paste(to.query[1:210],collapse=';'),reserved = TRUE)
+characteristicName2 <- URLencode.PTB(paste(to.query[211:length(to.query)],collapse=';'),reserved = TRUE)
 
 #### Define start and end date ####
 #The expected format is mm-dd-yyyy
@@ -103,7 +132,8 @@ theStationURL <- paste('http://www.waterqualitydata.us/Station/search?',
                      'statecode=', Oregon,
                      '&siteType=', siteType, 
                      '&sampleMedia=', sampleMedia,
-                     '&characteristicName=', characteristicName,
+                    '&characteristicName=', characteristicName,
+                   # '&characteristicName=', URLencode.PTB(paste(c(to.query[to.query == 'Bis(chloromethyl) ether'],to.query[grep('1,3-Dichloropropene',to.query)]), collapse = ';')),
                      '&startDateLo=', startDate,
                      '&startDateHi=', endDate,
                      '&mimeType=csv', sep ='')
@@ -126,4 +156,27 @@ wqp.stations <- read.csv(textConnection(tmp.stations), stringsAsFactors = FALSE)
 tmp.data <- getURL(theDataURL)
 wqp.data <- read.csv(textConnection(tmp.data), stringsAsFactors = FALSE)
 
+
+for (i in 281:length(to.query)) {
+  theStationURL <- paste('http://www.waterqualitydata.us/Station/search?',
+                         'statecode=', Oregon,
+                         '&siteType=', siteType, 
+                         '&sampleMedia=', sampleMedia,
+                        # '&characteristicName=', characteristicName,
+                           '&characteristicName=', URLencode.PTB(to.query[i]),
+                         '&startDateLo=', startDate,
+                         '&startDateHi=', endDate,
+                         '&mimeType=csv', sep ='')
+  tmp.stations <- getURL(theStationURL)
+  
+  ifelse(substr(tmp.stations,1,12) == 'Organization', 
+         print(paste('Success for parameter:',to.query[i], i, 'with', (length(to.query)-i), 'remaining to test.')), 
+         print(paste('!!!!!!!Unsuccessful for parameter:',to.query[i],'!!!!!!!!')))
+
+#   if (nrow(wqp.stations) > 0) {
+#     ifelse(i ==1 , wqp.stations.set <- wqp.stations, wqp.stations.set <- rbind(wqp.stations.set, wqp.stations))
+#   } else {
+#     print(paste('Parameter', to.query[i], 'needs help'))
+#   }
+}
 

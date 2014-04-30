@@ -1,7 +1,7 @@
 ,Criteria.Name,WQP.Name,Requires.followup,DEQ.Table.name
-1,"4,4`-DDD","p,p'-DDT",1,"DDD 4,4'"
-2,"4,4`-DDE","p,p'-DDE",1,"DDE 4,4'"
-3,"4,4`-DDT","p,p'-DDD",1,"DDT 4,4'"
+1,"4,4`-DDD","p,p'-DDT",0,"DDD 4,4'"
+2,"4,4`-DDE","p,p'-DDE",0,"DDE 4,4'"
+3,"4,4`-DDT","p,p'-DDD",0,"DDT 4,4'"
 4,alpha-BHC,.alpha.-Hexachlorocyclohexane,0,BHC Alpha
 5,"Antimony, Total recoverable",Antimony,0,Antimony
 6,"Arsenic, Total inorganic",Arsenic,0,Arsenic
@@ -51,7 +51,7 @@
 50,Methylene Chloride,Methylene chloride,0,Methylene Chloride
 51,"Nickel, Total recoverable",Nickel,0,Nickel
 52,Nitrates,Nitrate,0,Nitrates
-53,Nitrosamines,Nitrosamine,1,Nitrosamines
+53,Nitrosamines,Nitrosamine,0,Nitrosamines
 54,"Nitrosodibutylamine, N",N-Nitrosodi-n-butylamine,0,"Nitrosodibutylamine, N"
 55,"Nitrosodiethylamine, N",N-Nitrosodiethylamine,0,"Nitrosodiethylamine, N"
 56,"Nitrosodimethylamine, N",N-Nitrosodimethylamine,0,"Nitrosodimethylamine, N"
@@ -73,8 +73,8 @@
 72,Chlorpyrifos (Dursban),Chlorpyrifos,0,Chlorpyrifos
 73,"Chromium, Dissolved",Chromium,0,Chromium
 74,Chromium (Tri),Chromium(III),0,Chromium III
-75,Tributyltin,Tributlytin,1,Tributyltin (TBT)
-76,Total DDT,"DDT/DDD/DDE, sum of p,p' isomers",1,"DDT 4,4'"
+75,Tributyltin,Tributlytin,0,Tributyltin (TBT)
+76,Total DDT,"DDT/DDD/DDE, sum of p,p' isomers",0,"DDT 4,4'"
 77,Azinphos methyl,Azinphos-methyl,0,Guthion
 78,Guthion,Azinphos-methyl,0,Guthion
 79,"Iron, Total recoverable",Iron,0,Iron
