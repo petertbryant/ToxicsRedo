@@ -43,59 +43,58 @@ URLencode.PTB <- function (URL, reserved = FALSE)
   paste(x, collapse = "")
 }
 
+wqp.verification <- function(URL) {
+  h <- basicHeaderGatherer()
+  zz <- getURI(URL, headerfunction = h$update)
+  
+  if(as.numeric(h$value()["Total-Site-Count"]) == 0){
+    return.val = FALSE
+  } else {
+    return.val = TRUE
+  }
+}
+
 #### Water Quality Portal Station Query ####
 #All arguments are required to be from the WQP Domain values accessible using the WQP.domain.get function
 #This function will return a dataframe of stations whose data match the criteria specified.
 wqp.station.query <- function(stateCode, siteType, sampleMedia, characteristicName, startDate, endDate) {
-  h <- basicHeaderGatherer()  
-  
   theStationURL <- paste('http://www.waterqualitydata.us/Station/search?',
                          'statecode=', Oregon,
                          '&siteType=', siteType, 
                          '&sampleMedia=', sampleMedia,
-                         '&characteristicName=', characteristicName,
+                         '&characteristicName=', URLencode.PTB(characteristicName),
                          '&startDateLo=', startDate,
                          '&startDateHi=', endDate,
                          '&mimeType=csv', sep ='')
   
-  getURI(theStationURL, headerfunction = h$update)
-  
-  if(as.numeric(h$value()["Total-Site-Count"]) == 0){
-    print("There is a problem with your query. No results are returned")
-    ifelse(names(h$value()["STORET-Warning"]) == "STORET-Warning",
-           print(h$value()["STORET-Warning"]),
-           print("You'll have to figure out the problem."))
-  } else {
+ # if(wqp.verification(theStationURL)) {
     tmp.stations <- getURL(theStationURL)
-    wqp.stations <- read.csv(textConnection(tmp.stations), stringsAsFactors = FALSE) 
-  }
+    if (tmp.stations != "") {
+      wqp.stations <- read.csv(textConnection(tmp.stations), stringsAsFactors = FALSE)
+    }
+     
+ # } else {
+ #   print("There is a problem with your query. No results are returned")
+ # }
 }
 
 #### Water Quality Portal Data Query ####
 #All arguments are required to be from the WQP Domain values accessible using the WQP.domain.get function
 #This function will return a dataframe of data which match the criteria specified.
 wqp.data.query <- function(stateCode, siteType, sampleMedia, characteristicName, startDate, endDate) {
-  h <- basicHeaderGatherer() 
-  
   theDataURL <- paste('http://www.waterqualitydata.us/Result/search?',
                       'statecode=', Oregon,
                       '&siteType=', siteType, 
                       '&sampleMedia=', sampleMedia,
-                      '&characteristicName=', characteristicName,
+                      '&characteristicName=', URLencode.PTB(characteristicName),
                       '&startDateLo=', startDate,
                       '&startDateHi=', endDate,
                       '&mimeType=csv', sep ='')
   
-  getURI(theDataURL, headerfunction = h$update)
-  
-  
-  if(as.numeric(h$value()["Total-Site-Count"]) == 0){
-    print("There is a problem with your query. No results are returned")
-    ifelse(names(h$value()["STORET-Warning"]) == "STORET-Warning",
-           print(h$value()["STORET-Warning"]),
-           print("You'll have to figure out the problem."))
-  } else {
-    tmp.data <- getURL(theDataURL)
-    wqp.data <- read.csv(textConnection(tmp.data), stringsAsFactors = FALSE)
+  tmp.data <- getURL(theDataURL)
+  wqp.data <- read.csv(textConnection(tmp.data), stringsAsFactors = FALSE)
   }
-}
+
+
+  
+

@@ -9,14 +9,14 @@ source('//deqhq1/wqassessment/2012_wqassessment/toxicsredo/wqpquery_functions.R'
 Oregon <- 'US%3A41'
 
 #### Define site types to query ####
-wqp.siteTypes <- WQP.domain.get('siteType')
+wqp.siteTypes <- WQP.domain.get('Sitetype')
 
 #Using the wqp.siteTypes enter the values you want to query for in siteType.
 #Separate each value with the URL encoded semi-colon '%3B'. For values with commas use the URL encoded value '%2C+'
-siteType = 'Stream%3BLake%2C+Reservoir%2C+Impoundment'
+siteType = 'Estuary%3BOcean%3BStream%3BStream%3BLake%2C+Reservoir%2C+Impoundment'
 
 #### Define sample media to query ####
-wqp.sampleMedia <- WQP.domain.get('samplemedia')
+wqp.sampleMedia <- WQP.domain.get('Samplemedia')
 
 #Separate each value you want to query with the URL encoded semi-colon '%3B'.
 sampleMedia <- 'Water'
@@ -52,7 +52,7 @@ to.match <- read.csv('//deqhq1/wqassessment/2012_WQAssessment/ToxicsRedo/WQPName
 
 #for PCBs the standard is a total of all aroclors and congeners and so is a many to one. No comparison is done to individual compounds.
 #given that I'll list out all the aroclor and pcb names to include in the wqp query after taking out the blank match.
-to.match[to.match$Criteria.Name != 'Polychlorinated Biphenyls (PCBs)',]
+#to.match[to.match$Criteria.Name != 'Polychlorinated Biphenyls (PCBs)',]
 aroclors <- wqp.characteristics[grep('[Aa]roclor',wqp.characteristics$value),'value']
 pcbs <- wqp.characteristics[grep('[Pp][Cc][Bb]',wqp.characteristics$value),'value']
 
@@ -65,12 +65,12 @@ to.query <- c(to.match$WQP.Name,
                 'Hardness, Calcium','Hardness, carbonate','Hardness, carbonate as CaCO3','Hardness, magnesium',
                 'Total Hardness','Calcium','Magnesium','Calcium as CaCO3','Magnesium as CaCO3'))
 to.query <- to.query[!to.query %in% c('Dinitrophenol','','Nitrosamine')]
+to.query <- unique(to.query)
 
 #now put you characteristics in the characteristicName variable for use in the query
 #characteristicName <- 'pH'
 characteristicName1 <- URLencode.PTB(paste(to.query[1:210],collapse=';'),reserved = TRUE)
 characteristicName2 <- URLencode.PTB(paste(to.query[211:length(to.query)],collapse=';'),reserved = TRUE)
-characteristicsNames <- c(characteristicName1, characteristicName2)
 
 #### Define start and end date ####
 #The expected format is mm-dd-yyyy
@@ -80,42 +80,45 @@ endDate <- '12-31-2011'
 #### Pass the query using the arguments you defined above ####
 #Note that you can also pass different geographical scales but that is not currently built into this
 #Please refer to the linked page from the function definition for other available search parameters
-for (i in 1:length(characteristicNames)) {
-  tmp.stations <- wqp.station.query(Oregon, siteType, sampleMedia, characteristicsNames[i], startDate, endDate)
-  tmp.data <- wqp.data.query(Oregon, siteType, sampleMedia, characteristicsNames[i], startDate, endDate)
-  
-  if (nrow(tmp.stations) > 0) {
-    if(i == 1){
-      wqp.stations <- tmp.stations
-      wqp.data <- tmp.data
+success.table <- data.frame('Characteristic' = to.query, 'Success' = rep('Not Run',length(to.query)),stringsAsFactors = FALSE)
+for (i in 206:length(to.query)) {
+    tmp.stations <- wqp.station.query(stateCode = Oregon, 
+                                      siteType = siteType, 
+                                      sampleMedia = sampleMedia, 
+                                      characteristicName = to.query[i], 
+                                      startDate = startDate, 
+                                      endDate = endDate)
+    
+    if(is.character(tmp.stations)) {
+      print(paste('Awww shucks. Parameter',to.query[i],'has no data'))
+      success.table[i,'Success'] <- 'No data returned'
     } else {
-      wqp.stations <- rbind(wqp.stations, tmp.stations)
-      wqp.data <- rbind(wqp.data, tmp.data)
+      tmp.data <- wqp.data.query(stateCode = Oregon, 
+                                 siteType = siteType, 
+                                 sampleMedia = sampleMedia, 
+                                 characteristicName = to.query[i], 
+                                 startDate = startDate, 
+                                 endDate = endDate)
+      if(i == 1) {
+        wqp.stations <- tmp.stations
+        wqp.data <- tmp.data
+      } else {
+        wqp.stations <- rbind(wqp.stations, tmp.stations)
+        wqp.data <- rbind(wqp.data, tmp.data)
+      }
+      
+      print(paste('Success for Parameter:',to.query[i]))
+      
+      success.table[i,'Success'] <- 'Success!'
+      
+      print(paste('There are', nrow(tmp.stations), 'with data for', to.query[i]))
+      
+      print(paste(length(to.query)-i,'parameters left to query'))    
     }
-  } 
+    
+    wqp.stations$x <- apply(wqp.stations[,names(wqp.stations)],1,paste,collapse=',')
+    wqp.stations <- wqp.stations[!duplicated(wqp.stations$x),]
+    wqp.stations <- within(wqp.stations, rm(x))
 }
 
 
-# for (i in 281:length(to.query)) {
-#   theStationURL <- paste('http://www.waterqualitydata.us/Station/search?',
-#                          'statecode=', Oregon,
-#                          '&siteType=', siteType, 
-#                          '&sampleMedia=', sampleMedia,
-#                         # '&characteristicName=', characteristicName,
-#                            '&characteristicName=', URLencode.PTB(to.query[i]),
-#                          '&startDateLo=', startDate,
-#                          '&startDateHi=', endDate,
-#                          '&mimeType=csv', sep ='')
-#   tmp.stations <- getURL(theStationURL)
-#   
-#   ifelse(substr(tmp.stations,1,12) == 'Organization', 
-#          print(paste('Success for parameter:',to.query[i], i, 'with', (length(to.query)-i), 'remaining to test.')), 
-#          print(paste('!!!!!!!Unsuccessful for parameter:',to.query[i],'!!!!!!!!')))
-# 
-# #   if (nrow(wqp.stations) > 0) {
-# #     ifelse(i ==1 , wqp.stations.set <- wqp.stations, wqp.stations.set <- rbind(wqp.stations.set, wqp.stations))
-# #   } else {
-# #     print(paste('Parameter', to.query[i], 'needs help'))
-# #   }
-# }
-# 
