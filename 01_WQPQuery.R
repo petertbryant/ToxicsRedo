@@ -60,20 +60,25 @@ aroclors <- wqp.characteristics[grep('[Aa]roclor',wqp.characteristics$value),'va
 pcbs <- wqp.characteristics[grep('[Pp][Cc][Bb]',wqp.characteristics$value),'value']
 
 #then we put the characterisitic names together
+#The last character vector here includes parameters that were missed in the initial parameter identification
+#as well as parameters necessary to calculate sample specific criteria.
 to.query <- c(to.match$WQP.Name, 
               aroclors, 
               pcbs, 
               matched$Pollutant, 
               c('pH','Temperature, water','Temperature','Hardness, Ca, Mg','Hardness, Ca, Mg as CaCO3',
                 'Hardness, Calcium','Hardness, carbonate','Hardness, carbonate as CaCO3','Hardness, magnesium',
-                'Total Hardness','Calcium','Magnesium','Calcium as CaCO3','Magnesium as CaCO3','Ammonia', 'Ammonia as N'))
+                'Total Hardness','Calcium','Magnesium','Calcium as CaCO3','Magnesium as CaCO3','Ammonia', 'Ammonia as N',
+                'Chlordane, technical, and/or chlordane metabolites','Oxychlordane','cis-Nonachlor','trans-Nonachlor',
+                'Nonachlor','trans-Chlordane','cis-Chlordane','Chlordane, technical'))
 to.query <- to.query[!to.query %in% c('Dinitrophenol','','Nitrosamine')]
 to.query <- unique(to.query)
 
-#now put you characteristics in the characteristicName variable for use in the query
-#characteristicName <- 'pH'
-characteristicName1 <- URLencode.PTB(paste(to.query[1:210],collapse=';'),reserved = TRUE)
-characteristicName2 <- URLencode.PTB(paste(to.query[211:length(to.query)],collapse=';'),reserved = TRUE)
+#somehow chlordane isn't getting into the to.query vector now when it originally did at index 204
+#this code inserts it back into that specific index
+#to.query.start <- to.query[1:203]
+#to.query.end <- to.query[204:length(to.query)]
+#to.query <- c(to.query.start, 'Chlordane', to.query.end)
 
 #### Define start and end date ####
 #The expected format is mm-dd-yyyy
@@ -83,12 +88,29 @@ endDate <- '12-31-2011'
 #### Pass the query using the arguments you defined above ####
 #Note that you can also pass different geographical scales but that is not currently built into this
 #Please refer to the linked page from the function definition for other available search parameters
-success.table <- data.frame('Characteristic' = to.query, 
-                            'Success' = rep('Not Run',length(to.query)), 
-                            'stations' = rep(0, length(to.query)),
-                            'samples' = rep(0,length(to.query)),stringsAsFactors = FALSE)
 
-for (i in length(to.query)) {
+#This code was run the first time to set up the tracking table
+#success.table <- data.frame('Characteristic' = to.query, 
+#                            'Success' = rep('Not Run',length(to.query)), 
+#                            'stations' = rep(0, length(to.query)),
+#                            'samples' = rep(0,length(to.query)),stringsAsFactors = FALSE)
+
+#This next block pulls in the tracking table to see what's been done up to this point
+success.table <- sqlFetch(con, 'WQPQuery_Status')
+
+#Need to add in Ammonia and Ammonia as N to the success table. This parameter has only ph and temperature dependent criteria and so was 
+#missed when the criteria value column was coerced to numeric.
+success.table <- rbind(success.table, data.frame('Characteristic' = c('Ammonia','Ammonia as N','Chlordane, technical, and/or chlordane metabolites','Oxychlordane','cis-Nonachlor','trans-Nonachlor',
+                                                                      'Nonachlor','trans-Chlordane','cis-Chlordane','Chlordane, technical'), 
+                                                 'Success' = rep('Not run',10), 
+                                                 'stations' = rep(0,10), 
+                                                 'samples' = rep(0,10), stringsAsFactors = FALSE))
+
+#we have to pull this back from the databse to add to it now that we have parameters to add.
+wqp.stations <- sqlFetch(con, 'WQPStations_05022014')
+wqp.stations <- within(wqp.stations, rm(x))
+
+for (i in 259:length(to.query)) {
   tmp.stations <- wqp.station.query(stateCode = Oregon, 
                                     siteType = siteType, 
                                     sampleMedia = sampleMedia, 
@@ -124,10 +146,11 @@ for (i in length(to.query)) {
         wqp.stations <- tmp.stations
         sqlSave(con, tmp.data, 'WQPData_05022014', varTypes = WQPvarTypes)
       } else {
+        names(tmp.stations) <- gsub('\\.','',names(tmp.stations))
         wqp.stations <- rbind(wqp.stations, tmp.stations)
         tmp.data$USGSPCode <- as.character(tmp.data$USGSPCode)
         tmp.data$DetectionQuantitationLimitMeasure.MeasureValue <- as.numeric(tmp.data$DetectionQuantitationLimitMeasure.MeasureValue)
-        sqlSave(con, tmp.data, 'WQPData_05022014', append = TRUE, varTypes = WQPvarTypes)
+        sqlSave(con, tmp.data, 'WQPData_05022014', append = TRUE, varTypes = WQPvarTypes, rownames = FALSE)
       }
       print(paste('Success for Parameter:',to.query[i]))
       
@@ -156,12 +179,12 @@ for (i in length(to.query)) {
 }
 
 
-wqp.stations$x <- apply(wqp.stations[,c('MonitoringLocationIdentifier', 'VerticalMeasure.MeasureValue')],1,paste, collapse = ',')
+wqp.stations$x <- apply(wqp.stations[,c('MonitoringLocationIdentifier', 'VerticalMeasureMeasureValue')],1,paste, collapse = ',')
 wqp.stations.dups.removed <- wqp.stations[!duplicated(wqp.stations$x),]
 wqp.stations.dups.removed <- within(wqp.stations.dups.removed, rm(x))
 
-sqlSave(con, wqp.stations.dups.removed, 'WQPStations_05022014')
-sqlSave(con, success.table, 'WQPQuery_Status')
+#sqlSave(con, wqp.stations.dups.removed, 'WQPStations_05022014', rownames = FALSE)
+#sqlSave(con, success.table, 'WQPQuery_Status', rownames = FALSE)
 
 
 wqp.data <- sqlFetch(con, 'WQPData_05022014')
