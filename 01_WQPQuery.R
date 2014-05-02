@@ -1,8 +1,11 @@
 #### Using the water quality portal REST service for Characteristic names ####
 library(RCurl)
 library(XML)
+library(RODBC)
 
 source('//deqhq1/wqassessment/2012_wqassessment/toxicsredo/wqpquery_functions.R')
+
+con <- odbcConnect('WQAssessment')
 
 #### Define state to query ####
 #you can use the wqp.domain.get if you want outside Oregon but here is the Oregon code
@@ -63,7 +66,7 @@ to.query <- c(to.match$WQP.Name,
               matched$Pollutant, 
               c('pH','Temperature, water','Temperature','Hardness, Ca, Mg','Hardness, Ca, Mg as CaCO3',
                 'Hardness, Calcium','Hardness, carbonate','Hardness, carbonate as CaCO3','Hardness, magnesium',
-                'Total Hardness','Calcium','Magnesium','Calcium as CaCO3','Magnesium as CaCO3'))
+                'Total Hardness','Calcium','Magnesium','Calcium as CaCO3','Magnesium as CaCO3','Ammonia', 'Ammonia as N'))
 to.query <- to.query[!to.query %in% c('Dinitrophenol','','Nitrosamine')]
 to.query <- unique(to.query)
 
@@ -80,45 +83,86 @@ endDate <- '12-31-2011'
 #### Pass the query using the arguments you defined above ####
 #Note that you can also pass different geographical scales but that is not currently built into this
 #Please refer to the linked page from the function definition for other available search parameters
-success.table <- data.frame('Characteristic' = to.query, 'Success' = rep('Not Run',length(to.query)),stringsAsFactors = FALSE)
-for (i in 206:length(to.query)) {
-    tmp.stations <- wqp.station.query(stateCode = Oregon, 
-                                      siteType = siteType, 
-                                      sampleMedia = sampleMedia, 
-                                      characteristicName = to.query[i], 
-                                      startDate = startDate, 
-                                      endDate = endDate)
+success.table <- data.frame('Characteristic' = to.query, 
+                            'Success' = rep('Not Run',length(to.query)), 
+                            'stations' = rep(0, length(to.query)),
+                            'samples' = rep(0,length(to.query)),stringsAsFactors = FALSE)
+
+for (i in length(to.query)) {
+  tmp.stations <- wqp.station.query(stateCode = Oregon, 
+                                    siteType = siteType, 
+                                    sampleMedia = sampleMedia, 
+                                    characteristicName = to.query[i], 
+                                    startDate = startDate, 
+                                    endDate = endDate)
+  
+  if (names(tmp.stations)[1] != 'OrganizationIdentifier') {
+    print('The server is not accepting queries at this time. Please wait a bit to resume.')
+    print(paste('You can resume with the iterator', i, 'which is parameter', to.query[i]))
+    break
+  }
+  
+  if(is.character(tmp.stations)) {
+    print(paste('Awww shucks. Parameter',to.query[i],'has no data'))
+    success.table[i,'Success'] <- 'Unsuccessful'
+  } else {
+    tmp.data <- wqp.data.query(stateCode = Oregon, 
+                               siteType = siteType, 
+                               sampleMedia = sampleMedia, 
+                               characteristicName = to.query[i], 
+                               startDate = startDate, 
+                               endDate = endDate)
     
-    if(is.character(tmp.stations)) {
-      print(paste('Awww shucks. Parameter',to.query[i],'has no data'))
-      success.table[i,'Success'] <- 'No data returned'
-    } else {
-      tmp.data <- wqp.data.query(stateCode = Oregon, 
-                                 siteType = siteType, 
-                                 sampleMedia = sampleMedia, 
-                                 characteristicName = to.query[i], 
-                                 startDate = startDate, 
-                                 endDate = endDate)
+    if (names(tmp.data)[1] != 'OrganizationIdentifier') {
+      print('The server is not accepting queries at this time. Please wait a bit to resume.')
+      print(paste('You can resume with the iterator', i, 'which is parameter', to.query[i]))
+      break
+    }
+    
+    if(nrow(tmp.data) > 0) {
       if(i == 1) {
         wqp.stations <- tmp.stations
-        wqp.data <- tmp.data
+        sqlSave(con, tmp.data, 'WQPData_05022014', varTypes = WQPvarTypes)
       } else {
         wqp.stations <- rbind(wqp.stations, tmp.stations)
-        wqp.data <- rbind(wqp.data, tmp.data)
+        tmp.data$USGSPCode <- as.character(tmp.data$USGSPCode)
+        tmp.data$DetectionQuantitationLimitMeasure.MeasureValue <- as.numeric(tmp.data$DetectionQuantitationLimitMeasure.MeasureValue)
+        sqlSave(con, tmp.data, 'WQPData_05022014', append = TRUE, varTypes = WQPvarTypes)
       }
-      
       print(paste('Success for Parameter:',to.query[i]))
       
       success.table[i,'Success'] <- 'Success!'
+
       
-      print(paste('There are', nrow(tmp.stations), 'with data for', to.query[i]))
+      print(paste('There are', nrow(tmp.stations), 'stations with', nrow(tmp.data), 'samples for',to.query[i]))
       
-      print(paste(length(to.query)-i,'parameters left to query'))    
+      print(paste(length(to.query)-i,'parameters left to query')) 
+      
+    } else {
+      print(paste('No data available for', to.query[i]))
+      success.table[i,'Success'] <- 'No data returned'
     }
     
-    wqp.stations$x <- apply(wqp.stations[,names(wqp.stations)],1,paste,collapse=',')
-    wqp.stations <- wqp.stations[!duplicated(wqp.stations$x),]
-    wqp.stations <- within(wqp.stations, rm(x))
+    success.table[i,'samples'] <- nrow(tmp.data)
+    success.table[i,'stations'] <- nrow(tmp.stations)
+   
+    rm(tmp.data)
+    gc()
+  }
+  
+  wqp.stations$x <- apply(wqp.stations[,names(wqp.stations)],1,paste,collapse=',')
+  wqp.stations <- wqp.stations[!duplicated(wqp.stations$x),]
+  wqp.stations <- within(wqp.stations, rm(x))
 }
 
 
+wqp.stations$x <- apply(wqp.stations[,c('MonitoringLocationIdentifier', 'VerticalMeasure.MeasureValue')],1,paste, collapse = ',')
+wqp.stations.dups.removed <- wqp.stations[!duplicated(wqp.stations$x),]
+wqp.stations.dups.removed <- within(wqp.stations.dups.removed, rm(x))
+
+sqlSave(con, wqp.stations.dups.removed, 'WQPStations_05022014')
+sqlSave(con, success.table, 'WQPQuery_Status')
+
+
+wqp.data <- sqlFetch(con, 'WQPData_05022014')
+wqp.data[wqp.data$CharacteristicName == '']
