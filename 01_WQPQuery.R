@@ -1,7 +1,13 @@
+#Unfortunately, this got pretty messy as I was trying a few different things and learning how to work with the WQP.
+#The most reusable portion of this code is up to line 193. After that it was working solely with the specific data set 
+#i retrieved in order to add data necessary for calculated criteria.
+
 #### Using the water quality portal REST service for Characteristic names ####
 library(RCurl)
 library(XML)
 library(RODBC)
+
+options(stringsAsFactors = FALSE)
 
 source('//deqhq1/wqassessment/2012_wqassessment/toxicsredo/wqpquery_functions.R')
 
@@ -189,3 +195,133 @@ wqp.stations.dups.removed <- within(wqp.stations.dups.removed, rm(x))
 
 wqp.data <- sqlFetch(con, 'WQPData_05022014')
 wqp.data[wqp.data$CharacteristicName == '']
+
+#we need to add conductivity to the list of parameters to query
+cond.to.add.to.st <- data.frame('Characteristic' = c('Conductivity','Specific conductance'), 
+                                'Success' = rep('Not run',2), 
+                                'stations' = rep(0,2), 
+                                'samples' = rep(0,2))
+sqlSave(con, cond.to.add.to.st, 'WQPQuery_Status', append = TRUE, rownames = FALSE)
+st <- sqlFetch(con, 'WQPQuery_Status')
+
+#and salinity
+sal.to.add.to.st <- data.frame('Characteristic' = c('Salinity'), 
+                                'Success' = rep('Not run',1), 
+                                'stations' = rep(0,1), 
+                                'samples' = rep(0,1))
+sqlSave(con, sal.to.add.to.st, 'WQPQuery_Status', append = TRUE, rownames = FALSE)
+st <- sqlFetch(con, 'WQPQuery_Status')
+
+#### Query for temperature, conductivity and salinity at ammonia ####
+#We only want to query temperature and conductivity (or salinity) for where we have ammonia
+#the function i had wasn't really working for some reason so I pasetd the function steps here
+#this isn't really returning much. but it takes a long time to query temperature in the whole state
+#so it's hard to check if it's working right.
+ammonia.stations <- paste(as.character(unique(wqp.data[grep('Ammonia',wqp.data$CharacteristicName),'MonitoringLocationIdentifier'])),collapse=';')
+# tmp.stations.ammonia <- wqp.station.query(stateCode = Oregon, 
+#                                   siteType = siteType, 
+#                                   sampleMedia = sampleMedia, 
+#                                   characteristicName = (paste(as.character(st[c(245,246,268,269,270),'Characteristic']),collapse=';')), 
+#                                   startDate = startDate, 
+#                                   endDate = endDate)
+theDataURL.ammonia.calc <- paste('http://www.waterqualitydata.us/Result/search?',
+                                        'statecode=', Oregon,
+                                        '&siteType=', siteType, 
+                                        '&siteid=', URLencode.PTB(ammonia.stations),
+                                        '&sampleMedia=', sampleMedia,
+                                        '&characteristicName=', URLencode.PTB(paste(as.character(st[c(245,246,268,269,270),'Characteristic']),collapse=';')),
+                                        '&startDateLo=', startDate,
+                                        '&startDateHi=', endDate,
+                                        '&mimeType=csv', sep ='')
+
+tmp.data.ammonia.calc <- getURL(theDataURL.ammonia.calc)
+wqp.data.ammonia.calc <- read.csv(textConnection(tmp.data.ammonia.calc), stringsAsFactors = FALSE, as.is = c('ResultMeasureValue'))
+
+#update success table
+st[c(245,246,268,269,270),c('Success','stations','samples')] <- data.frame('Success' = c('Success!','No data returned','Success!','No data returned','No data returned'),
+                                                                           'stations' = c(1,0,1,0,0),
+                                                                           'samples' = c(35,0,39,0,0))
+
+#### Query hardness data ####
+#bring in names of crtieria for hardness calcs
+source('//deqlead01/wqm/TOXICS_2012/Data/R/hardness_eval_functions_Element_Names.R')
+
+#we don't need Silver because the chronic is always more stringent and is not hardness based
+hardness.metals.to.query <- as.character(unique(constants[constants$Name.alone != 'Silver','Name.alone']))
+
+#Using just the character vector from above with the SRS names for hardness in the wqp domain list
+#this queries statewide. There were over 600 stations with hardness metals and i think it was too many for the WQP
+#to take for station specific querying
+
+#We already have the stations we want this for in our dataset so we only have to run the data query
+
+# tmp.stations.hm <- wqp.station.query(stateCode = Oregon, 
+#                                           siteType = siteType, 
+#                                           sampleMedia = sampleMedia, 
+#                                           characteristicName = paste(c('Hardness, Ca, Mg','Hardness, Ca, Mg as CaCO3',
+#                                                                        'Hardness, Calcium','Hardness, carbonate','Hardness, carbonate as CaCO3','Hardness, magnesium',
+#                                                                        'Total Hardness','Calcium','Magnesium','Calcium as CaCO3','Magnesium as CaCO3'),collapse=';'), 
+#                                           startDate = startDate, 
+#                                           endDate = endDate)
+
+tmp.data.hm <- wqp.data.query(stateCode = Oregon, 
+                                   siteType = siteType, 
+                                   sampleMedia = sampleMedia, 
+                                   characteristicName = paste(c('Hardness, Ca, Mg','Hardness, Ca, Mg as CaCO3',
+                                                                'Hardness, Calcium','Hardness, carbonate','Hardness, carbonate as CaCO3','Hardness, magnesium',
+                                                                'Total Hardness','Calcium','Magnesium','Calcium as CaCO3','Magnesium as CaCO3'),collapse=';'), 
+                                   startDate = startDate, 
+                                   endDate = endDate)
+
+#Here we can drop the hardness data that is associated with stations where we don't have hardness metals data 
+tmp.data.hm.to.keep <- tmp.data.hm[tmp.data.hm$MonitoringLocationIdentifier %in% as.character(unique(wqp.data[wqp.data$CharacteristicName %in% hardness.metals.to.query,'MonitoringLocationIdentifier'])),]
+
+#This just updates the status table
+st.update <- ddply(tmp.data.hm.to.keep, .(CharacteristicName), summarise, stations = length(unique(MonitoringLocationIdentifier)), samples = length(ResultMeasureValue))
+st.update$success <- 'Success!'
+
+st[as.character(st$Characteristic) %in% c('Hardness, Ca, Mg','Hardness, Ca, Mg as CaCO3',
+                                          'Hardness, Calcium','Hardness, carbonate','Hardness, carbonate as CaCO3','Hardness, magnesium',
+                                          'Total Hardness','Calcium','Magnesium','Calcium as CaCO3','Magnesium as CaCO3'),'Success'] <- 'No data returned'
+st[as.character(st$Characteristic) %in% as.character(st.update$CharacteristicName),c('Success','stations','samples')] <- st.update[as.character(st.update$CharacteristicName) %in% as.character(st$Characteristic),c('success','stations','samples')]
+
+#### Query pH data ####
+#First I queried stations and checked against list of current stations.
+#All stations returned are in the current station list so all that is necessary is the data query
+tmp.stations.ph <- wqp.station.query(stateCode = Oregon, 
+                                     siteType = siteType, 
+                                     sampleMedia = sampleMedia, 
+                                     characteristicName = to.query[244], 
+                                     startDate = startDate, 
+                                     endDate = endDate)
+
+tmp.data.ph <- wqp.data.query(stateCode = Oregon, 
+                           siteType = siteType, 
+                           sampleMedia = sampleMedia, 
+                           characteristicName = to.query[244], 
+                           startDate = startDate, 
+                           endDate = endDate)
+
+#Update station table to include stations with ph only
+names(tmp.stations.ph) <- gsub('\\.','',names(tmp.stations.ph))
+wqp.stations <- rbind(wqp.stations.dups.removed, tmp.stations.ph)
+wqp.stations$x <- apply(wqp.stations[,names(wqp.stations)],1,paste,collapse=',')
+wqp.stations <- wqp.stations[!duplicated(wqp.stations$x),]
+wqp.stations <- within(wqp.stations, rm(x))
+wqp.stations$x <- apply(wqp.stations[,c('MonitoringLocationIdentifier', 'VerticalMeasureMeasureValue')],1,paste, collapse = ',')
+wqp.stations.dups.removed <- wqp.stations[!duplicated(wqp.stations$x),]
+wqp.stations.dups.removed <- within(wqp.stations.dups.removed, rm(x))
+
+#sqlSave(con, wqp.stations.dups.removed, 'WQPStations_05052014', rownames = FALSE)
+
+#update success table
+st[st$Characteristic == 'pH','Success'] <- 'Success!'
+st[st$Characteristic == 'pH','stations'] <- nrow(tmp.stations.ph)
+st[st$Characteristic == 'pH','samples'] <- nrow(tmp.data.ph)
+
+#save st to database
+sqlSave(con, st, 'WQPQueryStatus_05052014', rownames = FALSE)
+
+#### combine calculation data and add to data table ####
+tmp.data.to.add <- rbind(wqp.data.ammonia.calc, tmp.data.hm.to.keep, tmp.data.ph)
+#sqlSave(con, tmp.data.to.add, 'WQPData_05022014', append = TRUE, varTypes = WQPvarTypes, rownames = FALSE)

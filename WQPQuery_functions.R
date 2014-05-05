@@ -24,7 +24,7 @@ WQP.domain.get <- function(value) {
 #NOTE: This function has been modified to be consistent with WQP REST service encoding
 URLencode.PTB <- function (URL, reserved = FALSE) 
 {
-  OK <- "[^-ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvywxyz0-9']"
+  OK <- "[^-ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvywxyz0-9//_']"
   x <- strsplit(URL, "")[[1L]]
   z <- grep(OK, x)
   if (length(z)) {
@@ -57,10 +57,11 @@ wqp.verification <- function(URL) {
 #### Water Quality Portal Station Query ####
 #All arguments are required to be from the WQP Domain values accessible using the WQP.domain.get function
 #This function will return a dataframe of stations whose data match the criteria specified.
-wqp.station.query <- function(stateCode, siteType, sampleMedia, characteristicName, startDate, endDate) {
+wqp.station.query <- function(stateCode, siteType, sampleMedia, characteristicName, startDate, endDate) {#siteid,
   theStationURL <- paste('http://www.waterqualitydata.us/Station/search?',
                          'statecode=', Oregon,
                          '&siteType=', siteType, 
+                         #'&siteid=', siteid,
                          '&sampleMedia=', sampleMedia,
                          '&characteristicName=', URLencode.PTB(characteristicName),
                          '&startDateLo=', startDate,
@@ -81,10 +82,11 @@ wqp.station.query <- function(stateCode, siteType, sampleMedia, characteristicNa
 #### Water Quality Portal Data Query ####
 #All arguments are required to be from the WQP Domain values accessible using the WQP.domain.get function
 #This function will return a dataframe of data which match the criteria specified.
-wqp.data.query <- function(stateCode, siteType, sampleMedia, characteristicName, startDate, endDate) {
+wqp.data.query <- function(stateCode, siteType, sampleMedia, characteristicName, startDate, endDate) { #siteid,
   theDataURL <- paste('http://www.waterqualitydata.us/Result/search?',
                       'statecode=', Oregon,
                       '&siteType=', siteType, 
+                      #'&siteid=', siteid,
                       '&sampleMedia=', sampleMedia,
                       '&characteristicName=', URLencode.PTB(characteristicName),
                       '&startDateLo=', startDate,
