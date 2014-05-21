@@ -203,29 +203,29 @@ wqp.stations <- wqp.stations[wqp.stations$MonitoringLocationIdentifier %in% wqp.
 #sqlSave(con, wqp.stations, tablename = 'WQPStations_postQC_05192014', rownames = FALSE)
 
 #### Update success table with sample/station counts ####
-wqp.data$id <- paste(wqp.data$MonitoringLocationIdentifier, 
-                     wqp.data$ActivityStartDate, 
-                     wqp.data$ActivityStartTimeTime, 
-                     wqp.data$ActivityDepthHeightMeasureMeasureValue, 
-                     wqp.data$CharacteristicName)
-wqp.data.ph <- wqp.data[wqp.data$CharacteristicName == 'pH',]
-wqp.data.everything.else <- wqp.data[wqp.data$CharacteristicName != 'pH',]
-ph.grouped <- group_by(wqp.data.ph, id)
-ee.grouped <- group_by(wqp.data.everything.else, id)
-ee.dups.removed <- summarise(ee.grouped, ResultMeasureValue = max(ResultMeasureValue))
-ph.dups.removed <- summarise(ph.grouped, ResultMeasureValue = min(ResultMeasureValue))
-to.ref <- rbind(ee.dups.removed, ph.dups.removed)
-to.ref$relate <- paste(to.ref$id, to.ref$ResultMeasureValue)
-wqp.data$relate <- paste(wqp.data$id, wqp.data$ResultMeasureValue)
-wqp.data <- merge(wqp.data, to.ref[,'relate'], by = 'relate')
-wqp.data <- wqp.data[!duplicated(wqp.data$relate),]
-wqp.data <- within(wqp.data, rm('x', 'relate', 'id'))
+# wqp.data$id <- paste(wqp.data$MonitoringLocationIdentifier, 
+#                      wqp.data$ActivityStartDate, 
+#                      wqp.data$ActivityStartTimeTime, 
+#                      wqp.data$ActivityDepthHeightMeasureMeasureValue, 
+#                      wqp.data$CharacteristicName)
+# wqp.data.ph <- wqp.data[wqp.data$CharacteristicName == 'pH',]
+# wqp.data.everything.else <- wqp.data[wqp.data$CharacteristicName != 'pH',]
+# ph.grouped <- group_by(wqp.data.ph, id)
+# ee.grouped <- group_by(wqp.data.everything.else, id)
+# ee.dups.removed <- summarise(ee.grouped, ResultMeasureValue = max(ResultMeasureValue))
+# ph.dups.removed <- summarise(ph.grouped, ResultMeasureValue = min(ResultMeasureValue))
+# to.ref <- rbind(ee.dups.removed, ph.dups.removed)
+# to.ref$relate <- paste(to.ref$id, to.ref$ResultMeasureValue)
+# wqp.data$relate <- paste(wqp.data$id, wqp.data$ResultMeasureValue)
+# wqp.data <- merge(wqp.data, to.ref[,'relate'], by = 'relate')
+# wqp.data <- wqp.data[!duplicated(wqp.data$relate),]
+# wqp.data <- within(wqp.data, rm('x', 'relate', 'id'))
 
 #### Continuing on ####
 #WQP detect/nondetect
-wqp.data$dn <- ifelse(wqp.data$MeasureQualifierCode %in% c('U','UJ') | wqp.data$ResultMeasureValue < ifelse(is.na(wqp.data$DetectionQuantitationLimitMeasureMeasureValue),
-                                                                                                            0,
-                                                                                                            wqp.data$DetectionQuantitationLimitMeasureMeasureValue), 0, 1)
-
-table(wqp.data[wqp.data$dn == 0,'MeasureQualifierCode'])
-table(wqp.data$dn)
+# wqp.data$dn <- ifelse(wqp.data$MeasureQualifierCode %in% c('U','UJ') | wqp.data$ResultMeasureValue < ifelse(is.na(wqp.data$DetectionQuantitationLimitMeasureMeasureValue),
+#                                                                                                             0,
+#                                                                                                             wqp.data$DetectionQuantitationLimitMeasureMeasureValue), 0, 1)
+# 
+# table(wqp.data[wqp.data$dn == 0,'MeasureQualifierCode'])
+# table(wqp.data$dn)
