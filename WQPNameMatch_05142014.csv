@@ -1,0 +1,145 @@
+Criteria.Name,WQP.Name,Requires.followup,DEQ.Table.name
+"2,4-D","2,4-D",0,"2,4-D"
+"2,4-Dinitrotoluene","2,4-Dinitrotoluene",0,"2,4-Dinitrotoluene"
+Acenaphthene,Acenaphthene,0,Acenaphthene
+Acrolein,Acrolein,0,Acrolein
+Acrylonitrile,Acrylonitrile,0,Acrylonitrile
+Aldrin,Aldrin,0,Aldrin
+Alkalinity,Alkalinity,0,Alkalinity
+Ammonia as N,Ammonia,0,Ammonia
+Ammonia as N,Ammonia as N,0,Ammonia
+Anthracene,Anthracene,0,Anthracene
+"Antimony, Total recoverable",Antimony,0,Antimony
+"Arsenic, Total inorganic",Arsenic,0,Arsenic (inorganic)
+"Arsenic, Total recoverable",Arsenic,0,Arsenic (inorganic)
+"Arsenic, Dissolved",Arsenic,0,Arsenic (inorganic)
+"Arsenic, Dissolved",Arsenic ion (3+),0,Arsenic (inorganic)
+"Arsenic, Dissolved",Arsenic ion (5+),0,Arsenic (inorganic)
+"Barium, Total recoverable",Barium,0,Barium
+Benzo(a)anthracene,Benz[a]anthracene,0,Benz(a)anthracene
+Benzene,Benzene,0,Benzene
+Benzidine,Benzidine,0,Benzidine
+Benzo(a)pyrene,Benzo[a]pyrene,0,Benzo(a)pyrene
+Benzo[b]fluoranthene,Benzo(b)fluoranthene,0,"Benzo(b)fluoranthene 3,4"
+Benzo[k]fluoranthene,Benzo[k]fluoranthene,0,Benzo[k]fluoranthene
+alpha-BHC,.alpha.-Hexachlorocyclohexane,0,BHC Alpha
+beta-BHC,.beta.-Hexachlorocyclohexane,0,BHC Beta
+Lindane,Lindane,0,BHC Gamma (Lindane)
+Bromoform,Tribromomethane,0,Bromoform
+Butylbenzylphthalate,Butyl benzyl phthalate,0,Butylbenzyl Phthalate
+"Cadmium, Dissolved",Cadmium,0,Cadmium
+Carbon Tetrachloride,Carbon tetrachloride,0,Carbon Tetrachloride
+Chlordane,Chlordane,0,Chlordane
+Chloride,Chloride,0,Chloride
+Chlorine,Chlorine,0,Chlorine
+Chlorobenzene,Chlorobenzene,0,Chlorobenzene
+Chlorodibromomethane,Chlorodibromomethane,0,Chlorodibromomethane
+Chloroethyl Ether bis 2,Bis(2-chloroethyl) ether,0,Chloroethyl Ether bis 2
+Chloroform,Chloroform,0,Chloroform
+Chloroisopropyl Ether bis 2,Bis(2-chloroisopropyl) ether,0,Chloroisopropyl Ether bis 2
+"Chloromethyl ether, bis",Bis(chloromethyl) ether,0,"Chloromethyl ether, bis"
+Chloronaphthalene 2,2-Chloronaphthalene,0,Chloronaphthalene 2
+Chlorophenol 2,2-Chloronaphthalene,0,Chlorophenol 2
+"Chlorophenoxy Herbicide (2,4,5,-TP)",Silvex,0,"Chlorophenoxy Herbicide (2,4,5,-TP)"
+Chlorpyrifos (Dursban),Chlorpyrifos,0,Chlorpyrifos
+"Chromium, Dissolved",Chromium,0,Chromium VI 
+Chromium (Tri),Chromium(III),0,Chromium III
+Chromium (Hex),Chromium(VI),0,Chromium VI 
+Chrysene,Chrysene,0,Chrysene
+"Copper, Total recoverable",Copper,0,Copper
+"Copper, Dissolved",Copper,0,Copper
+Cyanide,Cyanide,0,Cyanide
+"4,4`-DDD","p,p'-DDT",0,"DDD 4,4'"
+"4,4`-DDE","p,p'-DDE",0,"DDE 4,4'"
+"4,4`-DDT","p,p'-DDD",0,"DDT 4,4'"
+Total DDT,"DDT/DDD/DDE, sum of p,p' isomers",0,"DDT 4,4'"
+Demeton,Demeton,0,Demeton
+"Dibenz[a,h]anthracene","Dibenz[a,h]anthracene",0,"Dibenz[a,h]anthracene"
+"Dichlorobenzene(m) 1,3",m-Dichlorobenzene,0,"Dichlorobenzene(m) 1,3"
+"Dichlorobenzene(o) 1,2",o-Dichlorobenzene,0,"Dichlorobenzene(o) 1,2"
+"Dichlorobenzene(p) 1,4",p-Dichlorobenzene,0,"Dichlorobenzene(p) 1,4"
+"Dichlorobenzidine 3,3'","3,3'-Dichlorobenzidine",0,"Dichlorobenzidine 3,3'"
+Dichlorobromomethane,Dichlorobromomethane,0,Dichlorobromomethane
+"Dichloroethane 1,2","1,2-Dichloroethane",0,"Dichloroethane 1,2"
+"Dichloroethylene 1,1","1,1-Dichloroethylene",0,"Dichloroethylene 1,1"
+"Dichloroethylene trans 1,2","trans-1,2-Dichloroethylene",0,"Dichloroethylene trans 1,2"
+"Dichlorophenol 2,4","2,4-Dichlorophenol",0,"Dichlorophenol 2,4"
+"Dichloropropane 1,2","1,2-Dichloropropane",0,"Dichloropropane 1,2"
+"Dichloropropene 1,3","1,3-Dichloropropene",0,"Dichloropropene 1,3"
+Dieldrin,Dieldrin,0,Dieldrin
+Diethylphthalate,Diethyl phthalate,0,Diethyl Phthalate
+Dimethylphthalate,Dimethyl phthalate,0,Dimethyl Phthalate
+"Dimethylphenol 2,4","2,4-Dimethylphenol",0,"Dimethylphenol 2,4"
+Di-n-butyl Phthalate,Dibutyl phthalate,0,Di-n-butyl Phthalate
+"Dinitrophenol 2,4","2,4-Dinitrophenol",0,"Dinitrophenol 2,4"
+Dinitrophenols,Dinitrophenol,0,Dinitrophenols
+"Dioxin (2,3,7,8-TCDD)","2,3,7,8-Tetrachlorodibenzo-p-dioxin",0,"Dioxin (2,3,7,8-TCDD)"
+"Diphenylhydrazine 1,2","1,2-Diphenylhydrazine",0,"Diphenylhydrazine 1,2"
+Endosulfan,Endosulfan,0,Endosulfan
+Endosulfan I,.alpha.-Endosulfan,0,Endosulfan Alpha
+Endosulfan II,.beta.-Endosulfan,0,Endosulfan Beta
+Endosulfan Sulfate,Endosulfan sulfate,0,Endosulfan Sulfate
+Endrin,Endrin,0,Endrin
+Endrin Aldehyde,Endrin aldehyde,0,Endrin Aldehyde
+Ethylbenzene,Ethylbenzene,0,Ethylbenzene
+Bis(2-ethylhexyl)phthalate,Di(2-ethylhexyl) phthalate,0,Ethylhexyl Phthalate bis 2
+Fluoranthene,Fluoranthene,0,Fluoranthene
+Fluorene,Fluorene,0,Fluorene
+Azinphos methyl,Azinphos-methyl,0,Guthion
+Guthion,Azinphos-methyl,0,Guthion
+Heptachlor,Heptachlor,0,Heptachlor
+Heptachlor Epoxide,Heptachlor epoxide,0,Heptachlor Epoxide
+Hexachlorobenzene,Hexachlorobenzene,0,Hexachlorobenzene
+Hexachlorobutadiene,Hexachlorobutadiene,0,Hexachlorobutadiene
+Hexachlorocyclo-hexane-Technical,"1,2,3,4,5,6-Hexachlorocyclohexane",0,Hexachlorocyclo-hexane-Technical
+Hexachlorocyclopentadiene,Hexachlorocyclopentadiene,0,Hexachlorocyclopentadiene
+Hexachloroethane,Hexachloroethane,0,Hexachloroethane
+"Indeno[1,2,3-cd]pyrene","Indeno[1,2,3-cd]pyrene",0,"Indeno[1,2,3-cd]pyrene"
+"Iron, Total recoverable",Iron,0,Iron (total)
+Isophorone,Isophorone,0,Isophorone
+"Lead, Dissolved",Lead,0,Lead 
+Malathion,Malathion,0,Malathion
+"Manganese, Total recoverable",Manganese,0,Manganese
+Mercury,Mercury,0,Mercury (total)
+Methoxychlor,Methoxychlor,0,Methoxychlor
+Methyl Bromide,Methyl bromide,0,Methyl Bromide
+"Methyl-4,6-dinitrophenol 2","4,6-Dinitro-o-cresol",0,"Methyl-4,6-dinitrophenol 2"
+Methylene Chloride,Methylene chloride,0,Methylene Chloride
+Mirex,Mirex,0,Mirex
+"Nickel, Total recoverable",Nickel,0,Nickel
+"Nickel, Dissolved",Nickel,0,Nickel
+Nitrates,Nitrate,0,Nitrates
+Nitrobenzene,Nitrobenzene,0,Nitrobenzene
+Nitrosamines,Nitrosamine,0,Nitrosamines
+"Nitrosodibutylamine, N",N-Nitrosodi-n-butylamine,0,"Nitrosodibutylamine, N"
+"Nitrosodiethylamine, N",N-Nitrosodiethylamine,0,"Nitrosodiethylamine, N"
+"Nitrosodimethylamine, N",N-Nitrosodimethylamine,0,"Nitrosodimethylamine, N"
+"Nitrosodi-n-propylamine, N",N-Nitrosodi-n-propylamine,0,"Nitrosodi-n-propylamine, N"
+"Nitrosodiphenylamine, N",N-Nitrosodiphenylamine,0,"Nitrosodiphenylamine, N"
+"Nitrosopyrrolidine, N",N-Nitrosopyrrolidine,0,"Nitrosopyrrolidine, N"
+Parathion,Parathion,0,Parathion
+Pentachlorobenzene,Pentachlorobenzene,0,Pentachlorobenzene
+Pentachlorophenol,Pentachlorophenol,0,Pentachlorophenol
+Phenol,Phenol,0,Phenol
+Phosphorus Elemental,Phosphorus,0,Phosphorus Elemental
+Polychlorinated Biphenyls (PCBs),,0,Polychlorinated Biphenyls (PCBs)
+Pyrene,Pyrene,0,Pyrene
+"Selenium, Total recoverable",Selenium,0,Selenium
+"Selenium, Dissolved",Selenium,0,Selenium
+"Silver, Dissolved",Silver,0,Silver
+Sulfide Hydrogen Sulfide,Hydrogen sulfide,0,Sulfide Hydrogen Sulfide
+"Tetrachlorobenzene, 1,2,4,5-","1,2,4,5-Tetrachlorobenzene",0,"Tetrachlorobenzene, 1,2,4,5-"
+"Tetrachloroethane 1,1,2,2","1,1,2,2-Tetrachloroethane",0,"Tetrachloroethane 1,1,2,2"
+Tetrachloroethylene,Tetrachloroethylene,0,Tetrachloroethylene
+"Thallium, Total recoverable",Thallium,0,Thallium
+Toluene,Toluene,0,Toluene
+Toxaphene,Toxaphene,0,Toxaphene
+Tributyltin,Tributlytin,0,Tributyltin (TBT)
+"Trichlorobenzene 1,2,4","1,2,4-Trichlorobenzene",0,"Trichlorobenzene 1,2,4"
+"Trichloroethane 1,1,2","1,1,2-Trichloroethane",0,"Trichloroethane 1,1,2"
+Trichloroethylene,Trichloroethylene,0,Trichloroethylene
+"Trichlorophenol 2,4,6","2,4,6-Trichlorophenol",0,"Trichlorophenol 2,4,6"
+"Trichlorophenol, 2, 4, 5-","2,4,5-Trichlorophenol",0,"Trichlorophenol, 2, 4, 5-"
+Vinyl Chloride,Vinyl chloride,0,Vinyl Chloride
+"Zinc, Total recoverable",Zinc,0,Zinc
+"Zinc, Dissolved",Zinc,0,Zinc
