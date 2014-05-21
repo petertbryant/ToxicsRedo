@@ -80,6 +80,18 @@ to.query <- c(to.match$WQP.Name,
 to.query <- to.query[!to.query %in% c('Dinitrophenol','','Nitrosamine')]
 to.query <- unique(to.query)
 
+#build out table for relate back to criteria names so it's a whole table operation and not based on similar names
+#which make it hard to track
+to.add <- data.frame('Criteria.Name' = matched$Pollutant, 
+                     'WQP.Name' = matched$Pollutant, 
+                     'Requires.followup' = rep(0,length(matched$Pollutant)), 
+                     'DEQ.Table.name' = matched$Pollutant)
+to.add <- to.add[!duplicated(to.add$Criteria.Name),]
+
+wqp.criteria.relate <- rbind(to.match[,c(2:5)], to.add)
+
+#write.csv(wqp.criteria.relate,'//deqhq1/wqassessment/2012_WQAssessment/ToxicsRedo/WQPNameMatch_05142014.csv',row.names = FALSE)
+
 #somehow chlordane isn't getting into the to.query vector now when it originally did at index 204
 #this code inserts it back into that specific index
 #to.query.start <- to.query[1:203]
