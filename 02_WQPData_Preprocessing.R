@@ -19,7 +19,7 @@ st <- sqlFetch(con, 'WQPQueryStatus_05052014')
 
 wqp.data <- merge(wqp.data, wqp.stations[,c('MonitoringLocationIdentifier','MonitoringLocationName')], all.x = TRUE)
 
-str(wqp.data)
+#str(wqp.data)
 
 #There seem to be a lot of NAs in this field. 
 #table(wqp.data$ResultMeasureValue, useNA = "always") #Need to discern if they are ND's or what
@@ -137,14 +137,14 @@ wqp.data <- wqp.data[wqp.data$OrganizationFormalName != 'Umatilla National Fores
 # unique(wqp.data[wqp.data$OrganizationFormalName == unique(wqp.data$OrganizationFormalName)[i],'CharacteristicName'])
 
 #Looks like I need to find out from Andrea if Inorganic phosphorus is applicable to our standard
-View(arrange(wqp.data[wqp.data$ResultCommentText %in% c("Analyte=Dissolved inorganic phosphorus (mg P/L); Detection limit= 0.3 ug/l",                                                     
-                                                 "Program: EMAP-West Coast; analtye: Dissolved inorganic phosphorus (mg P/L)",
-                                                 "Program: EMAP-West Coast ; equipment: YSI instrument; parameter: pH (pH units)",
-                                                 "Program: EMAP-West Coast; analtye: Dissolved inorganic phosphorus (mg P/L); MDL: 0.004 (mg P/L)",                                
-                                                 "Program: EMAP-West Coast; analtye: Dissolved inorganic phosphorus (mg P/L); MDL: 0.004 (mg P/L); QA code: Below reporting level",
-                                                 "Analyte: Dissolved inorganic phosphorus (mg P/L); Detection limit= 0.4367 ug/l",                                                
-                                                 "Analyte: Dissolved inorganic phosphorus (mg P/L); MDL: 0.000437 (mg P/L); Equipment: Kemmerer Bottle",                           
-                                                 "Analyte: Dissolved inorganic phosphorus (mg P/L); MDL: 0 (mg P/L); Equipment: Kemmerer Bottle"),],ResultCommentText))
+# View(arrange(wqp.data[wqp.data$ResultCommentText %in% c("Analyte=Dissolved inorganic phosphorus (mg P/L); Detection limit= 0.3 ug/l",                                                     
+#                                                  "Program: EMAP-West Coast; analtye: Dissolved inorganic phosphorus (mg P/L)",
+#                                                  "Program: EMAP-West Coast ; equipment: YSI instrument; parameter: pH (pH units)",
+#                                                  "Program: EMAP-West Coast; analtye: Dissolved inorganic phosphorus (mg P/L); MDL: 0.004 (mg P/L)",                                
+#                                                  "Program: EMAP-West Coast; analtye: Dissolved inorganic phosphorus (mg P/L); MDL: 0.004 (mg P/L); QA code: Below reporting level",
+#                                                  "Analyte: Dissolved inorganic phosphorus (mg P/L); Detection limit= 0.4367 ug/l",                                                
+#                                                  "Analyte: Dissolved inorganic phosphorus (mg P/L); MDL: 0.000437 (mg P/L); Equipment: Kemmerer Bottle",                           
+#                                                  "Analyte: Dissolved inorganic phosphorus (mg P/L); MDL: 0 (mg P/L); Equipment: Kemmerer Bottle"),],ResultCommentText))
 
 
 # View(arrange(wqp.data[wqp.data$ResultCommentText %in% c( "sample arrived at room temp / Holding time: 271 days"                                 
