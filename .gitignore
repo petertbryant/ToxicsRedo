@@ -1,5 +1,6 @@
 .Rhistory
-.Rdata
+*.Rdata
 .Rproj.user
 .Rproj
 .gitignore
+Analysis.mxd
