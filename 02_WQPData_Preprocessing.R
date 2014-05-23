@@ -2,7 +2,7 @@
 
 library(RODBC)
 library(plyr)
-library(dplyr) #note that this package has some overlap with plyr
+#library(dplyr) #note that this package has some overlap with plyr
 
 options(stringsAsFactors = FALSE)
 
