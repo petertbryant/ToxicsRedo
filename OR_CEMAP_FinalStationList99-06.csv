@@ -1,0 +1,392 @@
+Lasar_Number,StationID,Lat,Long,Station Description,StationLocation
+20660,OR2001,46.18833333,-123.9116667,Youngs Bay,Columbia
+20661,OR2002,46.21055556,-123.7236111,Cathlamet Bay,Columbia
+20662,OR2003,46.18,-123.8652778,Youngs Bay,Columbia
+20663,OR2004,46.21722222,-123.6722222,Cathlamet Bay,Columbia
+20664,OR2005,46.16722222,-123.8930556,Youngs Bay,Columbia
+20665,OR2006,46.20805556,-123.6883333,Cathlamet Bay,Columbia
+20666,OR2007,46.16916667,-123.8722222,Youngs Bay,Columbia
+20667,OR2008,46.22611111,-123.5880556,Marsh Island Creek,Columbia
+20668,OR2009,46.18972222,-123.7444444,Cathlamet Bay,Columbia
+20669,OR2010,46.18861111,-123.7463889,Cathlamet Bay,Columbia
+20670,OR2011,46.18638889,-123.6813889,Cathlamet Bay,Columbia
+20671,OR2012,46.14833333,-123.8186111,Youngs River,Columbia
+20672,OR2013,46.18722222,-123.5919444,Knappa Slough,Columbia
+20673,OR2014,46.17,-123.1441667,Bradbury Slough,Columbia
+20674,OR2015,46.13416667,-123.2722222,Wallace Slough,Columbia
+20675,OR2016,46.12861111,-123.2263889,Clatskanie River,Columbia
+20676,OR2017,46.10305556,-122.9966667,Rinearson Slough,Columbia
+20677,OR2018,45.69083333,-123.8994444,Nehalem River,Nehalem River
+20678,OR2019,45.38611111,-123.9555556,Netarts Bay,Netarts Bay
+20679,OR2020,45.1975,-123.9641667,Nestucca River,Nestucca River
+20680,OR2021,45.16611111,-123.9425,Little Nestucca River,Little Nestucca River
+20681,OR2022,45.04,-123.9938889,Salmon River,Salmon River
+20682,OR2023,44.925,-124.0166667,Siletz Bay,Siletz Bay
+20683,OR2024,44.62166667,-124.0341667,Yaquina Bay,Yaquina Bay
+20684,OR2025,44.59861111,-124.0155556,Yaquina River,Yaquina River
+20685,OR2026,44.57388889,-123.9630556,Yaquina River,Yaquina River
+20686,OR2027,44.41416667,-123.9988889,Alsea River,Alsea River
+20687,OR2028,44.30111111,-124.0633333,Yachats River,Yachats River
+20689,OR2030,44.01138889,-124.1263889,Siuslaw River,Siuslaw River
+20690,OR2031,44.02194444,-123.8808333,Siuslaw River,Siuslaw River
+20691,OR2032,43.74,-124.1363889,Umpqua River,Umpqua River
+20692,OR2033,43.7625,-124.0044444,Smith River (OR),Smith River (OR)
+20693,OR2034,43.72527778,-124.1458333,Umpqua River,Umpqua River
+20694,OR2035,43.7725,-123.9025,Smith River (OR),Smith River (OR)
+20695,OR2036,43.72222222,-124.1236111,Umpqua River,Umpqua River
+20696,OR2037,43.69305556,-124.1002778,Scholfield Creek,Scholfield Creek
+20697,OR2038,43.69222222,-124.0652778,Umpqua River,Umpqua River
+20698,OR2039,43.42277778,-124.2458333,Coos Bay,Coos Bay
+20699,OR2040,43.41388889,-124.2066667,Coos Bay,Coos Bay
+20700,OR2041,43.40666667,-124.2180556,Coos Bay,Coos Bay
+20701,OR2042,43.38638889,-124.2925,Coos Bay,Coos Bay
+20702,OR2043,43.40416667,-124.1991667,Coos Bay,Coos Bay
+20703,OR2044,43.36722222,-124.3033333,Coos Bay,Coos Bay
+20704,OR2045,43.34166667,-124.3205556,South Slough,South Slough
+20705,OR2046,43.37,-124.1475,Coos River,Coos River
+20706,OR2047,43.37722222,-124.1077778,Coos River,Coos River
+20707,OR2048,43.35,-124.1686111,Catching Slough,Catching Slough
+20708,OR2049,43.32111111,-124.1541667,Catching Slough,Catching Slough
+20709,OR2050,42.42083333,-124.4191667,Rogue River,Rogue River
+20710,OR2051,45.55166667,-123.9288889,Tillamook Bay,Tillamook Bay
+20711,OR2052,45.54722222,-123.9347222,Tillamook Bay,Tillamook Bay
+20712,OR2053,45.55138889,-123.9116667,Tillamook Bay,Tillamook Bay
+20713,OR2054,45.53388889,-123.9344444,Tillamook Bay,Tillamook Bay
+20714,OR2055,45.53888889,-123.9236111,Tillamook Bay,Tillamook Bay
+20715,OR2056,45.53638889,-123.9316667,Tillamook Bay,Tillamook Bay
+20716,OR2057,45.53805556,-123.9055556,Tillamook Bay,Tillamook Bay
+20717,OR2058,45.52777778,-123.9294444,Tillamook Bay,Tillamook Bay
+20718,OR2059,45.53111111,-123.9116667,Tillamook Bay,Tillamook Bay
+20719,OR2060,45.52361111,-123.9291667,Tillamook Bay,Tillamook Bay
+20720,OR2061,45.5175,-123.9344444,Tillamook Bay,Tillamook Bay
+20721,OR2062,45.52361111,-123.9122222,Tillamook Bay,Tillamook Bay
+20722,OR2063,45.51111111,-123.9213889,Tillamook Bay,Tillamook Bay
+20723,OR2064,45.51722222,-123.8911111,Tillamook Bay,Tillamook Bay
+20724,OR2065,45.50916667,-123.9325,Tillamook Bay,Tillamook Bay
+20725,OR2066,45.51472222,-123.9011111,Tillamook Bay,Tillamook Bay
+20726,OR2067,45.50083333,-123.9347222,Tillamook Bay,Tillamook Bay
+20727,OR2068,45.50888889,-123.9113889,Tillamook Bay,Tillamook Bay
+20728,OR2069,45.51138889,-123.8908333,Tillamook Bay,Tillamook Bay
+20729,OR2070,45.4975,-123.9225,Tillamook Bay,Tillamook Bay
+20730,OR2071,45.50611111,-123.8952778,Tillamook Bay,Tillamook Bay
+20731,OR2072,45.4975,-123.9086111,Tillamook Bay,Tillamook Bay
+20732,OR2073,45.49722222,-123.8913889,Tillamook Bay,Tillamook Bay
+20733,OR2074,45.49111111,-123.8944444,Tillamook Bay,Tillamook Bay
+20735,OR2076,45.48888889,-123.885,Tillamook Bay,Tillamook Bay
+20736,OR2077,45.48722222,-123.8983333,Tillamook Bay,Tillamook Bay
+20737,OR2078,45.48055556,-123.9005556,Tillamook Bay,Tillamook Bay
+20738,OR2079,45.46861111,-123.8833333,Tillamook Bay,Tillamook Bay
+20739,OR2080,45.44138889,-123.8769444,Tillamook River,Tillamook River
+23983,OR00-0001,46.18642,-123.18061,South of Oak Pt.,Columbia River
+23984,OR00-0002,46.16893,-123.21621,Upstream of Wallace Island,Columbia River
+23985,OR00-0003,46.18787,-123.14067,North of Crims Island,Columbia River
+23986,OR00-0004,46.14234,-123.27457,North of Wallace Island,Columbia River
+23987,OR00-0005,46.14628,-123.03566,Barlow Pt.,Columbia River
+23988,OR00-0006,46.12905,-122.99858,NE Lord Island,Columbia River
+23989,OR00-0007,46.1142,-122.9783,NE of Slaughter's Dike,Columbia River
+23990,OR00-0008,46.10204,-122.91451,Longview Inlet,Columbia River
+23991,OR00-0009,46.0889,-122.92321,East Ranier,Columbia River
+23992,OR00-0010,46.05742,-122.88671,Prescott Beach,Columbia River
+23993,OR00-0011,46.01564,-122.85795,North Kalama,Columbia River
+23994,OR00-0012,45.91205,-122.81021,Deer Island Slough,Columbia River
+23995,OR00-0013,45.87721,-122.79263,North St. Helens,Columbia River
+23996,OR00-0014,45.86531,-122.78803,South St. Helens (North of Sand Island),Columbia River
+23997,OR00-0015,45.84555,-122.78622,Warrior Rock (North Sauvie Island),Columbia River
+23998,OR00-0016,45.6517,-122.76305,Kelley Pt.,Columbia River
+23999,OR00-0017,45.64532,-122.75097,Downstream End of Hayden Island,Columbia River
+24000,OR00-0018,45.60626,-122.67456,Tomohawk Island Marina,Columbia River
+24001,OR00-0019,45.59698,-122.569,North of west Lemon Island,Columbia River
+24002,OR00-0020,45.59403,-122.58176,SW of Lemon Island (PDX Tower to South),Columbia River
+24003,OR00-0021,45.5839,-122.50199,N. Channel- Mid Government Island,Columbia River
+24004,OR00-0022,45.56827,-122.36615,East of Sandy River Mouth (1),Columbia River
+24005,OR00-0023,45.56863,-122.36312,East of Sandy River Mouth (2),Columbia River
+24006,OR00-0024,45.62269,-122.0179,Beacon Rock,Columbia River
+24007,OR00-0025,45.605,-122.05265,East of Franz Lake,Columbia River
+24008,OR00-0026,45.55558,-122.2996,North of Reed Island,Columbia River
+24009,OR00-0027,45.5745,-122.16497,East of Phoca Rock (near boat ramp),Columbia River
+24010,OR00-0028,45.54575,-122.31476,South of Reed Island,Columbia River
+24011,OR00-0029,45.55037,-122.27099,East of Reed Island,Columbia River
+24012,OR00-0030,45.58123,-122.14936,SW of Skamania I,Columbia River
+24013,OR00-0031,46.27134,-124.04481,Col. River Mouth: west of Jetty A,Columbia River
+24014,OR00-0032,46.2592,-124.02133,SW of Sand Island tower,Columbia River
+24015,OR00-0033,46.22675,-123.97801,East of Clatsop Spit,Columbia River
+24016,OR00-0034,46.24636,-123.86455,"""North Shore"" (E. of N. Astoria Bridge)",Columbia River
+24017,OR00-0035,46.28297,-123.7928,West of Grays Pt.,Columbia River
+24018,OR00-0036,46.23201,-123.93929,Mid-River between Hammond (OR) & Chinook Pt. (WA),Columbia River
+24019,OR00-0037,46.242,-123.8585,East of North Astoria Bridge,Columbia River
+24020,OR00-0038,46.23394,-123.88007,Pt. Ellice (SW of North Astoria Bridge),Columbia River
+24021,OR00-0039,46.23854,-123.78961,North of Taylor Sands,Columbia River
+24022,OR00-0040,46.26919,-123.7127,North of Rice Island,Columbia River
+24023,OR00-0041,46.20529,-123.88154,Desdemona Sands (Downstream of Astoria bridge),Columbia River
+24024,OR00-0042,46.22234,-123.79715,West Taylor Sands,Columbia River
+24025,OR00-0043,46.24003,-123.73236,SW of Rice Island,Columbia River
+24026,OR00-0044,46.26385,-123.65837,Altoona,Columbia River
+24027,OR00-0045,46.25365,-123.56219,East of Jim Crow Sands; West of Jim Crow Pt.,Columbia River
+24028,OR00-0046,46.21268,-123.78088,NW of Tongue Pt. Coast Guard Station,Columbia River
+24029,OR00-0047,46.22227,-123.66514,North of Green Marsh,Columbia River
+24030,OR00-0048,46.2683,-123.50184,North of Fitzpatrick,Columbia River
+24031,OR00-0049,46.24906,-123.44038,South of Price Island (S. Steamboat Slough entrance),Columbia River
+24032,OR00-0050,46.23561,-123.427,Channel- East Tenasillahe Island,Columbia River
+25637,OR01-0001,43.306038,-124.318953,South Slough off Coos Bay,South Slough
+25638,OR01-0002,45.174697,-123.940781,Nestucca Bay East side,Nestucca Bay
+25641,OR01-0005,43.134118,-124.328259,Coquille River @ RM 9,Coquille River 
+25643,OR01-0007,43.365711,-124.210053,Isthmus Slough East of Coos Bay city center,Isthmus Slough 
+25644,OR01-0008,44.617782,-124.06526,Yaquina Bay off North jetty,Yaquina Bay
+25645,OR01-0009,44.627374,-124.051472,Yaquina Bay mid-channel near US Coast Guard Res.,Yaquina Bay
+25646,OR01-0010,45.506303,-123.937357,Tillamook Bay West shore off Pitcher Point,Tillamook Bay
+25647,OR01-0011,45.413994,-123.937585,Netarts Bay Northeast shore near Yager Creek ,Netarts Bay
+25649,OR01-0013,43.730689,-124.162773,Umpqua River @ RM 5.4 near Barretts Landing,Umpqua River
+25650,OR01-0014,45.732001,-123.874542,Nehalem River North Fork @ RM 0,Nehalem River
+25651,OR01-0015,43.738133,-124.117411,Umpqua River @ RM 8.5 East shore near sawmill,Umpqua River
+25652,OR01-0016,46.016989,-123.920919,Necanicum River North shore near Gearhart beach,Necanicum River
+25653,OR01-0017,42.422756,-124.416359,Rogue River @ RM 0.5 in Gold Beach Harbor,Rogue River
+25654,OR01-0018,45.040424,-123.990891,Salmon River @ RM 0.8 off Knight Park,Salmon River
+25655,OR01-0019,43.331281,-124.193724,Isthmus Slough offshore of Millington,Isthmus Slough 
+25656,OR01-0020,45.187374,-123.954865,Nestucca River @ RM 0.2 off North Spit,Nestucca River 
+25657,OR01-0021,43.144998,-124.402507,Coquille River @ RM 3 ,Coquille River 
+25658,OR01-0022,45.400108,-123.955466,Netarts Bay West Shore off Netarts Spit,Netarts Bay
+25660,OR01-0024,45.6814,-123.931738,Nehalem Bay near Nehalem Beach,Nehalem River
+25661,OR01-0025,43.408214,-124.212168,Coos Bay East of North Bend,Coos Bay
+25662,OR01-0026,44.587664,-123.955038,Yaquina River @ RM 9.8 North shore off Craigie Point,Yaquina River
+25663,OR01-0027,43.69767,-124.107074,Scholfield Creek in Reedsport off Umpqua River,Scholfield Creek
+25664,OR01-0028,44.448466,-124.046123,Alsea Bay North shore,Alsea Bay 
+25665,OR01-0029,43.375855,-124.313102,Coos Bay West shore off North spit,Coos Bay
+25666,OR01-0030,44.412407,-123.902236,Alsea River @ RM 11.6 off Tidewater,Alsea River
+25667,OR01-0031,42.058816,-124.265869,Chetco River @ RM 1.1,Chetco River
+25668,OR01-0032,44.923436,-124.021005,Siletz Bay North off Salishan Spit,Siletz Bay
+25669,OR01-0033,43.134171,-124.412911,Coquille River @ RM 2 off Bullards Beach,Coquille River 
+25670,OR01-0034,45.397375,-123.938816,Netarts Bay Southeast shore near Whiskey creek,Netarts Bay
+25673,OR01-0037,43.346688,-124.162831,Catching Slough South of Coos River,Catching Slough
+25675,OR01-0039,43.73628,-124.14821,Umpqua River @ RM 6 South of The Point,Umpqua River
+25676,OR01-0040,45.697385,-123.899479,Nehalem Bay SW of Dean Point on tidal flat,Nehalem River
+28905,OR02-0001,45.694845,-123.902503,Nehalem Bay North shore on tidal flat,Nehalem Bay
+28906,OR02-0002,43.45036,-124.200111,"Coos Bay North, east shore near boat ramp",Coos Bay
+28907,OR02-0003,44.903925,-124.02101,Siletz Bay South,Siletz Bay
+28908,OR02-0004,43.385004,-124.207536,"Coos Bay Southeast, north of a blind",Coos Bay
+28909,OR02-0005,45.529319,-123.916903,Tillamook Bay Central near Seal channel,Tillamook Bay
+28910,OR02-0006,43.412687,-124.199202,"Coos Bay Northeast, south of Kentuck inlet",Coos Bay
+28911,OR02-0007,44.599417,-124.016493,Yaquina Bay South RM 4.6 west of Weiser Point,Yaquina Bay
+13375,OR02-0008,43.358694,-124.323492,"Coos Bay Southwest, west shore near green marker 7",Coos Bay
+28913,OR02-0009,45.509819,-123.895768,Tillamook Bay East off Goose Point,Tillamook Bay
+28914,OR02-0010,43.432701,-124.21928,"Coos Bay North, south of Russell Point",Coos Bay
+28915,OR02-0011,43.966582,-124.058673,Siuslaw River in South slough,Siuslaw River
+28916,OR02-0012,43.717161,-124.099205,Umpqua River @ RM 10.4 north of Bolon Island,Umpqua River
+28917,OR02-0013,45.400173,-123.937525,Netarts Bay East near Whiskey creek,Netarts Bay
+28918,OR02-0014,43.419325,-124.275305,"Coos Bay West, north green marker 19",Coos Bay
+28919,OR02-0015,45.410474,-123.945605,Netarts Bay North Central,Netarts Bay
+28920,OR02-0016,43.335357,-124.317673,Coos Bay South Slough near Joe Ney slough,Coos Bay
+28921,OR02-0017,45.506722,-123.925696,Tillamook Bay West,Tillamook Bay
+28922,OR02-0018,43.418034,-124.238827,Coos Bay Central Pony slough east of airport,Coos Bay
+28923,OR02-0019,44.617178,-124.009018,Yaquina Bay East RM 3.5 Sallys Bend,Yaquina Bay
+28924,OR02-0020,43.369427,-124.173631,"Coos Bay Southeast, near red marker 8",Coos Bay
+28912,OR02-0021,42.850375,-124.537863,"Sixes River, north of pinic area",Sixes River
+28927,OR02-0022,43.421166,-124.21099,"Coos Bay Northeast, near range marker",Coos Bay
+28928,OR02-0023,44.608546,-124.021177,Yaquina Bay South RM 3.8 near King slough,Yaquina Bay
+28926,OR02-0024,43.331579,-124.324874,Coos Bay South Slough north of Collver Point,Coos Bay
+28929,OR02-0025,45.495698,-123.871195,Tillamook Bay Southeast in marsh,Tillamook Bay
+28930,OR02-0026,43.412335,-124.234765,Coos Bay Central Pony slough southeast of airport,Coos Bay
+28931,OR02-0027,44.445869,-124.046844,Alsea Bay North,Alsea Bay 
+28932,OR02-0028,43.283146,-124.229306,"Coos Bay Isthmus slough, south of Hwy 101 & 42 Jct.",Coos Bay
+28933,OR02-0029,45.276731,-123.956937,Sand Lake West near mouth,Sand Lake
+28934,OR02-0030,43.394397,-124.191448,"Coos Bay East, near Cooston",Coos Bay
+28935,OR02-0031,43.466112,-124.199523,"Coos Bay North, far northwest shore",Coos Bay
+28936,OR02-0032,43.736131,-124.156538,Umpqua River @RM 5.7 east of Barrets Landing,Umpqua River
+28937,OR02-0033,45.527483,-123.898111,Tillamook Bay East and south of Sandstone Point,Tillamook Bay
+28938,OR02-0034,43.386864,-124.296895,"Coos Bay West, west shore near spoil area",Coos Bay
+28939,OR02-0035,44.8942,-124.012344,Siletz Bay Millport slough,Siletz Bay
+28940,OR02-0036,43.38527,-124.185027,"Coos Bay Southeast, south of Crawford Point",Coos Bay
+28941,OR02-0037,45.546316,-123.929941,Tillamook Bay North,Tillamook Bay
+28942,OR02-0038,43.430725,-124.208668,"Coos Bay Northeast, off Glasgow",Coos Bay
+28943,OR02-0039,44.572001,-124.00897,Yaquina River RM 6.5 up Pooles slough,Yaquina River
+28944,OR02-0040,43.301351,-124.324701,Coos Bay South Slough west of Long Island Point,Coos Bay
+28945,OR02-0041,45.507481,-123.938197,Tillamook Bay West off Pitcher Point,Tillamook Bay
+28946,OR02-0042,43.367643,-124.208923,"Coos Bay Isthmus slough, near green marker 43",Coos Bay
+28947,OR02-0043,44.415155,-124.022846,"Alsea River @ RM 3.8, east of Eckman Lake",Alsea River
+28984,OR02-0044,43.316291,-124.20187,"Coos Bay Isthmus slough, south of Shinglehouse slough",Coos Bay
+28985,OR02-0045,45.286129,-123.939245,Sand Lake Northeast,Sand Lake
+28986,OR02-0046,43.376807,-124.188112,"Coos Bay Southeast, near green marker 1",Coos Bay
+28987,OR02-0047,45.377397,-123.96243,Netarts Bay South near Netarts Campground,Netarts Bay
+28988,OR02-0048,43.133358,-124.41447,"Coquille River @ RM 1.9, west shore",Coquille River 
+28953,OR02-0049,45.520454,-123.934324,"Tillamook Bay West, east of Bayocean dike parking lot",Tillamook Bay
+28954,OR02-0050,43.445563,-124.229152,"Coos Bay North, north of Trans Pacific Parkway",Coos Bay
+28989,OR02-0051,43.974956,-124.075763,Siuslaw River @RM 0.1 at North Fork confluence,Siuslaw River
+28990,OR02-0052,43.718665,-124.148633,Umpqua River @RM 4.4 near Henderson Cove,Umpqua River
+28991,OR02-0053,45.383899,-123.955809,Netarts Bay South,Netarts Bay
+28992,OR02-0054,43.418254,-124.194872,"Coos Bay Northeast, Kentuck Inlet",Coos Bay
+28993,OR02-0055,45.487281,-123.900862,Tillamook Bay South and north of Rock Point,Tillamook Bay
+28994,OR02-0056,43.324845,-124.313553,Coos Bay South Slough Browns Cove,Coos Bay
+29002,OR02-0057,45.495656,-123.88795,Tillmook Bay Southeast,Tillamook Bay
+29003,OR02-0058,43.398053,-124.212574,"Coos Bay East, south of range maker",Coos Bay
+29004,OR02-0059,44.434746,-124.036953,Alsea Bay East,Alsea Bay 
+29005,OR02-0060,43.357995,-124.310707,"Coos Bay Southwest, north of Fossil Point",Coos Bay
+29006,OR02-0061,45.02721,-123.977024,Salmon River RM 2 in marsh,Salmon River
+29007,OR02-0062,43.387357,-124.198099,"Coos Bay Southeast, west of Crawford Point",Coos Bay
+29008,OR02-0063,43.445028,-124.217496,"Coos Bay North, east of Hwy 101",Coos Bay
+29009,OR02-0064,43.715237,-124.162962,Umpqua River @RM 4.2 west side,Umpqua River
+29010,OR02-0065,45.693637,-123.89741,Nehalem Bay North shore in marsh,Nehalem Bay
+29011,OR02-0066,46.001824,-123.915397,Neawanna Creek NE of Seaside,Neawanna Creek
+29012,OR02-0067,43.448442,-124.212511,"Coos Bay Northeast, Haynes Inlet south of Shorewood",Coos Bay
+29013,OR02-0068,45.175767,-123.939745,Nestucca Bay East,Nestucca Bay
+29014,OR02-0069,43.393827,-124.196066,"Coos Bay East, south of Pierce Point",Coos Bay
+29015,OR02-0070,45.483603,-123.892564,Tillamook Bay South and east of Rock Point,Tillamook Bay
+29016,OR02-0071,43.402417,-124.21039,"Coos Bay East, near range marker",Coos Bay
+29017,OR02-0072,44.435104,-124.050082,Alsea Bay South,Alsea Bay 
+29018,OR02-0073,43.350865,-124.314667,Coos Bay South near Fossil point,Coos Bay
+30215,OR03-0001,42.506108,-124.541833,Pacific Ocean 7.1 NM NW of Rogue river mouth,Pacific Ocean
+30216,OR03-0002,45.957509,-124.242794,Pacific Ocean 13.3 NM SW of Seaside,Pacific Ocean
+30217,OR03-0003,44.190514,-124.485548,Pacific Ocean 17.1 NM SW of Cape Perpetual,Pacific Ocean
+30218,OR03-0004,44.818711,-124.234404,Pacific Ocean 7.1 NM W of Cape Foulweather,Pacific Ocean
+30219,OR03-0005,42.013436,-124.351929,Pacific Ocean 5.4 NM S of Cape Ferrelo,Pacific Ocean
+30220,OR03-0006,44.009688,-124.206969,Pacific Ocean 2.8 NM SW of Siuslaw River,Pacific Ocean
+30221,OR03-0007,43.787973,-124.436761,Pacific Ocean 11.4 NM SW of Tahkenitch creek mouth,Pacific Ocean
+30222,OR03-0008,45.660124,-124.110233,Pacific Ocean 8.1 NM SW of Cape Falcon,Pacific Ocean
+30223,OR03-0009,44.588694,-124.248927,Pacific Ocean 8.9 NM SW of Yaquina Head,Pacific Ocean
+30224,OR03-0010,44.032618,-124.825024,Pacific Ocean 30.5 NM SW of Heceta Head,Pacific Ocean
+30225,OR03-0011,42.119409,-124.398336,Pacific Ocean 2.2 NM W of Cape Ferrelo,Pacific Ocean
+30226,OR03-0012,43.519339,-124.364318,Pacific Ocean 6.1 NM SW of Tenmile creek mouth,Pacific Ocean
+30227,OR03-0013,46.131623,-124.215088,Pacific Ocean 10.4 NM SW of Clatsop Spit,Pacific Ocean
+30228,OR03-0014,44.458770,-124.344915,Pacific Ocean 11.8 NM W of Waldport,Pacific Ocean
+30229,OR03-0015,45.041504,-124.100382,Pacific Ocean 3.6 NM SW of Cascade Head,Pacific Ocean
+30230,OR03-0016,45.421071,-124.140875,Pacific Ocean 7.9 NM SW of Netarts,Pacific Ocean
+30231,OR03-0017,45.266639,-124.087738,Pacific Ocean 5.3 NM SW of Cape Lookout,Pacific Ocean
+30232,OR03-0018,44.645315,-124.483138,Pacific Ocean 17.2 NM SW of Yaquina Head,Pacific Ocean
+30233,OR03-0019,44.315642,-124.518107,Pacific Ocean 17.4 NM W of Cape Perpetual ,Pacific Ocean
+30234,OR03-0020,42.302312,-124.474638,Pacific Ocean 2.2 NM SW of Cape Sebastian,Pacific Ocean
+30235,OR03-0021,46.003401,-124.302694,Pacific Ocean 15.4 NM W of Seaside,Pacific Ocean
+30236,OR03-0022,43.162977,-124.538300,Pacific Ocean 10.3 NM S of Cape Arago,Pacific Ocean
+30237,OR03-0023,42.497163,-124.620888,Pacific Ocean 9.6 NM W of Rouge river mouth,Pacific Ocean
+30238,OR03-0024,46.118992,-124.351716,Pacific Ocean 15.4 NM SW of Clatsop Spit,Pacific Ocean
+30239,OR03-0025,44.469128,-124.208309,Pacific Ocean 6.3 NM W of Waldport,Pacific Ocean
+30240,OR03-0026,44.923950,-124.161850,Pacific Ocean 5.9 NM SW of Lincoln city,Pacific Ocean
+30241,OR03-0027,43.933335,-124.314492,Pacific Ocean 7.6 NM W of Siltcoos river mouth,Pacific Ocean
+30242,OR03-0028,43.750213,-124.254248,Pacific Ocean 5.4 NM NW of Umpqua river mouth,Pacific Ocean
+30243,OR03-0029,45.621469,-124.011261,Pacific Ocean 2.6 NM W of Rockaway beach,Pacific Ocean
+30244,OR03-0030,44.685148,-124.186426,Pacific Ocean 4.5 NM W of Yaquina Head ,Pacific Ocean
+30245,OR03-0031,44.291723,-124.307433,Pacific Ocean 8.4 NM W of Cape Perpetual,Pacific Ocean
+30246,OR03-0032,42.076815,-124.372554,Pacific Ocean 1.8 NM S of Cape Ferrelo,Pacific Ocean
+30247,OR03-0033,43.597514,-124.378839,Pacific Ocean 8.4 NM SW of Umpqua river mouth,Pacific Ocean
+30248,OR03-0034,46.192015,-124.387400,Pacific Ocean 15.1 NM SW of Clatsop Spit,Pacific Ocean
+30249,OR03-0035,44.385870,-124.598683,Pacific Ocean 21.5 NM W of Cape Perpetual,Pacific Ocean
+30250,OR03-0036,44.187407,-124.675946,Pacific Ocean 24.9 NM SW of Cape Perpetual,Pacific Ocean
+30251,OR03-0037,45.589798,-124.164250,Pacific Ocean 9 NM SW of Rockaway beach,Pacific Ocean
+30252,OR03-0038,45.135097,-124.082770,Pacific Ocean 6.5 NM SW of Cape Kiwanda,Pacific Ocean
+30253,OR03-0039,44.078171,-124.237625,Pacific Ocean 5.7 NM SW of Hecta Head,Pacific Ocean
+30254,OR03-0040,44.092474,-124.425498,Pacific Ocean 12.9 NM SW of Heceta Head,Pacific Ocean
+30255,OR03-0041,42.624344,-124.568954,Pacific Ocean 6.9 NM S of Port Orford,Pacific Ocean
+30256,OR03-0042,46.031822,-124.194271,Pacific Ocean 11.1 NM W of Seaside,Pacific Ocean
+30257,OR03-0043,43.436872,-124.464810,Pacific Ocean 8.3 NM NW of Cape Arago,Pacific Ocean
+30258,OR03-0044,42.484438,-124.652751,Pacific Ocean 10.5 NM W of Rogue river mouth,Pacific Ocean
+30259,OR03-0045,46.163754,-124.230948,Pacific Ocean 9.5 NM SW of Clatsop Spit,Pacific Ocean
+30260,OR03-0046,44.222571,-124.215383,Pacific Ocean 6.1 NM SW of Cape Perpetual,Pacific Ocean
+30261,OR03-0047,44.779995,-124.192071,Pacific Ocean 4.9 NM W of Cape Foulweather,Pacific Ocean
+30262,OR03-0048,43.887535,-124.284110,Pacific Ocean 5.5 NM W of Siltcoos river mouth,Pacific Ocean
+30263,OR03-0049,43.621162,-124.264848,Pacific Ocean 3.6 NM SW of Umpqua river mouth,Pacific Ocean
+30264,OR03-0050,45.654543,-124.022030,Pacific Ocean 6.6 NM S of Cape Falcon,Pacific Ocean
+31303,OR03-0051,,,11.3 NM NW of Cape Perpetua,Pacific Ocean
+31305,OR03-0052,,,13.5 NM NW of Yaquina Head,Pacific Ocean
+31306,OR03-0053,,,3.9 NM NW of Siletz Bay,Pacific Ocean
+31308,OR03-0054,,,9.6 NM SW of Heceta Head,Pacific Ocean
+31310,OR03-0055,,,6.9 NW SW of Siletz Bay,Pacific Ocean
+31312,OR03-0056,,,8.2 NM SW of Siuslaw R. Mouth,Pacific Ocean
+31313,OR03-0057,,,4.2 NM NW of Heceta Head,Pacific Ocean
+31314,OR03-0058,,,14.1 NM W of Yaquina R. Mouth,Pacific Ocean
+31318,OR03-0059,,,10.5 NM NNW of Coos Bay Mouth,Pacific Ocean
+31319,OR03-0060,,,7.7 NM NW of Cannon Beach,Pacific Ocean
+31320,OR03-0061,,,6.1 NM NW of Heceta Head,Pacific Ocean
+31300,OR03-0062,,,9.2 NM NW of Cape Blanco,Pacific Ocean
+31317,OR03-0063,,,4.6 NM SW of Cape Blanco,Pacific Ocean
+31322,OR03-0064,,,19 NM W of Yachats R. Mouth,Pacific Ocean
+31323,OR03-0065,,,22 NM W of Yaquina R. Mouth,Pacific Ocean
+31565,OR04-0001,46.273325,-123.96327,Columbia River Baker Bay near Chinook,Columbia
+31566,OR04-0002,46.242736,-123.718542,Columbia River RM 21 near Rice Island,Columbia
+31567,OR04-0003,46.278885,-124.012342,Columbia River Baker Bay 0.2 NM E Sand Island,Columbia
+31568,OR04-0004,46.224032,-123.985999,Columbia River RM 6 near Clatsop Spit,Columbia
+31569,OR04-0005,46.20061,-123.889311,Columbia River RM 11.5 N of Marker #31,Columbia
+31570,OR04-0006,46.222003,-123.833209,Columbia River RM 15.5 1.6 NM N of Marker #37,Columbia
+31572,OR04-0008,46.194669,-123.849577,Columbia River RM 14 near S End of Astoria Bridge,Columbia
+31573,OR04-0009,46.230363,-123.92814,Columbia River RM 8 1.3 NM S of Chinook Pt.,Columbia
+31574,OR04-0010,46.209636,-123.756346,Columbia River RM 18 SE of Tongue Point,Columbia
+31576,OR04-0012,46.174865,-123.870948,Columbia River Youngs Bay near center of Hwy 101 Bridge,Columbia
+31578,OR04-0014,46.251872,-123.763745,Columbia River RM 19.5 1.3 NM S of Grays Pt.,Columbia
+31579,OR04-0015,45.738765,-123.862125,Nehalem River North Fork RM 0.9,Nehalem River
+31580,OR04-0016,44.441253,-124.054221,Alsea Bay 0.3 NM E of Devils Bend,Alsea Bay
+31582,OR04-0018,44.904451,-124.013924,Siletz Bay RM 0.1 N Siletz Keys,Siletz Bay
+31583,OR04-0019,42.422259,-124.419213,Rogue River RM 0.5 in Gold Beach Marina,Rogue River
+31584,OR04-0020,45.172004,-123.934779,Nestucca Bay E Shore 0.2 NM W of Hwy 101,Nestucca Bay
+31585,OR04-0021,44.013092,-124.131174,Siuslaw River 0.3 NM N of Marker #8,Siuslaw River
+31586,OR04-0022,43.158757,-124.345003,Coquille River RM 6.8 NE Shore near Randolph Island,Coquille River
+31587,OR04-0023,45.703756,-123.905884,Nehalem Bay 0.5 NM W of Dean Pt.,Nehalem River
+31588,OR04-0024,45.28648,-123.945022,Sand Lake 0.4 NM E of Sand Beach Campground,Sand Lake
+31589,OR04-0025,43.970461,-124.075905,Siuslaw River RM 6.2 SW Shore of Cox Island,Siuslaw River
+31590,OR04-0026,44.881244,-123.925436,Siletz River RM 5.8 N Shore E of Sunset Landing,Siletz River
+31591,OR04-0027,45.410933,-123.943929,Netarts Bay 0.4 NM SW of Yager Creek Mouth,Netarts Bay
+31592,OR04-0028,45.392374,-123.946833,Netarts Bay SE 0.3 NM N of Austin Creek Mouth,Netarts Bay
+31593,OR04-0029,43.653333,-123.882346,Umpqua River RM 23.9 0.6 NM D/S of Mill Cr.,Umpqua River
+31594,OR04-0030,43.324375,-124.322601,Coos Bay South Slough 0.1 NM NE of Younker Point,South Slough
+31595,OR04-0031,43.37663,-124.197653,Coos Bay N of Marshfield Channel 0.45 NM W of Marker #1,Coos Bay
+31596,OR04-0032,45.539242,-123.927745,Tillamook Bay W in South Channel,Tillamook Bay
+31597,OR04-0033,43.373925,-124.203719,Coos Bay S of Marshfield Channel near 'Q' Green Range Marker,Coos Bay
+31598,OR04-0034,44.583758,-123.960575,Yaquina River near Marker #38,Yaquina River
+31599,OR04-0035,43.709798,-124.152368,Umpqua River RM 3.9 in Hunt Cove,Umpqua River
+31600,OR04-0036,45.559623,-123.897037,Tillamook Bay E side of Miami Cove,Tillamook Bay
+31601,OR04-0037,43.448584,-124.20967,Coos Bay Haynes Inlet near Marker #7,Haynes Inlet
+31602,OR04-0038,43.74351,-124.144748,Umpqua River RM 6.6 N of The Point,Umpqua River
+31603,OR04-0039,43.403169,-124.211048,Coos Bay E side 0.6 NM W of Pierce Pt.,Coos Bay
+31604,OR04-0040,45.528019,-123.904897,Tillamook Bay E side in Bay City Channel near Sandstone Pt.,Tillamook Bay
+31606,OR04-0042,44.609765,-124.022333,Yaquina Bay RM 3.5 near King Slough,Yaquina Bay
+31607,OR04-0043,46.2684,-123.82226,Columbia River RM 17 N shore S of Knappton,Columbia
+31608,OR04-0044,46.280329,-123.806065,Columbia River RM 19 N shore NE of Knappton,Columbia
+31610,OR04-0046,46.280391,-124.004495,Columbia River Baker Bay 0.5 NM E Sand Island,Columbia
+31613,OR04-0059,44.422021,-124.036434,Alsea Bay E 0.3 NM SE of McKinney Slough,Alsea Bay
+31615,OR04-0061,44.43168,-124.04226,Alsea Bay 0.4 N of McKinney Slough,Alsea Bay
+31629,OR04-0075,43.359965,-124.315055,Coos Bay W 0.4 NM N of Fossil Pt.,Coos Bay
+32161,OR05-0001,46.23225,-123.93530,Columbia River RM 7.5 1.3 NM SW of Chinook Pt.,Columbia 
+32162,OR05-0002,46.22231,-123.79545,Columbia River RM 17 1.6 NM NW of Tongue Pt.,Columbia
+32164,OR05-0004,46.21277,-123.86360,Columbia River RM 6.5 0.1 NM E of Clatsop Spit,Columbia
+32165,OR05-0005,45.51598,-123.92919,Tillamook Bay W 0.8 NM NE of Pitcher Pt.,Tillamook
+32167,OR05-0007,44.61281,-124.01829,Yaquina Bay RM 3.5 0.3 NM W of Coquille Pt.,Yaquina
+32168,OR05-0008,43.44867,-124.21995,Coos Bay N Haynes Inlet 0.2 NM NW of Green Marker #5,Haynes Inlet
+32170,OR05-0010,46.21756,-123.77464,Columbia River RM 17.5 0.7 NM NW of Tongue Pt.,Columbia
+32171,OR05-0011,46.25574,-123.77320,Columbia River RM 19.5 1.1 NM S of Grays Pt.,Columbia
+32172,OR05-0012,46.17513,-123.85444,Columbia River Youngs Bay North Shore near Radio Towers,Youngs
+32173,OR05-0013,45.68818,-123.88979,Nehalem Bay 0.3 NM SW of Wheeler City Piers,Nehalem
+32174,OR05-0014,43.27119,-124.22538,Coos Bay Isthmus Slough 0.7 NM North of Manning Gulch,Isthmus Slough
+32175,OR05-0015,43.69608,-124.05115,Umpqua River RM 13.8 0.9 NM DS of Koapke Slu,Umpqua
+32176,OR05-0016,43.14365,-124.34071,Coquille River RM 8 near Parkersburg City,Coquille
+32177,OR05-0017,46.19016,-123.69051,Columbia River RM 20 Cathlamet Bay 0.2 NM S of Red Marker #8,Cathlamet
+32178,OR05-0018,43.97080,-124.09731,Siuslaw River RM 5.2 N shore 0.8 NM DS of North Fork Mouth,Siuslaw
+32179,OR05-0019,45.21143,-123.95657,Nestucca River RM 2.2 near Woods City,Nestucca
+32180,OR05-0020,43.39921,-124.20496,Coos Bay E 0.3 NM W of Pierce Pt.,Coos
+32182,OR05-0022,46.26769,-123.97836,Columbia River RM 5 Baker Bay 0.3 NM N of Sand Island,Baker
+32183,OR05-0023,46.25849,-123.73668,Columbia River RM 21 1.5 NM SE of Grays Pt.,Columbia
+32184,OR05-0024,46.21614,-123.95267,Columbia River RM 8 0.3 NM NW of Green Marker #25,Columbia
+32185,OR05-0025,46.22619,-123.70656,Columbia River RM 21 0.5 NM SE of Red Marker #52,Columbia
+32197,OR05-0062,44.41618,-124.00585,"Alsea River d/s of Drift creek, adjecent to kin silver RV park and marina",Alsea
+32212,OR05-0077,46.24379,-123.96366,Columbia River RM 7 1.0 NM S of Green Marker #7,Columbia
+32235,OR05-0100,45.47289,-123.89040,Tillamook Bay near Memaloose Boat Ramp,Tillamook
+32276,OR05-0141,46.26552,-123.99688,Columbia River Baker Bay W of Sand Island,Columbia
+32935,OR06-0001,46.17003,-123.81998,Columbia River Youngs Bay 0.15 NM NE of Daggett Pt.,Youngs River
+32936,OR06-0002,43.71518,-124.08326,Smith River RM 0.9 near N tip of Blacks Island,Umpqua River
+32937,OR06-0003,44.90020,-124.01555,Siletz Bay RM 0.2 W of Siletz Keys,Siletz Bay
+32938,OR06-0004,43.37706,-124.20117,Coos Bay SE 0.2 NM E of Iso green marker,Coos Bay
+32939,OR06-0005,46.20748,-123.68448,Columbia River RM 21 0.9 NM East of red marker #4,Cathlamet Bay
+32940,OR06-0006,46.21454,-123.80663,Columbia River RM 16.2 1.0 NM NE of green marker #39,Columbia River
+32941,OR06-0007,46.26087,-123.72378,Columbia River RM 7 2.0 NM SE of Grays Pt.,Columbia River
+32942,OR06-0008,46.19669,-123.84377,Columbia River RM 14 0.3 NM East of the Astoria Bridge,Columbia River
+32943,OR06-0009,46.22256,-123.68643,Columbia River RM 21.5 1.3 NM SE of red marker #52,Columbia River
+32944,OR06-0010,44.41956,-124.03648,Alsea Bay 0.44 NM SE of McKinney Slu,Alsea Bay
+32945,OR06-0011,44.60525,-124.01279,Yaquina Bay 0.12 NM West of green marker #17,Yaquina River
+32946,OR06-0012,43.42534,-124.23833,Coos Bay North near Pony Slough mouth,Coos Bay
+32947,OR06-0013,46.22986,-123.98199,Columbia River RM 6.2 0.35 NM South of green marker #21,Columbia River
+32948,OR06-0014,46.26852,-124.02279,Columbia River RM 3.5 just South of Sand Island,Columbia River
+32949,OR06-0015,46.22295,-123.74887,Columbia River RM 19 0.4 NM NE of marker #44,Columbia River
+32950,OR06-0016,46.22157,-123.95863,Columbia River RM 7 0.3 NM SW of Desdemona Sands marker,Columbia River
+32952,OR06-0018,46.23870,-123.77628,Columbia River RM 18.5 just North of Taylor Sands,Columbia River
+32953,OR06-0019,46.22463,-123.85065,Columbia River RM 15 1.3 NM SE of Point Ellice,Columbia River
+32955,OR06-0021,45.53478,-123.91239,Tillamook Bay East 0.6 NM NW of Sandstone Pt.,Tillamook Bay
+32956,OR06-0022,45.40607,-123.93846,Netarts Bay Central 0.5 NM SW of Yager Creek mouth,Netarts Bay
+32957,OR06-0023,43.73822,-124.14825,Umpqua River RM 6 W of The Point,Umpqua River
+32958,OR06-0024,43.36152,-124.31641,Coos Bay West 0.05 NM E of red marker #8,Coos Bay
+32959,OR06-0025,45.51496,-123.91231,Tillamook Bay South 1.0 NM SW of Bay City,Tillamook Bay
+32272,OR06-0137,46.19410,-123.89151,Columbia River RM 11.5 0.5 NM E of green marker #29,Columbia
+32347,OR06-0212,46.19885,-123.92452,Columbia River RM 9.5 0.25 NM W of green marker #27,Columbia
