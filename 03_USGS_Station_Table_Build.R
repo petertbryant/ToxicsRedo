@@ -16,7 +16,10 @@ source('//deqhq1/wqassessment/2012_WQAssessment/DO_Evaluation/R_scripts/02_DO_Ev
 source('//deqhq1/wqassessment/2012_WQAssessment/Segmentation/R_scripts/Toxics clean up v2.R')
 source('//deqhq1/wqassessment/2012_WQAssessment/Segmentation/R_scripts/Segmentation functions.R')
 source('//deqhq1/wqassessment/2012_WQAssessment/ToxicsRedo/02_WQPData_Preprocessing.R')
-source('//deqhq1/wqassessment/2012_WQAssessment/ToxicsRedo/01a_LASARQuery.R') 
+
+#this one crashes when run in order# weird
+#run the code from the file manually
+#source('//deqhq1/wqassessment/2012_WQAssessment/ToxicsRedo/01a_LASARQuery.R') 
 
 #make station identifiers consistent across platform
 wqp.usgs.stations <- wqp.stations[grep('USGS',wqp.stations$MonitoringLocationIdentifier),]
@@ -139,4 +142,4 @@ usgs.stations.full <- rename(usgs.stations.full, c('LatitudeMeasure.x' = 'Latitu
 usgs.stations.full$Latitude_clean <- as.character(as.numeric(usgs.stations.full$LatitudeMeasure))
 usgs.stations.full$Longitude_clean <- as.character(as.numeric(usgs.stations.full$LongitudeMeasure))
 
-rm(list = setdiff(ls(), c('usgs.stations.full')))
+#rm(list = setdiff(ls(), c('usgs.stations.full')))
