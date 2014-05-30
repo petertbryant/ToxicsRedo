@@ -116,6 +116,9 @@ lasar$code <- paste(lasar$STATION_KEY, lasar$SAMPLE_DATE, lasar$criteria.name)
 wqp.data.og <- wqp.data
 wqp.data <- wqp.data[!wqp.data$Temp.id %in% cemap.data[cemap.data$code %in% lasar$code,'Temp.id'],]
 
+#we also want to remove data associated with stations we aren't using
+wqp.data <- wqp.data[!wqp.data$MonitoringLocationIdentifier %in% remaining$MonitoringLocationIdentifier,]
+
 #compile EPA station list for Mike to locate
 not.usgs <- wqp.stations[-grep('USGS',wqp.stations$MonitoringLocationIdentifier),]
 not.usgs.not.cemap <- not.usgs[!not.usgs$OrganizationFormalName %in% c('Environmental Monitoring and Assessment Program'),]
@@ -218,3 +221,7 @@ lstl.ll <- (lasar.check[lasar.check$STATION_KE %in% lasar.stations.to.locate$STA
 c('Site_no','Site_name','Str_name','Str_LLID','Str_RM','LAKE_LLID','LAKE_NAME')
 
 #fields should match stations2010 for further creation of stations2012
+
+#Make sure to limit lasar data for only those stations we are moving forward with
+lasar.og <- lasar
+lasar <- lasar[lasar$STATION_KEY %in% c(lasar.stations.in.gdb$STATION_KEY,lstl.ll$STATION_KE),]
