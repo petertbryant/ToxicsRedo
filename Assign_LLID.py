@@ -33,6 +33,8 @@ outside_threshold = "outside_threshold"
 properties = "RID POINT MEAS"
 qc2_stations = "qc2_stations"
 qc2_streams = "qc2_streams"
+temp = "C:/assign_llid_temp.gdb/individual_runs"
+reruns = "C:/assign_llid_temp.gdb/reruns"
 
 # Check to see if a temp geodatabase exists. If not, create it.
 if os.path.exists(temp_location + temp_gdb):
@@ -139,7 +141,7 @@ arcpy.SelectLayerByAttribute_management(qc_lyr, "CLEAR_SELECTION")
 unique_ids_needing_review = arcpy.da.TableToNumPyArray((temp_location + temp_gdb + "/" + qc_review), ['Unique_ID'])['Unique_ID']
 unique_ids_needing_review2 = unique_ids_needing_review[660:670]
 
-n=[]
+#n=[]
 n2=[]
 for uid in unique_ids_needing_review:
     #uid = unique_ids_needing_review[0]
@@ -148,11 +150,25 @@ for uid in unique_ids_needing_review:
     arcpy.SelectLayerByAttribute_management(qc2_stations, "NEW_SELECTION", """ "UNIQUE_ID" = {} """.format(uid))
     station_stream_name = arcpy.da.TableToNumPyArray(qc2_stations, [station_river_name_field])[station_river_name_field][0].lower()
     arcpy.SelectLayerByLocation_management(qc2_streams, 'WITHIN_A_DISTANCE', qc2_stations, search_radius)
-    n.append(int(arcpy.GetCount_management(qc2_streams).getOutput(0)))
+    #n.append(int(arcpy.GetCount_management(qc2_streams).getOutput(0)))
     #print(n)
     #The REPLACE statement is not included in SQL-92, which is the standard used by file geodatabases, so I use TRIM instead
     arcpy.SelectLayerByAttribute_management(qc2_streams, "SUBSET_SELECTION", """ TRIM(BOTH ' ' FROM LOWER("{0}")) = '{1}' """.format(streams_river_name_field, station_stream_name))
+    if int(arcpy.GetCount_management(qc2_streams).getOutput(0)) == 1:
+        # Execute LocateFeaturesAlongRoutes tool for selected station and stream
+        arcpy.LocateFeaturesAlongRoutes_lr(qc2_stations, qc2_streams, rid, search_radius, temp, 
+                                           properties)
+        if arcpy.Exists(rerun):
+            arcpy.Merge_management([temp, reruns])
+        else:
+            arcpy.TableToTable_conversion(temp, reruns[:-7], reruns[-6:])
     n2.append(int(arcpy.GetCount_management(qc2_streams).getOutput(0)))
     #print(n2)
 
 n2s = pd.Series(n2)
+index = n2s[n2s == 1].index
+#Unique IDs that match and can be rerun through selection
+qced = unique_ids_needing_review[index]
+
+#Create two new copies of the reviewed shapefile
+
