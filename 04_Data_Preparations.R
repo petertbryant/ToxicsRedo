@@ -1,4 +1,5 @@
 library(plyr)
+library(reshape2)
 
 options(stringsAsFactors = FALSE, scipen = 100)
 
@@ -154,11 +155,97 @@ remove.dups <- function(tname) {
   no.dups <- aggregate(tResult ~ id, data = tname, FUN = min)
   tname <- tname[!duplicated(tname$id),]
   tname <- merge(no.dups, tname, by = 'id')
-  tname$tResult <- round(tname$tResult.x, 2)
+  #tname$tResult <- round(tname$tResult.x, 2)
+  tname$tResult <- tname$tResult.x
   tname <- within(tname, rm(tResult.x, tResult.y))
 }
 
 data.complete.wo.dups <- remove.dups(data.complete.w.resolved.fd)
+
+#### Grouping parameters to be compared to composite criteria ####
+#We will add this here for now but should be coming from Station locate process
+data.complete.wo.dups$Matrix <- 'FW' #mapvalues(data.complete.wo.dups$Matrix, from = c("River/Stream", "Estuary"), to = c('FW','SW'))
+
+#Some of the criteria apply to Totals and not individual degradates. Here we do that totalling so comparisons can be done.
+#First, we will make a Total DDT
+ddt <- data.complete.wo.dups[data.complete.wo.dups$Pollutant %in% c("4,4`-DDD", "4,4`-DDE", "4,4`-DDT", "p,p'-DDD", "p,p'-DDE", "p,p'-DDT"),]
+ddt.casted <- dcast(ddt, Agency + SampleRegID + SampleAlias + Matrix + 
+                      Sampled + SampleType + SpecificMethod +tMRL + tMRLUnit ~ Pollutant, value.var = 'tResult')
+ddt.casted$'Total DDT' <- rowSums(ddt.casted[,c("4,4`-DDD", "4,4`-DDE", "4,4`-DDT","p,p'-DDD", "p,p'-DDE", "p,p'-DDT")],na.rm=TRUE)
+ddt.casted.sub <- within(ddt.casted, rm("4,4`-DDD", "4,4`-DDE", "4,4`-DDT","p,p'-DDD", "p,p'-DDE", "p,p'-DDT"))
+ddt.melted <- melt(ddt.casted.sub, 
+                   id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SampleType','SpecificMethod', 'tMRL', 'tMRLUnit'),
+                   variable.name = 'Pollutant',
+                   value.name = 'tResult')
+#ddt.melted$Detect.nondetect <- ifelse(ddt.melted$tResult > 0,1,0)
+ddt.melted.addons <- data.frame('tMRL' = rep(0,nrow(ddt.melted)), 'Unit' = rep('µg/L',nrow(ddt.melted)), 'Status' = rep('A',nrow(ddt.melted)))
+ddt.melted <- cbind(ddt.melted, ddt.melted.addons)
+data.complete.wo.dups <- rbind(data.complete.wo.dups, ddt.melted)
+
+#Now Total Endosulfan
+endo <- data.complete.wo.dups[data.complete.wo.dups$Analyte %in% c("Endosulfan I", "Endosulfan II", "Endosulfan Sulfate"),]
+endo.casted <- dcast(endo, Agency + SampleRegID + SampleAlias + Matrix +
+                       Sampled + SampleType + SpecificMethod + chem.group ~ Analyte, value.var = 'tResult')
+endo.casted$Endosulfan <- rowSums(endo.casted[,c("Endosulfan I", "Endosulfan II", "Endosulfan Sulfate")],na.rm=TRUE)
+endo.casted.sub <- within(endo.casted, rm("Endosulfan I", "Endosulfan II", "Endosulfan Sulfate"))
+endo.melted <- melt(endo.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SampleType','SpecificMethod','chem.group'),variable.name = 'Analyte',value.name = 'tResult')#melt
+endo.melted$Detect.nondetect <- ifelse(endo.melted$tResult > 0,1,0)
+endo.melted.addons <- data.frame('tMRL' = rep(0,nrow(endo.melted)), 'Unit' = rep('µg/L',nrow(endo.melted)), 'Status' = rep('A',nrow(endo.melted)))
+endo.melted <- cbind(endo.melted, endo.melted.addons)
+data.complete.wo.dups <- rbind(data.complete.wo.dups, endo.melted)
+
+#Now Total Chlordane
+chlordane <- data.complete.wo.dups[data.complete.wo.dups$Analyte %in% c("Oxychlordane", "alpha-Chlordane", "cis-Chlordane", 'trans-Chlordane',"gamma-Chlordane+trans-Nonachlor", "trans-Nonachlor", "cis-Nonachlor"),]
+chlordane.casted <- dcast(chlordane, Agency + SampleRegID + SampleAlias + Matrix +
+                            Sampled + SampleType + SpecificMethod + chem.group ~ Analyte, value.var = 'tResult')
+chlordane.casted$Chlordane <- rowSums(chlordane.casted[,c("Oxychlordane", "alpha-Chlordane", "cis-Chlordane", 'trans-Chlordane',"gamma-Chlordane+trans-Nonachlor", "trans-Nonachlor", "cis-Nonachlor")],na.rm=TRUE)
+chlordane.casted.sub <- within(chlordane.casted, rm("Oxychlordane", "alpha-Chlordane", "cis-Chlordane", 'trans-Chlordane',"gamma-Chlordane+trans-Nonachlor", "trans-Nonachlor", "cis-Nonachlor"))
+chlordane.melted <- melt(chlordane.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SampleType','SpecificMethod','chem.group'),variable.name = 'Analyte',value.name = 'tResult')#melt
+chlordane.melted$Detect.nondetect <- ifelse(chlordane.melted$tResult > 0,1,0)
+chlordane.melted.addons <- data.frame('tMRL' = rep(0,nrow(chlordane.melted)), 'Unit' = rep('µg/L',nrow(chlordane.melted)), 'Status' = rep('A',nrow(chlordane.melted)))
+chlordane.melted <- cbind(chlordane.melted, chlordane.melted.addons)
+data.complete.wo.dups <- rbind(data.complete.wo.dups, chlordane.melted)
+
+#Now total PCBs
+pcb <- data.complete.wo.dups[grep('PCB',data.complete.wo.dups$Analyte),]
+pcb.casted <- dcast(pcb, Agency + SampleRegID + SampleAlias + Matrix + 
+                      Sampled + SampleType + SpecificMethod + chem.group ~ Analyte, value.var = 'tResult')
+pcb.casted$'Polychlorinated Biphenyls (PCBs)' <- rowSums(pcb.casted[,unique(data.complete.wo.dups[grep('PCB',data.complete.wo.dups$Analyte),'Analyte'])],na.rm=TRUE)
+pcb.casted.sub <- pcb.casted[,!names(pcb.casted) %in% unique(data.complete.wo.dups[grep('PCB',data.complete.wo.dups$Analyte),'Analyte'])]
+pcb.melted <- melt(pcb.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SampleType','SpecificMethod','chem.group'),variable.name = 'Analyte',value.name = 'tResult')#melt
+pcb.melted$Detect.nondetect <- ifelse(pcb.melted$tResult > 0,1,0)
+pcb.melted.addons <- data.frame('tMRL' = rep(0,nrow(pcb.melted)), 'Unit' = rep('µg/L',nrow(pcb.melted)), 'Status' = rep('A',nrow(pcb.melted)))
+pcb.melted <- cbind(pcb.melted, pcb.melted.addons)
+data.complete.wo.dups <- rbind(data.complete.wo.dups, pcb.melted)
+
+#### Associate with criteria and calculate hardness based criteria ####
+#We need an ID to match with the criteria so we'll simplify the Matrix field
+data.complete.wo.dups$Matrix <- 'FW' #mapvalues(data.complete.wo.dups$Matrix, from = c("River/Stream", "Estuary"), to = c('FW','SW'))
+data.complete.wo.dups$ID <- paste(data.complete.wo.dups$criteria.name, data.complete.wo.dups$Matrix)
+
+#Now that the names are consistent we can match using analyte name and bring in the criteria
+deq.pollutants <- criteria.values.melted.applicable[criteria.values.melted.applicable$variable %in% 
+                                                      c('Table 40 Human Health Criteria for Toxic Pollutants - Water + Organism',
+                                                        'Table 40 Human Health Criteria for Toxic Pollutants - Organism Only',
+                                                        'Table 30 Toxic Substances - Freshwater Acute',
+                                                        'Table 30 Toxic Substances - Freshwater Chronic',
+                                                        'Table 30 Toxic Substances - Saltwater Acute',
+                                                        'Table 30 Toxic Substances - Saltwater Chronic'),]
+deq.pollutants <- deq.pollutants[!duplicated(deq.pollutants$Pollutant),]
+criteria.for.analytes.we.have <- deq.pollutants[deq.pollutants$Pollutant %in% data.complete.wo.dups$criteria.name,]
+dcc <- merge(data.complete.wo.dups, criteria.for.analytes.we.have, by = 'ID', all.x = TRUE)
+
+#Where the MRL is greater than the criteria we can't use that sample to determine attainment or non-attainment
+dcc$Valid <- ifelse()
+
+#Using the hardness evaluation function loaded above we can calculate the hardness based criteria values
+#and bring them into the dataframe with the other criteria values. First, though we remove the hardness 
+#metals from the dataframe since the output of the function maintains all the columns of the original dataframe
+hm <- hardness.crit.calc(data.complete.wo.dups)
+hm <- hm[,names(dcc)]
+dvc.wo.hm <- dvc[!dvc$Analyte %in% hm$Analyte,]
+dvc.hm <- rbind(dvc.wo.hm, hm)
+
 
 #### Pick total or dissolved based on criteria ####
 #We will make the assumption that if fraction is not specified, then it is toal
