@@ -1,5 +1,6 @@
 library(plyr)
 library(reshape2)
+library(stringr)
 
 options(stringsAsFactors = FALSE, scipen = 100)
 
@@ -117,6 +118,23 @@ data.complete <- rbind(lasar.new.names, wqp.data.sub)
 #should have a numeric result and mrl fields
 data.complete$tResult <- as.numeric(data.complete$tResult)
 data.complete$tMRL <- as.numeric(data.complete$tMRL)
+
+#result should also be in micrograms since all the criteria are as well
+#first there are several improperply labeled units as well as some pH ones labeled with None for unit. pH is inlcuded in this analysis
+#for the purposes of 
+data.complete$Unit <- str_trim(data.complete$Unit)
+data.complete <- data.complete[!data.complete$Unit %in% c('%','mg/Kg wet','')]
+data.complete[data.complete$Unit %in% c('mg/L','mg/l'),'tResult'] <- data.complete[data.complete$Unit %in% c('mg/L','mg/l'),'tResult']*1000
+data.complete[data.complete$Unit %in% c('mg/L','mg/l'),'Unit'] <- 'µg/L'
+data.complete[data.complete$Unit %in% c('ng/L', 'ng/l'),'tResult'] <- data.complete[data.complete$Unit %in% c('ng/L', 'ng/l'),'tResult']/1000
+data.complete[data.complete$Unit %in% c('ng/L', 'ng/l'),'Unit'] <- 'µg/L'
+data.complete[data.complete$Unit %in% c('pg/L', 'pg/l'),'tResult'] <- data.complete[data.complete$Unit %in% c('pg/L', 'pg/l'),'tResult']/1000000
+data.complete[data.complete$Unit %in% c('pg/L', 'pg/l'),'Unit'] <- 'µg/L'
+
+data.complete[data.complete$Unit == 'ppb','Unit'] <- 'µg/L'
+data.complete[data.complete$Unit == 'ug/l','Unit'] <- 'µg/L'
+
+
 
 #making the name.full can happen after we combine data sets
 total.to.recoverable <- c('Arsenic','Mercury','Copper','Zinc','Nickel','Lead','Selenium',

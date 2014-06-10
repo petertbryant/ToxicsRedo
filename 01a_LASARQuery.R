@@ -70,8 +70,8 @@ lasar.names.match <- merge(data.frame('Pollutant' = deq.pollutants[,'Pollutant']
 lasar.names.match[grep('Dissolved',lasar.names.match$Pollutant),'lasar.name'] <- gsub(', Dissolved', "", lasar.names.match[grep('Dissolved',lasar.names.match$Pollutant),'Pollutant'])
 lasar.names.match[grep('Total recoverable',lasar.names.match$Pollutant),'lasar.name'] <- gsub(', Total recoverable', "", lasar.names.match[grep(', Total recoverable',lasar.names.match$Pollutant),'Pollutant'])
 
-View(arrange(all.parameters[grep('ichlorobromo', all.parameters$NAME),],NAME))
-all.parameters[which(all.parameters$CAS_NUMBER == 541731),]
+#View(arrange(all.parameters[grep('ichlorobromo', all.parameters$NAME),],NAME))
+#all.parameters[which(all.parameters$CAS_NUMBER == 541731),]
 
 lasar.names.match[is.na(lasar.names.match$lasar.name),]
 
