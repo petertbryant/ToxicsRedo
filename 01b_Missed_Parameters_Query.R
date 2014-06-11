@@ -30,12 +30,9 @@ hg.sampleMedia <- 'Biological%3bBiological+Tissue'
 #wqp.characteristics <- WQP.domain.get('Characteristicname')
 
 #wqp.characteristics[grep('[Pp]hosphate',wqp.characteristics$value),]
-phos <- c('Orthophosphate',
-          'Orthophosphate as P',
-          'Phosphate',
+phos <- c('Orthophosphate as P',
           'Phosphate-phosphorus',
           'Phosphate-phosphorus as P',
-          'Polyphosphate',
           'Polyphosphate as P')
 
 #wqp.characteristics[grep('[Mm]ercury',wqp.characteristics$value),]
@@ -46,19 +43,44 @@ hg.wqp <- c('Mercury','Methylmercury(1+)')
 startDate <- '01-01-2000'
 endDate <- '12-31-2011'
 
-
-tmp.stations <- wqp.station.query(stateCode = Oregon, 
+#Query for phosphorus data
+tmp.phos.stations <- wqp.station.query(stateCode = Oregon, 
                                   siteType = siteType, 
                                   sampleMedia = phos.sampleMedia, 
                                   characteristicName = phos, 
                                   startDate = startDate, 
                                   endDate = endDate)
 
+tmp.phos.data <- wqp.data.query(stateCode = Oregon, 
+                              siteType = siteType, 
+                              sampleMedia = phos.sampleMedia, 
+                              characteristicName = phos, 
+                              startDate = startDate, 
+                              endDate = endDate)
+
+#Due to prior QC review this is the only organization in this set that we want to keep data for
+tmp.phos.stations <- tmp.phos.stations[tmp.phos.stations$OrganizationFormalName == 'National Park Service Water Resources Division',]
+tmp.phos.data <- tmp.phos.data[tmp.phos.data$OrganizationFormalName == 'National Park Service Water Resources Division',]
+
+#Query for mercury in fish tissue
+tmp.hg.stations <- wqp.station.query(stateCode = Oregon, 
+                                       siteType = siteType, 
+                                       sampleMedia = hg.sampleMedia, 
+                                       characteristicName = paste(hg.wqp,collapse=';'), 
+                                       startDate = startDate, 
+                                       endDate = endDate)
+
+tmp.hg.data <- wqp.data.query(stateCode = Oregon, 
+                                siteType = siteType, 
+                                sampleMedia = hg.sampleMedia, 
+                                characteristicName = paste(hg.wqp,collapse=';'), 
+                                startDate = startDate, 
+                                endDate = endDate)
 
 #### LASAR Query ####
 
 #LASAR phosphate keys
-phos <- c('Orthophosphate as P' = '10970','Orthophosphate as PO4' = '5232')
+#phos <- c('Orthophosphate as P' = '10970','Orthophosphate as PO4' = '5232')
 
 #Calcium, magnesium and hardness
 hard <- c('Calcium' = '776','Total Recoverable Hardness as Calcium Carbonate (Calculated)' = '9676',
@@ -122,14 +144,11 @@ ifelse(length(stations) == 0,
   q.QA_QC_TYPE,
   st.STATUS,
   u.UNIT,
-  ss.SUBPROJECT_NAME,
-  am.METHOD
+  ss.SUBPROJECT_NAME
 FROM [LASAR].[dbo].[PARAMETER_RESULT] pr JOIN [LASAR].[dbo].[PARAMETER] p on 
   pr.PARAMETER_KEY = p.PARAMETER_KEY JOIN
   [LASAR].[dbo].[PARAMETER_MODIFIER] pm on 
   pr.PARAMETER_PREFIX_1 = pm.MODIFIER_KEY JOIN
-  [LASAR].dbo.ANALYTICAL_METHOD am on
-  pr.ANALYTICAL_METHOD_KEY = am.ANALYTICAL_METHOD_KEY JOIN 
   [LASAR].[dbo].[SAMPLE] s on
   pr.SAMPLE_KEY = s.SAMPLE_KEY JOIN
   [LASAR].dbo.XLU_QA_QC_TYPE q on
@@ -166,14 +185,11 @@ Order by s.STATION_KEY, s.SAMPLE_DATE;", sep = "'"),
   q.QA_QC_TYPE,
   st.STATUS,
   u.UNIT,
-  ss.SUBPROJECT_NAME,
-  am.METHOD
+  ss.SUBPROJECT_NAME
 FROM [LASAR].[dbo].[PARAMETER_RESULT] pr JOIN [LASAR].[dbo].[PARAMETER] p on 
   pr.PARAMETER_KEY = p.PARAMETER_KEY JOIN
   [LASAR].[dbo].[PARAMETER_MODIFIER] pm on 
   pr.PARAMETER_PREFIX_1 = pm.MODIFIER_KEY JOIN
-  [LASAR].dbo.ANALYTICAL_METHOD am on
-  pr.ANALYTICAL_METHOD_KEY = am.ANALYTICAL_METHOD_KEY JOIN 
   [LASAR].[dbo].[SAMPLE] s on
   pr.SAMPLE_KEY = s.SAMPLE_KEY JOIN
   [LASAR].dbo.XLU_QA_QC_TYPE q on
@@ -231,9 +247,9 @@ return(tmp)
 }
 
 phos.lasar <- lasar.query(names(phos))
-ammon.lasar <- lasar.query(parms = 'Ammonia as N', sampleMatrix = sw)
+#ammon.lasar <- lasar.query(parms = 'Ammonia as N', sampleMatrix = sw)
 ph.lasar <- lasar.query(parms = c('pH'), 
                         sampleMatrix = sw, 
-                        stations = c(unique(ammon.lasar$STATION_KEY),unique(lasar.og[lasar.og$NAME == 'Pentachlorophenol','STATION_KEY'])))
+                        stations = unique(lasar.og[lasar.og$NAME %in% c('Ammonia as N', 'Pentachlorophenol','STATION_KEY']))
 temp.lasar <- lasar.query(parms = 'Temperature', sampleMatrix = sw, stations = unique(ammon.lasar$STATION_KEY))
 hg.ft.lasar <- lasar.query(parms = names(hg), sampleMatrix = ft)

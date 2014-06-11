@@ -149,7 +149,7 @@ lasar.names.match <- rbind(lasar.names.match, to.add)
 aroclors <- all.parameters[grep('[Aa]roclor',all.parameters$NAME),'NAME']
 pcbs <- all.parameters[grep('[Pp][Cc][Bb]',all.parameters$NAME),'NAME']
 
-parameters <- paste("'",paste(c(aroclors, pcbs, unique(lasar.names.match$lasar.name)),collapse="','"),"'",sep="")
+parameters <- paste("'",paste(c(aroclors, pcbs, unique(lasar.names.match$lasar.name),'Ammonia as N','Orthophosphate as P'),collapse="','"),"'",sep="")
 
 #process: select out lasar names that are different and fall in deq.pollutants. remove deq.pollutant name. add in lasar name. pass to query.
 
@@ -168,15 +168,12 @@ query <- paste("SELECT pr.[PARAMETER_KEY],
 	   q.QA_QC_TYPE,
 	   st.STATUS,
 	   u.UNIT,
-	   ss.SUBPROJECT_NAME,
-	   am.METHOD
+	   ss.SUBPROJECT_NAME
 FROM [LASAR].[dbo].[PARAMETER_RESULT] pr JOIN [LASAR].[dbo].[PARAMETER] p on 
 										 pr.PARAMETER_KEY = p.PARAMETER_KEY JOIN
 										 [LASAR].[dbo].[PARAMETER_MODIFIER] pm on 
 										 pr.PARAMETER_PREFIX_1 = pm.MODIFIER_KEY JOIN
-										 [LASAR].dbo.ANALYTICAL_METHOD am on
-										 pr.ANALYTICAL_EQUIPMENT_KEY = am.ANALYTICAL_METHOD_KEY JOIN 
-										  [LASAR].[dbo].[SAMPLE] s on
+										 [LASAR].[dbo].[SAMPLE] s on
 										  pr.SAMPLE_KEY = s.SAMPLE_KEY JOIN
 										  [LASAR].dbo.XLU_QA_QC_TYPE q on
 										  q.QA_QC_TYPE_KEY = pr.QA_QC_TYPE JOIN
@@ -221,13 +218,21 @@ report[report$Case == '<0.002est','Sub'] <- 0.002
 report[report$Case == '<0.004est','Sub'] <- 0.004
 report[report$Case == '>0.6','Sub'] <- 0.6  
 report[report$Case == '>1','Sub'] <- 1
+report[report$Case == '<1..5','Sub'] <- 1.5
+report[report$Case == '< 6000','Sub'] <- 6000
+report[report$Case == '< 19','Sub'] <- 19
+report[report$Case == '< 18','Sub'] <- 18
+report[report$Case == '< 19est','Sub'] <- 19
+report[report$Case == '< 20','Sub'] <- 20
+report[report$Case == '<0.005(LOD)','Sub'] <- 0.005
+report[report$Case == '0.006J','Sub'] <- 0.006
+report[report$Case == '<20est','Sub'] <- 20
+report[report$Case == '<40est','Sub'] <- 40
+report[report$Case == '<80est','Sub'] <- 80
 
 Result_clean <- sub.cases(lasar$Result, report) 
 lasar <- cbind(lasar, Result_clean)
 lasar <- lasar[!is.na(lasar$Result_clean),]
-
-#wq <- odbcConnect('WQAssessment')
-#sqlSave(wq, lasar, tablename = 'LASAR_Toxics_Query_05192014', rownames = FALSE)
 
 lasar.stations <- unique(lasar[,c('STATION_KEY','LOCATION_DESCRIPTION')])
 
@@ -236,3 +241,11 @@ lasar$criteria.name <- mapvalues(lasar$NAME, from = lasar.names.match$lasar.name
 lasar$ABBREVIATION <- gsub('R','r',lasar$ABBREVIATION)
 
 lasar$test <- ifelse(lasar$ABBREVIATION %in% c('Dissolved', 'Total recoverable'),paste(lasar$NAME, ", ", lasar$ABBREVIATION, sep = ''),lasar$NAME)
+# 
+# wq <- odbcConnect('WQAssessment')
+# lasar.to.save <- lasar
+# lasar.to.save$SAMPLE_DATE <- as.character(lasar.to.save$SAMPLE_DATE)
+# lasar.to.save$SAMPLE_TIME <- substr(as.character(lasar.to.save$SAMPLE_TIME),12,19)
+# sqlSave(wq, lasar.to.save, tablename = 'LASAR_Toxics_Query_06112014', rownames = FALSE)
+# rm(lasar.to.save)
+

@@ -225,3 +225,7 @@ c('Site_no','Site_name','Str_name','Str_LLID','Str_RM','LAKE_LLID','LAKE_NAME')
 #Make sure to limit lasar data for only those stations we are moving forward with
 lasar.og <- lasar
 lasar <- lasar[lasar$STATION_KEY %in% c(lasar.stations.in.gdb$STATION_KEY,lstl.ll$STATION_KE),]
+
+#For the new lasar query
+new.to.locate <- unique(lasar[lasar$STATION_KEY %in% unique(unique(lasar[!(lasar$STATION_KEY %in% lasar.og$STATION_KEY),'STATION_KEY'])[!unique(lasar[!(lasar$STATION_KEY %in% lasar.og$STATION_KEY),'STATION_KEY']) %in% stations2010$STATION]),c('STATION_KEY','LOCATION_DESCRIPTION')])
+#write.csv(new.to.locate, 'Additional_LASAR_Stations_to_locate.csv', row.names = FALSE)
