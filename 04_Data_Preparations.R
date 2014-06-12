@@ -7,7 +7,11 @@ options(stringsAsFactors = FALSE, scipen = 100)
 
 #### This file is to bring the two datasets lasar and wqp.data into a single dataframe for moving forward with 
 #bring the two data sets into one now, lasar and wqp.data to feed into Toxics Analysis
-#names(lasar)
+con <- odbcConnect('WQAssessment')
+wqp.data <- sqlFetch(con, 'WQPData_postQC_06122014')
+wqp.stations <- sqlFetch(con, 'WQPStations_05052014')
+lasar <- sqlFetch(con, 'LASAR_Toxics_Query_wAddOns_06122014')
+odbcCloseAll()
 #names(wqp.data)
 #....we've got some work to do
 
