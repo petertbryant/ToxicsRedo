@@ -1,26 +1,20 @@
 library(plyr)
 library(reshape2)
-library(stringr)
-library(RODBC)
 
 options(stringsAsFactors = FALSE, scipen = 100)
 
 #### This file is to bring the two datasets lasar and wqp.data into a single dataframe for moving forward with 
 #bring the two data sets into one now, lasar and wqp.data to feed into Toxics Analysis
-#names(lasar)
-#names(wqp.data)
+names(lasar)
+names(wqp.data)
 #....we've got some work to do
 
-#View(arrange(criteria.values.melted.applicable.nonnum[grepl(', Total',criteria.values.melted.applicable.nonnum$Pollutant) & 
-#                                                        criteria.values.melted.applicable.nonnum$variable %in% deq.pollutants$variable,],Pollutant))
-#View(arrange(criteria.values.melted.applicable.nonnum[grepl('issolv',criteria.values.melted.applicable.nonnum$Pollutant) & 
-#                                                        criteria.values.melted.applicable.nonnum$variable %in% deq.pollutants$variable,],Pollutant))
+View(arrange(criteria.values.melted.applicable.nonnum[grepl(', Total',criteria.values.melted.applicable.nonnum$Pollutant) & 
+                                                        criteria.values.melted.applicable.nonnum$variable %in% deq.pollutants$variable,],Pollutant))
+View(arrange(criteria.values.melted.applicable.nonnum[grepl('issolv',criteria.values.melted.applicable.nonnum$Pollutant) & 
+                                                        criteria.values.melted.applicable.nonnum$variable %in% deq.pollutants$variable,],Pollutant))
 
 #### First the Water Quality Portal data ####
-#In case we need to pull the data in again
-#con <- odbcConnect('WQAssessment')
-#wqp.data <- sqlFetch(con, 'WQPData_05022014')
-
 #Remove Bed Sediment and Suspended samples
 wqp.data <- wqp.data[!wqp.data$ResultSampleFractionText %in% c('Bed Sediment','Suspended'),]
 
@@ -88,12 +82,6 @@ wqp.data.sub <- rename(wqp.data.sub, c('site_only' = 'SampleRegID',
 
 
 #### Now the lasar data ####
-#Preserve lasar query
-lasar.ng <- lasar
-
-#Pull the lasar data frame in new if we need to 
-#lasar <- sqlFetch(con, 'LASAR_Toxics_Query_06112014')
-
 #Make a date-time field
 lasar$Sampled <- paste(as.character(lasar$SAMPLE_DATE), substr(as.character(lasar$SAMPLE_TIME),12,19))
 
@@ -119,10 +107,6 @@ lasar.new.names <- rename(lasar, c('NAME' = 'Pollutant',
 lasar.new.names$Agency <- 'ODEQ'
 lasar.new.names$tMRLUnit <- lasar.new.names$Unit
 
-#I had to pull method out from the lasar dataset since I didn't know where to get accurate method information related
-#to the method_key in the parameter_result table. Until i find out where to get that info I'll populate a column with NAs
-lasar.new.names$SpecificMethod <- NA
-
 #This subsets the lasasr dataframe to only have the columns to be used for aggregation
 lasar.new.names <- lasar.new.names[,names(wqp.data.sub)]
 
@@ -133,27 +117,6 @@ data.complete <- rbind(lasar.new.names, wqp.data.sub)
 #should have a numeric result and mrl fields
 data.complete$tResult <- as.numeric(data.complete$tResult)
 data.complete$tMRL <- as.numeric(data.complete$tMRL)
-
-#need to determine detect/non-detect in order to accurately select maximum concentration in case there are more than one method
-#reported for a specific sample
-data.complete$dnd <- ifelse(is.na(data.complete$tMRL),1,ifelse(data.complete$tResult<=data.complete$tMRL,0,1))
-
-#result should also be in micrograms since all the criteria are as well
-#first there are several improperply labeled units as well as some pH ones labeled with None for unit. pH is inlcuded in this analysis
-#for the purposes of 
-data.complete$Unit <- str_trim(data.complete$Unit)
-data.complete <- data.complete[!data.complete$Unit %in% c('%','mg/Kg wet','')]
-data.complete[data.complete$Unit %in% c('mg/L','mg/l'),'tResult'] <- data.complete[data.complete$Unit %in% c('mg/L','mg/l'),'tResult']*1000
-data.complete[data.complete$Unit %in% c('mg/L','mg/l'),'Unit'] <- 'µg/L'
-data.complete[data.complete$Unit %in% c('ng/L', 'ng/l'),'tResult'] <- data.complete[data.complete$Unit %in% c('ng/L', 'ng/l'),'tResult']/1000
-data.complete[data.complete$Unit %in% c('ng/L', 'ng/l'),'Unit'] <- 'µg/L'
-data.complete[data.complete$Unit %in% c('pg/L', 'pg/l'),'tResult'] <- data.complete[data.complete$Unit %in% c('pg/L', 'pg/l'),'tResult']/1000000
-data.complete[data.complete$Unit %in% c('pg/L', 'pg/l'),'Unit'] <- 'µg/L'
-
-data.complete[data.complete$Unit == 'ppb','Unit'] <- 'µg/L'
-data.complete[data.complete$Unit == 'ug/l','Unit'] <- 'µg/L'
-
-
 
 #making the name.full can happen after we combine data sets
 total.to.recoverable <- c('Arsenic','Mercury','Copper','Zinc','Nickel','Lead','Selenium',
@@ -189,7 +152,7 @@ data.complete.w.resolved.fd <- rbind(data.complete.wo.fd.fp.pairs, fd.fp.max)
 
 #resolve duplicates at the same date-time
 remove.dups <- function(tname) {
-  no.dups <- aggregate(tResult ~ id, data = tname, FUN = max)
+  no.dups <- aggregate(tResult ~ id, data = tname, FUN = min)
   tname <- tname[!duplicated(tname$id),]
   tname <- merge(no.dups, tname, by = 'id')
   #tname$tResult <- round(tname$tResult.x, 2)

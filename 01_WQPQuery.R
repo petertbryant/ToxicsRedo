@@ -206,7 +206,7 @@ wqp.stations.dups.removed <- within(wqp.stations.dups.removed, rm(x))
 
 
 wqp.data <- sqlFetch(con, 'WQPData_05022014')
-#wqp.data[wqp.data$CharacteristicName == '']
+wqp.data[wqp.data$CharacteristicName == '']
 
 #we need to add conductivity to the list of parameters to query
 cond.to.add.to.st <- data.frame('Characteristic' = c('Conductivity','Specific conductance'), 
