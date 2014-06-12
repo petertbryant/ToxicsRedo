@@ -91,6 +91,15 @@ wqp.data.sub <- rename(wqp.data.sub, c('site_only' = 'SampleRegID',
 #Preserve lasar query
 lasar.ng <- lasar
 
+#put criteria names in lasar df
+lasar$criteria.name <- mapvalues(lasar$NAME, from = lasar.names.match$lasar.name, to  = lasar.names.match$Pollutant)
+
+#Make recoverable lower case to be consistent 
+lasar$ABBREVIATION <- gsub('R','r',lasar$ABBREVIATION)
+
+#Not sure if this field gets used but here it is
+lasar$test <- ifelse(lasar$ABBREVIATION %in% c('Dissolved', 'Total recoverable'),paste(lasar$NAME, ", ", lasar$ABBREVIATION, sep = ''),lasar$NAME)
+
 #Pull the lasar data frame in new if we need to 
 #lasar <- sqlFetch(con, 'LASAR_Toxics_Query_06112014')
 

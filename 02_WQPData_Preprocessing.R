@@ -10,6 +10,10 @@ con <- odbcConnect('WQAssessment')
 
 wqp.data <- sqlFetch(con, 'WQPData_05022014')
 
+#add in phosphate data that we missed the first time
+names(tmp.phos.data) <- gsub('\\.','',names(tmp.phos.data))
+wqp.data <- rbind(wqp.data, tmp.phos.data)
+
 wqp.data$x <- apply(wqp.data[,names(wqp.data)],1,paste,collapse=',')
 wqp.data <- wqp.data[!duplicated(wqp.data$x),]
 wqp.data <- within(wqp.data, rm(x))
@@ -229,3 +233,8 @@ wqp.stations <- wqp.stations[wqp.stations$MonitoringLocationIdentifier %in% wqp.
 # 
 # table(wqp.data[wqp.data$dn == 0,'MeasureQualifierCode'])
 # table(wqp.data$dn)
+
+#Output the interim QC'd data to help keep working space/environment clean and make it quicker to re-run further analyses
+# con <- odbcConnect('WQAssessment')
+# sqlSave(con, wqp.data, tablename = 'WQPData_postQC_06122014', rownames = FALSE)
+# odbcCloseAll()
