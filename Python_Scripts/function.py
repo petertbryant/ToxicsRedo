@@ -15,7 +15,7 @@ import os.path
 workspace = "E:/GitHub/ToxicsRedo/StationsToLocate/FinalList"
 arcpy.env.workspace = workspace
 
-def merge_data(gdb, in_feat, merge_file):
+def replace_attributes(gdb, in_feat, merge_file):
     print gdb
     print in_feat
     print merge_file
@@ -31,8 +31,8 @@ def merge_data(gdb, in_feat, merge_file):
     arcpy.DeleteField_management(gdb + "/" + in_feat, fields_to_drop)
     
     arcpy.TableToTable_conversion(merge_file, merge_table_path, merge_table_name)
-    arcpy.JoinField_management(in_feat, 'Unique_ID', (merge_table_path + "/" + merge_table_name), 'Unique_ID')
+    arcpy.JoinField_management((gdb + "/" + in_feat), 'Unique_ID', (merge_table_path + "/" + merge_table_name), 'Unique_ID')
     arcpy.Delete_management((merge_table_path + "/" + merge_table_name))
 
 
-merge_data("Additional_LASAR_Stations_Edits_function_test.gdb", "All_stations", "Additional_LASAR_Stations_merge.csv")
+replace_attributes("Additional_LASAR_Stations_Edits_function_test.gdb", "All_stations", "Additional_LASAR_Stations_merge.csv")

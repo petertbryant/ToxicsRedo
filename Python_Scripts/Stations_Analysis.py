@@ -13,6 +13,37 @@ from arcpy import env
 import os.path
 
 arcpy.env.overwriteOutput = True
+workspace = "E:/GitHub/ToxicsRedo/StationsToLocate/FinalList"
+arcpy.env.workspace = workspace
+
+#Two functions to simplify code
+
+#First function replaces old attributes with the manually edited attribute table
+
+def replace_attributes(out_path, in_feat, merge_file):
+    merge_table_path = out_path
+    merge_table_name = merge_file[:-4]
+    fieldList = arcpy.ListFields(in_feat)
+    fields_to_drop = []
+    
+    for field in fieldList:
+        if field.name not in ['Unique_ID', 'Shape','OBJECTID']:
+            fields_to_drop.append(field.name)
+            
+    arcpy.DeleteField_management(in_feat, fields_to_drop)
+    
+    arcpy.TableToTable_conversion(merge_file, merge_table_path, merge_table_name)
+    arcpy.JoinField_management(in_feat, 'Unique_ID', (merge_table_path + "/" + merge_table_name), 'Unique_ID')
+    arcpy.Delete_management((merge_table_path + "/" + merge_table_name))
+
+#Second, create a function that renames fields.
+def renameField(fc, old_name, new_name):
+    fields = arcpy.ListFields(fc)
+    dtype = [x.type for x in fields if x.name == old_name]
+    arcpy.AddField_management(fc, new_name, dtype[0])
+    arcpy.CalculateField_management(fc, new_name, "!%s!" % old_name, "PYTHON_9.3")
+    arcpy.DeleteField_management(in_file, old_name)
+
 
 #Subset the 44 new lasar stations from master lasar station shapefile
 ls_df = pd.read_csv("E:/GitHub/ToxicsRedo/StationsToLocate/FinalList/Additional_LASAR_Stations_to_locate_06112014.csv", header=0)
@@ -31,6 +62,12 @@ arcpy.CopyFeatures_management(lstations, out_feature)
 
 #Link manually edited results back up with their shapefiles. I have not figured out how to use functions yet,
 #so for the time being I'm just going to rewrite the scripts for each one.
+
+#Test-run of new function for Additional Lasar Stations
+out_file = "Additional_LASAR_Stations_Edits_test.gdb"
+in_fc = "Additional_LASAR_Stations_Edits_test.gdb/All_stations"
+in_table = "Additional_LASAR_Stations_merge.csv"
+replace_attributes(out_file, in_fc, in_table)
 
 #First for Additional Lasar Stations
 in_feature = "E:/GitHub/ToxicsRedo/StationsToLocate/FinalList/Additional_LASAR_Stations_Edits.gdb/All_stations"
@@ -207,13 +244,6 @@ lake_names = "F:/Base_Data/DEQ_Data/WQ_2010_IntegratedReport_V3/WQ_2010_Integrat
 arcpy.JoinField_management(in_file, 'LLID', stream_names, 'LLID', 'NAME')
 arcpy.JoinField_management(in_file, 'LAKE_LLID', lake_names, 'WATERBODYI', 'NAME')
 
-#Create a function that renames fields.
-def renameField(fc, old_name, new_name):
-    fields = arcpy.ListFields(fc)
-    dtype = [x.type for x in fields if x.name == old_name]
-    arcpy.AddField_management(fc, new_name, dtype[0])
-    arcpy.CalculateField_management(fc, new_name, "!%s!" % old_name, "PYTHON_9.3")
-    arcpy.DeleteField_management(in_file, old_name)
 
 #Update field names to meaningful ones.
 renameField(in_file, "NAME", "Stream_Name")
