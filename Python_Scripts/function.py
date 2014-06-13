@@ -13,6 +13,8 @@ from arcpy import env
 import os.path
 
 workspace = "E:/GitHub/ToxicsRedo/StationsToLocate/FinalList"
+arcpy.env.workspace = workspace
+
 def merge_data(gdb, in_feat, merge_file):
     print gdb
     print in_feat
@@ -33,4 +35,4 @@ def merge_data(gdb, in_feat, merge_file):
     arcpy.Delete_management((merge_table_path + "/" + merge_table_name))
 
 
-merge_data("E:/GitHub/ToxicsRedo/StationsToLocate/FinalList/Additional_LASAR_Stations_Edits_function_test.gdb", "All_stations", "Additional_LASAR_Stations_merge.csv")
+merge_data("Additional_LASAR_Stations_Edits_function_test.gdb", "All_stations", "Additional_LASAR_Stations_merge.csv")
