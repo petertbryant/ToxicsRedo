@@ -236,10 +236,13 @@ lasar <- lasar[!is.na(lasar$Result_clean),]
 
 lasar.stations <- unique(lasar[,c('STATION_KEY','LOCATION_DESCRIPTION')])
 
+#put criteria names in lasar df
+lasar$criteria.name <- mapvalues(lasar$NAME, from = lasar.names.match$lasar.name, to  = lasar.names.match$Pollutant)
+
 # 
 # wq <- odbcConnect('WQAssessment')
 # lasar.to.save <- lasar
 # lasar.to.save$SAMPLE_DATE <- as.character(lasar.to.save$SAMPLE_DATE)
 # lasar.to.save$SAMPLE_TIME <- substr(as.character(lasar.to.save$SAMPLE_TIME),12,19)
-# sqlSave(wq, lasar.to.save, tablename = 'LASAR_Toxics_Query_06112014', rownames = FALSE)
+# sqlSave(wq, lasar.to.save, tablename = 'LASAR_Toxics_Query_wCriteriaNames_06132014', rownames = FALSE)
 # rm(lasar.to.save)

@@ -8,9 +8,9 @@ options(stringsAsFactors = FALSE, scipen = 100)
 #### This file is to bring the two datasets lasar and wqp.data into a single dataframe for moving forward with 
 #bring the two data sets into one now, lasar and wqp.data to feed into Toxics Analysis
 con <- odbcConnect('WQAssessment')
-wqp.data <- sqlFetch(con, 'WQPData_postQC_06122014')
-wqp.stations <- sqlFetch(con, 'WQPStations_05052014')
-lasar <- sqlFetch(con, 'LASAR_Toxics_Query_wAddOns_06122014')
+wqp.data <- sqlFetch(con, 'WQPData_woLASAROverlap_06132014')
+wqp.stations <- sqlFetch(con, 'WQPStations_wUpdatedLatLon_06132014')
+lasar <- sqlFetch(con, 'LASAR_Toxics_Query_wCriteriaNames_06132014')
 odbcCloseAll()
 #names(wqp.data)
 #....we've got some work to do
@@ -36,7 +36,7 @@ wqp.data$Sampled <- paste(wqp.data$ActivityStartDate, wqp.data$ActivityStartTime
 
 #Make a column with criteria name based on earlier mapping 
 wqp.name.match <- read.csv('WQPNameMatch_05142014.csv',stringsAsFactors=FALSE)
-wqp.data$criteria.name <- mapvalues(wqp.data$CharacteristicName, from = wqp.name.match$WQP.Name, to = wqp.name.match$Criteria.Name)
+wqp.data$criterianame <- mapvalues(wqp.data$CharacteristicName, from = wqp.name.match$WQP.Name, to = wqp.name.match$Criteria.Name)
 
 #table(wqp.data[wqp.data$ResultSampleFractionText %in% c('Dissolved','Recoverable','Total'),'CharacteristicName'],wqp.data[wqp.data$ResultSampleFractionText %in% c('Dissolved','Recoverable','Total'),'ResultSampleFractionText'])
 
@@ -56,7 +56,7 @@ wqp.data.sub <- wqp.data[,c('site_only','OrganizationFormalName',
                             'Sampled', 'CharacteristicName','ResultSampleFractionText',
                             'ResultMeasureValue','ResultMeasureMeasureUnitCode','MeasureQualifierCode',
                             'ActivityTypeCode','DetectionQuantitationLimitMeasureMeasureValue','DetectionQuantitationLimitMeasureMeasureUnitCode',
-                            'MonitoringLocationName', 'criteria.name','ResultAnalyticalMethodMethodIdentifier')]
+                            'MonitoringLocationName', 'criterianame','ResultAnalyticalMethodMethodIdentifier')]
 
 #Now we make the names match the script I built for the Toxics Monitroing Program
 wqp.data.sub <- rename(wqp.data.sub, c('site_only' = 'SampleRegID',
@@ -93,10 +93,7 @@ wqp.data.sub <- rename(wqp.data.sub, c('site_only' = 'SampleRegID',
 
 #### Now the lasar data ####
 #Preserve lasar query
-lasar.ng <- lasar
-
-#put criteria names in lasar df
-lasar$criteria.name <- mapvalues(lasar$NAME, from = lasar.names.match$lasar.name, to  = lasar.names.match$Pollutant)
+#lasar.ng <- lasar
 
 #Make recoverable lower case to be consistent 
 lasar$ABBREVIATION <- gsub('R','r',lasar$ABBREVIATION)
@@ -108,7 +105,7 @@ lasar$test <- ifelse(lasar$ABBREVIATION %in% c('Dissolved', 'Total recoverable')
 #lasar <- sqlFetch(con, 'LASAR_Toxics_Query_06112014')
 
 #Make a date-time field
-lasar$Sampled <- paste(as.character(lasar$SAMPLE_DATE), substr(as.character(lasar$SAMPLE_TIME),12,19))
+lasar$Sampled <- paste(as.character(lasar$SAMPLE_DATE), as.character(lasar$SAMPLE_TIME)) #i had this in here because the lasar date and time were coming in as posix but today they come in as character so i'm taking it out: substr(as.character(lasar$SAMPLE_TIME),12,19)
 
 #see how much diff there is with method_detection_limit and method_reporting_limit
 #View(lasar[which(lasar$METHOD_DETECTION_LIMIT != lasar$METHOD_REPORTING_LIMIT),])
@@ -127,7 +124,7 @@ lasar.new.names <- rename(lasar, c('NAME' = 'Pollutant',
                                    'Result_clean' = 'tResult',
                                    'METHOD_REPORTING_LIMIT' = 'tMRL',
                                    'UNIT' = 'Unit',
-                                   'METHOD' = 'SpecificMethod',
+                                   #'METHOD' = 'SpecificMethod',
                                    'STATUS' = 'Status'))
 lasar.new.names$Agency <- 'ODEQ'
 lasar.new.names$tMRLUnit <- lasar.new.names$Unit
@@ -145,6 +142,11 @@ data.complete <- rbind(lasar.new.names, wqp.data.sub)
 #### Cleaning up the complete dataset and making some fields for consistent future processing ####
 #should have a numeric result and mrl fields
 data.complete$tResult <- as.numeric(data.complete$tResult)
+data.complete[which(data.complete$tMRL == '0.0105 Est'),'tMRL'] <- 0.0105
+data.complete[which(data.complete$tMRL == '0.0030 Est'),'tMRL'] <- 0.0030
+data.complete[which(data.complete$tMRL == '0.0035 Est'),'tMRL'] <- 0.0035
+data.complete[which(data.complete$tMRL == '0.02                                 0.02'),'tMRL'] <- 0.02
+data.complete[which(data.complete$tMRL == '0.10                                                                                                                                                                        0.10'),'tMRL'] <- 0.10
 data.complete$tMRL <- as.numeric(data.complete$tMRL)
 
 #need to determine detect/non-detect in order to accurately select maximum concentration in case there are more than one method
@@ -153,11 +155,11 @@ data.complete$dnd <- ifelse(is.na(data.complete$tMRL),1,ifelse(data.complete$tRe
 
 #result should also be in micrograms since all the criteria are as well
 #first there are several improperply labeled units as well as some pH ones labeled with None for unit. pH is inlcuded in this analysis
-#for the purposes of 
+#for the purposes of calculating pentachlorophenol and ammonia criteria 
 data.complete$Unit <- str_trim(data.complete$Unit)
-data.complete <- data.complete[!data.complete$Unit %in% c('%','mg/Kg wet','')]
-data.complete[data.complete$Unit %in% c('mg/L','mg/l'),'tResult'] <- data.complete[data.complete$Unit %in% c('mg/L','mg/l'),'tResult']*1000
-data.complete[data.complete$Unit %in% c('mg/L','mg/l'),'Unit'] <- 'µg/L'
+data.complete <- data.complete[!data.complete$Unit %in% c('%','mg/Kg wet','ng/SPMD','ueq/L'),]
+data.complete[data.complete$Unit %in% c('mg/L','mg/l','mg/l as N'),'tResult'] <- data.complete[data.complete$Unit %in% c('mg/L','mg/l','mg/l as N'),'tResult']*1000
+data.complete[data.complete$Unit %in% c('mg/L','mg/l','mg/l as N'),'Unit'] <- 'µg/L'
 data.complete[data.complete$Unit %in% c('ng/L', 'ng/l'),'tResult'] <- data.complete[data.complete$Unit %in% c('ng/L', 'ng/l'),'tResult']/1000
 data.complete[data.complete$Unit %in% c('ng/L', 'ng/l'),'Unit'] <- 'µg/L'
 data.complete[data.complete$Unit %in% c('pg/L', 'pg/l'),'tResult'] <- data.complete[data.complete$Unit %in% c('pg/L', 'pg/l'),'tResult']/1000000
@@ -166,7 +168,18 @@ data.complete[data.complete$Unit %in% c('pg/L', 'pg/l'),'Unit'] <- 'µg/L'
 data.complete[data.complete$Unit == 'ppb','Unit'] <- 'µg/L'
 data.complete[data.complete$Unit == 'ug/l','Unit'] <- 'µg/L'
 
+#for the MRL units too
+data.complete$tMRLUnit <- str_trim(data.complete$tMRLUnit)
+data.complete <- data.complete[!data.complete$tMRLUnit %in% c('%','mg/Kg wet','ng/SPMD','ueq/L'),]
+data.complete[data.complete$tMRLUnit %in% c('mg/L','mg/l','mg/l as N'),'tMRL'] <- data.complete[data.complete$tMRLUnit %in% c('mg/L','mg/l','mg/l as N'),'tMRL']*1000
+data.complete[data.complete$tMRLUnit %in% c('mg/L','mg/l','mg/l as N'),'tMRLUnit'] <- 'µg/L'
+data.complete[data.complete$tMRLUnit %in% c('ng/L', 'ng/l'),'tMRL'] <- data.complete[data.complete$tMRLUnit %in% c('ng/L', 'ng/l'),'tMRL']/1000
+data.complete[data.complete$tMRLUnit %in% c('ng/L', 'ng/l'),'tMRLUnit'] <- 'µg/L'
+data.complete[data.complete$tMRLUnit %in% c('pg/L', 'pg/l'),'tMRL'] <- data.complete[data.complete$tMRLUnit %in% c('pg/L', 'pg/l'),'tMRL']/1000000
+data.complete[data.complete$tMRLUnit %in% c('pg/L', 'pg/l'),'tMRLUnit'] <- 'µg/L'
 
+data.complete[which(data.complete$tMRLUnit == 'ppb'),'tMRLUnit'] <- 'µg/L'
+data.complete[which(data.complete$tMRLUnit == 'ug/l'),'tMRLUnit'] <- 'µg/L'
 
 #making the name.full can happen after we combine data sets
 total.to.recoverable <- c('Arsenic','Mercury','Copper','Zinc','Nickel','Lead','Selenium',
@@ -201,6 +214,19 @@ data.complete.wo.fd.fp.pairs <- data.complete[!data.complete$index %in% fd.fp$in
 data.complete.w.resolved.fd <- rbind(data.complete.wo.fd.fp.pairs, fd.fp.max)
 
 #resolve duplicates at the same date-time
+#because there are some with multiple methods and two MRL levels we can't just pick the max
+#value unless it was a detection
+for (i in 1:length(unique(data.complete.w.resolved.fd$id))) {
+  sub <- data.complete.w.resolved.fd[data.complete.w.resolved.fd$id == unique(data.complete.w.resolved.fd$id)[i],]
+  1if (nrow(sub) > 1) {
+    if any(sub$dnd == 1) {
+      sub <- aggregate(tMRL ~ id, data = sub, FUN = min)
+    }
+  }
+  
+  max.result <- aggregate(tResult ~ id, data = sub, FUN = max)
+}
+
 remove.dups <- function(tname) {
   no.dups <- aggregate(tResult ~ id, data = tname, FUN = max)
   tname <- tname[!duplicated(tname$id),]
@@ -210,7 +236,7 @@ remove.dups <- function(tname) {
   tname <- within(tname, rm(tResult.x, tResult.y))
 }
 
-data.complete.wo.dups <- remove.dups(data.complete.w.resolved.fd)
+data.complete.wo.dups <- data.complete.w.resolved.fd
 
 #### Grouping parameters to be compared to composite criteria ####
 #We will add this here for now but should be coming from Station locate process
@@ -219,6 +245,7 @@ data.complete.wo.dups$Matrix <- 'FW' #mapvalues(data.complete.wo.dups$Matrix, fr
 #Some of the criteria apply to Totals and not individual degradates. Here we do that totalling so comparisons can be done.
 #First, we will make a Total DDT
 ddt <- data.complete.wo.dups[data.complete.wo.dups$Pollutant %in% c("4,4`-DDD", "4,4`-DDE", "4,4`-DDT", "p,p'-DDD", "p,p'-DDE", "p,p'-DDT"),]
+ddt$tResult <- ddt$tResult*ddt$dnd
 ddt.casted <- dcast(ddt, Agency + SampleRegID + SampleAlias + Matrix + 
                       Sampled + SampleType + SpecificMethod +tMRL + tMRLUnit ~ Pollutant, value.var = 'tResult')
 ddt.casted$'Total DDT' <- rowSums(ddt.casted[,c("4,4`-DDD", "4,4`-DDE", "4,4`-DDT","p,p'-DDD", "p,p'-DDE", "p,p'-DDT")],na.rm=TRUE)
