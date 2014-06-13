@@ -172,18 +172,3 @@ qced = unique_ids_needing_review[index]
 
 #Create two new copies of the reviewed shapefile
 
-#Remove duplicates from qc_success
-in_file = "E:/GitHub/ToxicsRedo/StationsToLocate/FinalList/Master_List_of_Stations_Results_Tol12000_II_Edits.gdb/qc_success"
-expression = 'isDuplicate( !STATION_ID! )'
-codeblock = """uniqueList = []
-def isDuplicate(inValue):
-    if inValue in uniqueList:
-        return 1
-    else:
-        uniqueList.append(inValue)
-        return 0"""
-
-arcpy.AddField_management(in_file, "Duplicate", "SHORT")
-
-arcpy.CalculateField_management(in_file, "Duplicate", expression, "PYTHON_9.3", 
-                                codeblock)
