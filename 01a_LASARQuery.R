@@ -169,7 +169,7 @@ query <- paste("SELECT pr.[PARAMETER_KEY],
                st.STATUS,
                u.UNIT,
                ss.SUBPROJECT_NAME
-               FROM [LASAR].[dbo].[PARAMETER_RESULT] pr JOIN [LASAR].[dbo].[PARAMETER] p on 
+              FROM [LASAR].[dbo].[PARAMETER_RESULT] pr JOIN [LASAR].[dbo].[PARAMETER] p on 
                pr.PARAMETER_KEY = p.PARAMETER_KEY JOIN
                [LASAR].[dbo].[PARAMETER_MODIFIER] pm on 
                pr.PARAMETER_PREFIX_1 = pm.MODIFIER_KEY JOIN
@@ -187,14 +187,14 @@ query <- paste("SELECT pr.[PARAMETER_KEY],
                ss.SAMPLING_SUBPROJECT_KEY = s.SAMPLING_SUBPROJECT_KEY JOIN
                [LASAR].[dbo].[SAMPLE_MATRIX] sm on 
                sm.SAMPLE_MATRIX_KEY = pr.SAMPLE_MATRIX_KEY
-               WHERE s.SAMPLE_DATE > '2000-01-01 00:00:00.000' and 
+              WHERE s.SAMPLE_DATE > '2000-01-01 00:00:00.000' and 
                s.SAMPLE_DATE < '2011-12-31 00:00:00.000' and
                s.STATION_KEY != '10000' and 
                st.STATUS in ('A','A+','B') and 
                sm.SAMPLE_MATRIX in ('Surface water', 'Bay/Estuary/Ocean', 'Canal', 'Reservoir', 'Lake',
                'Ditch/Pond/Culvert/Drain') and
                p.Name in (", parameters, ") 
-               Order by s.STATION_KEY, s.SAMPLE_DATE;")
+              Order by s.STATION_KEY, s.SAMPLE_DATE;")
 
 lasar <- sqlQuery(con, query)
 
@@ -236,11 +236,6 @@ lasar <- lasar[!is.na(lasar$Result_clean),]
 
 lasar.stations <- unique(lasar[,c('STATION_KEY','LOCATION_DESCRIPTION')])
 
-lasar$criteria.name <- mapvalues(lasar$NAME, from = lasar.names.match$lasar.name, to  = lasar.names.match$Pollutant)
-
-lasar$ABBREVIATION <- gsub('R','r',lasar$ABBREVIATION)
-
-lasar$test <- ifelse(lasar$ABBREVIATION %in% c('Dissolved', 'Total recoverable'),paste(lasar$NAME, ", ", lasar$ABBREVIATION, sep = ''),lasar$NAME)
 # 
 # wq <- odbcConnect('WQAssessment')
 # lasar.to.save <- lasar
