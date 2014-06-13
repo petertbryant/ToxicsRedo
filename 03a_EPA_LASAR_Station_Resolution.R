@@ -26,8 +26,8 @@ epa.orgs.not.superfund <- c("Environmental Monitoring and Assessment Program","E
 epa.orgs.not.EMAP <- c("EPA National Aquatic Resource Survey Data","EPA National Aquatic Resources Survey", "EPA National Aquatic Resources Survey (TEST Submission)")
 
 #Checks to see which parameters we are even looking at for these NARS/EMAP data sets. Mainly nitrates, phosphorus, zinc and selenium.
-table(wqp.data[wqp.data$OrganizationFormalName %in% epa.orgs.not.EMAP,'MonitoringLocationIdentifier'],
-wqp.data[wqp.data$OrganizationFormalName %in% epa.orgs.not.EMAP,'CharacteristicName'])
+#table(wqp.data[wqp.data$OrganizationFormalName %in% epa.orgs.not.EMAP,'MonitoringLocationIdentifier'],
+#wqp.data[wqp.data$OrganizationFormalName %in% epa.orgs.not.EMAP,'CharacteristicName'])
 
 #Useless check?
 #View(wqp.stations[wqp.stations$OrganizationFormalName %in% epa.orgs.not.EMAP,])
@@ -55,7 +55,9 @@ wqp.stations.nars$LonChar <- wqp.stations.nars$LonChar2
 wqp.stations.nars <- within(wqp.stations.nars, rm(LatChar2, LonChar2, LAT, LONG))
 #We decided not to dig too far for these stations locations
 wqp.stations.nars <- wqp.stations.nars[!wqp.stations.nars$MonitoringLocationIdentifier %in% remaining$MonitoringLocationIdentifier,]
+#Preserving df with remaining stations
 wqp.stations.post.qc <- wqp.stations
+#Taking those stations we decided not to dig for out of the stations df
 wqp.stations <- wqp.stations.nars
 
 #checks to make sure that the following cemap.data merge got the right number of rows
@@ -116,8 +118,18 @@ lasar$code <- paste(lasar$STATION_KEY, lasar$SAMPLE_DATE, lasar$criteria.name)
 wqp.data.og <- wqp.data
 wqp.data <- wqp.data[!wqp.data$Temp.id %in% cemap.data[cemap.data$code %in% lasar$code,'Temp.id'],]
 
-#we also want to remove data associated with stations we aren't using
+#we also want to remove data associated with stations we aren't using -- refer to lines 56 and 57
 wqp.data <- wqp.data[!wqp.data$MonitoringLocationIdentifier %in% remaining$MonitoringLocationIdentifier,]
+
+#save this intermediate form of wqp.data to be used in the 04_Data_Preparations script
+# con <- odbcConnect('WQAssessment')
+# sqlSave(con, wqp.data, tablename = 'WQPData_woLASAROverlap_06132014', rownames = FALSE)
+# odbcCloseAll()
+
+#save wqp stations intermediate 
+# con <- odbcConnect('WQAssessment')
+# sqlSave(con, wqp.stations, tablename = 'WQPStations_wUpdatedLatLon_06132014', rownames = FALSE)
+# odbcCloseAll()
 
 #compile EPA station list for Mike to locate
 not.usgs <- wqp.stations[-grep('USGS',wqp.stations$MonitoringLocationIdentifier),]
@@ -126,6 +138,9 @@ not.usgs <- not.usgs.not.cemap
 #write.csv(not.usgs, 'StationsToLocate/EPAandNPS_Stations_to_locate_05292014.csv', row.names = FALSE)
 
 #### LASAR ####
+#Pull in stations in gdb that have been saved into text file
+stations2010 <- read.csv('//deqhq1/wqassessment/2012_wqassessment/toxicsredo/2010_Stations.txt')
+
 #check lasar stations against geodatabase 2010
 lasar.stations.in.gdb <- lasar.stations[(lasar.stations$STATION_KEY %in% stations2010$STATION),]
 lasar.stations.not.in.gdb <- lasar.stations[!(lasar.stations$STATION_KEY %in% stations2010$STATION),]
@@ -222,10 +237,23 @@ c('Site_no','Site_name','Str_name','Str_LLID','Str_RM','LAKE_LLID','LAKE_NAME')
 
 #fields should match stations2010 for further creation of stations2012
 
-#Make sure to limit lasar data for only those stations we are moving forward with
-lasar.og <- lasar
-lasar <- lasar[lasar$STATION_KEY %in% c(lasar.stations.in.gdb$STATION_KEY,lstl.ll$STATION_KE),]
+#### NOTE THAT THE BELOW WAS A ONE TIME RUN AND IS NO LONGER RELEVANT FOR SEQUENTIAL PROCESSING ####
+#### FUTURE REMOVAL OF DATA FROM THE LASAR DATAFRAME WILL OCCUR AT RECONCILIATION WITH THE RESULT
+#### OF THE STATION LOCATE PROCESSING
 
-#For the new lasar query
-new.to.locate <- unique(lasar[lasar$STATION_KEY %in% unique(unique(lasar[!(lasar$STATION_KEY %in% lasar.og$STATION_KEY),'STATION_KEY'])[!unique(lasar[!(lasar$STATION_KEY %in% lasar.og$STATION_KEY),'STATION_KEY']) %in% stations2010$STATION]),c('STATION_KEY','LOCATION_DESCRIPTION')])
-#write.csv(new.to.locate, 'Additional_LASAR_Stations_to_locate.csv', row.names = FALSE)
+#preserve lasar as is
+# lasar.og <- lasar
+# #Make sure to limit lasar data for only those stations we are moving forward with at this point
+# #we'll probably pull more stations out when we get the results from Mike's work
+# lasar <- lasar[lasar$STATION_KEY %in% c(lasar.stations.in.gdb$STATION_KEY,lstl.ll$STATION_KE),]
+# 
+# #NOTE::This has changed since I went back and fixed the lasar query. SO lasar.og here is referring to the old
+# #incorrect LASAR query result that I had based the initial station list for Mike on and the lasar df below
+# #used to get the new.to.locate stations is the result of the corrected lasar query. Becuase I have gone back and
+# #fixed the query, the above lasar.og assignment isn't correct when run with a fresh and clear working space.
+# 
+# #For the new lasar query
+# new.to.locate <- unique(lasar[lasar$STATION_KEY %in% unique(unique(lasar[!(lasar$STATION_KEY %in% lasar.og$STATION_KEY),'STATION_KEY'])[!unique(lasar[!(lasar$STATION_KEY %in% lasar.og$STATION_KEY),'STATION_KEY']) %in% stations2010$STATION]),c('STATION_KEY','LOCATION_DESCRIPTION')])
+# #write.csv(new.to.locate, 'Additional_LASAR_Stations_to_locate.csv', row.names = FALSE)
+
+
