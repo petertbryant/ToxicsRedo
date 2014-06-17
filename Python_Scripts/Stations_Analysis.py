@@ -18,7 +18,8 @@ arcpy.env.workspace = workspace
 
 #Define two functions to simplify code
 
-#The first function replaces old attributes with the manually edited attribute tables
+#The first function replaces old attributes with the manually edited attribute tables which had been exported from the output
+#shapefiles of the Assign_LLID script
 def replace_attributes(out_path, in_feat, merge_file):
     merge_table_path = out_path
     merge_table_name = merge_file[:-4]
