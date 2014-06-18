@@ -36,7 +36,7 @@ def replace_attributes(out_path, in_feat, merge_file):
     arcpy.JoinField_management(in_feat, 'Unique_ID', (merge_table_path + "/" + merge_table_name), 'Unique_ID')
     arcpy.Delete_management((merge_table_path + "/" + merge_table_name))
 
-#This one renames attribute field names.
+#This one renames attribute field names. Make sure the new field name is not a duplicate of another field. New field will not be created if it is.
 def renameField(fc, old_name, new_name):
     fields = arcpy.ListFields(fc)
     dtype = [x.type for x in fields if x.name == old_name]
@@ -62,9 +62,9 @@ arcpy.CopyFeatures_management(lstations, out_feature)
 
 #Link manually edited results back up with their shapefiles using replace_attributes function
 
-#First for Additional Lasar Stations
-out_path = "Additional_LASAR_Stations_Edits_test.gdb"
-in_fc = "Additional_LASAR_Stations_Edits_test.gdb/All_stations"
+#First for Additional Lasar Stations. 
+out_path = "Additional_LASAR_Stations_Edits.gdb"
+in_fc = "Additional_LASAR_Stations_Edits.gdb/All_stations"
 in_table = "Additional_LASAR_Stations_merge.csv"
 replace_attributes(out_path, in_fc, in_table)
 
@@ -76,8 +76,8 @@ in_table = "qc_success.csv"
 replace_attributes(out_path, in_fc, in_table)
 
 #Remove duplicates from qc_success
-in_file = "E:/GitHub/ToxicsRedo/StationsToLocate/FinalList/Master_List_of_Stations_Results_Tol12000_II_Edits.gdb/qc_success"
-expression = 'isDuplicate( !STATION_ID! )'
+in_file = "E:/GitHub/ToxicsRedo/StationsToLocate/FinalList/Master_List_of_Stations_Results_Tol12000_II_Edits.gdb/qc_success_update"
+expression = 'isDuplicate( !STATION! )'
 codeblock = """uniqueList = []
 def isDuplicate(inValue):
     if inValue in uniqueList:
@@ -111,7 +111,7 @@ replace_attributes(out_path, in_fc, in_table)
 
 #Remove duplicates from qc_needs_review_update
 in_file = "E:/GitHub/ToxicsRedo/StationsToLocate/FinalList/Master_List_of_Stations_Results_Tol12000_II_Edits.gdb/qc_needs_review_update"
-expression = 'isDuplicate( !STATION_ID! )'
+expression = 'isDuplicate( !STATION! )'
 codeblock = """uniqueList = []
 def isDuplicate(inValue):
     if inValue in uniqueList:
@@ -130,56 +130,75 @@ with arcpy.da.UpdateCursor(in_file, "Duplicate") as cursor:
         if row[0] == 1:
             cursor.deleteRow()
 
-
-#Select stations that are fully qc'd from the two reviewed fcs
-workspace = "E:/GitHub/ToxicsRedo/StationsToLocate/FinalList"
-arcpy.env.workspace = workspace
+#
+##Select stations that are fully qc'd from the two reviewed fcs
+#workspace = "E:/GitHub/ToxicsRedo/StationsToLocate/FinalList"
+#arcpy.env.workspace = workspace
 f1 = "Master_List_of_Stations_Results_Tol12000_II_Edits.gdb/qc_needs_review_update"
 f2 = "Additional_LASAR_Stations_Edits.gdb/All_stations"
-lay1 = "additional_lasar_stations"
-lay2 = "master_list_of_statiosn"
+#lay1 = "additional_lasar_stations"
+#lay2 = "master_list_of_statiosn"
+#
+##List unique values in the QAQC2 field of needs_review_update and All_stations
+#values = [row[0] for row in arcpy.da.SearchCursor(f1, "QAQC2")]
+#uniqueValues = set(values)
+#uniqueList1 = list(uniqueValues)
+#print uniqueList1
+#
+#values = [row[0] for row in arcpy.da.SearchCursor(f2, "QAQC2")]
+#uniqueValues = set(values)
+#uniqueList2 = list(uniqueValues)
+#print uniqueList2
+#
+##Remove "remove", "Further review", and "Potential digitization" from this list
+#items_to_remove = ["Potential Digitization", "Further Review Needed", "Remove"]
+#uniqueList1 = [x for x in uniqueList1 if x  not in items_to_remove]
+#uniqueList2 = [x for x in uniqueList2 if x not in items_to_remove]
+#
+##Setup Queries based on the lists of unique fields with only stations we want to keep
+#query1 = """ "QAQC2" in """ + "('" + "', '".join(uniqueList1) +"')"
+#query2 = """ "QAQC1" = 'Reviewed' or "QAQC2" in """ + "('" + "', '".join(uniqueList2) +"')"
+#
+#arcpy.MakeFeatureLayer_management(f1, lay1)
+#arcpy.MakeFeatureLayer_management(f2, lay2)
+#arcpy.SelectLayerByAttribute_management(lay1, "NEW_SELECTION", query1)
+#arcpy.SelectLayerByAttribute_management(lay2, "NEW_SELECTION", query2)
 
-#List unique values in the QAQC2 field of needs_review_update and All_stations
-values = [row[0] for row in arcpy.da.SearchCursor(f1, "QAQC2")]
-uniqueValues = set(values)
-uniqueList1 = list(uniqueValues)
-print uniqueList1
+#Create output geodatabase
+#out_geo = "All_Final.gdb"
+#arcpy.CreateFileGDB_management(workspace, out_geo, 'CURRENT')
 
-values = [row[0] for row in arcpy.da.SearchCursor(f2, "QAQC2")]
-uniqueValues = set(values)
-uniqueList2 = list(uniqueValues)
-print uniqueList2
-
-#Remove "remove", "Further review", and "Potential digitization" from this list
-items_to_remove = ["Potential Digitization", "Further Review Needed", "Remove"]
-uniqueList1 = [x for x in uniqueList1 if x  not in items_to_remove]
-uniqueList2 = [x for x in uniqueList2 if x not in items_to_remove]
-
-#Setup Queries based on the lists of unique fields with only stations we want to keep
-query1 = """ "QAQC2" in """ + "('" + "', '".join(uniqueList1) +"')"
-query2 = """ "QAQC1" = 'Reviewed' or "QAQC2" in """ + "('" + "', '".join(uniqueList2) +"')"
-
-arcpy.MakeFeatureLayer_management(f1, lay1)
-arcpy.MakeFeatureLayer_management(f2, lay2)
-arcpy.SelectLayerByAttribute_management(lay1, "NEW_SELECTION", query1)
-arcpy.SelectLayerByAttribute_management(lay2, "NEW_SELECTION", query2)
-
-#Merge all datasets together
+#Merge all datasets together and convert river feet (RF) to river miles (RM)
 
 f3 = "Master_List_of_Stations_Results_Tol12000_II_Edits.gdb/qc_success_update"
-out_file = "All.gdb/All_non_review_stations"
-arcpy.Merge_management([lay1, lay2, f3], out_file)
+f4 = "Master_List_of_Stations_Results_Tol12000_II_Edits.gdb/outside_threshold_update"
+out_file = "All_Final.gdb/All_stations"
+arcpy.Merge_management([f1, f2, f3, f4], out_file)
+arcpy.AddField_management(out_file, 'RIVER_MILE', 'DOUBLE')
+arcpy.CalculateField_management(out_file, 'RIVER_MILE', '!RF!/5280', "PYTHON_9.3")
+
+#Copy fc and remove Unwanted fields so fc is ready to merge with 2010 stations
+stations2010_formatting = "All_Final.gdb/All_stations_final"
+arcpy.CopyFeatures_management(out_file, stations2010_formatting)
+fieldList = arcpy.ListFields(stations2010_formatting)
+fields_to_drop = []
+
+for field in fieldList:
+    if field.name not in ['Shape','OBJECTID', 'LLID', 'LAKE_LLID', 'RM', 'AGENCY', 'AGENCY_ID', 'STATION', 'DEC_LAT', 'DEC_LONG', 
+                          'DESCRIPTION', 'QAQC1', 'QAQC2', 'Comments']:
+        fields_to_drop.append(field.name)
+
+arcpy.DeleteField_management(stations2010_formatting, fields_to_drop)
 
 #Add DEQ stream and lake names using LLID
-in_file = out_file
+in_file = stations2010_formatting
 stream_names = "F:/Base_Data/DEQ_Data/WQ_2010_IntegratedReport_V3/WQ_2010_IntegratedReport_V3/Assessment.gdb/DEQ_Streams_25APR2013"
 lake_names = "F:/Base_Data/DEQ_Data/WQ_2010_IntegratedReport_V3/WQ_2010_IntegratedReport_V3/Assessment.gdb/DEQLakes_14JUN2013"
 
 arcpy.JoinField_management(in_file, 'LLID', stream_names, 'LLID', 'NAME')
 arcpy.JoinField_management(in_file, 'LAKE_LLID', lake_names, 'WATERBODYI', 'NAME')
 
-
 #Change these new field names to meaningful ones.
-renameField(in_file, "NAME", "Stream_Name")
-renameField(in_file, "NAME_1", "Lake_Name")
+renameField(in_file, "NAME", "GIS_STREAMNAME")
+renameField(in_file, "NAME_1", "LAKE_NAME")
 
