@@ -216,27 +216,13 @@ data.complete.w.resolved.fd <- rbind(data.complete.wo.fd.fp.pairs, fd.fp.max)
 #resolve duplicates at the same date-time
 #because there are some with multiple methods and two MRL levels we can't just pick the max
 #value unless it was a detection
-for (i in 1:length(unique(data.complete.w.resolved.fd$id))) {
-  sub <- data.complete.w.resolved.fd[data.complete.w.resolved.fd$id == unique(data.complete.w.resolved.fd$id)[i],]
-  1if (nrow(sub) > 1) {
-    if any(sub$dnd == 1) {
-      sub <- aggregate(tMRL ~ id, data = sub, FUN = min)
-    }
-  }
-  
-  max.result <- aggregate(tResult ~ id, data = sub, FUN = max)
-}
 
-remove.dups <- function(tname) {
-  no.dups <- aggregate(tResult ~ id, data = tname, FUN = max)
-  tname <- tname[!duplicated(tname$id),]
-  tname <- merge(no.dups, tname, by = 'id')
-  #tname$tResult <- round(tname$tResult.x, 2)
-  tname$tResult <- tname$tResult.x
-  tname <- within(tname, rm(tResult.x, tResult.y))
-}
+data.complete.wo.dups.index <- ddply(data.complete.w.resolved.fd, .(id), function(sub) {
+                               ifelse(sum(sub$dnd) == 0,sub[which.min(sub$tMRL),'index'],
+                                      ifelse((sum(sub$dnd) >= 2),sub[which.max(sub$tResult),'index'],
+                                             sub[sub$dnd == 1,'index']))})
 
-data.complete.wo.dups <- data.complete.w.resolved.fd
+data.complete.wo.dups <- data.complete.w.resolved.fd[data.complete.w.resolved.fd$index %in% data.complete.wo.dups.index$V1,]
 
 #### Grouping parameters to be compared to composite criteria ####
 #We will add this here for now but should be coming from Station locate process
@@ -246,50 +232,83 @@ data.complete.wo.dups$Matrix <- 'FW' #mapvalues(data.complete.wo.dups$Matrix, fr
 #First, we will make a Total DDT
 ddt <- data.complete.wo.dups[data.complete.wo.dups$Pollutant %in% c("4,4`-DDD", "4,4`-DDE", "4,4`-DDT", "p,p'-DDD", "p,p'-DDE", "p,p'-DDT"),]
 ddt$tResult <- ddt$tResult*ddt$dnd
-ddt.casted <- dcast(ddt, Agency + SampleRegID + SampleAlias + Matrix + 
-                      Sampled + SampleType + SpecificMethod +tMRL + tMRLUnit ~ Pollutant, value.var = 'tResult')
+ddt.casted <- dcast(ddt, Agency + SampleRegID + SampleAlias + Matrix +  
+                      Sampled + SpecificMethod + Fraction + day ~ Pollutant, value.var = 'tResult')
 ddt.casted$'Total DDT' <- rowSums(ddt.casted[,c("4,4`-DDD", "4,4`-DDE", "4,4`-DDT","p,p'-DDD", "p,p'-DDE", "p,p'-DDT")],na.rm=TRUE)
 ddt.casted.sub <- within(ddt.casted, rm("4,4`-DDD", "4,4`-DDE", "4,4`-DDT","p,p'-DDD", "p,p'-DDE", "p,p'-DDT"))
 ddt.melted <- melt(ddt.casted.sub, 
-                   id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SampleType','SpecificMethod', 'tMRL', 'tMRLUnit'),
+                   id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SpecificMethod',  
+                               'Fraction','day'),
                    variable.name = 'Pollutant',
                    value.name = 'tResult')
-#ddt.melted$Detect.nondetect <- ifelse(ddt.melted$tResult > 0,1,0)
-ddt.melted.addons <- data.frame('tMRL' = rep(0,nrow(ddt.melted)), 'Unit' = rep('µg/L',nrow(ddt.melted)), 'Status' = rep('A',nrow(ddt.melted)))
+ddt.melted$dnd <- ifelse(ddt.melted$tResult > 0,1,0)
+ddt.melted$Name.full <- ddt.melted$Pollutant
+ddt.melted.addons <- data.frame('tMRL' = rep(0,nrow(ddt.melted)),
+                                'tMRLUnit' = rep('µg/L',nrow(ddt.melted)),
+                                'Unit' = rep('µg/L',nrow(ddt.melted)), 
+                                'Status' = rep('A',nrow(ddt.melted)))
 ddt.melted <- cbind(ddt.melted, ddt.melted.addons)
+ddt.melted$id <- paste(ddt.melted$SampleRegID, ddt.melted$Name.full, ddt.melted$Sampled)
+ddt.melted$day <- substr(ddt.melted$Sampled,1,10)
+ddt.melted$code <- paste(ddt.melted$SampleRegID, ddt.melted$Name.full, ddt.melted$day)
+ddt.melted$index <- as.character(max(as.numeric(data.complete.wo.dups$index)) + as.numeric(rownames(ddt.melted)))
+ddt.melted$criterianame <- 'Total DDT'
+ddt.melted$SampleType <- 'Sample'
 data.complete.wo.dups <- rbind(data.complete.wo.dups, ddt.melted)
 
 #Now Total Endosulfan
-endo <- data.complete.wo.dups[data.complete.wo.dups$Analyte %in% c("Endosulfan I", "Endosulfan II", "Endosulfan Sulfate"),]
-endo.casted <- dcast(endo, Agency + SampleRegID + SampleAlias + Matrix +
-                       Sampled + SampleType + SpecificMethod + chem.group ~ Analyte, value.var = 'tResult')
+endo <- data.complete.wo.dups[data.complete.wo.dups$criterianame %in% c("Endosulfan I", "Endosulfan II", "Endosulfan Sulfate"),]
+endo$tResult <- endo$tResult*endo$dnd
+endo.casted <- dcast(endo, Agency + SampleRegID + SampleAlias + Matrix + Fraction +
+                       Sampled +  SpecificMethod ~ criterianame, value.var = 'tResult')
 endo.casted$Endosulfan <- rowSums(endo.casted[,c("Endosulfan I", "Endosulfan II", "Endosulfan Sulfate")],na.rm=TRUE)
 endo.casted.sub <- within(endo.casted, rm("Endosulfan I", "Endosulfan II", "Endosulfan Sulfate"))
-endo.melted <- melt(endo.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SampleType','SpecificMethod','chem.group'),variable.name = 'Analyte',value.name = 'tResult')#melt
-endo.melted$Detect.nondetect <- ifelse(endo.melted$tResult > 0,1,0)
-endo.melted.addons <- data.frame('tMRL' = rep(0,nrow(endo.melted)), 'Unit' = rep('µg/L',nrow(endo.melted)), 'Status' = rep('A',nrow(endo.melted)))
+endo.melted <- melt(endo.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SpecificMethod','Fraction'),variable.name = 'Pollutant',value.name = 'tResult')#melt
+endo.melted$dnd <- ifelse(endo.melted$tResult > 0,1,0)
+endo.melted.addons <- data.frame('tMRL' = rep(0,nrow(endo.melted)), 
+                                 'tMRLUnit' = rep('µg/L',nrow(endo.melted)),
+                                 'Unit' = rep('µg/L',nrow(endo.melted)), 
+                                 'Status' = rep('A',nrow(endo.melted)))
 endo.melted <- cbind(endo.melted, endo.melted.addons)
+endo.melted$Name.full <- endo.melted$Pollutant
+endo.melted$id <- paste(endo.melted$SampleRegID, endo.melted$Name.full, endo.melted$Sampled)
+endo.melted$day <- substr(endo.melted$Sampled,1,10)
+endo.melted$code <- paste(endo.melted$SampleRegID, endo.melted$Name.full, endo.melted$day)
+endo.melted$index <- as.character(max(as.numeric(data.complete.wo.dups$index)) + as.numeric(rownames(endo.melted)))
+endo.melted$criterianame <- 'Endosulfan'
+endo.melted$SampleType <- 'Sample'
 data.complete.wo.dups <- rbind(data.complete.wo.dups, endo.melted)
 
 #Now Total Chlordane
-chlordane <- data.complete.wo.dups[data.complete.wo.dups$Analyte %in% c("Oxychlordane", "alpha-Chlordane", "cis-Chlordane", 'trans-Chlordane',"gamma-Chlordane+trans-Nonachlor", "trans-Nonachlor", "cis-Nonachlor"),]
+chlordane <- data.complete.wo.dups[data.complete.wo.dups$Pollutant %in% c("Oxychlordane", "alpha-Chlordane", "cis-Chlordane", 'trans-Chlordane',"gamma-Chlordane+trans-Nonachlor", "trans-Nonachlor", "cis-Nonachlor"),]
+chlordane$tResult <- chlordane$tResult*chlordane$dnd
 chlordane.casted <- dcast(chlordane, Agency + SampleRegID + SampleAlias + Matrix +
-                            Sampled + SampleType + SpecificMethod + chem.group ~ Analyte, value.var = 'tResult')
-chlordane.casted$Chlordane <- rowSums(chlordane.casted[,c("Oxychlordane", "alpha-Chlordane", "cis-Chlordane", 'trans-Chlordane',"gamma-Chlordane+trans-Nonachlor", "trans-Nonachlor", "cis-Nonachlor")],na.rm=TRUE)
-chlordane.casted.sub <- within(chlordane.casted, rm("Oxychlordane", "alpha-Chlordane", "cis-Chlordane", 'trans-Chlordane',"gamma-Chlordane+trans-Nonachlor", "trans-Nonachlor", "cis-Nonachlor"))
-chlordane.melted <- melt(chlordane.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SampleType','SpecificMethod','chem.group'),variable.name = 'Analyte',value.name = 'tResult')#melt
-chlordane.melted$Detect.nondetect <- ifelse(chlordane.melted$tResult > 0,1,0)
-chlordane.melted.addons <- data.frame('tMRL' = rep(0,nrow(chlordane.melted)), 'Unit' = rep('µg/L',nrow(chlordane.melted)), 'Status' = rep('A',nrow(chlordane.melted)))
+                            Sampled + SpecificMethod +Fraction ~ Pollutant, value.var = 'tResult')
+chlordane.casted$Chlordane <- rowSums(chlordane.casted[,c("Oxychlordane", "cis-Chlordane", 'trans-Chlordane',"trans-Nonachlor", "cis-Nonachlor")],na.rm=TRUE)
+chlordane.casted.sub <- within(chlordane.casted, rm("Oxychlordane", "cis-Chlordane", 'trans-Chlordane',"trans-Nonachlor", "cis-Nonachlor"))
+chlordane.melted <- melt(chlordane.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SpecificMethod','Fraction'),variable.name = 'Pollutant',value.name = 'tResult')#melt
+chlordane.melted$dnd <- ifelse(chlordane.melted$tResult > 0,1,0)
+chlordane.melted.addons <- data.frame('tMRL' = rep(0,nrow(chlordane.melted)), 
+                                      'tMRLUnit' = rep('µg/L',nrow(chlordane.melted)),
+                                      'Unit' = rep('µg/L',nrow(chlordane.melted)), 
+                                      'Status' = rep('A',nrow(chlordane.melted)))
 chlordane.melted <- cbind(chlordane.melted, chlordane.melted.addons)
+chlordane.melted$Name.full <- chlordane.melted$Pollutant
+chlordane.melted$id <- paste(chlordane.melted$SampleRegID, chlordane.melted$Name.full, chlordane.melted$Sampled)
+chlordane.melted$day <- substr(chlordane.melted$Sampled,1,10)
+chlordane.melted$code <- paste(chlordane.melted$SampleRegID, chlordane.melted$Name.full, chlordane.melted$day)
+chlordane.melted$index <- as.character(max(as.numeric(data.complete.wo.dups$index)) + as.numeric(rownames(chlordane.melted)))
+chlordane.melted$criterianame <- 'Chlordane'
+chlordane.melted$SampleType <- 'Sample'
 data.complete.wo.dups <- rbind(data.complete.wo.dups, chlordane.melted)
 
 #Now total PCBs
-pcb <- data.complete.wo.dups[grep('PCB',data.complete.wo.dups$Analyte),]
+pcb <- data.complete.wo.dups[grep('PCB',data.complete.wo.dups$Pollutant),]
 pcb.casted <- dcast(pcb, Agency + SampleRegID + SampleAlias + Matrix + 
-                      Sampled + SampleType + SpecificMethod + chem.group ~ Analyte, value.var = 'tResult')
-pcb.casted$'Polychlorinated Biphenyls (PCBs)' <- rowSums(pcb.casted[,unique(data.complete.wo.dups[grep('PCB',data.complete.wo.dups$Analyte),'Analyte'])],na.rm=TRUE)
-pcb.casted.sub <- pcb.casted[,!names(pcb.casted) %in% unique(data.complete.wo.dups[grep('PCB',data.complete.wo.dups$Analyte),'Analyte'])]
-pcb.melted <- melt(pcb.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SampleType','SpecificMethod','chem.group'),variable.name = 'Analyte',value.name = 'tResult')#melt
+                      Sampled + SampleType + SpecificMethod + chem.group ~ Pollutant, value.var = 'tResult')
+pcb.casted$'Polychlorinated Biphenyls (PCBs)' <- rowSums(pcb.casted[,unique(data.complete.wo.dups[grep('PCB',data.complete.wo.dups$Pollutant),'Pollutant'])],na.rm=TRUE)
+pcb.casted.sub <- pcb.casted[,!names(pcb.casted) %in% unique(data.complete.wo.dups[grep('PCB',data.complete.wo.dups$Pollutant),'Pollutant'])]
+pcb.melted <- melt(pcb.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SampleType','SpecificMethod','chem.group'),variable.name = 'Pollutant',value.name = 'tResult')#melt
 pcb.melted$Detect.nondetect <- ifelse(pcb.melted$tResult > 0,1,0)
 pcb.melted.addons <- data.frame('tMRL' = rep(0,nrow(pcb.melted)), 'Unit' = rep('µg/L',nrow(pcb.melted)), 'Status' = rep('A',nrow(pcb.melted)))
 pcb.melted <- cbind(pcb.melted, pcb.melted.addons)
