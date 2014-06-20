@@ -17,27 +17,28 @@ hardness.crit.calc <- function(df, remove.chromium = TRUE) {
     constants <- constants[constants$Name.alone != 'Chromium',]
   }
   
-  df$ID <- paste(df$SampleRegID, df$Sampled, substr(df$Analyte, nchar(df$Analyte), nchar(df$Analyte)))
+  df$ID <- paste(df$SampleRegID, df$Sampled, substr(df$Name.full, nchar(df$Name.full), nchar(df$Name.full)))
   
-  metals <- df[df$Analyte %in% constants$Analyte,]
+  metals <- df[df$criterianame %in% constants$Analyte,]
   
-  hardness <- df[grep('Hardness',df$Analyte),c('ID','Analyte','tResult')]
+  hardness <- df[grep('Hardness',df$Name.full),c('ID','Name.full','tResult')]
   
   mh <- merge(metals, hardness, by = 'ID', suffixes = c('.metal','.hardness'),all.x = TRUE)
   
   mh$tResult.hardness <- as.numeric(mh$tResult.hardness)
+  mh[is.na(mh$tResult.hardness),'tResult.hardness'] <- 25
   mh$tResult.hardness <- ifelse(mh$tResult.hardness < 25, 
                                 25, 
                                 ifelse(mh$tResult.hardness > 400, 
                                        400, 
                                        mh$tResult.hardness))
   
-  mhc <- merge(mh, constants, by.x = 'Analyte.metal', by.y = 'Analyte', all.x = TRUE)
+  mhc <- merge(mh, constants, by.x = 'criterianame', by.y = 'Analyte', all.x = TRUE)
   
   for (i in 1:nrow(mhc)) {
-    if(mhc$Analyte.metal[i] == 'Cadmium, Dissolved') {
+    if(mhc$criterianame[i] == 'Cadmium, Dissolved') {
       mhc$CFC[i] <- 1.101672-(log(mhc$tResult.hardness[i])*(0.041838))
-    } else if (mhc$Analyte.metal[i] == 'Lead, Dissolved') {
+    } else if (mhc$criterianame[i] == 'Lead, Dissolved') {
       mhc$CFA[i] <- 1.46203-(log(mhc$tResult.hardness[i])*(0.145712))
       mhc$CFC[i] <- 1.46203-(log(mhc$tResult.hardness[i])*(0.145712))
     }
@@ -50,11 +51,11 @@ hardness.crit.calc <- function(df, remove.chromium = TRUE) {
   
   mhcm <- mhc.melted[!is.na(mhc.melted$value),]
   
-  mhcm <- rename(mhcm, c('Analyte.metal' = 'Analyte', 'tResult.metal' = 'tResult', 'Matrix' = 'Matrix.x'))
+  mhcm <- rename(mhcm, c('Name.full.metal' = 'Name.full', 'tResult.metal' = 'tResult', 'Matrix' = 'Matrix.x'))
   
   mhcm$Matrix.y <- 'FW'
   
-  mhcm$Pollutant <- mhcm$Analyte
+  #mhcm$Pollutant <- mhcm$Pollutant
   
   return(mhcm)
 }
@@ -62,10 +63,10 @@ hardness.crit.calc <- function(df, remove.chromium = TRUE) {
 
 #the general case -- This requires two input dataframes, a detect dataframe and a constants dataframe. the detect dataframe must have
 #the detect columns     Name.full: A concatentation of Total Recoverable or Dissolved and the metal name with no space in between
-#                            Analyte: The metal name alone
+#                            Pollutant: The metal name alone
 #                             tResult: A clean numeric Result field in micrograms/L
 #                              ID: A concatenation of the STATION and SAMPLE_DATE fields
-#the constants columns Name.alone: The metal name alone (equivalent to Analyte in the detect dataframe)
+#the constants columns Name.alone: The metal name alone (equivalent to Pollutant in the detect dataframe)
 #                       Name.full: The metal name preceded by Total Recoverable or Dissolved
 #                          mA, bA: The coefficients for acute criteria calculation
 #                          mC, bC: The coefficients for chronic criteria calculation
