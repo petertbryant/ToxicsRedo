@@ -31,7 +31,7 @@ sampleMedia <- 'Water'
 wqp.characteristics <- WQP.domain.get('Characteristicname')
 
 #wqp.characteristics[grep('[Ss]alinity|[Cc]onducti',wqp.characteristics$value),]
-consal <- c('Conductivity','Salinity','Specific conductivity')
+consal <- URLencode.PTB(paste(c('Conductivity','Salinity','Specific conductivity'),collapse=';'))
 
 #wqp.characteristics[grep('[Pp]hosphate',wqp.characteristics$value),]
 phos <- c('Orthophosphate as P',
@@ -48,7 +48,18 @@ startDate <- '01-01-2000'
 endDate <- '12-31-2011'
 
 #Pull in stations to query for salinity and conductivity
-read.csv()
+consal.stations.file <- read.csv('Estuary_Analysis/stations_needing_salinity_data.csv', stringsAsFactors = FALSE)
+consal.stations <- wqp.stations[wqp.stations$site_only %in% consal.stations.file$STATION,'MonitoringLocationIdentifier']
+consal.stations <- URLencode.PTB(paste(consal.stations,collapse=";"))
+
+#Query for conductivity and salinity
+tmp.consal.data <- wqp.data.query.by.station(stateCode = Oregon, 
+                                       siteType = siteType, 
+                                       sampleMedia = sampleMedia, 
+                                       characteristicName = consal, 
+                                       startDate = startDate, 
+                                       endDate = endDate,
+                                       siteid = consal.stations)
 
 #Query for phosphorus data
 tmp.phos.stations <- wqp.station.query(stateCode = Oregon, 
@@ -289,6 +300,11 @@ temp.lasar <- make.clean(temp.lasar, temp.report)
 hg.ft.lasar <- lasar.query(parms = names(hg), sampleMatrix = ft)
 hg.ft.lasar.report <- create.sub.table(hg.ft.lasar$Result)
 hg.ft.lasar <- make.clean(hg.ft.lasar, hg.ft.lasar.report)
+
+#conductivity and salinity
+consal.lasar <- lasar.query(parms = c('Conductivity', 'Salinity'), sampleMatrix = sw, stations = consal.stations.file[nchar(consal.stations.file$STATION) == 5,'STATION'])
+consal.report <- create.sub.table(consal.lasar$Result)
+consal.lasar <- make.clean(consal.lasar, consal.report)
 
 #Add pH and temperature to the complete lasar dataset
 lasar <- rbind(lasar, ph.lasar, temp.lasar)

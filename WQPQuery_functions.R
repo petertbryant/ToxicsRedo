@@ -97,6 +97,21 @@ wqp.data.query <- function(stateCode, siteType, sampleMedia, characteristicName,
   wqp.data <- read.csv(textConnection(tmp.data), stringsAsFactors = FALSE, as.is = c('ResultMeasureValue'))
   }
 
+wqp.data.query.by.station <- function(stateCode, siteType, sampleMedia, characteristicName, startDate, endDate, siteid) { 
+  theDataURL <- paste('http://www.waterqualitydata.us/Result/search?',
+                      'statecode=', Oregon,
+                      '&siteType=', siteType, 
+                      '&siteid=', siteid,
+                      '&sampleMedia=', sampleMedia,
+                      '&characteristicName=', characteristicName,
+                      '&startDateLo=', startDate,
+                      '&startDateHi=', endDate,
+                      '&mimeType=csv', sep ='')
+  
+  tmp.data <- getURL(theDataURL)
+  wqp.data <- read.csv(textConnection(tmp.data), stringsAsFactors = FALSE, as.is = c('ResultMeasureValue'))
+}
+
 WQPvarTypes <- c('OrganizationIdentifier'= 'varchar(255)',
                  'OrganizationFormalName'= 'varchar(255)',
                  'ActivityIdentifier'= 'varchar(255)',
