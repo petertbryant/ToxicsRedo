@@ -139,9 +139,9 @@ pentachlorophenol.crit.calc <- function(df) {
 
   df$ID <- paste(df$SampleRegID, df$Sampled)
   
-  penta <- df[df$Analyte == 'Pentachlorophenol',]
+  penta <- df[df$criterianame == 'Pentachlorophenol',]
   
-  ph <- df[df$Analyte == 'pH',c('ID','Analyte','tResult')]
+  ph <- df[df$Pollutant == 'pH',c('ID','Pollutant','tResult')]
   
   pp <- merge(penta, ph, by = 'ID', suffixes = c('.penta','.ph'),all.x = TRUE)
   
@@ -154,7 +154,7 @@ pentachlorophenol.crit.calc <- function(df) {
   
   ppm <- pp.melted[!is.na(pp.melted$value),]
   
-  ppm <- rename(ppm, c('Analyte.penta' = 'Analyte', 'tResult.penta' = 'tResult', 'Matrix' = 'Matrix.x'))
+  ppm <- rename(ppm, c('Pollutant.penta' = 'Analyte', 'tResult.penta' = 'tResult', 'Matrix' = 'Matrix.x'))
   
   ppm$Matrix.y <- 'FW'
   
@@ -172,11 +172,11 @@ ammonia.crit.calc <- function(df, salmonids = 'all') {
   
   df$ID <- paste(df$SampleRegID, df$Sampled)
   
-  amm <- df[df$Analyte == 'Ammonia as N',]
+  amm <- df[df$criterianame == 'Ammonia as N',]
   
-  ph <- df[df$Analyte == 'pH',c('ID','Analyte','tResult')]
+  ph <- df[df$criterianame == 'pH',c('ID','Analyte','tResult')]
   
-  temp <- df[df$Analyte == 'Temperature',c('ID','Analyte','tResult')]
+  temp <- df[df$criterianame == 'Temperature',c('ID','Analyte','tResult')]
   
   cond <- df[df$Analyte == 'Conductivity',c('ID','Analyte','tResult')]
   

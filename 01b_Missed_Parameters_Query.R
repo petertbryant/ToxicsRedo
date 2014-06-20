@@ -24,10 +24,14 @@ siteType = 'Estuary%3BOcean%3BStream%3BStream%3BLake%2C+Reservoir%2C+Impoundment
 #Separate each value you want to query with the URL encoded semi-colon '%3B'.
 phos.sampleMedia <- 'Water'
 hg.sampleMedia <- 'Biological%3bBiological+Tissue'
+sampleMedia <- 'Water'
 
 #### Define characteristics to query ####
 #First get the list of Characteristic names from the WQP. These names are consistent with EPA's SRS. 
-#wqp.characteristics <- WQP.domain.get('Characteristicname')
+wqp.characteristics <- WQP.domain.get('Characteristicname')
+
+#wqp.characteristics[grep('[Ss]alinity|[Cc]onducti',wqp.characteristics$value),]
+consal <- c('Conductivity','Salinity','Specific conductivity')
 
 #wqp.characteristics[grep('[Pp]hosphate',wqp.characteristics$value),]
 phos <- c('Orthophosphate as P',
@@ -42,6 +46,9 @@ hg.wqp <- c('Mercury','Methylmercury(1+)')
 #The expected format is mm-dd-yyyy
 startDate <- '01-01-2000'
 endDate <- '12-31-2011'
+
+#Pull in stations to query for salinity and conductivity
+read.csv()
 
 #Query for phosphorus data
 tmp.phos.stations <- wqp.station.query(stateCode = Oregon, 
