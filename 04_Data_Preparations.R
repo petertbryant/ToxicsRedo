@@ -404,6 +404,9 @@ dcwd.w.totals <- remove.dups(dcwd.w.totals)
 dcwd.w.totals$Matrix <- 'FW' #mapvalues(dcwd.w.totals$Matrix, from = c("River/Stream", "Estuary"), to = c('FW','SW'))
 dcwd.w.totals$ID <- paste(dcwd.w.totals$criterianame, dcwd.w.totals$Matrix)
 
+#make the tMRL 0 where it is NA for determining valid samples later on
+dcwd.w.totals[is.na(dcwd.w.totals$tMRL),'tMRL'] <- 0
+
 #Now that the names are consistent we can match using analyte name and bring in the criteria
 deq.pollutants <- criteria.values.melted.applicable[criteria.values.melted.applicable$variable %in% 
                                                       c('Table 40 Human Health Criteria for Toxic Pollutants - Water + Organism',
@@ -415,37 +418,70 @@ deq.pollutants <- criteria.values.melted.applicable[criteria.values.melted.appli
 deq.pollutants <- deq.pollutants[!duplicated(deq.pollutants$Pollutant),]
 criteria.for.analytes.we.have <- deq.pollutants[deq.pollutants$Pollutant %in% dcwd.w.totals$criterianame,]
 dcc <- merge(dcwd.w.totals, criteria.for.analytes.we.have, by = 'ID', all.x = TRUE)
+dcc <- within(dcc, rm(Pollutant.y))
+dcc <- rename(dcc, c('Pollutant.x' = 'Pollutant'))
 
-#Where the MRL is greater than the criteria we can't use that sample to determine attainment or non-attainment
-dcc[is.na(dcc$tMRL),'tMRL'] <- 0
-dcc$Valid <- ifelse(dcc$tMRL < dcc$value, 1, 0)
-
-
+#### Hardness criteria calculation ####
 #Using the hardness evaluation function loaded above we can calculate the hardness based criteria values
 #and bring them into the dataframe with the other criteria values. First, though we remove the hardness 
 #metals from the dataframe since the output of the function maintains all the columns of the original dataframe
+#Calculate criteria based on hardness
 hm <- hardness.crit.calc(dcwd.w.totals)
-hm <- hm[,names(dcc)]
-dvc.wo.hm <- dvc[!dvc$Analyte %in% hm$Analyte,]
-dvc.hm <- rbind(dvc.wo.hm, hm)
+
+#Assumes total sample fraction for those samples that remain unstandardized
+hm[!grepl('Total recoverable|Dissolved', hm$Name.full),'Name.full'] <- paste(hm[!grepl('Total recoverable|Dissolved', hm$Name.full),'Name.full'], 'Total recoverable', sep = ", ")
+
+#Determine minimum applicable criteria for each sample
+hm.min <- ddply(hm, .(criterianame, SampleRegID, Sampled, Fraction), function(m) {m[which(m$value == min(m$value)),]})
+
+#Preserve result column
+hm.min$tResult.old <- hm.min$tResult
+
+#Select appropriate sample fraction when both available and convert when NOT except where the sample is ND. 
+hm.frac <- ddply(hm.min, .(criterianame, SampleRegID, Sampled), function(m) {
+  if(nrow(m) > 1) {
+    use <- m[m$criterianame == m$Name.full,] 
+    use$tResult <- use$tResult.old
+  } else {
+    use <- m
+    use$tResult <- ifelse(use$tMRL < use$value,ifelse(grepl('Chronic',use$variable),use$tResult*use$CFC,use$tResult*use$CFA),use$tResult.old)
+  }
+  return(use)
+})
+# hm.frac$check <- paste(hm.frac$criterianame, hm.frac$SampleRegID, hm.frac$Sampled)
+# any(duplicated(hm.frac$check))
+# hm.frac <- within(hm.frac, rm(check))
+#Percentages of using a non-matching sample fraction to compare to the standard
+# table(hm.frac[hm.frac$criterianame != hm.frac$Name.full,'criterianame'])/ table(hm.frac$criterianame) *100
+hm.frac <- hm.frac[,names(dcc)]
+dcc.wo.hm <- dcc[!dcc$criterianame %in% hm.frac$criterianame,]
+dcc.hm <- rbind(dcc.wo.hm, hm.frac)
+
+#### Pentachlorophenol pH dependent criteria calculation ####
+#Similarly pentachlorophenol is parameter dependent and is handled the same as hardness
+# penta <- pentachlorophenol.crit.calc(dcwd.w.totals)
+# penta <- penta[,names(dcc)]
+# penta40 <- dcc[dcc$criterianame == 'Pentachlorophenol' & !is.na(dcc$variable),]
+# penta.all <- rbind(penta, penta40)
+# penta.min <- ddply(penta.all, .(criterianame, SampleRegID, Sampled, Fraction), function(m) {m[which(m$value == min(m$value)),]})
+
+## Turns out Table 40 criteria for penta are ALWAYS lower for this dataset ##
+
+#dcc.wo.penta <- dcc.hm[!dcc.hm$criterianame %in% penta$criterianame,]
+#dcc.penta <- rbind(dcc.wo.penta, penta)
+#rm(list = ls()[c(grep('penta', ls()))])
+
+#make a couple sites saltwater for testing
+#data.wo.void[data.wo.void$SampleRegID %in% c(28574,13141),'Matrix'] <- 'SW'
+
+#### Ammonia pH and temperature dependent criteria calculation ####
+#Ammonia is also parameter dependent and is handled similarly
+amm <- ammonia.crit.calc(data.wo.void)
+amm <- amm[,names(dvc)]
+dvc.wo.amm <- dvc.penta[!dvc.penta$Analyte %in% amm$Analyte,]
+dvc.amm <- rbind(dvc.wo.amm, amm)
+dvc.hm <- dvc.amm
 
 
-#### Pick total or dissolved based on criteria ####
-#We will make the assumption that if fraction is not specified, then it is toal
-data.complete.wo.dups[data.complete.wo.dups$Name.full %in% c(total.to.recoverable),'Name.full'] <- paste(data.complete.wo.dups[data.complete.wo.dups$Name.full %in% c(total.to.recoverable),'Name.full'], ', Total recoverable', sep ='')
-
-View(arrange(unique(data.complete.wo.dups[data.complete.wo.dups$Pollutant %in% c(total.to.recoverable, dissolved.metals) & 
-                                            data.complete.wo.dups$Name.full != data.complete.wo.dups$criteria.name,c('Name.full','criteria.name')]),criteria.name))
-
-View(arrange(unique(data.complete.wo.dups[data.complete.wo.dups$Pollutant %in% c(total.to.recoverable, dissolved.metals),c('Name.full','criteria.name')]),criteria.name))
-
-metals <- unique(data.complete.wo.dups[data.complete.wo.dups$Pollutant %in% c(total.to.recoverable, dissolved.metals) ,'criteria.name'])
-
-deq.metals.criteria <- criteria.values.melted.applicable.nonnum[criteria.values.melted.applicable.nonnum$Pollutant %in% 
-                                                                  metals & criteria.values.melted.applicable.nonnum$variable %in% 
-                                                                  deq.pollutants$variable,]
-source('TMP-RCode/hardness_eval_functions_Element_Names.R')
-
-dc.dissolved.crit <- (data.complete.wo.dups[data.complete.wo.dups$criteria.name %in% constants$Analyte,])
-
-paste(data.complete.wo.dups$SampleRegID, data.complete.wo.dups$Sampled, data.complete.wo.dups$Pollutant)
+#Where the MRL is greater than the criteria we can't use that sample to determine attainment or non-attainment
+dcc$Valid <- ifelse(dcc$tMRL < dcc$value, 1, 0)
