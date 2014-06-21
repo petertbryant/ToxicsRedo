@@ -36,6 +36,23 @@ qc2_streams = "qc2_streams"
 temp = "E:/GitHub/ToxicsRedo/StationsToLocate/FinalList/assign_llid_temp.gdb/individual_runs"
 reruns = "E:/GitHub/ToxicsRedo/StationsToLocate/FinalList/assign_llid_temp.gdb/reruns"
 
+#
+##Subset the 44 new lasar stations from master lasar station shapefile
+#ls_df = pd.read_csv("E:/GitHub/ToxicsRedo/StationsToLocate/FinalList/Additional_LASAR_Stations_to_locate_06112014.csv", header=0)
+#ls_keys = ls_df['STATION_KEY'].values
+#
+#in_feature = "//Deqlead03/gis_wa/Project_Working_Folders/LASAR_Stations/LASAR_Stations/LASAR_Stations_26sept13.shp"
+#out_feature = "E:/GitHub/ToxicsRedo/StationsToLocate/FinalList/ShapeFiles/Additional_LASAR_Stations_test.shp"
+#lstations = "lstations"
+#query = """ "STATION_KE" in """ + "(" + ', '.join([str(i) for i in ls_keys]) +")"
+#
+#arcpy.MakeFeatureLayer_management(in_feature, lstations)
+#arcpy.SelectLayerByAttribute_management(lstations, "NEW_SELECTION", query)
+##arcpy.GetCount_management(lstations).getOutput(0)
+#arcpy.CopyFeatures_management(lstations, out_feature)
+#
+
+
 # Check to see if a temp geodatabase exists. If not, create it.
 if os.path.exists(temp_location + temp_gdb):
     print "It exist!"
