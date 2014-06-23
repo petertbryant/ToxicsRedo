@@ -174,11 +174,11 @@ ammonia.crit.calc <- function(df, salmonids = 'all') {
   
   amm <- df[df$criterianame == 'Ammonia as N',]
   
-  ph <- df[df$criterianame == 'pH',c('ID','Analyte','tResult')]
+  ph <- df[df$criterianame == 'pH',c('ID','Pollutant','tResult')]
   
-  temp <- df[df$criterianame == 'Temperature',c('ID','Analyte','tResult')]
+  temp <- df[df$criterianame == 'Temperature',c('ID','Pollutant','tResult')]
   
-  cond <- df[df$Analyte == 'Conductivity',c('ID','Analyte','tResult')]
+  sal <- df[df$criterianame == 'Salinity',c('ID','Pollutant','tResult')]
   
   ap <- merge(amm, ph, by = 'ID', suffixes = c('.amm','.ph'),all.x = TRUE)
   
@@ -215,34 +215,35 @@ ammonia.crit.calc <- function(df, salmonids = 'all') {
   
   aptm$Matrix.y <- 'FW'
   
-  aptm <- within(aptm, rm(Analyte))
+  aptm <- within(aptm, rm(Pollutant))
   
   #The saltwater criteria
-  aptc <- merge(apt, cond, by = 'ID', suffixes = c('.temp','.cond'),all.x = TRUE)
+  aptc <- merge(apt, sal, by = 'ID', suffixes = c('.temp','.sal'),all.x = TRUE)
   
   aptc <- aptc[aptc$Matrix == 'SW',]
   
-  aptc$tResult.cond <- as.numeric(aptc$tResult.cond)
+  aptc$tResult.sal <- as.numeric(aptc$tResult.sal)
   
   #for testing let's actually make these conductivities more saline
-  #set.seed(3000)
-  #aptc$tResult.cond <- rnorm(172, 3000, sd = 500)
-  
-    #to use the Salinity function in the wq package we have to convert to mS
-  aptc$tResult.cond.mS <- aptc$tResult.cond/1000
-  
-  #Then we can actually do the conversion - THIS equation appears to only work for actual conductance
-  #aptc$Salinity <- ec2pss(aptc$tResult.cond.mS, aptc$tResult.temp)
-  
-  #This equation comes from http://pubs.usgs.gov/tm/2006/tm1D3/pdf/TM1D3.pdf page 36 
-  #The report says this equation is used to convert specific conductance to salinity
-  aptc$R <- aptc$tResult.cond.mS/53.087
-  aptc$Salinity <- (0.0120 + (-0.2174*(aptc$R^(1/2))) + (25.3283*aptc$R) + (13.7714*(aptc$R^(3/2))) + 
-                    (-6.4788*(aptc$R^2)) + (2.5842*(aptc$R^(5/2))))
+#   set.seed(3000)
+#   aptc$tResult.sal <- rnorm(14115, 20, sd = 1)
+#   
+  #Since we already had some salinity it made more sense to convert all to salinity and take the max so this should already be done
+#     #to use the Salinity function in the wq package we have to convert to mS
+#   aptc$tResult.cond.mS <- aptc$tResult.cond/1000
+#   
+#   #Then we can actually do the conversion - THIS equation appears to only work for actual conductance
+#   #aptc$Salinity <- ec2pss(aptc$tResult.cond.mS, aptc$tResult.temp)
+#   
+#   #This equation comes from http://pubs.usgs.gov/tm/2006/tm1D3/pdf/TM1D3.pdf page 36 
+#   #The report says this equation is used to convert specific conductance to salinity
+#   aptc$R <- aptc$tResult.cond.mS/53.087
+#   aptc$Salinity <- (0.0120 + (-0.2174*(aptc$R^(1/2))) + (25.3283*aptc$R) + (13.7714*(aptc$R^(3/2))) + 
+#                     (-6.4788*(aptc$R^2)) + (2.5842*(aptc$R^(5/2))))
   
   
   #Now that we have Salinity we can use it in the calculation
-  mis <- (19.9273*aptc$Salinity/(1000-1.005109*aptc$Salinity))
+  mis <- (19.9273*aptc$tResult.sal/(1000-1.005109*aptc$tResult.sal))
   pk <- ifelse(mis>0.85,NA,9.245+0.116*mis)
   pu <- (1/(1+10^(pk+0.0324*(298-aptc$tResult.temp-273)+0.0415*1/(aptc$tResult.temp+273)-aptc$tResult.ph)))
   unionized.acute <- 0.233
@@ -260,7 +261,7 @@ ammonia.crit.calc <- function(df, salmonids = 'all') {
   
   aptcm$Matrix.y <- rep('SW',nrow(aptcm))
   
-  aptcm <- within(aptcm, rm(Analyte.temp,Analyte.cond,tResult.cond,tResult.cond.mS,Salinity,R))
+  aptcm <- within(aptcm, rm(Pollutant.temp,Pollutant.sal,tResult.sal,R))
   
   aptm.sub <- (aptm[,names(aptm)[names(aptm) %in% names(aptcm)]])
   
@@ -268,8 +269,11 @@ ammonia.crit.calc <- function(df, salmonids = 'all') {
   
   amm.fw.sw$Pollutant <- amm.fw.sw$Analyte.amm
   
-  amm.fw.sw <- rename(amm.fw.sw, c('Analyte.amm' = 'Analyte', 'Matrix' = 'Matrix.x', 'tResult' = 'tResult.temp', 'tResult.amm' = 'tResult'))
+  amm.fw.sw <- rename(amm.fw.sw, c('Pollutant.amm' = 'Pollutant', 'Matrix' = 'Matrix.x', 'tResult' = 'tResult.temp', 'tResult.amm' = 'tResult'))
   
+  #Convert to micrograms per liter for consistency
+  amm.fw.sw$value <- amm.fw.sw$value* 1000
+
   return(amm.fw.sw)
   
   

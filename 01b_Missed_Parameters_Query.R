@@ -60,6 +60,9 @@ tmp.consal.data <- wqp.data.query.by.station(stateCode = Oregon,
                                        startDate = startDate, 
                                        endDate = endDate,
                                        siteid = consal.stations)
+write.csv(tmp.consal.data, 'Estuary_Analysis/WQP_consal.csv', row.names = FALSE)
+
+#There are no ammonia data that made it past the QC checks from the WQP.
 
 #Query for phosphorus data
 tmp.phos.stations <- wqp.station.query(stateCode = Oregon, 
@@ -305,9 +308,7 @@ hg.ft.lasar <- make.clean(hg.ft.lasar, hg.ft.lasar.report)
 consal.lasar <- lasar.query(parms = c('Conductivity', 'Salinity'), sampleMatrix = sw, stations = consal.stations.file[nchar(consal.stations.file$STATION) == 5,'STATION'])
 consal.report <- create.sub.table(consal.lasar$Result)
 consal.lasar <- make.clean(consal.lasar, consal.report)
-
-#Add pH and temperature to the complete lasar dataset
-lasar <- rbind(lasar, ph.lasar, temp.lasar)
+write.csv(consal.lasar, 'Estuary_Analysis/LASAR_consal.csv', row.names = FALSE)
 
 #Save this complete lasar dataset to the database to make it easier for later analyses to run. Mostly
 #so we don't have to re-run the queries of the lasar database every time.
@@ -316,5 +317,25 @@ lasar <- rbind(lasar, ph.lasar, temp.lasar)
 # lasar.to.save$SAMPLE_DATE <- as.character(lasar.to.save$SAMPLE_DATE)
 # lasar.to.save$SAMPLE_TIME <- substr(as.character(lasar.to.save$SAMPLE_TIME),12,19)
 # sqlSave(wq, lasar.to.save, tablename = 'LASAR_Toxics_Query_wAddOns_06122014', rownames = FALSE)
+# rm(lasar.to.save)
+# odbcCloseAll()
+
+#So it looks like I screwed up and when I went to add criteria names I didn't include the temperature and pH I had queried from lasar
+#Here i query that table back in, add ph.lasar and temp.lasar to it and save it back to the database with a new name to use in the data prep
+wq <- odbcConnect('WQAssessment')
+lasar <- sqlFetch(wq, 'LASAR_Toxics_Query_wCriteriaNames_06132014')
+#Add pH and temperature to the complete lasar dataset
+ph.lasar$criterianame <- 'pH'
+ph.lasar <- rename(ph.lasar, c('Name.full' = 'Namefull'))
+ph.lasar$SAMPLE_DATE <- as.character(ph.lasar$SAMPLE_DATE)
+ph.lasar$SAMPLE_TIME <- substr(as.character(ph.lasar$SAMPLE_TIME),12,19)
+temp.lasar$criterianame <- 'Temperature'
+temp.lasar <- rename(temp.lasar, c('Name.full' = 'Namefull'))
+temp.lasar$SAMPLE_DATE <- as.character(temp.lasar$SAMPLE_DATE)
+temp.lasar$SAMPLE_TIME <- substr(as.character(temp.lasar$SAMPLE_TIME),12,19)
+lasar <- rbind(lasar, ph.lasar, temp.lasar)
+lasar$Result_clean <- as.numeric(lasar$Result_clean)
+# lasar.to.save <- lasar
+# sqlSave(wq, lasar.to.save, tablename = 'LASAR_Toxics_Query_wcriterianame_wAddOns_06232014', rownames = FALSE)
 # rm(lasar.to.save)
 # odbcCloseAll()

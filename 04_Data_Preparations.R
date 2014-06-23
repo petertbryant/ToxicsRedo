@@ -10,10 +10,36 @@ options(stringsAsFactors = FALSE, scipen = 100)
 con <- odbcConnect('WQAssessment')
 wqp.data <- sqlFetch(con, 'WQPData_woLASAROverlap_06132014')
 wqp.stations <- sqlFetch(con, 'WQPStations_wUpdatedLatLon_06132014')
-lasar <- sqlFetch(con, 'LASAR_Toxics_Query_wCriteriaNames_06132014')
+lasar <- sqlFetch(con, 'LASAR_Toxics_Query_wcriterianame_wAddOns_06232014')
 odbcCloseAll()
 #names(wqp.data)
 #....we've got some work to do
+lasar$Result_clean <- as.numeric(lasar$Result_clean)
+consal.lasar <- read.csv('Estuary_Analysis/LASAR_consal.csv')
+consal.lasar$criterianame <- consal.lasar$NAME
+consal.lasar[consal.lasar$NAME == 'Conductivity','Result_clean'] <- consal.lasar[consal.lasar$NAME == 'Conductivity','Result_clean']/1000
+#This equation comes from http://pubs.usgs.gov/tm/2006/tm1D3/pdf/TM1D3.pdf page 36 
+#The report says this equation is used to convert specific conductance to salinity
+consal.lasar[consal.lasar$NAME == 'Conductivity','R'] <- consal.lasar[consal.lasar$NAME == 'Conductivity','Result_clean']/53.087
+consal.lasar[consal.lasar$NAME == 'Conductivity','Result_clean'] <- (0.0120 + (-0.2174*(consal.lasar[consal.lasar$NAME == 'Conductivity','R']^(1/2))) + (25.3283*consal.lasar[consal.lasar$NAME == 'Conductivity','R']) + (13.7714*(consal.lasar[consal.lasar$NAME == 'Conductivity','R']^(3/2))) + 
+                    (-6.4788*(consal.lasar[consal.lasar$NAME == 'Conductivity','R']^2)) + (2.5842*(consal.lasar[consal.lasar$NAME == 'Conductivity','R']^(5/2))))
+consal.lasar[consal.lasar$NAME == 'Conductivity','UNIT'] <- 'ppth'
+consal.lasar[consal.lasar$NAME == 'Conductivity','criterianame'] <- 'Salinity'
+consal.lasar[consal.lasar$NAME == 'Conductivity','NAME'] <- 'Salinity'
+consal.lasar.max <- ddply(consal.lasar, .(STATION_KEY,SAMPLE_DATE,SAMPLE_TIME,NAME,LOCATION_DESCRIPTION,UNIT,criterianame,SAMPLE_MATRIX), summarise, Result_clean = max(Result_clean))
+consal.lasar.max <- cbind(consal.lasar.max, data.frame('PARAMETER_KEY' = rep(5229,nrow(consal.lasar.max)),
+                                                       'Result' = consal.lasar.max$Result_clean,
+                                                       'ABBREVIATION' = rep('Field',nrow(consal.lasar.max)),
+                                                       'Namefull' = rep('FieldSalinity',nrow(consal.lasar.max)),
+                                                       'METHOD_DETECTION_LIMIT' = rep(0,nrow(consal.lasar.max)),
+                                                       'METHOD_REPORTING_LIMIT' = rep(0,nrow(consal.lasar.max)),
+                                                       'QA_QC_TYPE' = rep('Sample',nrow(consal.lasar.max)),
+                                                       'STATUS' = rep('A',nrow(consal.lasar.max)),
+                                                       'SUBPROJECT_NAME' = rep(NA,nrow(consal.lasar.max))))
+consal.lasar.max$SAMPLE_TIME <- substr(consal.lasar.max$SAMPLE_TIME,12,19)
+#join back up with lasar
+lasar <- rbind(lasar, consal.lasar.max)
+rm(consal.lasar, consal.lasar.max)
 
 #Pull in the compiled criteria table used for the Toxics Monitoring prgram
 source('//deqlead01/wqm/TOXICS_2012/Data/R/criteria.R')
@@ -476,12 +502,11 @@ dcc.hm <- rbind(dcc.wo.hm, hm.frac)
 
 #### Ammonia pH and temperature dependent criteria calculation ####
 #Ammonia is also parameter dependent and is handled similarly
-amm <- ammonia.crit.calc(data.wo.void)
-amm <- amm[,names(dvc)]
-dvc.wo.amm <- dvc.penta[!dvc.penta$Analyte %in% amm$Analyte,]
-dvc.amm <- rbind(dvc.wo.amm, amm)
-dvc.hm <- dvc.amm
-
+amm <- ammonia.crit.calc(dcwd.w.totals)
+amm <- amm[,names(dcc.hm)]
+amm.min <- ddply(amm, .(criterianame, SampleRegID, Sampled, Fraction), function(m) {m[which(m$value == min(m$value)),]})
+dcc.wo.amm <- dcc.hm[!dcc.hm$Pollutant %in% amm.min$Pollutant,]
+dcc.amm <- rbind(dcc.wo.amm, amm.min)
 
 #Where the MRL is greater than the criteria we can't use that sample to determine attainment or non-attainment
-dcc$Valid <- ifelse(dcc$tMRL < dcc$value, 1, 0)
+dcc.amm$Valid <- ifelse(dcc.amm$tMRL < dcc.amm$value, 1, 0)
