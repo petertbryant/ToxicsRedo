@@ -3,14 +3,17 @@
 Created on Mon Jun 16 14:00:34 2014
 
 @author: MPsaris
+
+This script uses stations classified as estuaries in the 2010 IR to classify new stations used in the 2012 IR toxics "redo"
+The analysis classifies any new stations as estuary if there are stations from 2010's IR already classified as estuary.
 """
 
 import arcpy
 import numpy
 import pandas as pd
-import re
 from arcpy import env
 import os.path
+from __builtin__ import any
 
 arcpy.env.overwriteOutput = True
 workspace = "E:/GitHub/ToxicsRedo/Estuary_Analysis"
@@ -74,7 +77,7 @@ def upstreamEstuary(llid, rm, estuary_stations):
             if row[0] == llid:
                 est = est.append({'llid': str(row[0]), 'rm':row[1], 'estuary':row[2]}, ignore_index=True)
     est = est[est['rm']>= rm]
-    if any([x==1 for x in est['estuary']]):
+    if any(x==1 for x in est['estuary']):
         return('Estuary')
     else:
         return('Needs Further Review')
@@ -82,18 +85,16 @@ def upstreamEstuary(llid, rm, estuary_stations):
 upstreamEstuary('1244292424210', 0.485352, stations_2010)
 
 #Create new estuary field and populate it using upstreamEstuary function
-in_fc = "E:/GitHub/ToxicsRedo/Estuary_Analysis/Estuaries.gdb/test"
-out_fc = "E:/GitHub/ToxicsRedo/Estuary_Analysis/Estuaries.gdb/test1"
+in_fc = "E:/GitHub/ToxicsRedo/Estuary_Analysis/Estuaries.gdb/stations_subset"
+out_fc = "E:/GitHub/ToxicsRedo/Estuary_Analysis/Estuaries.gdb/stations_subset_est2010"
 arcpy.CopyFeatures_management(in_fc, out_fc)
 arcpy.AddField_management(out_fc, 'Estuary_2010', 'TEXT')
 with arcpy.da.UpdateCursor(out_fc, ['LLID', 'RIVER_MILE', 'Estuary_2010']) as cursor:
     for row in cursor:
-        print(row)
-        if row[0] == 0:
+        print(type(row[0]))
+        if row[0] == 0 or row[0] is None:
             row[2] = 'No stream LLID'
         else:
-            row[2] = upstreamEstuary(row[0], row[1], stations_2010)
-            print(row[2])
+            row[2] = upstreamEstuary(str("{:13.0f}".format(row[0])), row[1], stations_2010)
         cursor.updateRow(row)
-
 
