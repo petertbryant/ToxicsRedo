@@ -4,6 +4,12 @@ Created on Thu Jun 12 11:49:12 2014
 
 @author: MPsaris
 
+This script is used to merge the station lists that resulted from two rounds of assigning LLIDs and River Miles.
+After running the 'Assign_LLID.py' script, the attribute tables of the resulting feature classes were exported to 
+excel so a manual review could be conducted. Once manual changes were finalized, the modified spreadsheets were 
+saved as csv files. This script takes those csv files, joins them back up with the original shapefiles, merges 
+them, and finally formats the field names so the stations are ready to add to the 2010 station list. This list
+will be the master station list for the 2012 IR toxics "redo".
 """
 
 import arcpy

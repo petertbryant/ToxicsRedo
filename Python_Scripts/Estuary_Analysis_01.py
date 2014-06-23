@@ -3,12 +3,14 @@
 Created on Mon Jun 16 14:00:34 2014
 
 @author: MPsaris
+
+This script uses stations classified as estuaries in the 2010 IR to classify new stations used in the 2012 IR toxics "redo"
+The analysis classifies any new stations as estuary if there are stations from 2010's IR already classified as estuary.
 """
 
 import arcpy
 import numpy
 import pandas as pd
-import re
 from arcpy import env
 import os.path
 from __builtin__ import any
