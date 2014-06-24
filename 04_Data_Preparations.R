@@ -42,7 +42,7 @@ lasar <- rbind(lasar, consal.lasar.max)
 rm(consal.lasar, consal.lasar.max)
 
 #Pull in the compiled criteria table used for the Toxics Monitoring prgram
-source('//deqlead01/wqm/TOXICS_2012/Data/R/criteria.R')
+source('//deqhq1/wqassessment/2012_WQAssessment/ToxicsRedo/TMP-RCode/criteria.R')
 
 #Pull in criteria determination calculation functions
 source('//deqhq1/wqassessment/2012_WQAssessment/ToxicsRedo/TMP-RCode/hardness_eval_functions_Element_Names.R')
@@ -68,7 +68,9 @@ wqp.data$Sampled <- paste(wqp.data$ActivityStartDate, wqp.data$ActivityStartTime
 
 #Make a column with criteria name based on earlier mapping 
 wqp.name.match <- read.csv('WQPNameMatch_05142014.csv',stringsAsFactors=FALSE)
-wqp.data$criterianame <- mapvalues(wqp.data$CharacteristicName, from = wqp.name.match$WQP.Name, to = wqp.name.match$Criteria.Name)
+wqp.data <- merge(wqp.data, wqp.name.match[,c('WQP.Name','Criteria.Name')], by.x = 'CharacteristicName', by.y = 'WQP.Name', all.x = TRUE)
+wqp.data <- rename(wqp.data, c('Criteria.Name' = 'criterianame'))
+#wqp.data$criterianame <- mapvalues(wqp.data$CharacteristicName, from = wqp.name.match$WQP.Name, to = wqp.name.match$Criteria.Name)
 
 #table(wqp.data[wqp.data$ResultSampleFractionText %in% c('Dissolved','Recoverable','Total'),'CharacteristicName'],wqp.data[wqp.data$ResultSampleFractionText %in% c('Dissolved','Recoverable','Total'),'ResultSampleFractionText'])
 
@@ -126,6 +128,12 @@ wqp.data.sub <- rename(wqp.data.sub, c('site_only' = 'SampleRegID',
 #### Now the lasar data ####
 #Preserve lasar query
 #lasar.ng <- lasar
+
+#let's rebuild the criterianame
+#run lines 51 to 147 in 01a_LASARQuery.R to get lasar.names.match
+lasar <- within(lasar, rm(criterianame))
+lasar <- merge(lasar, lasar.names.match, by.x = 'NAME', by.y = 'lasar.name', all.x = TRUE)
+lasar <- rename(lasar, c('Pollutant' = 'criterianame'))
 
 #Make recoverable lower case to be consistent 
 lasar$ABBREVIATION <- gsub('R','r',lasar$ABBREVIATION)
@@ -230,9 +238,9 @@ data.complete <- data.complete[!data.complete$SampleType %in% c('Equipment Blank
                                                                 'Matrix Spike Duplicate - Field', 
                                                                 'Transfer Blank'),]
 
-data.complete$id <- paste(data.complete$SampleRegID, data.complete$Name.full, data.complete$Sampled)
+data.complete$id <- paste(data.complete$SampleRegID, ifelse(is.na(data.complete$criterianame),data.complete$Name.full,data.complete$criterianame), data.complete$Sampled)
 data.complete$day <- substr(data.complete$Sampled,1,10)
-data.complete$code <- paste(data.complete$SampleRegID, data.complete$Name.full, data.complete$day)
+data.complete$code <- paste(data.complete$SampleRegID, ifelse(is.na(data.complete$criterianame),data.complete$Name.full,data.complete$criterianame), data.complete$day)
 data.complete$index <- rownames(data.complete)
 
 #### Resolve duplicates ####
@@ -425,7 +433,12 @@ remove.dups <- function(tname) {
 
 dcwd.w.totals <- remove.dups(dcwd.w.totals)
 
-#### Associate with criteria and calculate hardness based criteria ####
+#### Associate with criteria ####
+#Not sure where the best place is for this but we need to fix some of the issues with Arsenic and Dissolved/Total/Total inorganic
+#We can assume per Andrea that all of dissolved is in Total inorganic form. That leaves the conversion for anything in Total recoverable.
+dcwd.w.totals[dcwd.w.totals$Name.full %in% c('Arsenic, Total recoverable','Arsenic'),'tResult'] <- dcwd.w.totals[dcwd.w.totals$Name.full %in% c('Arsenic, Total recoverable','Arsenic'),'tResult']*0.76
+dcwd.w.totals[grep('Arsenic',dcwd.w.totals$Name.full),'criterianame'] <- 'Arsenic, Total inorganic'
+
 #We need an ID to match with the criteria so we'll simplify the Matrix field
 dcwd.w.totals$Matrix <- 'FW' #mapvalues(dcwd.w.totals$Matrix, from = c("River/Stream", "Estuary"), to = c('FW','SW'))
 dcwd.w.totals$ID <- paste(dcwd.w.totals$criterianame, dcwd.w.totals$Matrix)
@@ -441,7 +454,7 @@ deq.pollutants <- criteria.values.melted.applicable[criteria.values.melted.appli
                                                         'Table 30 Toxic Substances - Freshwater Chronic',
                                                         'Table 30 Toxic Substances - Saltwater Acute',
                                                         'Table 30 Toxic Substances - Saltwater Chronic'),]
-deq.pollutants <- deq.pollutants[!duplicated(deq.pollutants$Pollutant),]
+deq.pollutants <- deq.pollutants[!duplicated(deq.pollutants$ID),]
 criteria.for.analytes.we.have <- deq.pollutants[deq.pollutants$Pollutant %in% dcwd.w.totals$criterianame,]
 dcc <- merge(dcwd.w.totals, criteria.for.analytes.we.have, by = 'ID', all.x = TRUE)
 dcc <- within(dcc, rm(Pollutant.y))
@@ -508,5 +521,12 @@ amm.min <- ddply(amm, .(criterianame, SampleRegID, Sampled, Fraction), function(
 dcc.wo.amm <- dcc.hm[!dcc.hm$Pollutant %in% amm.min$Pollutant,]
 dcc.amm <- rbind(dcc.wo.amm, amm.min)
 
+#### EVALUATION ####
+dcc.amm$exceed <- ifelse(dcc.amm$criterianame == 'Alkalinity',ifelse(dcc.amm$tResult > dcc.amm$value,0,1),ifelse(dcc.amm$tResult < dcc.amm$value,0,1))
+
+#Now on to determining which are valid exceedances
 #Where the MRL is greater than the criteria we can't use that sample to determine attainment or non-attainment
-dcc.amm$Valid <- ifelse(dcc.amm$tMRL < dcc.amm$value, 1, 0)
+dcc.amm$Valid <- ifelse(dcc.amm$tMRL <= dcc.amm$value, 1, 0)
+
+#Dissolved versus total criteria
+View(dcc.amm[grepl('Dissolved',dcc.amm$Name.full) & grepl('Total',dcc.amm$criterianame),])
