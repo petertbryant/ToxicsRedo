@@ -43,12 +43,15 @@ def replace_attributes(out_path, in_feat, merge_file):
     arcpy.Delete_management((merge_table_path + "/" + merge_table_name))
 
 #This one renames attribute field names. Make sure the new field name is not a duplicate of another field. New field will not be created if it is.
-def renameField(fc, old_name, new_name):
+def renameField(fc, old_name, new_name, dtype = []):
     fields = arcpy.ListFields(fc)
-    dtype = [x.type for x in fields if x.name == old_name]
+    if len(dtype) == 0:
+        dtype = [x.type for x in fields if x.name == old_name]
+    else:
+        dtype = [dtype]
     arcpy.AddField_management(fc, new_name, dtype[0])
     arcpy.CalculateField_management(fc, new_name, "!%s!" % old_name, "PYTHON_9.3")
-    arcpy.DeleteField_management(in_file, old_name)
+    arcpy.DeleteField_management(fc, old_name)
 
 #This one removes duplicates based off of 'STATION' field
 def removeDuplicates(in_fc):
@@ -75,13 +78,16 @@ def isDuplicate(inValue):
 #Link manually edited results back up with their shapefiles using replace_attributes function
 
 #First for Additional Lasar Stations. No known duplicates so no need to run the removeDuplicate function.
+#Arc makes station names type 'long' since they're all numeric, so I have to manually create a new field with
+#type 'text'
 out_path = "Additional_LASAR_Stations_Edits.gdb"
 in_fc = "Additional_LASAR_Stations_Edits.gdb/All_stations"
 out_fc = "Additional_LASAR_Stations_Edits.gdb/All_stations_update"
 in_table = "Additional_LASAR_Stations_merge.csv"
 arcpy.CopyFeatures_management(in_fc, out_fc)
 replace_attributes(out_path, out_fc, in_table)
-
+renameField(out_fc, 'STATION', 'STATION1')
+renameField(out_fc, 'STATION1', 'STATION', 'TEXT')
 
 #Then for Master_List_of_Stations_Results_Tol12000_II_Edits qc_success
 out_path = "Master_List_of_Stations_Results_Tol12000_II_Edits.gdb"
@@ -114,7 +120,7 @@ removeDuplicates(out_fc)
 #Merge all datasets together and convert river feet (RF) to river miles (RM)
 
 f1 = "Master_List_of_Stations_Results_Tol12000_II_Edits.gdb/qc_needs_review_update"
-f2 = "Additional_LASAR_Stations_Edits.gdb/All_stations"
+f2 = "Additional_LASAR_Stations_Edits.gdb/All_stations_update"
 f3 = "Master_List_of_Stations_Results_Tol12000_II_Edits.gdb/qc_success_update"
 f4 = "Master_List_of_Stations_Results_Tol12000_II_Edits.gdb/outside_threshold_update"
 out_file = "All_Final.gdb/All_stations"
