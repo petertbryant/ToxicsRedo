@@ -146,6 +146,9 @@ to.add <- data.frame('Pollutant' = c('Alkalinity', 'Arsenic, Total inorganic', '
 
 lasar.names.match <- rbind(lasar.names.match, to.add)
 
+#This df is useful for matching to criteria names later
+#write.csv(lasar.names.match, 'lasar_names_match.csv', row.names = FALSE)
+
 aroclors <- all.parameters[grep('[Aa]roclor',all.parameters$NAME),'NAME']
 pcbs <- all.parameters[grep('[Pp][Cc][Bb]',all.parameters$NAME),'NAME']
 

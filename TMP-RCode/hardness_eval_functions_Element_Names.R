@@ -261,7 +261,7 @@ ammonia.crit.calc <- function(df, salmonids = 'all') {
   
   aptcm$Matrix.y <- rep('SW',nrow(aptcm))
   
-  aptcm <- within(aptcm, rm(Pollutant.temp,Pollutant.sal,tResult.sal,R))
+  aptcm <- within(aptcm, rm(Pollutant.temp,Pollutant.sal,tResult.sal))
   
   aptm.sub <- (aptm[,names(aptm)[names(aptm) %in% names(aptcm)]])
   
