@@ -56,6 +56,7 @@ deq.pollutants <- criteria.values.melted.applicable[criteria.values.melted.appli
 Table3040.applicable <- merge(deq.pollutants, wqp.name.match[,c('Criteria.Name','DEQ.Table.name')], by.x = 'Pollutant', by.y = 'Criteria.Name')
 
 
+
 #Pull in criteria determination calculation functions
 source('//deqhq1/wqassessment/2012_WQAssessment/ToxicsRedo/TMP-RCode/hardness_eval_functions_Element_Names.R')
 
@@ -278,13 +279,21 @@ data.complete.w.resolved.fd <- rbind(data.complete.wo.fd.fp.pairs, fd.fp.max)
 #resolve duplicates at the same date-time
 #because there are some with multiple methods and two MRL levels we can't just pick the max
 #value unless it was a detection
-
 data.complete.wo.dups.index <- ddply(data.complete.w.resolved.fd, .(id), function(sub) {
                                ifelse(sum(sub$dnd) == 0,sub[which.min(sub$tMRL),'index'],
                                       ifelse((sum(sub$dnd) >= 2),sub[which.max(sub$tResult),'index'],
                                              sub[sub$dnd == 1,'index']))})
 
-data.complete.wo.dups <- data.complete.w.resolved.fd[data.complete.w.resolved.fd$index %in% data.complete.wo.dups.index$V1,]
+data.complete.wo.dups.time <- data.complete.w.resolved.fd[data.complete.w.resolved.fd$index %in% data.complete.wo.dups.index$V1,]
+
+#We also have multiple samples within a day. 
+#View(data.complete.wo.dups[data.complete.wo.dups$code %in% data.complete.wo.dups[duplicated(data.complete.wo.dups$code),'code'],])
+data.complete.wo.dups.by.day.index <- ddply(data.complete.wo.dups.time, .(code), function(sub) {
+  ifelse(sum(sub$dnd) == 0,sub[which.min(sub$tMRL),'index'],
+         ifelse((sum(sub$dnd) >= 2),sub[which.max(sub$tResult),'index'],
+                sub[sub$dnd == 1,'index']))})
+
+data.complete.wo.dups <- data.complete.wo.dups.time[data.complete.wo.dups.time$index %in% data.complete.wo.dups.by.day.index$V1,]
 
 #### Grouping parameters to be compared to composite criteria ####
 #We will add this here for now but should be coming from Station locate process
@@ -319,12 +328,12 @@ ddt.melted$SampleType <- 'Sample'
 dcwd.ddt <- rbind(data.complete.wo.dups, ddt.melted)
 
 #Now Total Endosulfan
-endo <- dcwd.ddt[dcwd.ddt$criterianame %in% c("Endosulfan I", "Endosulfan II", "Endosulfan Sulfate"),]
+endo <- dcwd.ddt[dcwd.ddt$Pollutant %in% c("Endosulfan I", "Endosulfan II", "Endosulfan sulfate", ".alpha.-Endosulfan", ".beta.-Endosulfan"),]
 endo$tResult <- endo$tResult*endo$dnd
 endo.casted <- dcast(endo, Agency + SampleRegID + SampleAlias + Matrix + Fraction +
-                       Sampled +  SpecificMethod ~ criterianame, value.var = 'tResult')
-endo.casted$Endosulfan <- rowSums(endo.casted[,c("Endosulfan I", "Endosulfan II", "Endosulfan Sulfate")],na.rm=TRUE)
-endo.casted.sub <- within(endo.casted, rm("Endosulfan I", "Endosulfan II", "Endosulfan Sulfate"))
+                       Sampled +  SpecificMethod ~ Pollutant, value.var = 'tResult')
+endo.casted$Endosulfan <- rowSums(endo.casted[,c("Endosulfan I", "Endosulfan II", "Endosulfan sulfate",".alpha.-Endosulfan", ".beta.-Endosulfan")],na.rm=TRUE)
+endo.casted.sub <- within(endo.casted, rm("Endosulfan I", "Endosulfan II", "Endosulfan sulfate",".alpha.-Endosulfan", ".beta.-Endosulfan"))
 endo.melted <- melt(endo.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SpecificMethod','Fraction'),variable.name = 'Pollutant',value.name = 'tResult')#melt
 endo.melted$dnd <- ifelse(endo.melted$tResult > 0,1,0)
 endo.melted.addons <- data.frame('tMRL' = rep(0,nrow(endo.melted)), 
@@ -445,9 +454,9 @@ dcwd.w.totals <- dcwd.w.totals[!is.na(dcwd.w.totals$tResult),]
 #we want the max between endosulfan and its sum of isomers, between chlordane
 #and is sum of isomers and between sum of pcb congeners and aroclors.
 remove.dups <- function(tname) {
-  no.dups <- aggregate(tResult ~ id, data = tname, FUN = max)
-  tname <- tname[!duplicated(tname$id),]
-  tname <- merge(no.dups, tname, by = 'id')
+  no.dups <- aggregate(tResult ~ code, data = tname, FUN = max)
+  tname <- tname[!duplicated(tname$code),]
+  tname <- merge(no.dups, tname, by = 'code')
   #tname$tResult <- round(tname$tResult.x, 2)
   tname$tResult <- tname$tResult.x
   tname <- within(tname, rm(tResult.x, tResult.y))
@@ -459,7 +468,7 @@ dcwd.w.totals <- remove.dups(dcwd.w.totals)
 #Not sure where the best place is for this but we need to fix some of the issues with Arsenic and Dissolved/Total/Total inorganic
 #We can assume per Andrea that all of dissolved is in Total inorganic form. That leaves the conversion for anything in Total recoverable.
 dcwd.w.totals[dcwd.w.totals$Name.full %in% c('Arsenic, Total recoverable','Arsenic'),'tResult'] <- dcwd.w.totals[dcwd.w.totals$Name.full %in% c('Arsenic, Total recoverable','Arsenic'),'tResult']*0.76
-dcwd.w.totals[grep('Arsenic',dcwd.w.totals$Name.full),'criterianame'] <- 'Arsenic, Total inorganic'
+#dcwd.w.totals[grep('Arsenic',dcwd.w.totals$Name.full),'criterianame'] <- 'Arsenic, Total inorganic'
 
 #We need an ID to match with the criteria so we'll simplify the Matrix field
 dcwd.w.totals$Matrix <- 'FW' #mapvalues(dcwd.w.totals$Matrix, from = c("River/Stream", "Estuary"), to = c('FW','SW'))
@@ -472,31 +481,32 @@ dcwd.w.totals[is.na(dcwd.w.totals$tMRL),'tMRL'] <- 0
 
 #This is an arbitraty way to pick the minimum criteria
 #deq.pollutants <- deq.pollutants[!duplicated(deq.pollutants$ID),]
-#We need a smarter way to do it
-deq.pollutants.min <- ddply(deq.pollutants, .(ID), function(m) {m[which(m$value == min(m$value)),]})
-#Now that we have the minimum we arbitrarily pick one of the variables that had min (e.g. Table 40 W+O or Table 40 O only for Acrolein)
-deq.pollutants <- deq.pollutants.min[!duplicated(deq.pollutants.min$ID),]
-criteria.for.analytes.we.have <- deq.pollutants[deq.pollutants$Pollutant %in% dcwd.w.totals$criterianame,]
-dcc <- merge(dcwd.w.totals, criteria.for.analytes.we.have, by = 'ID', all.x = TRUE)
-dcc <- within(dcc, rm(Pollutant.y))
+# Let's hold off on taking the minimum here for now and consider doing after the condition specific criteria calcs
+# #We need a smarter way to do it
+# deq.pollutants.min <- ddply(deq.pollutants, .(ID), function(m) {m[which(m$value == min(m$value)),]})
+# #Now that we have the minimum we arbitrarily pick one of the variables that had min (e.g. Table 40 W+O or Table 40 O only for Acrolein)
+# deq.pollutants <- deq.pollutants.min[!duplicated(deq.pollutants.min$ID),]
+#criteria.for.analytes.we.have <- deq.pollutants[deq.pollutants$Pollutant %in% dcwd.w.totals$criterianame,]
+dcc <- merge(dcwd.w.totals, deq.pollutants, by = 'ID', all.x = TRUE)
+#dcc <- within(dcc, rm(Pollutant.y))
 dcc <- rename(dcc, c('Pollutant.x' = 'Pollutant'))
 
-#So i can re-run from here. I am going to output the intermediates
-dcwd.w.totals <- within(dcwd.w.totals, rm(id))
-dcc <- within(dcc, rm(id))
-con <- odbcConnect('WQAssessment')
-# sqlSave(con, dcwd.w.totals, tablename = '2012_INTERMEDIATE_dcwdwtotals')
-# sqlSave(con, dcc, tablename = '2012_INTERMEDIATE_dcc')
-dcwd.w.totals <- sqlFetch(con, '2012_INTERMEDIATE_dcwdwtotals')
-dcwd.w.totals <- rename(dcwd.w.totals, c('Namefull' = 'Name.full'))
-dcwd.w.totals$tMRL <- as.numeric(dcwd.w.totals$tMRL)
-dcwd.w.totals$tResult <- as.numeric(dcwd.w.totals$tResult)
-dcc <- sqlFetch(con, '2012_INTERMEDIATE_dcc')
-dcc <- rename(dcc, c('Namefull' = 'Name.full', 'Matrixx' = 'Matrix.x', 'Matrixy' = 'Matrix.y'))
-dcc$tMRL <- as.numeric(dcc$tMRL)
-dcc$tResult <- as.numeric(dcc$tResult)
-dcc$value <- as.numeric(dcc$value)
-odbcCloseAll()
+# #So i can re-run from here. I am going to output the intermediates
+# dcwd.w.totals <- within(dcwd.w.totals, rm(id))
+# dcc <- within(dcc, rm(id))
+# con <- odbcConnect('WQAssessment')
+# # sqlSave(con, dcwd.w.totals, tablename = '2012_INTERMEDIATE_dcwdwtotals')
+# # sqlSave(con, dcc, tablename = '2012_INTERMEDIATE_dcc')
+# dcwd.w.totals <- sqlFetch(con, '2012_INTERMEDIATE_dcwdwtotals')
+# dcwd.w.totals <- rename(dcwd.w.totals, c('Namefull' = 'Name.full'))
+# dcwd.w.totals$tMRL <- as.numeric(dcwd.w.totals$tMRL)
+# dcwd.w.totals$tResult <- as.numeric(dcwd.w.totals$tResult)
+# dcc <- sqlFetch(con, '2012_INTERMEDIATE_dcc')
+# dcc <- rename(dcc, c('Namefull' = 'Name.full', 'Matrixx' = 'Matrix.x', 'Matrixy' = 'Matrix.y'))
+# dcc$tMRL <- as.numeric(dcc$tMRL)
+# dcc$tResult <- as.numeric(dcc$tResult)
+# dcc$value <- as.numeric(dcc$value)
+# odbcCloseAll()
 
 #### Hardness criteria calculation ####
 #Using the hardness evaluation function loaded above we can calculate the hardness based criteria values
@@ -505,33 +515,33 @@ odbcCloseAll()
 #Calculate criteria based on hardness
 hm <- hardness.crit.calc(dcwd.w.totals)
 
+#We are going to hold off on this for now
+# #Determine minimum applicable criteria for each sample
+# hm.min <- ddply(hm, .(criterianame, SampleRegID, Sampled, Fraction), function(m) {m[which(m$value == min(m$value)),]})
 
-#Determine minimum applicable criteria for each sample
-hm.min <- ddply(hm, .(criterianame, SampleRegID, Sampled, Fraction), function(m) {m[which(m$value == min(m$value)),]})
-
-#Preserve result column
-hm.min$tResult.old <- hm.min$tResult
-
-#Select appropriate sample fraction when both available and convert when NOT except where the sample is ND. 
-hm.frac <- ddply(hm.min, .(criterianame, SampleRegID, Sampled), function(m) {
-  if(nrow(m) > 1) {
-    use <- m[m$criterianame == m$Name.full,] 
-    use$tResult <- use$tResult.old
-  } else {
-    use <- m
-    use$tResult <- ifelse(use$tMRL < use$value,ifelse(grepl('Chronic',use$variable),use$tResult*use$CFC,use$tResult*use$CFA),use$tResult.old)
-  }
-  return(use)
-})
-hm.frac$check <- paste(hm.frac$criterianame, hm.frac$SampleRegID, hm.frac$Sampled)
-any(duplicated(hm.frac$check))
-hm.frac <- within(hm.frac, rm(check))
-#Percentages of using a non-matching sample fraction to compare to the standard
-# table(hm.frac[hm.frac$criterianame != hm.frac$Name.full,'criterianame'])/ table(hm.frac$criterianame) *100
-hm.frac <- hm.frac[,names(dcc)]
-hm.frac$ID <- paste(hm.frac$criterianame, hm.frac$Matrix.x)
-dcc.wo.hm <- dcc[!dcc$ID %in% hm.frac$ID,]
-dcc.hm <- rbind(dcc.wo.hm, hm.frac)
+# #Preserve result column
+# hm$tResult.old <- hm$tResult
+# 
+# #Select appropriate sample fraction when both available and convert when NOT except where the sample is ND. 
+# hm.frac <- ddply(hm, .(criterianame, SampleRegID, Sampled), function(m) {
+#   if(nrow(m) > 1) {
+#     use <- m[m$criterianame == m$Name.full,] 
+#     use$tResult <- use$tResult.old
+#   } else {
+#     use <- m
+#     use$tResult <- ifelse(use$tMRL < use$value,ifelse(grepl('Chronic',use$variable),use$tResult*use$CFC,use$tResult*use$CFA),use$tResult.old)
+#   }
+#   return(use)
+# })
+# hm.frac$check <- paste(hm.frac$criterianame, hm.frac$SampleRegID, hm.frac$Sampled)
+# any(duplicated(hm.frac$check))
+# hm.frac <- within(hm.frac, rm(check))
+# #Percentages of using a non-matching sample fraction to compare to the standard
+# # table(hm.frac[hm.frac$criterianame != hm.frac$Name.full,'criterianame'])/ table(hm.frac$criterianame) *100
+hm <- hm[,names(dcc)]
+# hm.frac$ID <- paste(hm.frac$criterianame, hm.frac$Matrix.x)
+dcc.wo.hm <- dcc[!dcc$ID %in% hm$ID,]
+dcc.hm <- rbind(dcc.wo.hm, hm)
 
 #### Pentachlorophenol pH dependent criteria calculation ####
 #Similarly pentachlorophenol is parameter dependent and is handled the same as hardness
@@ -554,17 +564,42 @@ dcc.hm <- rbind(dcc.wo.hm, hm.frac)
 #Ammonia is also parameter dependent and is handled similarly
 amm <- ammonia.crit.calc(dcwd.w.totals)
 amm <- amm[,names(dcc.hm)]
-amm.min <- ddply(amm, .(criterianame, SampleRegID, Sampled, Fraction), function(m) {m[which(m$value == min(m$value)),]})
-amm.min$ID <- paste(amm.min$criterianame, amm.min$Matrix.x)
-dcc.wo.amm <- dcc.hm[!dcc.hm$ID %in% amm.min$ID,]
-dcc.amm <- rbind(dcc.wo.amm, amm.min)
+#amm.min <- ddply(amm, .(criterianame, SampleRegID, Sampled, Fraction), function(m) {m[which(m$value == min(m$value)),]})
+#amm.min$ID <- paste(amm.min$criterianame, amm.min$Matrix.x)
+dcc.wo.amm <- dcc.hm[!dcc.hm$ID %in% amm$ID,]
+dcc.amm <- rbind(dcc.wo.amm, amm)
 
 #### EVALUATION ####
-dcc.amm$exceed <- ifelse(dcc.amm$criterianame == 'Alkalinity',ifelse(dcc.amm$tResult > dcc.amm$value,0,1),ifelse(dcc.amm$tResult < dcc.amm$value,0,1))
+#First we'll take the minimum associated criteria for each sample
+#dcc.amm.min <- ddply(dcc.amm, .(Name.full, SampleRegID, Sampled), function(m) {m[which(m$value == min(m$value)),]})
+#regenerate this so it is new as long as any(duplicated(rownames(dcc.amm))) evaluates to false
+dcc.amm$index <- rownames(dcc.amm)
+#ddply ran out of memory so I am using dplyr here which works way faster. Not sure this is the correct usage. There is probably
+#a more elegant way but it's doing what I want so far. 
+library(dplyr)
+dcc.amm.groups <- group_by(dcc.amm, Name.full, SampleRegID, Sampled)
+dcc.amm.min.index <- summarise(dcc.amm.groups, value = min(value), index)
+dcc.amm.min <- dcc.amm[dcc.amm$index %in% dcc.amm.min.index$index,]
+detach(package:dplyr)
+
+#evaluate exceedances to the minimum criteria
+dcc.amm.min$exceed <- ifelse(dcc.amm.min$criterianame == 'Alkalinity',ifelse(dcc.amm.min$tResult > dcc.amm.min$value,0,1),ifelse(dcc.amm.min$tResult < dcc.amm.min$value,0,1))
 
 #Now on to determining which are valid exceedances
-#Where the MRL is greater than the criteria we can't use that sample to determine attainment or non-attainment
-dcc.amm$Valid <- ifelse(dcc.amm$tMRL <= dcc.amm$value, 1, 0)
+#First, Where the MRL is greater than the criteria we can't use that sample to determine attainment or non-attainment
+dcc.amm.min$Valid <- ifelse(dcc.amm.min$tMRL <= dcc.amm.min$value, 1, 0)
+
+#Select appropriate sample fraction when both available and convert when NOT except where the sample is ND. 
+ddply(dcc.amm.min, .(criterianame, SampleRegID, Sampled), function(m) {
+  if(nrow(m) > 1) {
+    use <- m[m$criterianame == m$Name.full,] 
+    use$tResult <- use$tResult.old
+  } else {
+    use <- m
+    use$tResult <- ifelse(use$tMRL < use$value,ifelse(grepl('Chronic',use$variable),use$tResult*use$CFC,use$tResult*use$CFA),use$tResult.old)
+  }
+  return(use)
+})
 
 #Dissolved versus total criteria
-View(dcc.amm[grepl('Dissolved',dcc.amm$Name.full) & grepl('Total',dcc.amm$criterianame),])
+View(dcc.amm.min[grepl('Dissolved',dcc.amm.min$Name.full) & grepl('Total',dcc.amm.min$criterianame),])

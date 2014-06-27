@@ -17,13 +17,13 @@ hardness.crit.calc <- function(df, remove.chromium = TRUE) {
     constants <- constants[constants$Name.alone != 'Chromium',]
   }
   
-  df$ID <- paste(df$SampleRegID, df$Sampled, substr(df$Name.full, nchar(df$Name.full), nchar(df$Name.full)))
+  df$relate <- paste(df$SampleRegID, df$Sampled, substr(df$Name.full, nchar(df$Name.full), nchar(df$Name.full)))
   
-  metals <- df[df$criterianame %in% constants$Analyte,]
+  metals <- df[df$criterianame %in% constants$Name.alone,]
   
-  hardness <- df[grep('Hardness',df$Name.full),c('ID','Name.full','tResult')]
+  hardness <- df[grep('Hardness',df$Name.full),c('relate','Name.full','tResult')]
   
-  mh <- merge(metals, hardness, by = 'ID', suffixes = c('.metal','.hardness'),all.x = TRUE)
+  mh <- merge(metals, hardness, by = 'relate', suffixes = c('.metal','.hardness'),all.x = TRUE)
   
   mh$tResult.hardness <- as.numeric(mh$tResult.hardness)
   mh[is.na(mh$tResult.hardness),'tResult.hardness'] <- 25
@@ -33,7 +33,7 @@ hardness.crit.calc <- function(df, remove.chromium = TRUE) {
                                        400, 
                                        mh$tResult.hardness))
   
-  mhc <- merge(mh, constants, by.x = 'criterianame', by.y = 'Analyte', all.x = TRUE)
+  mhc <- merge(mh, constants, by.x = 'criterianame', by.y = 'Name.alone', all.x = TRUE)
   
   for (i in 1:nrow(mhc)) {
     if(mhc$criterianame[i] == 'Cadmium, Dissolved') {
@@ -51,11 +51,13 @@ hardness.crit.calc <- function(df, remove.chromium = TRUE) {
   
   mhcm <- mhc.melted[!is.na(mhc.melted$value),]
   
-  mhcm <- rename(mhcm, c('Name.full.metal' = 'Name.full', 'tResult.metal' = 'tResult', 'Matrix' = 'Matrix.x'))
+  mhcm <- rename(mhcm, c('Name.full.metal' = 'Name.full', 'tResult.metal' = 'tResult', 'Matrix' = 'Matrix.x', 'Analyte' = 'Pollutant.y'))
   
   mhcm$Matrix.y <- 'FW'
   
   #mhcm$Pollutant <- mhcm$Pollutant
+  
+  mhcm <- within(mhcm, rm(relate))
   
   return(mhcm)
 }
@@ -170,19 +172,19 @@ ammonia.crit.calc <- function(df, salmonids = 'all') {
     df$salmonids <- FALSE
   } 
   
-  df$ID <- paste(df$SampleRegID, df$Sampled)
+  df$relate <- paste(df$SampleRegID, df$Sampled)
   
   amm <- df[df$criterianame == 'Ammonia as N',]
   
-  ph <- df[df$criterianame == 'pH',c('ID','Pollutant','tResult')]
+  ph <- df[df$criterianame == 'pH',c('relate','Pollutant','tResult')]
   
-  temp <- df[df$criterianame == 'Temperature',c('ID','Pollutant','tResult')]
+  temp <- df[df$criterianame == 'Temperature',c('relate','Pollutant','tResult')]
   
-  sal <- df[df$criterianame == 'Salinity',c('ID','Pollutant','tResult')]
+  sal <- df[df$criterianame == 'Salinity',c('relate','Pollutant','tResult')]
   
-  ap <- merge(amm, ph, by = 'ID', suffixes = c('.amm','.ph'),all.x = TRUE)
+  ap <- merge(amm, ph, by = 'relate', suffixes = c('.amm','.ph'),all.x = TRUE)
   
-  apt <- merge(ap, temp, by = 'ID', suffixes = c('.ap','.temp'),all.x = TRUE)
+  apt <- merge(ap, temp, by = 'relate', suffixes = c('.ap','.temp'),all.x = TRUE)
 
   apt$tResult.ph <- as.numeric(apt$tResult.ph)
   
@@ -218,7 +220,7 @@ ammonia.crit.calc <- function(df, salmonids = 'all') {
   aptm <- within(aptm, rm(Pollutant))
   
   #The saltwater criteria
-  aptc <- merge(apt, sal, by = 'ID', suffixes = c('.temp','.sal'),all.x = TRUE)
+  aptc <- merge(apt, sal, by = 'relate', suffixes = c('.temp','.sal'),all.x = TRUE)
   
   aptc <- aptc[aptc$Matrix == 'SW',]
   
@@ -273,6 +275,10 @@ ammonia.crit.calc <- function(df, salmonids = 'all') {
   
   #Convert to micrograms per liter for consistency
   amm.fw.sw$value <- amm.fw.sw$value* 1000
+
+  amm.fw.sw <- within(amm.fw.sw, rm(relate))
+
+  amm.fw.sw$Pollutant.y <- amm.fw.sw$criterianame
 
   return(amm.fw.sw)
   
