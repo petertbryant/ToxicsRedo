@@ -19,15 +19,25 @@ workspace = "E:/GitHub/ToxicsRedo/Estuary_Analysis"
 arcpy.env.workspace = workspace
 
 #Run ConSal_Data_Cleanup.R 
-#******This doesn't work correctly. Run through R interface*************
 rscript = 'ConSal_Data_Cleanup.R'
 rcode = subprocess.call(['C:/Program Files/R/R-3.1.0/bin/RScript', (workspace + '/' + rscript)])
 
 #Join up temporary .csv file created in ConSal_Data_Cleanup.R 
 in_table = "Estuaries.gdb/consal"
 out_file = 'E:/GitHub/ToxicsRedo/Estuary_Analysis/temp_csv.csv'
+#The head of the table has stations which are numeric only. Since Arc only uses the first seven or so rows
+#to determine field type, Arc classifies the Station column as Double, rather than text.To override this
+# the Schema.ini file must be edited to specify the type for each field. Check to make sure the schema.ini file
+#located here: 
+#has the following contents: //Deqhq1/mpsaris/GitHub/ToxicsRedo/Estuary_Analysis
+#==============================================================================
+# [temp_csv.csv]
+# Col1=Station Text
+# Col2=Sal_ppth Double
+#==============================================================================
+
 arcpy.TableToTable_conversion(out_file, workspace, in_table)
-#os.remove(out_file)
+os.remove(out_file)
 in_fc = 'Estuaries.gdb/stations_subset_est2010'
 out_fc = 'Estuaries.gdb/stations_subset_est2010_consal'
 arcpy.CopyFeatures_management(in_fc, out_fc)

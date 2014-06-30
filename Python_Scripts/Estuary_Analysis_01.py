@@ -23,6 +23,7 @@ arcpy.env.workspace = workspace
 in_feature = "E:/GitHub/ToxicsRedo/StationsToLocate/Assessment2010_copy.gdb/Stations_2010"
 out_feature = "E:/GitHub/ToxicsRedo/Estuary_Analysis/Estuaries.gdb/Stations_2010"
 #the join table was pulled from //Deqhq1/wqassessment/2010_WQAssessment/Databases/WorkingTables_2010.mdb/StationUseList_2010
+#using the following R script: //Deqhq1/mpsaris/GitHub/ToxicsRedo/Estuary_Analysis/Pull_2010_StationUseList.R
 join_table = "E:/GitHub/ToxicsRedo/Estuary_Analysis/station_2010.csv"
 out_table = "E:/GitHub/ToxicsRedo/Estuary_Analysis/Estuaries.gdb/station_2010"
 
