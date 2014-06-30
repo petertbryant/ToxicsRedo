@@ -118,16 +118,19 @@ arcpy.MakeFeatureLayer_management(output_success, qc_lyr)
 arcpy.SelectLayerByAttribute_management(qc_lyr, "NEW_SELECTION", """ "QAQC1" = 'Reviewed' """)
 
 if int(arcpy.GetCount_management(qc_lyr).getOutput(0)) == len(successful_features):
-    arcpy.CopyFeatures_management(qc_lyr, (temp_location + temp_gdb + "/" + qc_success))
+    arcpy.CopyFeatures_management(qc_lyr, (temp_location + final_gdb + "/" + qc_success))
 elif int(arcpy.GetCount_management(qc_lyr).getOutput(0)) == 0:
-    arcpy.CopyFeatures_management(output_success, (temp_location + temp_gdb + "/" + qc_review))
+    arcpy.CopyFeatures_management(output_success, (temp_location + final_gdb + "/" + qc_review))
 elif int(arcpy.GetCount_management(qc_lyr).getOutput(0)) < len(successful_features) and int(arcpy.GetCount_management(qc_lyr).getOutput(0)) > 0:
-    arcpy.CopyFeatures_management(qc_lyr, (temp_location + temp_gdb + "/" + qc_success))
+    arcpy.CopyFeatures_management(qc_lyr, (temp_location + final_gdb + "/" + qc_success))
     arcpy.SelectLayerByAttribute_management(qc_lyr, "NEW_SELECTION", """ "QAQC1" = 'Needs Secondary Review' """)
-    arcpy.CopyFeatures_management(qc_lyr, (temp_location + temp_gdb + "/" + qc_review))
+    arcpy.CopyFeatures_management(qc_lyr, (temp_location + final_gdb + "/" + qc_review))
 
 arcpy.CopyFeatures_management(output_fail, (temp_location + final_gdb + '/' + outside_threshold))
 arcpy.SelectLayerByAttribute_management(qc_lyr, "CLEAR_SELECTION")
+
+#The following attempted to use spatial location and character matching to force the station be properly
+#addressed. It was never completed due to time constraints.
 
 #Begin secondary review
 
