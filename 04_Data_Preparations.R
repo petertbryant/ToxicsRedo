@@ -44,6 +44,19 @@ rm(consal.lasar, consal.lasar.max)
 #Pull in the compiled criteria table used for the Toxics Monitoring prgram
 source('//deqhq1/wqassessment/2012_WQAssessment/ToxicsRedo/TMP-RCode/criteria.R')
 
+#Names Names Names!!! We want to associate 
+wqp.name.match <- read.csv('WQPNameMatch_05142014.csv',stringsAsFactors=FALSE)
+deq.pollutants <- criteria.values.melted.applicable[criteria.values.melted.applicable$variable %in% 
+                                                      c('Table 40 Human Health Criteria for Toxic Pollutants - Water + Organism',
+                                                        'Table 40 Human Health Criteria for Toxic Pollutants - Organism Only',
+                                                        'Table 30 Toxic Substances - Freshwater Acute',
+                                                        'Table 30 Toxic Substances - Freshwater Chronic',
+                                                        'Table 30 Toxic Substances - Saltwater Acute',
+                                                        'Table 30 Toxic Substances - Saltwater Chronic'),]
+Table3040.applicable <- merge(deq.pollutants, wqp.name.match[,c('Criteria.Name','DEQ.Table.name')], by.x = 'Pollutant', by.y = 'Criteria.Name')
+
+
+
 #Pull in criteria determination calculation functions
 source('//deqhq1/wqassessment/2012_WQAssessment/ToxicsRedo/TMP-RCode/hardness_eval_functions_Element_Names.R')
 
@@ -67,10 +80,10 @@ wqp.data <- wqp.data[wqp.data$ActivityMediaSubdivisionName != 'Interstitial',]
 wqp.data$Sampled <- paste(wqp.data$ActivityStartDate, wqp.data$ActivityStartTimeTime)
 
 #Make a column with criteria name based on earlier mapping 
-wqp.name.match <- read.csv('WQPNameMatch_05142014.csv',stringsAsFactors=FALSE)
-wqp.data <- merge(wqp.data, wqp.name.match[,c('WQP.Name','Criteria.Name')], by.x = 'CharacteristicName', by.y = 'WQP.Name', all.x = TRUE)
-wqp.data <- rename(wqp.data, c('Criteria.Name' = 'criterianame'))
-#wqp.data$criterianame <- mapvalues(wqp.data$CharacteristicName, from = wqp.name.match$WQP.Name, to = wqp.name.match$Criteria.Name)
+wqp.data <- merge(wqp.data, unique(wqp.name.match[,c('WQP.Name','DEQ.Table.name')]), by.x = 'CharacteristicName', by.y = 'WQP.Name', all.x = TRUE)
+wqp.data <- rename(wqp.data, c('DEQ.Table.name' = 'criterianame'))
+wqp.data$criterianame <- ifelse(is.na(wqp.data$criterianame),wqp.data$CharacteristicName,wqp.data$criterianame)
+#wqp.data$criterianame2 <- mapvalues(wqp.data$CharacteristicName, from = wqp.name.match$WQP.Name, to = wqp.name.match$DEQ.Table.name)
 
 #table(wqp.data[wqp.data$ResultSampleFractionText %in% c('Dissolved','Recoverable','Total'),'CharacteristicName'],wqp.data[wqp.data$ResultSampleFractionText %in% c('Dissolved','Recoverable','Total'),'ResultSampleFractionText'])
 
@@ -130,10 +143,15 @@ wqp.data.sub <- rename(wqp.data.sub, c('site_only' = 'SampleRegID',
 #lasar.ng <- lasar
 
 #let's rebuild the criterianame
-#run lines 51 to 147 in 01a_LASARQuery.R to get lasar.names.match
+lasar.names.match <- read.csv('lasar_names_match.csv',stringsAsFactors = FALSE)
 lasar <- within(lasar, rm(criterianame))
 lasar <- merge(lasar, lasar.names.match, by.x = 'NAME', by.y = 'lasar.name', all.x = TRUE)
-lasar <- rename(lasar, c('Pollutant' = 'criterianame'))
+lasar$x <- apply(lasar[,names(lasar)],1,paste,collapse=',')
+lasar <- lasar[!duplicated(lasar$x),]
+lasar <- within(lasar, rm(x))
+lasar <- merge(lasar, unique(Table3040.applicable[,c('Pollutant','DEQ.Table.name')]), by = 'Pollutant', all.x = TRUE)
+lasar <- rename(lasar, c('DEQ.Table.name' = 'criterianame'))
+lasar$criterianame <- ifelse(is.na(lasar$criterianame),lasar$NAME,lasar$criterianame)
 
 #Make recoverable lower case to be consistent 
 lasar$ABBREVIATION <- gsub('R','r',lasar$ABBREVIATION)
@@ -154,7 +172,14 @@ lasar$Sampled <- paste(as.character(lasar$SAMPLE_DATE), as.character(lasar$SAMPL
 #again not sure why this is here
 #lasar$adid <- paste(lasar$NAME, lasar$Sampled)
 
+#found some hanging bad QA QC Types from lasar data set
+lasar <- lasar[!lasar$QA_QC_TYPE %in% c('Equipment Blank - Field', 
+                                        'Matrix Spike - Field', 
+                                        'Matrix Spike Duplicate - Field', 
+                                        'Transfer Blank'),]
+
 #Make the lasar names match the script and be consistent with the new wqp names
+lasar <- rename(lasar, c('Pollutant' = 'CriteriaTableName'))
 lasar.new.names <- rename(lasar, c('NAME' = 'Pollutant',
                                    'ABBREVIATION' = 'Fraction',
                                    #'criteria.name' = 'Analyte', 
@@ -227,20 +252,18 @@ total.to.recoverable <- c('Arsenic','Mercury','Copper','Zinc','Nickel','Lead','S
                           'Cadmium','Cyanide','Chromium(VI)')
 dissolved.metals <- c('Arsenic','Cadmium','Chromium','Chromium(VI)','Lead','Nickel','Selenium','Silver','Zinc')
 data.complete[data.complete$Pollutant %in% total.to.recoverable & data.complete$Fraction %in% c('Total', 'Recoverable'),'Fraction'] <- 'Total recoverable'
+#Assumes total sample fraction for those samples that remain unstandardized
+data.complete[data.complete$Pollutant %in% total.to.recoverable & !grepl('Total recoverable|Dissolved', data.complete$Fraction),'Fraction'] <- 'Total recoverable'
+#compile Name.full for metals
 data.complete$Name.full <- ifelse(data.complete$Pollutant %in% c(total.to.recoverable, dissolved.metals) & 
                                     data.complete$Fraction %in% c('Dissolved', 'Total recoverable'),
                                   paste(data.complete$Pollutant, ", ", data.complete$Fraction, sep = ''),
                                   data.complete$Pollutant)
 
-#found some hanging bad QA QC Types from lasar data set
-data.complete <- data.complete[!data.complete$SampleType %in% c('Equipment Blank - Field', 
-                                                                'Matrix Spike - Field', 
-                                                                'Matrix Spike Duplicate - Field', 
-                                                                'Transfer Blank'),]
-
-data.complete$id <- paste(data.complete$SampleRegID, ifelse(is.na(data.complete$criterianame),data.complete$Name.full,data.complete$criterianame), data.complete$Sampled)
+#Fields for future grouping
+data.complete$id <- paste(data.complete$SampleRegID, data.complete$Name.full, data.complete$Sampled)
 data.complete$day <- substr(data.complete$Sampled,1,10)
-data.complete$code <- paste(data.complete$SampleRegID, ifelse(is.na(data.complete$criterianame),data.complete$Name.full,data.complete$criterianame), data.complete$day)
+data.complete$code <- paste(data.complete$SampleRegID, data.complete$Name.full, data.complete$day)
 data.complete$index <- rownames(data.complete)
 
 #### Resolve duplicates ####
@@ -256,13 +279,21 @@ data.complete.w.resolved.fd <- rbind(data.complete.wo.fd.fp.pairs, fd.fp.max)
 #resolve duplicates at the same date-time
 #because there are some with multiple methods and two MRL levels we can't just pick the max
 #value unless it was a detection
-
 data.complete.wo.dups.index <- ddply(data.complete.w.resolved.fd, .(id), function(sub) {
                                ifelse(sum(sub$dnd) == 0,sub[which.min(sub$tMRL),'index'],
                                       ifelse((sum(sub$dnd) >= 2),sub[which.max(sub$tResult),'index'],
                                              sub[sub$dnd == 1,'index']))})
 
-data.complete.wo.dups <- data.complete.w.resolved.fd[data.complete.w.resolved.fd$index %in% data.complete.wo.dups.index$V1,]
+data.complete.wo.dups.time <- data.complete.w.resolved.fd[data.complete.w.resolved.fd$index %in% data.complete.wo.dups.index$V1,]
+
+#We also have multiple samples within a day. 
+#View(data.complete.wo.dups[data.complete.wo.dups$code %in% data.complete.wo.dups[duplicated(data.complete.wo.dups$code),'code'],])
+data.complete.wo.dups.by.day.index <- ddply(data.complete.wo.dups.time, .(code), function(sub) {
+  ifelse(sum(sub$dnd) == 0,sub[which.min(sub$tMRL),'index'],
+         ifelse((sum(sub$dnd) >= 2),sub[which.max(sub$tResult),'index'],
+                sub[sub$dnd == 1,'index']))})
+
+data.complete.wo.dups <- data.complete.wo.dups.time[data.complete.wo.dups.time$index %in% data.complete.wo.dups.by.day.index$V1,]
 
 #### Grouping parameters to be compared to composite criteria ####
 #We will add this here for now but should be coming from Station locate process
@@ -297,12 +328,12 @@ ddt.melted$SampleType <- 'Sample'
 dcwd.ddt <- rbind(data.complete.wo.dups, ddt.melted)
 
 #Now Total Endosulfan
-endo <- dcwd.ddt[dcwd.ddt$criterianame %in% c("Endosulfan I", "Endosulfan II", "Endosulfan Sulfate"),]
+endo <- dcwd.ddt[dcwd.ddt$Pollutant %in% c("Endosulfan I", "Endosulfan II", "Endosulfan sulfate", ".alpha.-Endosulfan", ".beta.-Endosulfan"),]
 endo$tResult <- endo$tResult*endo$dnd
 endo.casted <- dcast(endo, Agency + SampleRegID + SampleAlias + Matrix + Fraction +
-                       Sampled +  SpecificMethod ~ criterianame, value.var = 'tResult')
-endo.casted$Endosulfan <- rowSums(endo.casted[,c("Endosulfan I", "Endosulfan II", "Endosulfan Sulfate")],na.rm=TRUE)
-endo.casted.sub <- within(endo.casted, rm("Endosulfan I", "Endosulfan II", "Endosulfan Sulfate"))
+                       Sampled +  SpecificMethod ~ Pollutant, value.var = 'tResult')
+endo.casted$Endosulfan <- rowSums(endo.casted[,c("Endosulfan I", "Endosulfan II", "Endosulfan sulfate",".alpha.-Endosulfan", ".beta.-Endosulfan")],na.rm=TRUE)
+endo.casted.sub <- within(endo.casted, rm("Endosulfan I", "Endosulfan II", "Endosulfan sulfate",".alpha.-Endosulfan", ".beta.-Endosulfan"))
 endo.melted <- melt(endo.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SpecificMethod','Fraction'),variable.name = 'Pollutant',value.name = 'tResult')#melt
 endo.melted$dnd <- ifelse(endo.melted$tResult > 0,1,0)
 endo.melted.addons <- data.frame('tMRL' = rep(0,nrow(endo.melted)), 
@@ -420,12 +451,12 @@ dcwd.w.totals[grep('ardnes',dcwd.w.totals$Name.full),'criterianame'] <- dcwd.w.t
 dcwd.w.totals <- dcwd.w.totals[!is.na(dcwd.w.totals$tResult),]
 
 
-#we want the max between endosulfan and its sum of isomers, between chlordance
+#we want the max between endosulfan and its sum of isomers, between chlordane
 #and is sum of isomers and between sum of pcb congeners and aroclors.
 remove.dups <- function(tname) {
-  no.dups <- aggregate(tResult ~ id, data = tname, FUN = max)
-  tname <- tname[!duplicated(tname$id),]
-  tname <- merge(no.dups, tname, by = 'id')
+  no.dups <- aggregate(tResult ~ code, data = tname, FUN = max)
+  tname <- tname[!duplicated(tname$code),]
+  tname <- merge(no.dups, tname, by = 'code')
   #tname$tResult <- round(tname$tResult.x, 2)
   tname$tResult <- tname$tResult.x
   tname <- within(tname, rm(tResult.x, tResult.y))
@@ -437,7 +468,7 @@ dcwd.w.totals <- remove.dups(dcwd.w.totals)
 #Not sure where the best place is for this but we need to fix some of the issues with Arsenic and Dissolved/Total/Total inorganic
 #We can assume per Andrea that all of dissolved is in Total inorganic form. That leaves the conversion for anything in Total recoverable.
 dcwd.w.totals[dcwd.w.totals$Name.full %in% c('Arsenic, Total recoverable','Arsenic'),'tResult'] <- dcwd.w.totals[dcwd.w.totals$Name.full %in% c('Arsenic, Total recoverable','Arsenic'),'tResult']*0.76
-dcwd.w.totals[grep('Arsenic',dcwd.w.totals$Name.full),'criterianame'] <- 'Arsenic, Total inorganic'
+#dcwd.w.totals[grep('Arsenic',dcwd.w.totals$Name.full),'criterianame'] <- 'Arsenic, Total inorganic'
 
 #We need an ID to match with the criteria so we'll simplify the Matrix field
 dcwd.w.totals$Matrix <- 'FW' #mapvalues(dcwd.w.totals$Matrix, from = c("River/Stream", "Estuary"), to = c('FW','SW'))
@@ -447,18 +478,35 @@ dcwd.w.totals$ID <- paste(dcwd.w.totals$criterianame, dcwd.w.totals$Matrix)
 dcwd.w.totals[is.na(dcwd.w.totals$tMRL),'tMRL'] <- 0
 
 #Now that the names are consistent we can match using analyte name and bring in the criteria
-deq.pollutants <- criteria.values.melted.applicable[criteria.values.melted.applicable$variable %in% 
-                                                      c('Table 40 Human Health Criteria for Toxic Pollutants - Water + Organism',
-                                                        'Table 40 Human Health Criteria for Toxic Pollutants - Organism Only',
-                                                        'Table 30 Toxic Substances - Freshwater Acute',
-                                                        'Table 30 Toxic Substances - Freshwater Chronic',
-                                                        'Table 30 Toxic Substances - Saltwater Acute',
-                                                        'Table 30 Toxic Substances - Saltwater Chronic'),]
-deq.pollutants <- deq.pollutants[!duplicated(deq.pollutants$ID),]
-criteria.for.analytes.we.have <- deq.pollutants[deq.pollutants$Pollutant %in% dcwd.w.totals$criterianame,]
-dcc <- merge(dcwd.w.totals, criteria.for.analytes.we.have, by = 'ID', all.x = TRUE)
-dcc <- within(dcc, rm(Pollutant.y))
+
+#This is an arbitraty way to pick the minimum criteria
+#deq.pollutants <- deq.pollutants[!duplicated(deq.pollutants$ID),]
+# Let's hold off on taking the minimum here for now and consider doing after the condition specific criteria calcs
+# #We need a smarter way to do it
+# deq.pollutants.min <- ddply(deq.pollutants, .(ID), function(m) {m[which(m$value == min(m$value)),]})
+# #Now that we have the minimum we arbitrarily pick one of the variables that had min (e.g. Table 40 W+O or Table 40 O only for Acrolein)
+# deq.pollutants <- deq.pollutants.min[!duplicated(deq.pollutants.min$ID),]
+#criteria.for.analytes.we.have <- deq.pollutants[deq.pollutants$Pollutant %in% dcwd.w.totals$criterianame,]
+dcc <- merge(dcwd.w.totals, deq.pollutants, by = 'ID', all.x = TRUE)
+#dcc <- within(dcc, rm(Pollutant.y))
 dcc <- rename(dcc, c('Pollutant.x' = 'Pollutant'))
+
+# #So i can re-run from here. I am going to output the intermediates
+# dcwd.w.totals <- within(dcwd.w.totals, rm(id))
+# dcc <- within(dcc, rm(id))
+# con <- odbcConnect('WQAssessment')
+# # sqlSave(con, dcwd.w.totals, tablename = '2012_INTERMEDIATE_dcwdwtotals')
+# # sqlSave(con, dcc, tablename = '2012_INTERMEDIATE_dcc')
+# dcwd.w.totals <- sqlFetch(con, '2012_INTERMEDIATE_dcwdwtotals')
+# dcwd.w.totals <- rename(dcwd.w.totals, c('Namefull' = 'Name.full'))
+# dcwd.w.totals$tMRL <- as.numeric(dcwd.w.totals$tMRL)
+# dcwd.w.totals$tResult <- as.numeric(dcwd.w.totals$tResult)
+# dcc <- sqlFetch(con, '2012_INTERMEDIATE_dcc')
+# dcc <- rename(dcc, c('Namefull' = 'Name.full', 'Matrixx' = 'Matrix.x', 'Matrixy' = 'Matrix.y'))
+# dcc$tMRL <- as.numeric(dcc$tMRL)
+# dcc$tResult <- as.numeric(dcc$tResult)
+# dcc$value <- as.numeric(dcc$value)
+# odbcCloseAll()
 
 #### Hardness criteria calculation ####
 #Using the hardness evaluation function loaded above we can calculate the hardness based criteria values
@@ -467,34 +515,33 @@ dcc <- rename(dcc, c('Pollutant.x' = 'Pollutant'))
 #Calculate criteria based on hardness
 hm <- hardness.crit.calc(dcwd.w.totals)
 
-#Assumes total sample fraction for those samples that remain unstandardized
-hm[!grepl('Total recoverable|Dissolved', hm$Name.full),'Name.full'] <- paste(hm[!grepl('Total recoverable|Dissolved', hm$Name.full),'Name.full'], 'Total recoverable', sep = ", ")
+#We are going to hold off on this for now
+# #Determine minimum applicable criteria for each sample
+# hm.min <- ddply(hm, .(criterianame, SampleRegID, Sampled, Fraction), function(m) {m[which(m$value == min(m$value)),]})
 
-#Determine minimum applicable criteria for each sample
-hm.min <- ddply(hm, .(criterianame, SampleRegID, Sampled, Fraction), function(m) {m[which(m$value == min(m$value)),]})
-
-#Preserve result column
-hm.min$tResult.old <- hm.min$tResult
-
-#Select appropriate sample fraction when both available and convert when NOT except where the sample is ND. 
-hm.frac <- ddply(hm.min, .(criterianame, SampleRegID, Sampled), function(m) {
-  if(nrow(m) > 1) {
-    use <- m[m$criterianame == m$Name.full,] 
-    use$tResult <- use$tResult.old
-  } else {
-    use <- m
-    use$tResult <- ifelse(use$tMRL < use$value,ifelse(grepl('Chronic',use$variable),use$tResult*use$CFC,use$tResult*use$CFA),use$tResult.old)
-  }
-  return(use)
-})
+# #Preserve result column
+# hm$tResult.old <- hm$tResult
+# 
+# #Select appropriate sample fraction when both available and convert when NOT except where the sample is ND. 
+# hm.frac <- ddply(hm, .(criterianame, SampleRegID, Sampled), function(m) {
+#   if(nrow(m) > 1) {
+#     use <- m[m$criterianame == m$Name.full,] 
+#     use$tResult <- use$tResult.old
+#   } else {
+#     use <- m
+#     use$tResult <- ifelse(use$tMRL < use$value,ifelse(grepl('Chronic',use$variable),use$tResult*use$CFC,use$tResult*use$CFA),use$tResult.old)
+#   }
+#   return(use)
+# })
 # hm.frac$check <- paste(hm.frac$criterianame, hm.frac$SampleRegID, hm.frac$Sampled)
 # any(duplicated(hm.frac$check))
 # hm.frac <- within(hm.frac, rm(check))
-#Percentages of using a non-matching sample fraction to compare to the standard
-# table(hm.frac[hm.frac$criterianame != hm.frac$Name.full,'criterianame'])/ table(hm.frac$criterianame) *100
-hm.frac <- hm.frac[,names(dcc)]
-dcc.wo.hm <- dcc[!dcc$criterianame %in% hm.frac$criterianame,]
-dcc.hm <- rbind(dcc.wo.hm, hm.frac)
+# #Percentages of using a non-matching sample fraction to compare to the standard
+# # table(hm.frac[hm.frac$criterianame != hm.frac$Name.full,'criterianame'])/ table(hm.frac$criterianame) *100
+hm <- hm[,names(dcc)]
+# hm.frac$ID <- paste(hm.frac$criterianame, hm.frac$Matrix.x)
+dcc.wo.hm <- dcc[!dcc$ID %in% hm$ID,]
+dcc.hm <- rbind(dcc.wo.hm, hm)
 
 #### Pentachlorophenol pH dependent criteria calculation ####
 #Similarly pentachlorophenol is parameter dependent and is handled the same as hardness
@@ -517,16 +564,42 @@ dcc.hm <- rbind(dcc.wo.hm, hm.frac)
 #Ammonia is also parameter dependent and is handled similarly
 amm <- ammonia.crit.calc(dcwd.w.totals)
 amm <- amm[,names(dcc.hm)]
-amm.min <- ddply(amm, .(criterianame, SampleRegID, Sampled, Fraction), function(m) {m[which(m$value == min(m$value)),]})
-dcc.wo.amm <- dcc.hm[!dcc.hm$Pollutant %in% amm.min$Pollutant,]
-dcc.amm <- rbind(dcc.wo.amm, amm.min)
+#amm.min <- ddply(amm, .(criterianame, SampleRegID, Sampled, Fraction), function(m) {m[which(m$value == min(m$value)),]})
+#amm.min$ID <- paste(amm.min$criterianame, amm.min$Matrix.x)
+dcc.wo.amm <- dcc.hm[!dcc.hm$ID %in% amm$ID,]
+dcc.amm <- rbind(dcc.wo.amm, amm)
 
 #### EVALUATION ####
-dcc.amm$exceed <- ifelse(dcc.amm$criterianame == 'Alkalinity',ifelse(dcc.amm$tResult > dcc.amm$value,0,1),ifelse(dcc.amm$tResult < dcc.amm$value,0,1))
+#First we'll take the minimum associated criteria for each sample
+#dcc.amm.min <- ddply(dcc.amm, .(Name.full, SampleRegID, Sampled), function(m) {m[which(m$value == min(m$value)),]})
+#regenerate this so it is new as long as any(duplicated(rownames(dcc.amm))) evaluates to false
+dcc.amm$index <- rownames(dcc.amm)
+#ddply ran out of memory so I am using dplyr here which works way faster. Not sure this is the correct usage. There is probably
+#a more elegant way but it's doing what I want so far. 
+library(dplyr)
+dcc.amm.groups <- group_by(dcc.amm, Name.full, SampleRegID, Sampled)
+dcc.amm.min.index <- summarise(dcc.amm.groups, value = min(value), index)
+dcc.amm.min <- dcc.amm[dcc.amm$index %in% dcc.amm.min.index$index,]
+detach(package:dplyr)
+
+#evaluate exceedances to the minimum criteria
+dcc.amm.min$exceed <- ifelse(dcc.amm.min$criterianame == 'Alkalinity',ifelse(dcc.amm.min$tResult > dcc.amm.min$value,0,1),ifelse(dcc.amm.min$tResult < dcc.amm.min$value,0,1))
 
 #Now on to determining which are valid exceedances
-#Where the MRL is greater than the criteria we can't use that sample to determine attainment or non-attainment
-dcc.amm$Valid <- ifelse(dcc.amm$tMRL <= dcc.amm$value, 1, 0)
+#First, Where the MRL is greater than the criteria we can't use that sample to determine attainment or non-attainment
+dcc.amm.min$Valid <- ifelse(dcc.amm.min$tMRL <= dcc.amm.min$value, 1, 0)
+
+#Select appropriate sample fraction when both available and convert when NOT except where the sample is ND. 
+ddply(dcc.amm.min, .(criterianame, SampleRegID, Sampled), function(m) {
+  if(nrow(m) > 1) {
+    use <- m[m$criterianame == m$Name.full,] 
+    use$tResult <- use$tResult.old
+  } else {
+    use <- m
+    use$tResult <- ifelse(use$tMRL < use$value,ifelse(grepl('Chronic',use$variable),use$tResult*use$CFC,use$tResult*use$CFA),use$tResult.old)
+  }
+  return(use)
+})
 
 #Dissolved versus total criteria
-View(dcc.amm[grepl('Dissolved',dcc.amm$Name.full) & grepl('Total',dcc.amm$criterianame),])
+View(dcc.amm.min[grepl('Dissolved',dcc.amm.min$Name.full) & grepl('Total',dcc.amm.min$criterianame),])
