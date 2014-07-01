@@ -10,7 +10,9 @@ constants <- data.frame('Name.alone' = c('Cadmium', 'Copper', 'Cadmium', 'Chromi
                         'mC' = c(NA, 0.8545, 0.7409, 0.8190, 1.273, 0.8460, NA, 0.8473),
                         'bC' = c(NA, -1.465, -4.719, 0.6848, -4.705, 0.0584, NA, 0.884),
                         'CFA' = c(1, 1, 1, 0.316, 1, 0.998, 0.85, 0.978),
-                        'CFC' = c(1, 1, 1, 0.860, 1, 0.997, 0.85, 0.986))
+                        'CFC' = c(1, 1, 1, 0.860, 1, 0.997, 0.85, 0.986),
+                        'CFA_SW' = c(1,1,0.994,0.993,0.951,0.990,0.85,0.946),
+                        'CFC_SW' = c(1,1,0.994,0.993,0.951,0.990,1,0.946))
 
 hardness.crit.calc <- function(df, remove.chromium = TRUE) {
   if(remove.chromium == FALSE) {
@@ -36,9 +38,9 @@ hardness.crit.calc <- function(df, remove.chromium = TRUE) {
   mhc <- merge(mh, constants, by.x = 'criterianame', by.y = 'Name.alone', all.x = TRUE)
   
   for (i in 1:nrow(mhc)) {
-    if(mhc$criterianame[i] == 'Cadmium, Dissolved') {
+    if(mhc$Analyte[i] == c('Cadmium, Dissolved')) {
       mhc$CFC[i] <- 1.101672-(log(mhc$tResult.hardness[i])*(0.041838))
-    } else if (mhc$criterianame[i] == 'Lead, Dissolved') {
+    } else if (mhc$Analyte[i] == c('Lead, Dissolved')) {
       mhc$CFA[i] <- 1.46203-(log(mhc$tResult.hardness[i])*(0.145712))
       mhc$CFC[i] <- 1.46203-(log(mhc$tResult.hardness[i])*(0.145712))
     }
@@ -46,16 +48,27 @@ hardness.crit.calc <- function(df, remove.chromium = TRUE) {
   
   mhc$'Table 30 Toxic Substances - Freshwater Acute' <- exp(mhc$mA*(log(mhc$tResult.hardness)) + mhc$bA) * mhc$CFA
   mhc$'Table 30 Toxic Substances - Freshwater Chronic' <- exp(mhc$mC*(log(mhc$tResult.hardness)) + mhc$bC) * mhc$CFC
+
+  mhc$'Table 30 Toxic Substances - Saltwater Acute' <- exp(mhc$mA*(log(mhc$tResult.hardness)) + mhc$bA) * mhc$CFA_SW
+  mhc$'Table 30 Toxic Substances - Saltwater Chronic' <- exp(mhc$mC*(log(mhc$tResult.hardness)) + mhc$bC) * mhc$CFC_SW
   
-  mhc.melted <- melt(mhc, measure.vars = c('Table 30 Toxic Substances - Freshwater Acute', 'Table 30 Toxic Substances - Freshwater Chronic'))
+  mhc$'Table 30 Toxic Substances - Freshwater Acute' <- ifelse(mhc$Matrix == 'SW',NA,mhc$'Table 30 Toxic Substances - Freshwater Acute')
+  mhc$'Table 30 Toxic Substances - Freshwater Chronic' <- ifelse(mhc$Matrix == 'SW',NA,mhc$'Table 30 Toxic Substances - Freshwater Chronic')
+  mhc$'Table 30 Toxic Substances - Saltwater Acute' <- ifelse(mhc$Matrix == 'FW',NA,mhc$'Table 30 Toxic Substances - Saltwater Acute')
+  mhc$'Table 30 Toxic Substances - Saltwater Chronic' <- ifelse(mhc$Matrix == 'FW',NA,mhc$'Table 30 Toxic Substances - Saltwater Chronic')
+  
+  mhc.melted <- melt(mhc, measure.vars = c('Table 30 Toxic Substances - Freshwater Acute', 'Table 30 Toxic Substances - Freshwater Chronic',
+                                           'Table 30 Toxic Substances - Saltwater Acute', 'Table 30 Toxic Substances - Saltwater Chronic'))
   
   mhcm <- mhc.melted[!is.na(mhc.melted$value),]
   
-  mhcm <- rename(mhcm, c('Name.full.metal' = 'Name.full', 'tResult.metal' = 'tResult', 'Matrix' = 'Matrix.x', 'Analyte' = 'Pollutant.y'))
+  mhcm <- rename(mhcm, c('Name.full.metal' = 'Name.full', 'tResult.metal' = 'tResult', 'Matrix' = 'Matrix.x', 'Analyte' = 'Criteria.Name.full'))
   
-  mhcm$Matrix.y <- 'FW'
+  mhcm$Matrix.y <- mhcm$Matrix.x
   
   #mhcm$Pollutant <- mhcm$Pollutant
+  
+  mhcm$criterianame.x <- mhcm$Name
   
   mhcm <- within(mhcm, rm(relate))
   
@@ -176,11 +189,11 @@ ammonia.crit.calc <- function(df, salmonids = 'all') {
   
   amm <- df[df$criterianame == 'Ammonia as N',]
   
-  ph <- df[df$criterianame == 'pH',c('relate','Pollutant','tResult')]
+  ph <- df[df$criterianame == 'pH',c('relate','Name','tResult')]
   
-  temp <- df[df$criterianame == 'Temperature',c('relate','Pollutant','tResult')]
+  temp <- df[df$criterianame == 'Temperature',c('relate','Name','tResult')]
   
-  sal <- df[df$criterianame == 'Salinity',c('relate','Pollutant','tResult')]
+  sal <- df[df$criterianame == 'Salinity',c('relate','Name','tResult')]
   
   ap <- merge(amm, ph, by = 'relate', suffixes = c('.amm','.ph'),all.x = TRUE)
   
@@ -191,7 +204,7 @@ ammonia.crit.calc <- function(df, salmonids = 'all') {
   apt$tResult <- as.numeric(apt$tResult)
   
   #The freshwater criteria
-  apt.fw <- apt[apt$Matrix == 'FW',]
+  apt.fw <- apt[apt$Matrix %in% c('FW','ES'),]
   
   for (i in 1:nrow(apt.fw)) {
       apt.fw$TCAP.CMC[i] <- ifelse(apt.fw$salmonids[i] == TRUE,20,25)
@@ -215,14 +228,14 @@ ammonia.crit.calc <- function(df, salmonids = 'all') {
   
   aptm <- apt.fw.melted[!is.na(apt.fw.melted$value),]
   
-  aptm$Matrix.y <- 'FW'
+  aptm$Matrix.y <- aptm$Matrix
   
-  aptm <- within(aptm, rm(Pollutant))
+  aptm <- within(aptm, rm(Name))
   
   #The saltwater criteria
   aptc <- merge(apt, sal, by = 'relate', suffixes = c('.temp','.sal'),all.x = TRUE)
   
-  aptc <- aptc[aptc$Matrix == 'SW',]
+  aptc <- aptc[aptc$Matrix %in% c('SW','ES'),]
   
   aptc$tResult.sal <- as.numeric(aptc$tResult.sal)
   
@@ -261,24 +274,26 @@ ammonia.crit.calc <- function(df, salmonids = 'all') {
   
   aptcm <- rename(aptcm, c('tResult.temp' = 'tResult'))
   
-  aptcm$Matrix.y <- rep('SW',nrow(aptcm))
+  aptcm$Matrix.y <- aptcm$Matrix
   
-  aptcm <- within(aptcm, rm(Pollutant.temp,Pollutant.sal,tResult.sal))
+  aptcm <- within(aptcm, rm(Name.temp,Name.sal,tResult.sal))
   
   aptm.sub <- (aptm[,names(aptm)[names(aptm) %in% names(aptcm)]])
   
   amm.fw.sw <- rbind(aptcm,aptm.sub)
   
-  amm.fw.sw$Pollutant <- amm.fw.sw$Analyte.amm
+  amm.fw.sw$Name <- amm.fw.sw$Name.amm
   
-  amm.fw.sw <- rename(amm.fw.sw, c('Pollutant.amm' = 'Pollutant', 'Matrix' = 'Matrix.x', 'tResult' = 'tResult.temp', 'tResult.amm' = 'tResult'))
+  amm.fw.sw <- rename(amm.fw.sw, c('Matrix' = 'Matrix.x', 'tResult' = 'tResult.temp', 'tResult.amm' = 'tResult'))
   
   #Convert to micrograms per liter for consistency
   amm.fw.sw$value <- amm.fw.sw$value* 1000
 
   amm.fw.sw <- within(amm.fw.sw, rm(relate))
 
-  amm.fw.sw$Pollutant.y <- amm.fw.sw$criterianame
+  amm.fw.sw$criterianame.x <- amm.fw.sw$criterianame
+
+  amm.fw.sw$Criteria.Name.full <- amm.fw.sw$criterianame
 
   return(amm.fw.sw)
   

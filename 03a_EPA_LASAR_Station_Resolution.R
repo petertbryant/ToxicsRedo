@@ -168,6 +168,7 @@ lasar.stations.to.locate <- lasar.stations.not.in.gdb[lasar.stations.not.in.gdb$
 #check against station use list from 2010
 con.2010 <- odbcConnectAccess('//deqhq1/wqassessment/2010_WQAssessment/Databases/WorkingTables_2010.mdb')
 sul2010 <- sqlFetch(con.2010, 'StationUseList_2010')
+odbcCloseAll()
 
 #let's see if they were to be included in the 2010 iteration
 check <- (merge(lasar.stations.to.locate, sul2010, by.x = 'STATION_KEY', by.y = 'STATION'))
