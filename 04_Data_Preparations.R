@@ -2,6 +2,7 @@ library(plyr)
 library(reshape2)
 library(stringr)
 library(RODBC)
+library(foreign)
 
 options(stringsAsFactors = FALSE, scipen = 100)
 
@@ -311,14 +312,18 @@ data.complete.w.resolved.fd <- rbind(data.complete.wo.fd.fp.pairs, fd.fp.max)
 
 #We also have multiple samples within a day. 
 #View(data.complete.wo.dups[data.complete.wo.dups$code %in% data.complete.wo.dups[duplicated(data.complete.wo.dups$code),'code'],])
-system.time(data.complete.wo.dups.by.day.index <- ddply(data.complete.w.resolved.fd, .(code), function(sub) {
-  ifelse(sum(sub$dnd) == 0,sub[which.min(sub$tMRL),'index'],
-         ifelse((sum(sub$dnd) >= 2),sub[which.max(sub$tResult),'index'],
-                sub[sub$dnd == 1,'index']))}))
+# system.time(data.complete.wo.dups.by.day.index <- ddply(data.complete.w.resolved.fd, .(code), function(sub) {
+#   ifelse(sum(sub$dnd) == 0,sub[which.min(sub$tMRL),'index'],
+#          ifelse((sum(sub$dnd) >= 2),sub[which.max(sub$tResult),'index'],
+#                 sub[sub$dnd == 1,'index']))}))
 
 #data.complete.wo.dups.by.day.index <- pick.min.MRL(data.complete.w.resolved.fd)
 
-data.complete.wo.dups <- data.complete.w.resolved.fd[data.complete.w.resolved.fd$index %in% data.complete.wo.dups.by.day.index$V1,]
+# data.complete.wo.dups <- data.complete.w.resolved.fd[data.complete.w.resolved.fd$index %in% data.complete.wo.dups.by.day.index$V1,]
+
+sub <- with(data.complete.w.resolved.fd, resolveMRLs(code, dnd, tResult))
+data.complete.wo.dup.MRLs <- d[sub,]
+data.complete.wo.dups <- remove.dups(data.complete.wo.dup.MRLs)
 
 #### Grouping parameters to be compared to composite criteria ####
 #We will add this here for now but should be coming from Station locate process
@@ -478,15 +483,6 @@ dcwd.w.totals <- dcwd.w.totals[!is.na(dcwd.w.totals$tResult),]
 
 #we want the max between endosulfan and its sum of isomers, between chlordane
 #and is sum of isomers and between sum of pcb congeners and aroclors.
-remove.dups <- function(tname) {
-  no.dups <- aggregate(tResult ~ code, data = tname, FUN = max)
-  tname <- tname[!duplicated(tname$code),]
-  tname <- merge(no.dups, tname, by = 'code')
-  #tname$tResult <- round(tname$tResult.x, 2)
-  tname$tResult <- tname$tResult.x
-  tname <- within(tname, rm(tResult.x, tResult.y))
-}
-
 dcwd.w.totals <- remove.dups(dcwd.w.totals)
 
 #### Associate with criteria ####
@@ -497,10 +493,13 @@ dcwd.w.totals[dcwd.w.totals$Name.full %in% c('Arsenic, Total recoverable','Arsen
 
 #We need an ID to match with the criteria so we'll simplify the Matrix field
 #To get the matrix field we need to pull in marine and estuary determinations
+sul2012 <- read.dbf('Estuary_Analysis/All_stations_final_est/GitHub/ToxicsRedo/Estuary_Analysis/All_stations_final_est.dbf')
+sul2012$Matrix <- mapvalues(sul2012, from = unique(sul2012$Est_final), to = )
 con.2010 <- odbcConnectAccess('//deqhq1/wqassessment/2010_WQAssessment/Databases/WorkingTables_2010.mdb')
 sul2010 <- sqlFetch(con.2010, 'StationUseList_2010')
 odbcCloseAll()
 sul2010$Matrix <- ifelse(sul2010$MARINE_WATERS == 1,'SW',ifelse(sul2010$ESTUARY == 1,'ES','FW'))
+
 dcwd.w.matrix <- merge(dcwd.w.totals, sul2010[,c('STATION','Matrix')], by.x = 'SampleRegID', by.y = 'STATION', all.x = TRUE)
 dcwd.w.matrix$Matrix <- ifelse(is.na(dcwd.w.matrix$Matrix.y),dcwd.w.matrix$Matrix.x,dcwd.w.matrix$Matrix.y)
 dcwd.w.matrix <- within(dcwd.w.matrix, rm(Matrix.x, Matrix.y))
