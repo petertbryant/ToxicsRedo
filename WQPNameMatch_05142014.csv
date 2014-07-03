@@ -52,7 +52,7 @@ Cyanide,Cyanide,0,Cyanide
 "4,4`-DDD","p,p'-DDT",0,"DDD 4,4'"
 "4,4`-DDE","p,p'-DDE",0,"DDE 4,4'"
 "4,4`-DDT","p,p'-DDD",0,"DDT 4,4'"
-Total DDT,"DDT/DDD/DDE, sum of p,p' isomers",0,"DDT 4,4'"
+Total DDT,"DDT/DDD/DDE, sum of p,p' isomers",0,Total DDT
 Demeton,Demeton,0,Demeton
 "Dibenz[a,h]anthracene","Dibenz[a,h]anthracene",0,"Dibenz[a,h]anthracene"
 "Dichlorobenzene(m) 1,3",m-Dichlorobenzene,0,"Dichlorobenzene(m) 1,3"
