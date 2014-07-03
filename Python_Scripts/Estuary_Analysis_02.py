@@ -13,6 +13,7 @@ import pandas as pd
 from arcpy import env
 import os.path
 import subprocess
+from IR2012_Functions import renameField
 
 arcpy.env.overwriteOutput = True
 workspace = "E:/GitHub/ToxicsRedo/Estuary_Analysis"
@@ -89,3 +90,73 @@ arcpy.SelectLayerByAttribute_management(final_station_lyr, 'SWITCH_SELECTION')
 arcpy.SelectLayerByAttribute_management(final_station_lyr, 'SUBSET_SELECTION', """"QAQC2" not in ('Remove', 'Potential Digitization')""")
 print(int(arcpy.GetCount_management(final_station_lyr).getOutput(0)))
 arcpy.CalculateField_management(final_station_lyr, 'Est_Final', '"Freshwater"')
+
+#Fill in final 'Matrix' field
+out_fc = 'E:/GitHub/ToxicsRedo/Estuary_Analysis/Estuaries.gdb/All_stations_final_est'
+code_block = """def Reclass(matrix):
+    if matrix == 'Estuary':
+        return 'ES'
+    elif matrix == 'Marine':
+        return 'SW'
+    elif matrix is None:
+        return None
+    else:
+        return 'FW'"""
+expression = 'Reclass(!Est_Final!)'
+arcpy.AddField_management(out_fc, 'MATRIX', 'TEXT')
+arcpy.CalculateField_management(out_fc, 'MATRIX', expression, 'PYTHON_9.3', code_block)
+#arcpy.DeleteField_management(out_fc, 'MATRIX')
+
+#Do the same for stations2010
+out_fc = 'E:/GitHub/ToxicsRedo/Estuary_Analysis/Estuaries.gdb/Stations_2010'
+out_fc_lyr = 'stations2010_lyr'
+query_es = '"ESTUARY" = 1'
+query_sw = '"MARINE_WATERS" = 1'
+query_fw = '"ESTUARY" <> 1 and "MARINE_WATERS" <> 1'
+arcpy.AddField_management(out_fc, 'MATRIX', 'TEXT')
+arcpy.MakeFeatureLayer_management(out_fc, out_fc_lyr, query_es)
+arcpy.CalculateField_management(out_fc_lyr, 'MATRIX', '"ES"')
+arcpy.MakeFeatureLayer_management(out_fc, out_fc_lyr, query_sw)
+arcpy.CalculateField_management(out_fc_lyr, 'MATRIX', '"SW"')
+arcpy.MakeFeatureLayer_management(out_fc, out_fc_lyr, query_fw)
+arcpy.CalculateField_management(out_fc_lyr, 'MATRIX', '"FW"')
+#arcpy.DeleteField_management(out_fc, 'MATRIX')
+
+#Merge this output with stations_2010 for final station use list for 2012, and remove unnecessary fields
+
+in_fc1 = 'F:/Base_Data/DEQ_Data/WQ_2010_IntegratedReport_V3/WQ_2010_IntegratedReport_V3/Assessment.gdb/SurfaceWaterMonitoringStations/Stations_2010'
+in_fc1_join = 'E:/GitHub/ToxicsRedo/Estuary_Analysis/Estuaries.gdb/Stations_2010'
+in_fc1_temp = "E:/GitHub/ToxicsRedo/Estuary_Analysis/Estuaries.gdb/Stations_2010_temp"
+in_fc2 = 'E:/GitHub/ToxicsRedo/Estuary_Analysis/Estuaries.gdb/All_stations_final_est'
+in_fc2_lyr = 'only_finalized_stations'
+query = """"QAQC2" not in ('Potential Digitization', 'Remove', 'Further Review Needed')"""
+out_fc = "E:/GitHub/ToxicsRedo/Estuary_Analysis/Estuaries.gdb/Stations_2012_Analysis"
+arcpy.CopyFeatures_management(in_fc1, in_fc1_temp)
+arcpy.AddField_management(in_fc1_temp, 'AGENCY', 'TEXT')
+arcpy.AddField_management(in_fc1_temp, 'AGENCY_ID', 'TEXT')
+arcpy.CalculateField_management(in_fc1_temp, 'AGENCY', '"Oregon Department of Environmental Quality"')
+arcpy.CalculateField_management(in_fc1_temp, 'AGENCY_ID', '"ODEQ"')
+arcpy.JoinField_management(in_fc1_temp, 'STATION', in_fc1_join, 'STATION', 'MATRIX')
+renameField(in_fc1_temp, 'STATION', 'STATION_TEMP', 'TEXT')
+renameField(in_fc1_temp, 'STATION_TEMP', 'STATION')
+arcpy.MakeFeatureLayer_management(in_fc2, in_fc2_lyr, query)
+arcpy.Merge_management([in_fc1_temp, in_fc2_lyr], out_fc)
+arcpy.Delete_management(in_fc1_temp)
+fieldList = arcpy.ListFields(out_fc)
+fields_to_drop = []
+
+for field in fieldList:
+    if field.name not in ['Shape','OBJECTID', 'STATION', 'DESCRIPTION', 'DEC_LAT', 'DEC_LONG', 'LLID', 'RIVER_MILE', 
+                          'LAKE_NAME', 'LAKE_LLID', 'GIS_Source_LAKE', 'GIS_STREAMNAME', 'GIS_Source', 
+                          'EPA_BEACH_ID', 'BEACH_NAME', 'AGENCY', 'AGENCY_ID', 'MATRIX']:
+        fields_to_drop.append(field.name)
+
+arcpy.DeleteField_management(out_fc, fields_to_drop)
+renameField(out_fc, 'GIS_STREAMNAME', 'STREAM_NAME')
+renameField(out_fc, 'GIS_Source_LAKE', 'LAKE_SOURCE')
+renameField(out_fc, 'GIS_Source', 'STREAM_SOURCE')
+
+#Remove Matrix field
+out_fc_final = "E:/GitHub/ToxicsRedo/Estuary_Analysis/Estuaries.gdb/Stations_2012"
+arcpy.CopyFeatures_management(out_fc, out_fc_final)
+arcpy.DeleteField_management(out_fc_final, 'MATRIX')
