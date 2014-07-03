@@ -61,6 +61,10 @@ T3040.ES$ID <- paste(T3040.ES$criterianame, T3040.ES$Matrix)
 T3040.ES$x <- apply(T3040.ES[,names(T3040.ES)],1,paste,collapse=',')
 T3040.ES <- T3040.ES[!duplicated(T3040.ES$x),]
 T3040.ES <- within(T3040.ES, rm(x))
+wo.to.keep <- T3040.ES[T3040.ES$criterianame %in% c('Barium','Chlorophenoxy Herbicide (2,4,5,-TP)','2,4-D','Copper','Methoxychlor','Nitrates') & 
+                         T3040.ES$variable == 'Table 40 Human Health Criteria for Toxic Pollutants - Water + Organism',]
+T3040.ES <- T3040.ES[T3040.ES$variable != 'Table 40 Human Health Criteria for Toxic Pollutants - Water + Organism',]
+T3040.ES <- rbind(T3040.ES, wo.to.keep)
 Table3040.applicable <- rbind(Table3040.applicable, T3040.ES)
 
 #Pull in criteria determination calculation functions
@@ -269,8 +273,10 @@ data.complete$Name.full <- ifelse(data.complete$Name %in% c(total.to.recoverable
 
 #Fields for future grouping
 data.complete$id <- paste(data.complete$SampleRegID, data.complete$Name.full, data.complete$Sampled)
+data.complete$id <- as.numeric(as.factor(data.complete$id))
 data.complete$day <- substr(data.complete$Sampled,1,10)
 data.complete$code <- paste(data.complete$SampleRegID, data.complete$Name.full, data.complete$day)
+data.complete$code <- as.numeric(as.factor(data.complete$code))
 data.complete$index <- rownames(data.complete)
 
 #### Resolve duplicates ####
@@ -305,10 +311,12 @@ data.complete.w.resolved.fd <- rbind(data.complete.wo.fd.fp.pairs, fd.fp.max)
 
 #We also have multiple samples within a day. 
 #View(data.complete.wo.dups[data.complete.wo.dups$code %in% data.complete.wo.dups[duplicated(data.complete.wo.dups$code),'code'],])
-data.complete.wo.dups.by.day.index <- ddply(data.complete.w.resolved.fd, .(code), function(sub) {
+system.time(data.complete.wo.dups.by.day.index <- ddply(data.complete.w.resolved.fd, .(code), function(sub) {
   ifelse(sum(sub$dnd) == 0,sub[which.min(sub$tMRL),'index'],
          ifelse((sum(sub$dnd) >= 2),sub[which.max(sub$tResult),'index'],
-                sub[sub$dnd == 1,'index']))})
+                sub[sub$dnd == 1,'index']))}))
+
+#data.complete.wo.dups.by.day.index <- pick.min.MRL(data.complete.w.resolved.fd)
 
 data.complete.wo.dups <- data.complete.w.resolved.fd[data.complete.w.resolved.fd$index %in% data.complete.wo.dups.by.day.index$V1,]
 
@@ -622,59 +630,45 @@ rm(dt, dt.min)
 #Select appropriate sample fraction when both available and convert when NOT except where the sample is ND. 
 #Pick up here: This section is not working yet.
 dcc.min$tResult.old <- dcc.min$tResult
-dcc.min <- merge(dcc.min, td.conv, by = 'code', all.x = TRUE)
 dissolved.metals.criteria <- unique(dcc.min[grep('Dissolved',dcc.min$Criteria.Name.full),c('Criteria.Name.full')])
-dcc.min[dcc.min$Criteria.Name.full %in% dissolved.metals.criteria & dcc.min$Criteria.Name.full != dcc.min$Name.full & dcc.min$dnd == 1,'tResult'] <- 
-  ifelse(grepl('Chronic',dcc.min[dcc.min$Criteria.Name.full %in% dissolved.metals.criteria & 
-                                   dcc.min$Criteria.Name.full != dcc.min$Name.full & 
-                                   dcc.min$dnd == 1,'variable']),
-         ifelse(grepl('Saltwater',dcc.min[dcc.min$Criteria.Name.full %in% dissolved.metals.criteria & 
-                                          dcc.min$Criteria.Name.full != dcc.min$Name.full & 
-                                          dcc.min$dnd == 1,'variable']),
-                dcc.min[dcc.min$Criteria.Name.full %in% dissolved.metals.criteria & 
-                          dcc.min$Criteria.Name.full != dcc.min$Name.full & 
-                          dcc.min$dnd == 1,'tResult']*dcc.min[dcc.min$Criteria.Name.full %in% dissolved.metals.criteria & 
-                                                                dcc.min$Criteria.Name.full != dcc.min$Name.full & 
-                                                                dcc.min$dnd == 1,'CFC_SW'],
-                dcc.min[dcc.min$Criteria.Name.full %in% dissolved.metals.criteria & 
-                          dcc.min$Criteria.Name.full != dcc.min$Name.full & 
-                          dcc.min$dnd == 1,'tResult']*dcc.min[dcc.min$Criteria.Name.full %in% dissolved.metals.criteria & 
-                                                                dcc.min$Criteria.Name.full != dcc.min$Name.full & 
-                                                                dcc.min$dnd == 1,'CFC']
-           ),
-         ifelse(grepl('Saltwater',dcc.min[dcc.min$Criteria.Name.full %in% dissolved.metals.criteria & 
-                                            dcc.min$Criteria.Name.full != dcc.min$Name.full & 
-                                            dcc.min$dnd == 1,'variable']),
-                dcc.min[dcc.min$Criteria.Name.full %in% dissolved.metals.criteria & 
-                          dcc.min$Criteria.Name.full != dcc.min$Name.full & 
-                          dcc.min$dnd == 1,'tResult']*dcc.min[dcc.min$Criteria.Name.full %in% dissolved.metals.criteria & 
-                                                                dcc.min$Criteria.Name.full != dcc.min$Name.full & 
-                                                                dcc.min$dnd == 1,'CFA_SW'],
-                dcc.min[dcc.min$Criteria.Name.full %in% dissolved.metals.criteria & 
-                          dcc.min$Criteria.Name.full != dcc.min$Name.full & 
-                          dcc.min$dnd == 1,'tResult']*dcc.min[dcc.min$Criteria.Name.full %in% dissolved.metals.criteria & 
-                                                                dcc.min$Criteria.Name.full != dcc.min$Name.full & 
-                                                                dcc.min$dnd == 1,'CFA'])
-  )
+sub1 <- dcc.min[dcc.min$Criteria.Name.full %in% dissolved.metals.criteria,]
+sub2 <- merge(sub1, td.conv, by = 'code', all.x = TRUE)
+sub2$x <- apply(sub2[,names(sub2)],1,paste,collapse=',')
+sub2 <- sub2[!duplicated(sub2$x),]
+sub2 <- within(sub2, rm(x))
+sub3 <- sub2[sub2$Criteria.Name.full != sub2$Name.full,]
+sub4 <- sub3[sub3$dnd == 1,] 
+sub4[sub4$Criteria.Name.full == 'Chromium, Dissolved',c('CFA')] <- 0.982 
+sub4[sub4$Criteria.Name.full == 'Chromium, Dissolved',c('CFC')] <- 0.962
+sub4[sub4$Criteria.Name.full == 'Chromium, Dissolved',c('CFA_SW','CFC_SW')] <- 0.993
+sub4[sub4$Criteria.Name.full == 'Selenium, Dissolved', 'CFA'] <- 0.996
+sub4[sub4$Criteria.Name.full == 'Selenium, Dissolved', 'CFC'] <- 0.922
+sub4[sub4$Criteria.Name.full == 'Selenium, Dissolved', c('CFC_SW','CFA_SW')] <- 0.998 
+sub4$tResult <- ifelse(grepl('Chronic',sub4$variable),
+                       ifelse(grepl('Saltwater',sub4$variable),
+                              sub4$tResult*sub4$CFC_SW,
+                              sub4$tResult*sub4$CFC),
+                       ifelse(grepl('Saltwater',sub4$variable),
+                              sub4$tResult*sub4$CFA_SW,
+                              sub4$tResult*sub4$CFA))
 
-
-dcc.min.converted <- ddply(dcc.min, .(criterianame.x, SampleRegID, Sampled), function(m) {
-  if(nrow(m) > 1) {
-    use <- m[m$criterianame.x == m$Name.full,] 
-    use$tResult <- use$tResult.old
-  } else {
-    use <- m
-    use$tResult <- ifelse(use$tMRL < use$value,ifelse(grepl('Chronic',use$variable),use$tResult*use$CFC,use$tResult*use$CFA),use$tResult.old)
-  }
-  return(use)
-})
+sub4 <- sub4[,names(dcc.min)]
+dcc.min.wo.sub4 <- dcc.min[!dcc.min$index %in% sub4$index,]
+dcc.min <- rbind(dcc.min.wo.sub4, sub4)
 
 #evaluate exceedances to the minimum criteria
-dcc.min$exceed <- ifelse(dcc.min$criterianame == 'Alkalinity',ifelse(dcc.min$tResult > dcc.min$value,0,1),ifelse(dcc.min$tResult < dcc.min$value,0,1))
+dcc.min$exceed <- ifelse(dcc.min$criterianame.x == 'Alkalinity',ifelse(dcc.min$tResult > dcc.min$value,0,1),ifelse(dcc.min$tResult < dcc.min$value,0,1))
 
 #Now on to determining which are valid exceedances
-#First, Where the MRL is greater than the criteria we can't use that sample to determine attainment or non-attainment
+#Where the MRL is greater than the criteria we can't use that sample to determine attainment or non-attainment
 dcc.min$Valid <- ifelse(dcc.min$tMRL <= dcc.min$value, 1, 0)
 
 #Dissolved versus total criteria
-View(dcc.min[grepl('Dissolved',dcc.min$Name.full) & grepl('Total',dcc.min$criterianame),])
+dtc <- dcc.min[dcc.min$Criteria.Name.full != dcc.min$Name.full & dcc.min$Fraction == 'Dissolved' & grepl('Total',dcc.min$Criteria.Name.full),]
+dtc$Valid <- ifelse(dtc$tResult > dtc$value,ifelse(dtc$Valid == 0,0,1),0)
+dcc.min.wo.dtc <- dcc.min[!dcc.min$index %in% dtc$index,]
+dcc.min <- rbind(dcc.min.wo.dtc, dtc)
+
+
+
+

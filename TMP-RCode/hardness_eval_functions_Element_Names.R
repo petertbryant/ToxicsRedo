@@ -299,3 +299,27 @@ ammonia.crit.calc <- function(df, salmonids = 'all') {
   
   
 }
+
+resolveMRLs <- function(ids, dnd, results){
+  
+  dnd.sum <- ave(dnd, ids, FUN = sum)
+  cases   <- findInterval(dnd.sum, c(0, 1, 2))
+  
+  id.max <- ave(results, ids, FUN = max)
+  id.min <- ave(results, ids, FUN = min)
+  
+  i0 <- cases == 1 & id.min == results
+  i1 <- cases == 2 & dnd == 1
+  i2 <- cases == 3 & id.max == results
+  
+  return(i0 | i1 | i2)
+}
+
+remove.dups <- function(tname) {
+  no.dups <- aggregate(tResult ~ code, data = tname, FUN = max)
+  tname <- tname[!duplicated(tname$code),]
+  tname <- merge(no.dups, tname, by = 'code')
+  #tname$tResult <- round(tname$tResult.x, 2)
+  tname$tResult <- tname$tResult.x
+  tname <- within(tname, rm(tResult.x, tResult.y))
+}
