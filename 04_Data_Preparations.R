@@ -105,6 +105,7 @@ wqp.data$criterianame <- ifelse(is.na(wqp.data$criterianame),wqp.data$Characteri
 
 #Pull in site_only so when we build summary info later it will fit that formatting better
 wqp.data <- merge(wqp.data, wqp.stations[,c('MonitoringLocationIdentifier','site_only')], by = 'MonitoringLocationIdentifier', all.x = TRUE)
+wqp.data$site_only <- gsub('USGS-|11NPSWRD-|NARSTEST-|R10PORTLANDHARBOR-','',wqp.data$site_only)
 
 #Not sure what I was doing with this one
 #wqp.data$adid <- paste(wqp.data$CharacteristicName, wqp.data$ActivityStartDate)
@@ -322,43 +323,53 @@ data.complete.w.resolved.fd <- rbind(data.complete.wo.fd.fp.pairs, fd.fp.max)
 # data.complete.wo.dups <- data.complete.w.resolved.fd[data.complete.w.resolved.fd$index %in% data.complete.wo.dups.by.day.index$V1,]
 
 sub <- with(data.complete.w.resolved.fd, resolveMRLs(code, dnd, tResult))
-data.complete.wo.dup.MRLs <- d[sub,]
+data.complete.wo.dup.MRLs <- data.complete.w.resolved.fd[sub,]
 data.complete.wo.dups <- remove.dups(data.complete.wo.dup.MRLs)
 
 #### Grouping parameters to be compared to composite criteria ####
 #We will add this here for now but should be coming from Station locate process
-data.complete.wo.dups$Matrix <- 'FW' #mapvalues(data.complete.wo.dups$Matrix, from = c("River/Stream", "Estuary"), to = c('FW','SW'))
+# data.complete.wo.dups$Matrix <- 'FW' #mapvalues(data.complete.wo.dups$Matrix, from = c("River/Stream", "Estuary"), to = c('FW','SW'))
+sul2012 <- read.dbf('C:/Users/pbryant/Desktop/Stations_2012_Analysis.dbf')
+#xsul2012 <- read.dbf('C:/Users/pbryant/Desktop/All_stations_final_est.dbf')
+# con.2010 <- odbcConnectAccess('//deqhq1/wqassessment/2010_WQAssessment/Databases/WorkingTables_2010.mdb')
+# sul2010 <- sqlFetch(con.2010, 'StationUseList_2010')
+# odbcCloseAll()
+# sul2010$Matrix <- ifelse(sul2010$MARINE_WATERS == 1,'SW',ifelse(sul2010$ESTUARY == 1,'ES','FW'))
+sul2012 <- rename(sul2012, c('MATRIX' = 'Matrix'))
+data.complete.w.matrix <- merge(data.complete.wo.dups, sul2012[,c('STATION','Matrix')], by.x = 'SampleRegID', by.y = 'STATION')
+# data.complete.w.matrix$Matrix <- ifelse(is.na(data.complete.w.matrix$Matrix.y),data.complete.w.matrix$Matrix.x,data.complete.w.matrix$Matrix.y)
+# data.complete.w.matrix <- within(data.complete.w.matrix, rm(Matrix.x, Matrix.y))
 
 #Some of the criteria apply to Totals and not individual degradates. Here we do that totalling so comparisons can be done.
-#First, we will make a Total DDT
-ddt <- data.complete.wo.dups[data.complete.wo.dups$Name %in% c("4,4`-DDD", "4,4`-DDE", "4,4`-DDT", "p,p'-DDD", "p,p'-DDE", "p,p'-DDT"),]
-ddt$tResult <- ddt$tResult*ddt$dnd
-ddt.casted <- dcast(ddt, Agency + SampleRegID + SampleAlias + Matrix +  
-                      Sampled + SpecificMethod + Fraction + day ~ Name, value.var = 'tResult')
-ddt.casted$'Total DDT' <- rowSums(ddt.casted[,c("4,4`-DDD", "4,4`-DDE", "4,4`-DDT","p,p'-DDD", "p,p'-DDE", "p,p'-DDT")],na.rm=TRUE)
-ddt.casted.sub <- within(ddt.casted, rm("4,4`-DDD", "4,4`-DDE", "4,4`-DDT","p,p'-DDD", "p,p'-DDE", "p,p'-DDT"))
-ddt.melted <- melt(ddt.casted.sub, 
-                   id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SpecificMethod',  
-                               'Fraction','day'),
-                   variable.name = 'Name',
-                   value.name = 'tResult')
-ddt.melted$dnd <- ifelse(ddt.melted$tResult > 0,1,0)
-ddt.melted$Name.full <- ddt.melted$Name
-ddt.melted.addons <- data.frame('tMRL' = rep(0,nrow(ddt.melted)),
-                                'tMRLUnit' = rep('µg/L',nrow(ddt.melted)),
-                                'Unit' = rep('µg/L',nrow(ddt.melted)), 
-                                'Status' = rep('A',nrow(ddt.melted)))
-ddt.melted <- cbind(ddt.melted, ddt.melted.addons)
-ddt.melted$id <- paste(ddt.melted$SampleRegID, ddt.melted$Name.full, ddt.melted$Sampled)
-ddt.melted$day <- substr(ddt.melted$Sampled,1,10)
-ddt.melted$code <- paste(ddt.melted$SampleRegID, ddt.melted$Name.full, ddt.melted$day)
-ddt.melted$index <- as.character(max(as.numeric(data.complete.wo.dups$index)) + as.numeric(rownames(ddt.melted)))
-ddt.melted$criterianame <- 'Total DDT'
-ddt.melted$SampleType <- 'Sample'
-dcwd.ddt <- rbind(data.complete.wo.dups, ddt.melted)
+#First, we will make a Total DDT - This Criteria is never the most stringent and will not be included for analysis
+# ddt <- data.complete.wo.dups[data.complete.wo.dups$Name %in% c("4,4`-DDD", "4,4`-DDE", "4,4`-DDT", "p,p'-DDD", "p,p'-DDE", "p,p'-DDT"),]
+# ddt$tResult <- ddt$tResult*ddt$dnd
+# ddt.casted <- dcast(ddt, Agency + SampleRegID + SampleAlias + Matrix +  
+#                       Sampled + SpecificMethod + Fraction + day ~ Name, value.var = 'tResult')
+# ddt.casted$'Total DDT' <- rowSums(ddt.casted[,c("4,4`-DDD", "4,4`-DDE", "4,4`-DDT","p,p'-DDD", "p,p'-DDE", "p,p'-DDT")],na.rm=TRUE)
+# ddt.casted.sub <- within(ddt.casted, rm("4,4`-DDD", "4,4`-DDE", "4,4`-DDT","p,p'-DDD", "p,p'-DDE", "p,p'-DDT"))
+# ddt.melted <- melt(ddt.casted.sub, 
+#                    id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SpecificMethod',  
+#                                'Fraction','day'),
+#                    variable.name = 'Name',
+#                    value.name = 'tResult')
+# ddt.melted$dnd <- ifelse(ddt.melted$tResult > 0,1,0)
+# ddt.melted$Name.full <- ddt.melted$Name
+# ddt.melted.addons <- data.frame('tMRL' = rep(0,nrow(ddt.melted)),
+#                                 'tMRLUnit' = rep('µg/L',nrow(ddt.melted)),
+#                                 'Unit' = rep('µg/L',nrow(ddt.melted)), 
+#                                 'Status' = rep('A',nrow(ddt.melted)))
+# ddt.melted <- cbind(ddt.melted, ddt.melted.addons)
+# ddt.melted$id <- paste(ddt.melted$SampleRegID, ddt.melted$Name.full, ddt.melted$Sampled)
+# ddt.melted$day <- substr(ddt.melted$Sampled,1,10)
+# ddt.melted$code <- paste(ddt.melted$SampleRegID, ddt.melted$Name.full, ddt.melted$day)
+# ddt.melted$index <- as.character(max(as.numeric(data.complete.wo.dups$index)) + as.numeric(rownames(ddt.melted)))
+# ddt.melted$criterianame <- 'Total DDT'
+# ddt.melted$SampleType <- 'Sample'
+# dcwd.ddt <- rbind(data.complete.wo.dups, ddt.melted)
 
 #Now Total Endosulfan
-endo <- dcwd.ddt[dcwd.ddt$Name %in% c("Endosulfan I", "Endosulfan II", "Endosulfan sulfate", ".alpha.-Endosulfan", ".beta.-Endosulfan"),]
+endo <- data.complete.w.matrix[data.complete.w.matrix$Name %in% c("Endosulfan I", "Endosulfan II", "Endosulfan sulfate", ".alpha.-Endosulfan", ".beta.-Endosulfan"),]
 endo$tResult <- endo$tResult*endo$dnd
 endo.casted <- dcast(endo, Agency + SampleRegID + SampleAlias + Matrix + Fraction +
                        Sampled +  SpecificMethod ~ Name, value.var = 'tResult')
@@ -375,13 +386,13 @@ endo.melted$Name.full <- endo.melted$Name
 endo.melted$id <- paste(endo.melted$SampleRegID, endo.melted$Name.full, endo.melted$Sampled)
 endo.melted$day <- substr(endo.melted$Sampled,1,10)
 endo.melted$code <- paste(endo.melted$SampleRegID, endo.melted$Name.full, endo.melted$day)
-endo.melted$index <- as.character(max(as.numeric(dcwd.ddt$index)) + as.numeric(rownames(endo.melted)))
+endo.melted$index <- as.character(max(as.numeric(data.complete.w.matrix$index)) + as.numeric(rownames(endo.melted)))
 endo.melted$criterianame <- 'Endosulfan'
 endo.melted$SampleType <- 'Sample'
-dcwd.ddt.endo <- rbind(dcwd.ddt, endo.melted)
+dcwd.endo <- rbind(data.complete.w.matrix, endo.melted)
 
 #Now Total Chlordane
-chlordane <- dcwd.ddt.endo[dcwd.ddt.endo$Name %in% c("Oxychlordane", "alpha-Chlordane", "cis-Chlordane", 'trans-Chlordane',"gamma-Chlordane+trans-Nonachlor", "trans-Nonachlor", "cis-Nonachlor"),]
+chlordane <- dcwd.endo[dcwd.endo$Name %in% c("Oxychlordane", "alpha-Chlordane", "cis-Chlordane", 'trans-Chlordane',"gamma-Chlordane+trans-Nonachlor", "trans-Nonachlor", "cis-Nonachlor"),]
 chlordane$tResult <- chlordane$tResult*chlordane$dnd
 chlordane.casted <- dcast(chlordane, Agency + SampleRegID + SampleAlias + Matrix +
                             Sampled + SpecificMethod +Fraction ~ Name, value.var = 'tResult')
@@ -398,19 +409,19 @@ chlordane.melted$Name.full <- chlordane.melted$Name
 chlordane.melted$id <- paste(chlordane.melted$SampleRegID, chlordane.melted$Name.full, chlordane.melted$Sampled)
 chlordane.melted$day <- substr(chlordane.melted$Sampled,1,10)
 chlordane.melted$code <- paste(chlordane.melted$SampleRegID, chlordane.melted$Name.full, chlordane.melted$day)
-chlordane.melted$index <- as.character(max(as.numeric(dcwd.ddt.endo$index)) + as.numeric(rownames(chlordane.melted)))
+chlordane.melted$index <- as.character(max(as.numeric(dcwd.endo$index)) + as.numeric(rownames(chlordane.melted)))
 chlordane.melted$criterianame <- 'Chlordane'
 chlordane.melted$SampleType <- 'Sample'
-dcwd.ddt.endo.chlord <- rbind(dcwd.ddt.endo, chlordane.melted)
+dcwd.endo.chlord <- rbind(dcwd.endo, chlordane.melted)
 
 #Now total PCBs
 #First the congeners
-pcb <- dcwd.ddt.endo.chlord[grep('PCB',dcwd.ddt.endo.chlord$Name),]
+pcb <- dcwd.endo.chlord[grep('PCB',dcwd.endo.chlord$Name),]
 pcb$tResult <- pcb$tResult*pcb$dnd
 pcb.casted <- dcast(pcb, Agency + SampleRegID + SampleAlias + Matrix + 
                       Sampled + SpecificMethod + Fraction ~ Name, value.var = 'tResult')
-pcb.casted$'Polychlorinated Biphenyls (PCBs)' <- rowSums(pcb.casted[,unique(dcwd.ddt.endo.chlord[grep('PCB',dcwd.ddt.endo.chlord$Name),'Name'])],na.rm=TRUE)
-pcb.casted.sub <- pcb.casted[,!names(pcb.casted) %in% unique(dcwd.ddt.endo.chlord[grep('PCB',dcwd.ddt.endo.chlord$Name),'Name'])]
+pcb.casted$'Polychlorinated Biphenyls (PCBs)' <- rowSums(pcb.casted[,unique(dcwd.endo.chlord[grep('PCB',dcwd.endo.chlord$Name),'Name'])],na.rm=TRUE)
+pcb.casted.sub <- pcb.casted[,!names(pcb.casted) %in% unique(dcwd.endo.chlord[grep('PCB',dcwd.endo.chlord$Name),'Name'])]
 pcb.melted <- melt(pcb.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SpecificMethod','Fraction'),variable.name = 'Name',value.name = 'tResult')#melt
 pcb.melted$dnd <- ifelse(pcb.melted$tResult > 0,1,0)
 pcb.melted.addons <- data.frame('tMRL' = rep(0,nrow(pcb.melted)), 
@@ -422,18 +433,18 @@ pcb.melted$Name.full <- pcb.melted$Name
 pcb.melted$id <- paste(pcb.melted$SampleRegID, pcb.melted$Name.full, pcb.melted$Sampled)
 pcb.melted$day <- substr(pcb.melted$Sampled,1,10)
 pcb.melted$code <- paste(pcb.melted$SampleRegID, pcb.melted$Name.full, pcb.melted$day)
-pcb.melted$index <- as.character(max(as.numeric(dcwd.ddt.endo.chlord$index)) + as.numeric(rownames(pcb.melted)))
+pcb.melted$index <- as.character(max(as.numeric(dcwd.endo.chlord$index)) + as.numeric(rownames(pcb.melted)))
 pcb.melted$criterianame <- 'Polychlorinated Biphenyls (PCBs)'
 pcb.melted$SampleType <- 'Sample'
-dcwd.ddt.endo.chlord.pcb <- rbind(dcwd.ddt.endo.chlord, pcb.melted)
+dcwd.endo.chlord.pcb <- rbind(dcwd.endo.chlord, pcb.melted)
 
 #Now the Aroclors
-aroclor <- dcwd.ddt.endo.chlord.pcb[grep('roclor',dcwd.ddt.endo.chlord.pcb$Name),]
+aroclor <- dcwd.endo.chlord.pcb[grep('roclor',dcwd.endo.chlord.pcb$Name),]
 aroclor$tResult <- aroclor$tResult*aroclor$dnd
 aroclor.casted <- dcast(aroclor, Agency + SampleRegID + SampleAlias + Matrix + 
                       Sampled + SpecificMethod + Fraction ~ Name, value.var = 'tResult')
-aroclor.casted$'Polychlorinated Biphenyls (PCBs)' <- rowSums(aroclor.casted[,unique(dcwd.ddt.endo.chlord.pcb[grep('roclor',dcwd.ddt.endo.chlord.pcb$Name),'Name'])],na.rm=TRUE)
-aroclor.casted.sub <- aroclor.casted[,!names(aroclor.casted) %in% unique(dcwd.ddt.endo.chlord.pcb[grep('roclor',dcwd.ddt.endo.chlord.pcb$Name),'Name'])]
+aroclor.casted$'Polychlorinated Biphenyls (PCBs)' <- rowSums(aroclor.casted[,unique(dcwd.endo.chlord.pcb[grep('roclor',dcwd.endo.chlord.pcb$Name),'Name'])],na.rm=TRUE)
+aroclor.casted.sub <- aroclor.casted[,!names(aroclor.casted) %in% unique(dcwd.endo.chlord.pcb[grep('roclor',dcwd.endo.chlord.pcb$Name),'Name'])]
 aroclor.melted <- melt(aroclor.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SpecificMethod','Fraction'),variable.name = 'Name',value.name = 'tResult')#melt
 aroclor.melted$dnd <- ifelse(aroclor.melted$tResult > 0,1,0)
 aroclor.melted.addons <- data.frame('tMRL' = rep(0,nrow(aroclor.melted)), 
@@ -445,13 +456,13 @@ aroclor.melted$Name.full <- aroclor.melted$Name
 aroclor.melted$id <- paste(aroclor.melted$SampleRegID, aroclor.melted$Name.full, aroclor.melted$Sampled)
 aroclor.melted$day <- substr(aroclor.melted$Sampled,1,10)
 aroclor.melted$code <- paste(aroclor.melted$SampleRegID, aroclor.melted$Name.full, aroclor.melted$day)
-aroclor.melted$index <- as.character(max(as.numeric(dcwd.ddt.endo.chlord.pcb$index)) + as.numeric(rownames(aroclor.melted)))
+aroclor.melted$index <- as.character(max(as.numeric(dcwd.endo.chlord.pcb$index)) + as.numeric(rownames(aroclor.melted)))
 aroclor.melted$criterianame <- 'Polychlorinated Biphenyls (PCBs)'
 aroclor.melted$SampleType <- 'Sample'
-dcwd.ddt.endo.chlord.pcb.aroclor <- rbind(dcwd.ddt.endo.chlord.pcb, aroclor.melted)
+dcwd.endo.chlord.pcb.aroclor <- rbind(dcwd.endo.chlord.pcb, aroclor.melted)
 
 #we need to take the calcium and magnesium and calculate hardness where we can
-calmag <- dcwd.ddt.endo.chlord.pcb.aroclor[dcwd.ddt.endo.chlord.pcb.aroclor$Name %in% c('Calcium','Magnesium'),]
+calmag <- dcwd.endo.chlord.pcb.aroclor[dcwd.endo.chlord.pcb.aroclor$Name %in% c('Calcium','Magnesium'),]
 calmag$tResult <- calmag$tResult*calmag$dnd
 calmag.casted <- dcast(calmag, Agency + SampleRegID + SampleAlias + Matrix +
                          Sampled + SpecificMethod +Fraction ~ Name, value.var = 'tResult')
@@ -469,17 +480,16 @@ calmag.melted$Name.full <- paste(calmag.melted$Name, calmag.melted$Fraction, sep
 calmag.melted$id <- paste(calmag.melted$SampleRegID, calmag.melted$Name.full, calmag.melted$Sampled)
 calmag.melted$day <- substr(calmag.melted$Sampled,1,10)
 calmag.melted$code <- paste(calmag.melted$SampleRegID, calmag.melted$Name.full, calmag.melted$day)
-calmag.melted$index <- as.character(max(as.numeric(dcwd.ddt.endo.chlord.pcb.aroclor$index)) + as.numeric(rownames(calmag.melted)))
+calmag.melted$index <- as.character(max(as.numeric(dcwd.endo.chlord.pcb.aroclor$index)) + as.numeric(rownames(calmag.melted)))
 calmag.melted$criterianame <- calmag.melted$Name.full
 calmag.melted$SampleType <- 'Sample'
-dcwd.w.totals <- rbind(dcwd.ddt.endo.chlord.pcb.aroclor, calmag.melted)
+dcwd.w.totals <- rbind(dcwd.endo.chlord.pcb.aroclor, calmag.melted)
 
 dcwd.w.totals[dcwd.w.totals$Name.full == "Hardness, carbonate as CaCO3",'Name.full'] <- paste(dcwd.w.totals[dcwd.w.totals$Name.full == "Hardness, carbonate as CaCO3",'Name.full'], dcwd.w.totals[dcwd.w.totals$Name.full == "Hardness, carbonate as CaCO3",'Fraction'], sep = ', ')
 dcwd.w.totals[dcwd.w.totals$Name.full == "Hardness, carbonate as CaCO3, Total",'Name.full'] <- "Hardness, carbonate as CaCO3, Total recoverable"
 dcwd.w.totals[grep('ardnes',dcwd.w.totals$Name.full),'tResult'] <- dcwd.w.totals[grep('ardnes',dcwd.w.totals$Name.full),'tResult']/1000
 dcwd.w.totals[grep('ardnes',dcwd.w.totals$Name.full),'criterianame'] <- dcwd.w.totals[grep('ardnes',dcwd.w.totals$Name.full),'Name.full']
 dcwd.w.totals <- dcwd.w.totals[!is.na(dcwd.w.totals$tResult),]
-
 
 #we want the max between endosulfan and its sum of isomers, between chlordane
 #and is sum of isomers and between sum of pcb congeners and aroclors.
@@ -491,20 +501,7 @@ dcwd.w.totals <- remove.dups(dcwd.w.totals)
 dcwd.w.totals[dcwd.w.totals$Name.full %in% c('Arsenic, Total recoverable','Arsenic'),'tResult'] <- dcwd.w.totals[dcwd.w.totals$Name.full %in% c('Arsenic, Total recoverable','Arsenic'),'tResult']*0.76
 #dcwd.w.totals[grep('Arsenic',dcwd.w.totals$Name.full),'criterianame'] <- 'Arsenic, Total inorganic'
 
-#We need an ID to match with the criteria so we'll simplify the Matrix field
-#To get the matrix field we need to pull in marine and estuary determinations
-sul2012 <- read.dbf('Estuary_Analysis/All_stations_final_est/GitHub/ToxicsRedo/Estuary_Analysis/All_stations_final_est.dbf')
-sul2012$Matrix <- mapvalues(sul2012, from = unique(sul2012$Est_final), to = )
-con.2010 <- odbcConnectAccess('//deqhq1/wqassessment/2010_WQAssessment/Databases/WorkingTables_2010.mdb')
-sul2010 <- sqlFetch(con.2010, 'StationUseList_2010')
-odbcCloseAll()
-sul2010$Matrix <- ifelse(sul2010$MARINE_WATERS == 1,'SW',ifelse(sul2010$ESTUARY == 1,'ES','FW'))
-
-dcwd.w.matrix <- merge(dcwd.w.totals, sul2010[,c('STATION','Matrix')], by.x = 'SampleRegID', by.y = 'STATION', all.x = TRUE)
-dcwd.w.matrix$Matrix <- ifelse(is.na(dcwd.w.matrix$Matrix.y),dcwd.w.matrix$Matrix.x,dcwd.w.matrix$Matrix.y)
-dcwd.w.matrix <- within(dcwd.w.matrix, rm(Matrix.x, Matrix.y))
-dcwd.w.totals <- dcwd.w.matrix
-#dcwd.w.totals$Matrix <- 'FW' #mapvalues(dcwd.w.totals$Matrix, from = c("River/Stream", "Estuary"), to = c('FW','SW'))
+#We need an ID to match with the criteria
 dcwd.w.totals$ID <- paste(dcwd.w.totals$criterianame, dcwd.w.totals$Matrix)
 Table3040.applicable$ID <- paste(Table3040.applicable$criterianame, Table3040.applicable$Matrix)
 
