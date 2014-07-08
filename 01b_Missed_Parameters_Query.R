@@ -48,6 +48,7 @@ startDate <- '01-01-2000'
 endDate <- '12-31-2011'
 
 #Pull in stations to query for salinity and conductivity
+#I think this is just for those stations
 consal.stations.file <- read.csv('Estuary_Analysis/stations_needing_salinity_data.csv', stringsAsFactors = FALSE)
 consal.stations <- wqp.stations[wqp.stations$site_only %in% consal.stations.file$STATION,'MonitoringLocationIdentifier']
 consal.stations <- URLencode.PTB(paste(consal.stations,collapse=";"))
@@ -290,7 +291,8 @@ make.clean <- function(tmp, report) {
 #pH data for Marine and estuary sites in repsonse to comments regarding ocean acidification
 ph.lasar <- lasar.query(parms = c('pH'), 
                         sampleMatrix = sw, 
-                        stations = unique(lasar[lasar$NAME %in% c('Ammonia as N', 'Pentachlorophenol'),'STATION_KEY']))
+                        #stations = unique(lasar[lasar$NAME %in% c('Ammonia as N', 'Pentachlorophenol'),'STATION_KEY']))
+                        stations = unique(dcwd.w.totals[dcwd.w.totals$Matrix %in% c('SW','ES'),c('SampleRegID')]))
 ph.report <- create.sub.table(ph.lasar$Result)
 ph.lasar <- make.clean(ph.lasar, ph.report)
 
@@ -305,10 +307,11 @@ hg.ft.lasar.report <- create.sub.table(hg.ft.lasar$Result)
 hg.ft.lasar <- make.clean(hg.ft.lasar, hg.ft.lasar.report)
 
 #conductivity and salinity
-consal.lasar <- lasar.query(parms = c('Conductivity', 'Salinity'), sampleMatrix = sw, stations = consal.stations.file[nchar(consal.stations.file$STATION) == 5,'STATION'])
+# consal.lasar <- lasar.query(parms = c('Conductivity', 'Salinity'), sampleMatrix = sw, stations = consal.stations.file[nchar(consal.stations.file$STATION) == 5,'STATION'])
+consal.lasar <- lasar.query(parms = c('Conductivity', 'Salinity'), sampleMatrix = sw, stations = dcwd.w.totals[grepl('Ammonia',dcwd.w.totals$Name) & dcwd.w.totals$Matrix == 'SW',c('SampleRegID')])
 consal.report <- create.sub.table(consal.lasar$Result)
 consal.lasar <- make.clean(consal.lasar, consal.report)
-write.csv(consal.lasar, 'Estuary_Analysis/LASAR_consal.csv', row.names = FALSE)
+write.csv(consal.lasar, 'Estuary_Analysis/LASAR_consal_20140707.csv', row.names = FALSE)
 
 #Save this complete lasar dataset to the database to make it easier for later analyses to run. Mostly
 #so we don't have to re-run the queries of the lasar database every time.

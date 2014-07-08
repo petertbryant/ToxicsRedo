@@ -3,6 +3,7 @@ library(reshape2)
 library(stringr)
 library(RODBC)
 library(foreign)
+library(xlsx)
 
 options(stringsAsFactors = FALSE, scipen = 100)
 
@@ -13,10 +14,11 @@ wqp.data <- sqlFetch(con, 'WQPData_woLASAROverlap_06132014')
 wqp.stations <- sqlFetch(con, 'WQPStations_wUpdatedLatLon_06132014')
 lasar <- sqlFetch(con, 'LASAR_Toxics_Query_wcriterianame_wAddOns_06232014')
 odbcCloseAll()
+gresham <- read.csv('//deqhq1/wqassessment/2012_WQAssessment/WQ_2012_Assessment_Raw/Gresham/CFD_Gresham_2012_Analytical_Data.csv')
 #names(wqp.data)
 #....we've got some work to do
 lasar$Result_clean <- as.numeric(lasar$Result_clean)
-consal.lasar <- read.csv('Estuary_Analysis/LASAR_consal.csv')
+consal.lasar <- read.csv('Estuary_Analysis/LASAR_consal_20140707.csv')
 consal.lasar$criterianame <- consal.lasar$NAME
 consal.lasar[consal.lasar$NAME == 'Conductivity','Result_clean'] <- consal.lasar[consal.lasar$NAME == 'Conductivity','Result_clean']/1000
 #This equation comes from http://pubs.usgs.gov/tm/2006/tm1D3/pdf/TM1D3.pdf page 36 
@@ -214,6 +216,41 @@ lasar.new.names$SpecificMethod <- NA
 #This subsets the lasasr dataframe to only have the columns to be used for aggregation
 lasar.new.names <- lasar.new.names[,names(wqp.data.sub)]
 
+#Need to make sure to include the gresham data too
+gresham$posix_date <- as.POSIXct(strptime(gresham$SAMPLE_DATE, format = '%m/%d/%Y'))
+gresham$posix_time <- as.POSIXct(strptime(gresham$SAMPLE_TIME, format = '%H:%M'))
+gresham$Sampled <- paste(as.character(gresham$posix_date), substr(as.character(gresham$posix_time),12,19))
+gresham$tResult <- ifelse(is.na(as.numeric(gresham$RESULT)),gresham$REPORTING_LIMIT,as.numeric(gresham$RESULT))
+gresham$Fraction <- ifelse(grepl('Dissolved',gresham$PARAMETER),'Dissolved',ifelse(grepl('Total',gresham$PARAMETER),'Total recoverable',''))
+gresh.rename.vector <- c('Alpha-BHC' = 'alpha-BHC', 
+                         'Cu-Dissolved' = 'Copper', 
+                         'Cu-Total' = 'Copper', 
+                         'Endosulfan Sulfate' = 'Endosulfan sulfate',
+                         'Hardness' = 'Hardness, carbonate as CaCO3',
+                         'Hg-Total' = 'Mercury',
+                         'NH3-N' = 'Ammonia as N',
+                         'Ni-Dissolved' = 'Nickel',
+                         'Ni-Total' = 'Nickel',
+                         'NO3-N' = 'Nitrates',
+                         'O-PO4' = 'Orthophosphate',
+                         'Pb-Dissolved' = 'Lead',
+                         'Pb-Total' = 'Lead',
+                         'Total-P' = 'Phosphorus',
+                         'Zn-Dissolved' = 'Zinc',
+                         'Zn-Total' = 'Zinc')
+gresham$Name <- mapvalues(gresham$PARAMETER, from = names(gresh.rename.vector), to = gresh.rename.vector)
+gresham$tMRLUnit <- gresham$UNIT
+gresham$Status <- NA
+gresham <- gresham[!gresham$Name %in% c('BOD5','E. coli', 'TKN', 'TSS', 'Chlorophyll-a'),]
+gresham.criteria.vector <- c( "4,4'-DDD" = "DDD 4,4'", "4,4'-DDE" = "DDE 4,4'", "4,4'-DDT" = "DDT 4,4'",
+                               "Orthophosphate" = "Orthophosphate as P", "Phosphorus" = "Phosphorus Elemental",
+                               "alpha-BHC" = "BHC Alpha", "Endosulfan I" = "Endosulfan Alpha", "Endosulfan II" = "Endosulfan Beta",
+                               "Endosulfan sulfate" = "Endosulfan Sulfate", "Mercury" = "Mercury (total)")
+gresham$criterianame <- mapvalues(gresham$Name, from = names(gresham.criteria.vector), to = gresham.criteria.vector)
+gresham <- rename(gresham, c('STATION_ID' = 'SampleRegID', 'SITE_DESCRIPTION_LOCATION' = 'SampleAlias', 'SAMPLING_ORGANIZATION' = 'Agency',
+                             'METHOD_NAME' = 'SpecificMethod', 'REPORTING_LIMIT' = 'tMRL', 'UNIT' = 'Unit', 'SAMPLE_QA_TYPE' = 'SampleType'))
+
+
 #### Pulling wqp.data and lasar together now! ####
 data.complete <- rbind(lasar.new.names, wqp.data.sub)
 
@@ -391,8 +428,54 @@ endo.melted$criterianame <- 'Endosulfan'
 endo.melted$SampleType <- 'Sample'
 dcwd.endo <- rbind(data.complete.w.matrix, endo.melted)
 
+#Now Nitrosamines
+nitrosamines <- data.complete.w.matrix[data.complete.w.matrix$Name %in% c("n-Nitrosodiphenylamine", "N-Nitrosodi-n-propylamine", "N-Nitrosodimethylamine", "N-Nitrosodiphenylamine"),]
+nitrosamines$tResult <- nitrosamines$tResult*nitrosamines$dnd
+nitrosamines.casted <- dcast(nitrosamines, Agency + SampleRegID + SampleAlias + Matrix + Fraction +
+                       Sampled +  SpecificMethod ~ Name, value.var = 'tResult')
+nitrosamines.casted$Nitrosamines <- rowSums(nitrosamines.casted[,c("n-Nitrosodiphenylamine", "N-Nitrosodi-n-propylamine", "N-Nitrosodimethylamine", "N-Nitrosodiphenylamine")],na.rm=TRUE)
+nitrosamines.casted.sub <- within(nitrosamines.casted, rm("n-Nitrosodiphenylamine", "N-Nitrosodi-n-propylamine", "N-Nitrosodimethylamine", "N-Nitrosodiphenylamine"))
+nitrosamines.melted <- melt(nitrosamines.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SpecificMethod','Fraction'),variable.name = 'Name',value.name = 'tResult')#melt
+nitrosamines.melted$dnd <- ifelse(nitrosamines.melted$tResult > 0,1,0)
+nitrosamines.melted.addons <- data.frame('tMRL' = rep(0,nrow(nitrosamines.melted)), 
+                                 'tMRLUnit' = rep('µg/L',nrow(nitrosamines.melted)),
+                                 'Unit' = rep('µg/L',nrow(nitrosamines.melted)), 
+                                 'Status' = rep('A',nrow(nitrosamines.melted)))
+nitrosamines.melted <- cbind(nitrosamines.melted, nitrosamines.melted.addons)
+nitrosamines.melted$Name.full <- nitrosamines.melted$Name
+nitrosamines.melted$id <- paste(nitrosamines.melted$SampleRegID, nitrosamines.melted$Name.full, nitrosamines.melted$Sampled)
+nitrosamines.melted$day <- substr(nitrosamines.melted$Sampled,1,10)
+nitrosamines.melted$code <- paste(nitrosamines.melted$SampleRegID, nitrosamines.melted$Name.full, nitrosamines.melted$day)
+nitrosamines.melted$index <- as.character(max(as.numeric(dcwd.endo$index)) + as.numeric(rownames(nitrosamines.melted)))
+nitrosamines.melted$criterianame <- 'Nitrosamines'
+nitrosamines.melted$SampleType <- 'Sample'
+dcwd.endo.nitrosamines <- rbind(dcwd.endo, nitrosamines.melted)
+
+#Now Nitrosamines
+hch <- data.complete.w.matrix[data.complete.w.matrix$Name %in% c("beta-BHC", "alpha-BHC", ".beta.-Hexachlorocyclohexane", ".alpha.-Hexachlorocyclohexane","Lindane"),]
+hch$tResult <- hch$tResult*hch$dnd
+hch.casted <- dcast(hch, Agency + SampleRegID + SampleAlias + Matrix + Fraction +
+                               Sampled +  SpecificMethod ~ Name, value.var = 'tResult')
+hch.casted$'Hexachlorocyclo-hexane-Technical' <- rowSums(hch.casted[,c("beta-BHC", "alpha-BHC", ".beta.-Hexachlorocyclohexane", ".alpha.-Hexachlorocyclohexane","Lindane")],na.rm=TRUE)
+hch.casted.sub <- within(hch.casted, rm("beta-BHC", "alpha-BHC", ".beta.-Hexachlorocyclohexane", ".alpha.-Hexachlorocyclohexane","Lindane"))
+hch.melted <- melt(hch.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SpecificMethod','Fraction'),variable.name = 'Name',value.name = 'tResult')#melt
+hch.melted$dnd <- ifelse(hch.melted$tResult > 0,1,0)
+hch.melted.addons <- data.frame('tMRL' = rep(0,nrow(hch.melted)), 
+                                         'tMRLUnit' = rep('µg/L',nrow(hch.melted)),
+                                         'Unit' = rep('µg/L',nrow(hch.melted)), 
+                                         'Status' = rep('A',nrow(hch.melted)))
+hch.melted <- cbind(hch.melted, hch.melted.addons)
+hch.melted$Name.full <- hch.melted$Name
+hch.melted$id <- paste(hch.melted$SampleRegID, hch.melted$Name.full, hch.melted$Sampled)
+hch.melted$day <- substr(hch.melted$Sampled,1,10)
+hch.melted$code <- paste(hch.melted$SampleRegID, hch.melted$Name.full, hch.melted$day)
+hch.melted$index <- as.character(max(as.numeric(dcwd.endo.nitrosamines$index)) + as.numeric(rownames(hch.melted)))
+hch.melted$criterianame <- 'Hexachlorocyclo-hexane-Technical'
+hch.melted$SampleType <- 'Sample'
+dcwd.endo.nitrosamines.hch <- rbind(dcwd.endo.nitrosamines, hch.melted)
+
 #Now Total Chlordane
-chlordane <- dcwd.endo[dcwd.endo$Name %in% c("Oxychlordane", "alpha-Chlordane", "cis-Chlordane", 'trans-Chlordane',"gamma-Chlordane+trans-Nonachlor", "trans-Nonachlor", "cis-Nonachlor"),]
+chlordane <- dcwd.endo.nitrosamines.hch[dcwd.endo.nitrosamines.hch$Name %in% c("Oxychlordane", "alpha-Chlordane", "cis-Chlordane", 'trans-Chlordane',"gamma-Chlordane+trans-Nonachlor", "trans-Nonachlor", "cis-Nonachlor"),]
 chlordane$tResult <- chlordane$tResult*chlordane$dnd
 chlordane.casted <- dcast(chlordane, Agency + SampleRegID + SampleAlias + Matrix +
                             Sampled + SpecificMethod +Fraction ~ Name, value.var = 'tResult')
@@ -409,19 +492,19 @@ chlordane.melted$Name.full <- chlordane.melted$Name
 chlordane.melted$id <- paste(chlordane.melted$SampleRegID, chlordane.melted$Name.full, chlordane.melted$Sampled)
 chlordane.melted$day <- substr(chlordane.melted$Sampled,1,10)
 chlordane.melted$code <- paste(chlordane.melted$SampleRegID, chlordane.melted$Name.full, chlordane.melted$day)
-chlordane.melted$index <- as.character(max(as.numeric(dcwd.endo$index)) + as.numeric(rownames(chlordane.melted)))
+chlordane.melted$index <- as.character(max(as.numeric(dcwd.endo.nitrosamines.hch$index)) + as.numeric(rownames(chlordane.melted)))
 chlordane.melted$criterianame <- 'Chlordane'
 chlordane.melted$SampleType <- 'Sample'
-dcwd.endo.chlord <- rbind(dcwd.endo, chlordane.melted)
+dcwd.endo.nitrosamines.hch.chlord <- rbind(dcwd.endo.nitrosamines.hch, chlordane.melted)
 
 #Now total PCBs
 #First the congeners
-pcb <- dcwd.endo.chlord[grep('PCB',dcwd.endo.chlord$Name),]
+pcb <- dcwd.endo.nitrosamines.hch.chlord[grep('PCB',dcwd.endo.nitrosamines.hch.chlord$Name),]
 pcb$tResult <- pcb$tResult*pcb$dnd
 pcb.casted <- dcast(pcb, Agency + SampleRegID + SampleAlias + Matrix + 
                       Sampled + SpecificMethod + Fraction ~ Name, value.var = 'tResult')
-pcb.casted$'Polychlorinated Biphenyls (PCBs)' <- rowSums(pcb.casted[,unique(dcwd.endo.chlord[grep('PCB',dcwd.endo.chlord$Name),'Name'])],na.rm=TRUE)
-pcb.casted.sub <- pcb.casted[,!names(pcb.casted) %in% unique(dcwd.endo.chlord[grep('PCB',dcwd.endo.chlord$Name),'Name'])]
+pcb.casted$'Polychlorinated Biphenyls (PCBs)' <- rowSums(pcb.casted[,unique(dcwd.endo.nitrosamines.hch.chlord[grep('PCB',dcwd.endo.nitrosamines.hch.chlord$Name),'Name'])],na.rm=TRUE)
+pcb.casted.sub <- pcb.casted[,!names(pcb.casted) %in% unique(dcwd.endo.nitrosamines.hch.chlord[grep('PCB',dcwd.endo.nitrosamines.hch.chlord$Name),'Name'])]
 pcb.melted <- melt(pcb.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SpecificMethod','Fraction'),variable.name = 'Name',value.name = 'tResult')#melt
 pcb.melted$dnd <- ifelse(pcb.melted$tResult > 0,1,0)
 pcb.melted.addons <- data.frame('tMRL' = rep(0,nrow(pcb.melted)), 
@@ -433,18 +516,18 @@ pcb.melted$Name.full <- pcb.melted$Name
 pcb.melted$id <- paste(pcb.melted$SampleRegID, pcb.melted$Name.full, pcb.melted$Sampled)
 pcb.melted$day <- substr(pcb.melted$Sampled,1,10)
 pcb.melted$code <- paste(pcb.melted$SampleRegID, pcb.melted$Name.full, pcb.melted$day)
-pcb.melted$index <- as.character(max(as.numeric(dcwd.endo.chlord$index)) + as.numeric(rownames(pcb.melted)))
+pcb.melted$index <- as.character(max(as.numeric(dcwd.endo.nitrosamines.hch.chlord$index)) + as.numeric(rownames(pcb.melted)))
 pcb.melted$criterianame <- 'Polychlorinated Biphenyls (PCBs)'
 pcb.melted$SampleType <- 'Sample'
-dcwd.endo.chlord.pcb <- rbind(dcwd.endo.chlord, pcb.melted)
+dcwd.endo.nitrosamines.hch.chlord.pcb <- rbind(dcwd.endo.nitrosamines.hch.chlord, pcb.melted)
 
 #Now the Aroclors
-aroclor <- dcwd.endo.chlord.pcb[grep('roclor',dcwd.endo.chlord.pcb$Name),]
+aroclor <- dcwd.endo.nitrosamines.hch.chlord.pcb[grep('roclor',dcwd.endo.nitrosamines.hch.chlord.pcb$Name),]
 aroclor$tResult <- aroclor$tResult*aroclor$dnd
 aroclor.casted <- dcast(aroclor, Agency + SampleRegID + SampleAlias + Matrix + 
                       Sampled + SpecificMethod + Fraction ~ Name, value.var = 'tResult')
-aroclor.casted$'Polychlorinated Biphenyls (PCBs)' <- rowSums(aroclor.casted[,unique(dcwd.endo.chlord.pcb[grep('roclor',dcwd.endo.chlord.pcb$Name),'Name'])],na.rm=TRUE)
-aroclor.casted.sub <- aroclor.casted[,!names(aroclor.casted) %in% unique(dcwd.endo.chlord.pcb[grep('roclor',dcwd.endo.chlord.pcb$Name),'Name'])]
+aroclor.casted$'Polychlorinated Biphenyls (PCBs)' <- rowSums(aroclor.casted[,unique(dcwd.endo.nitrosamines.hch.chlord.pcb[grep('roclor',dcwd.endo.nitrosamines.hch.chlord.pcb$Name),'Name'])],na.rm=TRUE)
+aroclor.casted.sub <- aroclor.casted[,!names(aroclor.casted) %in% unique(dcwd.endo.nitrosamines.hch.chlord.pcb[grep('roclor',dcwd.endo.nitrosamines.hch.chlord.pcb$Name),'Name'])]
 aroclor.melted <- melt(aroclor.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SpecificMethod','Fraction'),variable.name = 'Name',value.name = 'tResult')#melt
 aroclor.melted$dnd <- ifelse(aroclor.melted$tResult > 0,1,0)
 aroclor.melted.addons <- data.frame('tMRL' = rep(0,nrow(aroclor.melted)), 
@@ -456,13 +539,13 @@ aroclor.melted$Name.full <- aroclor.melted$Name
 aroclor.melted$id <- paste(aroclor.melted$SampleRegID, aroclor.melted$Name.full, aroclor.melted$Sampled)
 aroclor.melted$day <- substr(aroclor.melted$Sampled,1,10)
 aroclor.melted$code <- paste(aroclor.melted$SampleRegID, aroclor.melted$Name.full, aroclor.melted$day)
-aroclor.melted$index <- as.character(max(as.numeric(dcwd.endo.chlord.pcb$index)) + as.numeric(rownames(aroclor.melted)))
+aroclor.melted$index <- as.character(max(as.numeric(dcwd.endo.nitrosamines.hch.chlord.pcb$index)) + as.numeric(rownames(aroclor.melted)))
 aroclor.melted$criterianame <- 'Polychlorinated Biphenyls (PCBs)'
 aroclor.melted$SampleType <- 'Sample'
-dcwd.endo.chlord.pcb.aroclor <- rbind(dcwd.endo.chlord.pcb, aroclor.melted)
+dcwd.endo.nitrosamines.hch.chlord.pcb.aroclor <- rbind(dcwd.endo.nitrosamines.hch.chlord.pcb, aroclor.melted)
 
 #we need to take the calcium and magnesium and calculate hardness where we can
-calmag <- dcwd.endo.chlord.pcb.aroclor[dcwd.endo.chlord.pcb.aroclor$Name %in% c('Calcium','Magnesium'),]
+calmag <- dcwd.endo.nitrosamines.hch.chlord.pcb.aroclor[dcwd.endo.nitrosamines.hch.chlord.pcb.aroclor$Name %in% c('Calcium','Magnesium'),]
 calmag$tResult <- calmag$tResult*calmag$dnd
 calmag.casted <- dcast(calmag, Agency + SampleRegID + SampleAlias + Matrix +
                          Sampled + SpecificMethod +Fraction ~ Name, value.var = 'tResult')
@@ -480,10 +563,10 @@ calmag.melted$Name.full <- paste(calmag.melted$Name, calmag.melted$Fraction, sep
 calmag.melted$id <- paste(calmag.melted$SampleRegID, calmag.melted$Name.full, calmag.melted$Sampled)
 calmag.melted$day <- substr(calmag.melted$Sampled,1,10)
 calmag.melted$code <- paste(calmag.melted$SampleRegID, calmag.melted$Name.full, calmag.melted$day)
-calmag.melted$index <- as.character(max(as.numeric(dcwd.endo.chlord.pcb.aroclor$index)) + as.numeric(rownames(calmag.melted)))
+calmag.melted$index <- as.character(max(as.numeric(dcwd.endo.nitrosamines.hch.chlord.pcb.aroclor$index)) + as.numeric(rownames(calmag.melted)))
 calmag.melted$criterianame <- calmag.melted$Name.full
 calmag.melted$SampleType <- 'Sample'
-dcwd.w.totals <- rbind(dcwd.endo.chlord.pcb.aroclor, calmag.melted)
+dcwd.w.totals <- rbind(dcwd.endo.nitrosamines.hch.chlord.pcb.aroclor, calmag.melted)
 
 dcwd.w.totals[dcwd.w.totals$Name.full == "Hardness, carbonate as CaCO3",'Name.full'] <- paste(dcwd.w.totals[dcwd.w.totals$Name.full == "Hardness, carbonate as CaCO3",'Name.full'], dcwd.w.totals[dcwd.w.totals$Name.full == "Hardness, carbonate as CaCO3",'Fraction'], sep = ', ')
 dcwd.w.totals[dcwd.w.totals$Name.full == "Hardness, carbonate as CaCO3, Total",'Name.full'] <- "Hardness, carbonate as CaCO3, Total recoverable"
