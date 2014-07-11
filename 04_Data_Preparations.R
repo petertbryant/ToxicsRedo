@@ -19,7 +19,7 @@ source('//deqhq1/wqassessment/2012_WQAssessment/ToxicsRedo/TMP-RCode/hardness_ev
 
 #### Pull in the raw data and criteria ####
 con <- odbcConnect('WQAssessment')
-wqp.data <- sqlFetch(con, 'WQPData_woLASAROverlap_06132014')
+wqp.data <- sqlFetch(con, 'WQPData_wOrthophos_07092014')
 wqp.stations <- sqlFetch(con, 'WQPStations_wUpdatedLatLon_06132014')
 lasar <- sqlFetch(con, 'LASAR_Toxics_Query_wcriterianame_wAddOns_07082014')
 odbcCloseAll()
@@ -70,7 +70,7 @@ Table3040.applicable <- rbind(Table3040.applicable, c('Criteria.name.full' = 'Ph
 wqp.data <- wqp.data[!wqp.data$ResultSampleFractionText %in% c('Bed Sediment','Suspended'),]
 
 #Remove samples labeled as Interstitial
-wqp.data <- wqp.data[wqp.data$ActivityMediaSubdivisionName != 'Interstitial',]
+wqp.data <- wqp.data[which(wqp.data$ActivityMediaSubdivisionName != 'Interstitial'),]
 
 #Make a date-time column
 wqp.data$Sampled <- paste(wqp.data$ActivityStartDate, wqp.data$ActivityStartTimeTime)
@@ -229,7 +229,7 @@ gresham.sub <- gresham[,names(wqp.data.sub)]
 #### Pulling wqp.data and lasar and gresham together now! ####
 data.complete <- rbind(lasar.new.names, wqp.data.sub, gresham.sub)
 #I had vector allocation issues so I am keeping my workingspace a little lighter
-rm(wqp.data, wqp.stations, gresham, lasar)
+#rm(wqp.data, wqp.stations, gresham, lasar)
 
 #### Cleaning up the complete dataset and making some fields for consistent future processing ####
 #should have a numeric result and mrl fields
@@ -310,8 +310,8 @@ data.complete$index <- rownames(data.complete)
 #resolve duplicates, taking the max by day
 #because there are some with multiple methods and two MRL levels we can't just pick the max
 #value unless it was a detection so I made the resolveMRLs function from the hardness_eval_functions_Element_Name.R file
-sub <- with(data.complete.w.resolved.fd, resolveMRLs(code, dnd, tResult))
-data.complete.wo.dup.MRLs <- data.complete.w.resolved.fd[sub,]
+sub <- with(data.complete, resolveMRLs(code, dnd, tResult))
+data.complete.wo.dup.MRLs <- data.complete[sub,]
 data.complete.wo.dups <- remove.dups(data.complete.wo.dup.MRLs)
 
 #### Select only those stations that mapped to a stream or lake ####
@@ -533,8 +533,8 @@ rm(list = ls()[grep('aroclor|calmag|chlordane|endo|hch|nitrosamines|pcb',ls())])
 #### Associate with criteria ####
 #Not sure where the best place is for this but we need to fix some of the issues with Arsenic and Dissolved/Total/Total inorganic
 #We can assume per Andrea that all of dissolved is in Total inorganic form. That leaves the conversion for anything in Total recoverable.
-#The AM section for total coversion is on page 64
-dcwd.w.totals[dcwd.w.totals$Name.full %in% c('Arsenic, Total recoverable','Arsenic'),'tResult'] <- dcwd.w.totals[dcwd.w.totals$Name.full %in% c('Arsenic, Total recoverable','Arsenic'),'tResult']*0.76
+#The AM section for total coversion is on page 64 - Decided NOT to use this conversion
+#dcwd.w.totals[dcwd.w.totals$Name.full %in% c('Arsenic, Total recoverable','Arsenic'),'tResult'] <- dcwd.w.totals[dcwd.w.totals$Name.full %in% c('Arsenic, Total recoverable','Arsenic'),'tResult']*0.76
 #dcwd.w.totals[grep('Arsenic',dcwd.w.totals$Name.full),'criterianame'] <- 'Arsenic, Total inorganic'
 
 #We need an ID to match with the criteria and ensure the right matrix is used
@@ -583,7 +583,7 @@ amm <- ammonia.crit.calc(dcwd.w.totals)
 amm <- amm[,names(dcc.hm)]
 dcc.wo.amm <- dcc.hm[!dcc.hm$ID %in% amm$ID,]
 #We need to clean up the workspace because I was running into problems with memory allocation
-rm(list = setdiff(ls(), c('dcc.wo.amm', 'amm', 'td.conv')))
+#rm(list = setdiff(ls(), c('dcc.wo.amm', 'amm', 'td.conv')))
 dcc.w.calcs <- rbind(dcc.wo.amm, amm)
 
 #### EVALUATION ####

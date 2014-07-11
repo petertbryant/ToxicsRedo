@@ -84,6 +84,14 @@ tmp.phos.data <- wqp.data.query(stateCode = Oregon,
 tmp.phos.stations <- tmp.phos.stations[tmp.phos.stations$OrganizationFormalName == 'National Park Service Water Resources Division',]
 tmp.phos.data <- tmp.phos.data[tmp.phos.data$OrganizationFormalName == 'National Park Service Water Resources Division',]
 
+tmp.phos.data$MonitoringLocationName <- wqp.stations[wqp.stations$MonitoringLocationIdentifier %in% tmp.phos.data$MonitoringLocationIdentifier,'MonitoringLocationName']
+tmp.phos.data$Tempid <- NA
+names(tmp.phos.data) <- gsub('\\.','',names(tmp.phos.data))
+wqp.data2 <- rbind(wqp.data, tmp.phos.data)
+con <- odbcConnect('WQAssessment')
+sqlSave(con, wqp.data2,  tablename = 'WQPData_wOrthophos_07092014', rownames = FALSE)
+odbcCloseAll()
+
 #Query for mercury in fish tissue
 tmp.hg.stations <- wqp.station.query(stateCode = Oregon, 
                                      siteType = siteType, 
@@ -101,6 +109,10 @@ tmp.hg.data <- wqp.data.query(stateCode = Oregon,
 
 tmp.hg.data <- tmp.hg.data[tmp.hg.data$SubjectTaxonomicName %in% c('Oncorhynchus clarkii', 'Oncorhynchus mykiss gairdnerii', 'Cottus', 'Cottus perplexus'),]
 tmp.hg.data <- tmp.hg.data[tmp.hg.data$ResultDetectionConditionText != 'Detected Not Quantified',]
+
+tmp.hg.data <- merge(tmp.hg.data, wqp.stations[,c('MonitoringLocationIdentifier','MonitoringLocationName')], by = 'MonitoringLocationIdentifier', all.x = TRUE)
+tmp.hg.data$Tempid <- NA
+names(tmp.hg.data) <- gsub('\\.','',names(tmp.hg.data))
 
 #### LASAR Query ####
 
