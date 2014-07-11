@@ -1,9 +1,12 @@
 library(plyr)
 library(RODBC)
+library(psych)
 
 con <- odbcConnect('WQAssessment')
 sul2010 <- sqlFetch(con, 'StationUseList')
 odbcCloseAll()
+
+sul2012 <- read.csv('Estuary_Analysis/All_stations_final_est.csv')
 
 hg.ft.all <- read.csv('LASAR_WQP_Mercury_fish_tissue.csv')
 
@@ -28,3 +31,11 @@ hg.ft.all.grouped <- ddply(hg.ft.all.fixed, .(STATION_KEY, LOCATION_DESCRIPTION)
 hg.w.sul <- merge(hg.ft.all.grouped, sul2010[,c('STATION','USE_OtherParms','USE_Final')], by.x = 'STATION_KEY', by.y = 'STATION', all.x = TRUE)
 
 hg.for.mike <- hg.w.sul[is.na(hg.w.sul$USE_OtherParms),]
+
+hg.for.mike <- merge(hg.for.mike, sul2012, by.x = 'STATION_KEY', by.y = 'STATION', all.x = TRUE)
+
+hg.for.mike <- hg.for.mike[is.na(hg.for.mike$OBJECTID),]
+
+hg.for.mike <- merge(hg.for.mike, hgdata, by.x = 'STATION_KEY', by.y = 'site_no', all.x = TRUE)
+
+hg.for.mike <- hg.for.mike[,colSums(is.na(hg.for.mike))<nrow(hg.for.mike)]

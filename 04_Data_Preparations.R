@@ -198,7 +198,7 @@ gresh.rename.vector <- c('Alpha-BHC' = 'alpha-BHC',
                          'Ni-Dissolved' = 'Nickel',
                          'Ni-Total' = 'Nickel',
                          'NO3-N' = 'Nitrates',
-                         'O-PO4' = 'Orthophosphate',
+                         'O-PO4' = 'Orthophosphate as P',
                          'Pb-Dissolved' = 'Lead',
                          'Pb-Total' = 'Lead',
                          'Total-P' = 'Phosphorus',
@@ -213,7 +213,7 @@ gresham <- gresham[!gresham$Name %in% c('BOD5','E. coli', 'TKN', 'TSS', 'Chlorop
 gresham.criteria.vector <- c( "4,4'-DDD" = "DDD 4,4'", 
                               "4,4'-DDE" = "DDE 4,4'", 
                               "4,4'-DDT" = "DDT 4,4'",
-                              "Orthophosphate" = "Orthophosphate as P", 
+                              "Orthophosphate as P" = "Orthophosphate as P", 
                               "Phosphorus" = "Phosphorus Elemental",
                               "alpha-BHC" = "BHC Alpha", 
                               "Endosulfan I" = "Endosulfan Alpha", 
@@ -230,6 +230,9 @@ gresham.sub <- gresham[,names(wqp.data.sub)]
 data.complete <- rbind(lasar.new.names, wqp.data.sub, gresham.sub)
 #I had vector allocation issues so I am keeping my workingspace a little lighter
 #rm(wqp.data, wqp.stations, gresham, lasar)
+
+#makes sure orthophosphate can match to the criteria
+data.complete[grep('hospha',data.complete$Name),c('criterianame')] <- 'Phosphate Phosphorus'
 
 #### Cleaning up the complete dataset and making some fields for consistent future processing ####
 #should have a numeric result and mrl fields
@@ -628,12 +631,16 @@ sub4 <- sub4[,names(dcc.min)]
 dcc.min.wo.sub4 <- dcc.min[!dcc.min$index %in% sub4$index,]
 dcc.min <- rbind(dcc.min.wo.sub4, sub4)
 
+#Make sure tResult and criteria values are numeric
+dcc.min$tResult <- as.numeric(dcc.min$tResult)
+dcc.min$value <- as.numeric(dcc.min$value)
+
 #evaluate exceedances to the minimum criteria
 dcc.min$exceed <- ifelse(dcc.min$criterianame.x == 'Alkalinity',ifelse(dcc.min$tResult > dcc.min$value,0,1),ifelse(dcc.min$tResult < dcc.min$value,0,1))
 
 #### Determining which are valid exceedances ####
 #Where the MRL is greater than the criteria we can't use that sample to determine attainment or non-attainment
-dcc.min$Valid <- ifelse(dcc.min$tMRL <= dcc.min$value, 1, 0)
+dcc.min$Valid <- ifelse(dcc.min$dnd == 1,1,ifelse(dcc.min$tMRL <= dcc.min$value, 1, 0))
 
 #Dissolved versus total criteria
 dtc <- dcc.min[dcc.min$Criteria.Name.full != dcc.min$Name.full & dcc.min$Fraction == 'Dissolved' & grepl('Total',dcc.min$Criteria.Name.full),]

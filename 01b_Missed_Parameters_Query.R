@@ -114,6 +114,21 @@ tmp.hg.data <- merge(tmp.hg.data, wqp.stations[,c('MonitoringLocationIdentifier'
 tmp.hg.data$Tempid <- NA
 names(tmp.hg.data) <- gsub('\\.','',names(tmp.hg.data))
 
+tmp.hg.data <- rename(tmp.hg.data, c('SampleTissueAnatomyName' = 'SAMPLE_MATRIX', 
+                                     'MonitoringLocationIdentifier' = 'STATION_KEY',
+                                     'OrganizationIdentifier' = 'AGENCY',
+                                     'ActivityStartDate' = 'SAMPLE_DATE',
+                                     #'ActivityStartTimeTime' = 'SAMPLE_TIME',
+                                     'ActivityTypeCode' = 'QA_QC_TYPE',
+                                     'CharacteristicName' = 'NAME',
+                                     'ResultSampleFractionText' = 'ABBREVIATION',
+                                     'ResultMeasureValue' = 'Result_clean',
+                                     'ResultMeasureMeasureUnitCode' = 'UNIT',
+                                     'DetectionQuantitationLimitMeasureMeasureValue' = 'METHOD_REPORTING_LIMIT',
+                                     'MonitoringLocationName' = 'LOCATION_DESCRIPTION'
+                                     ))
+tmp.hg.data.sub <- tmp.hg.data[,names(tmp.hg.data)[names(tmp.hg.data) %in% names(hg.ft.lasar)]]
+
 #### LASAR Query ####
 
 #LASAR phosphate keys
@@ -317,6 +332,14 @@ temp.lasar <- make.clean(temp.lasar, temp.report)
 hg.ft.lasar <- lasar.query(parms = names(hg), sampleMatrix = ft)
 hg.ft.lasar.report <- create.sub.table(hg.ft.lasar$Result)
 hg.ft.lasar <- make.clean(hg.ft.lasar, hg.ft.lasar.report)
+
+hg.ft.lasar.sub <- hg.ft.lasar[,names(tmp.hg.data.sub)]
+hg.ft.lasar.sub$SAMPLE_DATE <- as.character(hg.ft.lasar.sub$SAMPLE_DATE)
+
+hg.ft.all <- rbind(hg.ft.lasar.sub, tmp.hg.data.sub)
+
+#write.csv(hg.ft.all, 'LASAR_WQP_Mercury_fish_tissue.csv', row.names = FALSE)
+
 
 #conductivity and salinity
 # consal.lasar <- lasar.query(parms = c('Conductivity', 'Salinity'), sampleMatrix = sw, stations = consal.stations.file[nchar(consal.stations.file$STATION) == 5,'STATION'])
