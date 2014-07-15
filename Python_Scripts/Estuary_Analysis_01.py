@@ -68,6 +68,7 @@ out_fc = 'E:/GitHub/ToxicsRedo/Estuary_Analysis/Estuaries.gdb/stations_subset'
 arcpy.Clip_analysis(stations_new, huc4_lyr, out_fc)
 
 #Use this function to check if one station has an upstream station classified as an estuary
+#**********from __builtin__ import any MUST be run for function to work properly*****************
 def upstreamEstuary(llid, rm, estuary_stations):
     stations_lyr = "stations_2010_lyr"
     st_query = '"ESTUARY" = 1'

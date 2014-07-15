@@ -8,6 +8,7 @@ Created on Tue Jul 01 16:43:05 2014
 import arcpy
 from arcpy import env
 import os.path
+from __builtin__ import any
 
 arcpy.env.overwriteOutput = True
 workspace = "C:/Users/MPsaris/DEQ_Stream_Lake_Additions"
@@ -102,3 +103,117 @@ arcpy.CreateFeatureclass_management(out_path, fc_nhdm_wb, 'POLYGON', spatial_ref
 
 #At this point, the fc is copied, and manual review is conducted using the copy: 
 #All_stations_final_est_unfinalized_manual
+#We decided to only add watercourses and waterbodies from PNW 24K to simplify processing. The appropriate
+#stream and lake LLIDs, and River Miles were added. The GIS work necessary for updating DEQ Streams and Lakes
+#will be done later. For now, the following code takes the manually revised station list dataset, updates
+#stream and lake names and merges it back up with the master station addition dataset
+
+#Update stream and lake names
+
+#Join the following fields using LLID: GIS_STREAMNAME, LAKE_NAME, GIS_Source_LAKE, GIS_Source
+in_file = 'C:/Users/MPsaris/DEQ_Stream_Lake_Additions/Additions.gdb/All_stations_final_est_unfinalized_manual'
+out_file = 'C:/Users/MPsaris/DEQ_Stream_Lake_Additions/Additions.gdb/All_stations_final_est_unfinalized_manual_update'
+stream_names = "F:/Base_Data/DEQ_Data/WQ_2010_IntegratedReport_V3/WQ_2010_IntegratedReport_V3/Assessment.gdb/DEQ_Streams_25APR2013"
+lake_names = "F:/Base_Data/DEQ_Data/WQ_2010_IntegratedReport_V3/WQ_2010_IntegratedReport_V3/Assessment.gdb/DEQLakes_14JUN2013"
+
+arcpy.CopyFeatures_management(in_file, out_file)
+arcpy.DeleteField_management(out_file, ['GIS_STREAMNAME', 'LAKE_NAME', 'GIS_Source', 'GIS_Source_LAKE'])
+arcpy.JoinField_management(out_file, 'LLID', stream_names, 'LLID', ['NAME', 'SOURCE'])
+arcpy.JoinField_management(out_file, 'LAKE_LLID', lake_names, 'WATERBODYI', ['NAME', 'SOURCE'])
+
+#Change these new field names to meaningful ones.
+renameField(out_file, "NAME", "GIS_STREAMNAME")
+renameField(out_file, "NAME_1", "LAKE_NAME")
+renameField(out_file, "Source", "GIS_Source")
+renameField(out_file, "SOURCE_1", "GIS_Source_LAKE")
+
+###################################################################################################################
+#Update Estuary analysis. The following code originated in Estuary_Analysis_01.py
+
+#Make initial subset of the new stations using two 'select by location' queries
+#1) HUC_8 watersheds which intersect the Pacific Ocean linear feature in DEQ streams
+#2) HUC_8 watersheds which have 2010 stations classified as estuary in them
+
+huc4 = "F:/Base_Data/Hydrography/NHD/NHDH_OR_931v210/NHDH_OR.gdb/WBD/WBD_HU8"
+huc4_lyr = "huc4lyr"
+#huc4_lyr = "huc4lyr2"
+deq_streams = r'C:\Users\MPsaris\DEQ_Stream_Lake_Additions\Additions.gdb\DEQ_Streams_25APR2013'
+streams_lyr = "deq_streams_lyr"
+stations_2010 = "E:/GitHub/ToxicsRedo/Estuary_Analysis/Estuaries.gdb/Stations_2010"
+stations_lyr = "stations_2010_lyr"
+streams_query = """"NAME" = 'Pacific Ocean'"""
+st_query = '"ESTUARY" = 1'
+
+arcpy.MakeFeatureLayer_management(huc4, huc4_lyr)
+arcpy.MakeFeatureLayer_management(deq_streams, streams_lyr, streams_query)
+arcpy.MakeFeatureLayer_management(stations_2010, stations_lyr, st_query)
+arcpy.SelectLayerByLocation_management(huc4_lyr, 'INTERSECT', streams_lyr)
+arcpy.SelectLayerByLocation_management(huc4_lyr, 'INTERSECT', stations_lyr, 0,'ADD_TO_SELECTION')
+
+hucs = []
+with arcpy.da.SearchCursor(huc4_lyr, 'HU_8_Name') as cursor:
+    for row in cursor:
+        hucs.append(row[0])
+
+print(hucs)
+
+result = int(arcpy.GetCount_management(huc4_lyr).getOutput(0)) 
+print result
+
+#Clip out new stations which are inside the remaining hucs
+stations_new = 'C:/Users/MPsaris/DEQ_Stream_Lake_Additions/Additions.gdb/All_stations_final_est_unfinalized_manual_update'
+out_fc = 'C:/Users/MPsaris/DEQ_Stream_Lake_Additions/Additions.gdb/stations_subset'
+#arcpy.Clip_analysis(stations_new, huc4_lyr, out_fc)
+
+#Label all stations not clipped out as Freshwater
+stations_update = 'stations_update'
+arcpy.MakeFeatureLayer_management(stations_new, stations_update)
+arcpy.SelectLayerByLocation_management(stations_update, 'INTERSECT', huc4_lyr)
+arcpy.SelectLayerByLocation_management(stations_update, 'INTERSECT', huc4_lyr, None, 'SWITCH_SELECTION')
+arcpy.CalculateField_management(stations_update, 'Estuary_2010', '"Freshwater"')
+
+
+
+#Use this function to check if one station has an upstream station classified as an estuary
+#**********from __builtin__ import any MUST be run for function to work properly
+def upstreamEstuary(llid, rm, estuary_stations):
+    stations_lyr = "stations_2010_lyr"
+    st_query = '"ESTUARY" = 1'
+    arcpy.MakeFeatureLayer_management(estuary_stations, stations_lyr, st_query)
+    est = pd.DataFrame({'llid': [], 'rm':[], 'estuary':[]})
+    with arcpy.da.SearchCursor(stations_lyr, ['LLID', 'RIVER_MILE', 'ESTUARY']) as cursor:
+        for row in cursor:
+            if row[0] == llid:
+                est = est.append({'llid': str(row[0]), 'rm':row[1], 'estuary':row[2]}, ignore_index=True)
+    est = est[est['rm']>= rm]
+    if any(x==1 for x in est['estuary']):
+        return('Estuary')
+    else:
+        return('Needs Further Review')
+
+upstreamEstuary('1241417430803', 28.584502, stations_2010)
+
+#Create new estuary field and populate it using upstreamEstuary function
+in_fc = "C:/Users/MPsaris/DEQ_Stream_Lake_Additions/Additions.gdb/stations_subset"
+out_fc = "C:/Users/MPsaris/DEQ_Stream_Lake_Additions/Additions.gdb/stations_subset_est2010"
+arcpy.CopyFeatures_management(in_fc, out_fc)
+#Update Estuary_2010 Field
+with arcpy.da.UpdateCursor(out_fc, ['LLID', 'RIVER_MILE', 'Estuary_2010']) as cursor:
+    for row in cursor:
+        print(type(row[0]))
+        if row[0] == 0 or row[0] is None:
+            row[2] = 'No stream LLID'
+        else:
+            row[2] = upstreamEstuary(str("{:13.0f}".format(row[0])), row[1], stations_2010)
+        cursor.updateRow(row)
+
+###################################################################################################################
+
+#Merge updated dataset back up with master dataset
+in_fc = '//deqhq1/mpsaris/GitHub/ToxicsRedo/Estuary_Analysis/Estuaries.gdb/All_stations_final_est'
+in_fc_lyr = 'new_wb_needed'
+out_fc = "C:/Users/MPsaris/DEQ_Stream_Lake_Additions/Additions.gdb/All_stations_final_est_pd"
+query = """"QAQC2" not in ( 'Further Review Needed' , 'Potential Digitization' )"""
+merge_fc = 'C:/Users/MPsaris/DEQ_Stream_Lake_Additions/Additions.gdb/All_stations_final_est_unfinalized_manual'
+arcpy.MakeFeatureLayer_management(in_fc, in_fc_lyr, query)
+arcpy.Merge_management([in_fc_lyr, merge_fc], out_fc)
