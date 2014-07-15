@@ -3,7 +3,7 @@ library(XML)
 library(RODBC)
 library(stringr)
 
-options(stringsAsFactors = FALSE)
+options(stringsAsFactors = FALSE, scipen = 100)
 
 source('//deqhq1/wqassessment/2012_wqassessment/toxicsredo/wqpquery_functions.R')
 
@@ -48,6 +48,7 @@ startDate <- '01-01-2000'
 endDate <- '12-31-2011'
 
 #Pull in stations to query for salinity and conductivity
+#I think this is just for those stations
 consal.stations.file <- read.csv('Estuary_Analysis/stations_needing_salinity_data.csv', stringsAsFactors = FALSE)
 consal.stations <- wqp.stations[wqp.stations$site_only %in% consal.stations.file$STATION,'MonitoringLocationIdentifier']
 consal.stations <- URLencode.PTB(paste(consal.stations,collapse=";"))
@@ -83,6 +84,14 @@ tmp.phos.data <- wqp.data.query(stateCode = Oregon,
 tmp.phos.stations <- tmp.phos.stations[tmp.phos.stations$OrganizationFormalName == 'National Park Service Water Resources Division',]
 tmp.phos.data <- tmp.phos.data[tmp.phos.data$OrganizationFormalName == 'National Park Service Water Resources Division',]
 
+tmp.phos.data$MonitoringLocationName <- wqp.stations[wqp.stations$MonitoringLocationIdentifier %in% tmp.phos.data$MonitoringLocationIdentifier,'MonitoringLocationName']
+tmp.phos.data$Tempid <- NA
+names(tmp.phos.data) <- gsub('\\.','',names(tmp.phos.data))
+wqp.data2 <- rbind(wqp.data, tmp.phos.data)
+con <- odbcConnect('WQAssessment')
+sqlSave(con, wqp.data2,  tablename = 'WQPData_wOrthophos_07092014', rownames = FALSE)
+odbcCloseAll()
+
 #Query for mercury in fish tissue
 tmp.hg.stations <- wqp.station.query(stateCode = Oregon, 
                                      siteType = siteType, 
@@ -100,6 +109,25 @@ tmp.hg.data <- wqp.data.query(stateCode = Oregon,
 
 tmp.hg.data <- tmp.hg.data[tmp.hg.data$SubjectTaxonomicName %in% c('Oncorhynchus clarkii', 'Oncorhynchus mykiss gairdnerii', 'Cottus', 'Cottus perplexus'),]
 tmp.hg.data <- tmp.hg.data[tmp.hg.data$ResultDetectionConditionText != 'Detected Not Quantified',]
+
+tmp.hg.data <- merge(tmp.hg.data, wqp.stations[,c('MonitoringLocationIdentifier','MonitoringLocationName')], by = 'MonitoringLocationIdentifier', all.x = TRUE)
+tmp.hg.data$Tempid <- NA
+names(tmp.hg.data) <- gsub('\\.','',names(tmp.hg.data))
+
+tmp.hg.data <- rename(tmp.hg.data, c('SampleTissueAnatomyName' = 'SAMPLE_MATRIX', 
+                                     'MonitoringLocationIdentifier' = 'STATION_KEY',
+                                     'OrganizationIdentifier' = 'AGENCY',
+                                     'ActivityStartDate' = 'SAMPLE_DATE',
+                                     #'ActivityStartTimeTime' = 'SAMPLE_TIME',
+                                     'ActivityTypeCode' = 'QA_QC_TYPE',
+                                     'CharacteristicName' = 'NAME',
+                                     'ResultSampleFractionText' = 'ABBREVIATION',
+                                     'ResultMeasureValue' = 'Result_clean',
+                                     'ResultMeasureMeasureUnitCode' = 'UNIT',
+                                     'DetectionQuantitationLimitMeasureMeasureValue' = 'METHOD_REPORTING_LIMIT',
+                                     'MonitoringLocationName' = 'LOCATION_DESCRIPTION'
+                                     ))
+tmp.hg.data.sub <- tmp.hg.data[,names(tmp.hg.data)[names(tmp.hg.data) %in% names(hg.ft.lasar)]]
 
 #### LASAR Query ####
 
@@ -290,7 +318,8 @@ make.clean <- function(tmp, report) {
 #pH data for Marine and estuary sites in repsonse to comments regarding ocean acidification
 ph.lasar <- lasar.query(parms = c('pH'), 
                         sampleMatrix = sw, 
-                        stations = unique(lasar[lasar$NAME %in% c('Ammonia as N', 'Pentachlorophenol'),'STATION_KEY']))
+                        #stations = unique(lasar[lasar$NAME %in% c('Ammonia as N', 'Pentachlorophenol'),'STATION_KEY']))
+                        stations = unique(dcwd.w.totals[dcwd.w.totals$Matrix %in% c('SW','ES'),c('SampleRegID')]))
 ph.report <- create.sub.table(ph.lasar$Result)
 ph.lasar <- make.clean(ph.lasar, ph.report)
 
@@ -304,11 +333,25 @@ hg.ft.lasar <- lasar.query(parms = names(hg), sampleMatrix = ft)
 hg.ft.lasar.report <- create.sub.table(hg.ft.lasar$Result)
 hg.ft.lasar <- make.clean(hg.ft.lasar, hg.ft.lasar.report)
 
+hg.ft.lasar.sub <- hg.ft.lasar[,names(tmp.hg.data.sub)]
+hg.ft.lasar.sub$SAMPLE_DATE <- as.character(hg.ft.lasar.sub$SAMPLE_DATE)
+
+hg.ft.all <- rbind(hg.ft.lasar.sub, tmp.hg.data.sub)
+
+#write.csv(hg.ft.all, 'LASAR_WQP_Mercury_fish_tissue.csv', row.names = FALSE)
+
+
 #conductivity and salinity
-consal.lasar <- lasar.query(parms = c('Conductivity', 'Salinity'), sampleMatrix = sw, stations = consal.stations.file[nchar(consal.stations.file$STATION) == 5,'STATION'])
+# consal.lasar <- lasar.query(parms = c('Conductivity', 'Salinity'), sampleMatrix = sw, stations = consal.stations.file[nchar(consal.stations.file$STATION) == 5,'STATION'])
+consal.lasar <- lasar.query(parms = c('Conductivity', 'Salinity'), sampleMatrix = sw, stations = dcwd.w.totals[grepl('Ammonia',dcwd.w.totals$Name) & dcwd.w.totals$Matrix == 'SW',c('SampleRegID')])
 consal.report <- create.sub.table(consal.lasar$Result)
 consal.lasar <- make.clean(consal.lasar, consal.report)
-write.csv(consal.lasar, 'Estuary_Analysis/LASAR_consal.csv', row.names = FALSE)
+write.csv(consal.lasar, 'Estuary_Analysis/LASAR_consal_20140707.csv', row.names = FALSE)
+
+#hardness...looks like i set this up by finding parameter keys but never actually ran a query for them.
+hard.lasar <- lasar.query(parms = names(hard), sampleMatrix = sw, stations = unique(lasar.new.names[lasar.new.names$Name %in% constants$Name.alone,'SampleRegID']))
+hard.report <- create.sub.table(hard.lasar$Result)
+hard.lasar <- make.clean(hard.lasar, hard.report)
 
 #Save this complete lasar dataset to the database to make it easier for later analyses to run. Mostly
 #so we don't have to re-run the queries of the lasar database every time.
@@ -339,3 +382,44 @@ lasar$Result_clean <- as.numeric(lasar$Result_clean)
 # sqlSave(wq, lasar.to.save, tablename = 'LASAR_Toxics_Query_wcriterianame_wAddOns_06232014', rownames = FALSE)
 # rm(lasar.to.save)
 # odbcCloseAll()
+
+#Again it looks like I forgot to query for hardness so I did that above and I need to add it into the database table. 
+#I'm also going to add in the consal data here as well to clean up the data preparation file a bit.
+consal.lasar <- read.csv('Estuary_Analysis/LASAR_consal_20140707.csv')
+consal.lasar$criterianame <- consal.lasar$NAME
+consal.lasar[consal.lasar$NAME == 'Conductivity','Result_clean'] <- consal.lasar[consal.lasar$NAME == 'Conductivity','Result_clean']/1000
+#This equation comes from http://pubs.usgs.gov/tm/2006/tm1D3/pdf/TM1D3.pdf page 36 
+#The report says this equation is used to convert specific conductance to salinity
+consal.lasar[consal.lasar$NAME == 'Conductivity','R'] <- consal.lasar[consal.lasar$NAME == 'Conductivity','Result_clean']/53.087
+consal.lasar[consal.lasar$NAME == 'Conductivity','Result_clean'] <- (0.0120 + (-0.2174*(consal.lasar[consal.lasar$NAME == 'Conductivity','R']^(1/2))) + (25.3283*consal.lasar[consal.lasar$NAME == 'Conductivity','R']) + (13.7714*(consal.lasar[consal.lasar$NAME == 'Conductivity','R']^(3/2))) + 
+                                                                       (-6.4788*(consal.lasar[consal.lasar$NAME == 'Conductivity','R']^2)) + (2.5842*(consal.lasar[consal.lasar$NAME == 'Conductivity','R']^(5/2))))
+consal.lasar[consal.lasar$NAME == 'Conductivity','UNIT'] <- 'ppth'
+consal.lasar[consal.lasar$NAME == 'Conductivity','criterianame'] <- 'Salinity'
+consal.lasar[consal.lasar$NAME == 'Conductivity','NAME'] <- 'Salinity'
+consal.lasar.max <- ddply(consal.lasar, .(STATION_KEY,SAMPLE_DATE,SAMPLE_TIME,NAME,LOCATION_DESCRIPTION,UNIT,criterianame,SAMPLE_MATRIX), summarise, Result_clean = max(Result_clean))
+consal.lasar.max <- cbind(consal.lasar.max, data.frame('PARAMETER_KEY' = rep(5229,nrow(consal.lasar.max)),
+                                                       'Result' = consal.lasar.max$Result_clean,
+                                                       'ABBREVIATION' = rep('Field',nrow(consal.lasar.max)),
+                                                       'Namefull' = rep('FieldSalinity',nrow(consal.lasar.max)),
+                                                       'METHOD_DETECTION_LIMIT' = rep(0,nrow(consal.lasar.max)),
+                                                       'METHOD_REPORTING_LIMIT' = rep(0,nrow(consal.lasar.max)),
+                                                       'QA_QC_TYPE' = rep('Sample',nrow(consal.lasar.max)),
+                                                       'STATUS' = rep('A',nrow(consal.lasar.max)),
+                                                       'SUBPROJECT_NAME' = rep(NA,nrow(consal.lasar.max))))
+consal.lasar.max$SAMPLE_TIME <- substr(consal.lasar.max$SAMPLE_TIME,12,19)
+
+wq <- odbcConnect('WQAssessment')
+lasar <- sqlFetch(wq, 'LASAR_Toxics_Query_wcriterianame_wAddOns_06232014')
+odbcCloseAll()
+
+hard.lasar$criterianame <- ifelse(grepl('Hardness',hard.lasar$NAME),'Hardness, carbonate as CaCO3',hard.lasar$NAME)
+hard.lasar$NAME <- ifelse(grepl('Hardness',hard.lasar$NAME),'Hardness, carbonate as CaCO3',hard.lasar$NAME)
+hard.lasar <- rename(hard.lasar, c('Name.full' = 'Namefull'))
+hard.lasar$SAMPLE_DATE <- as.character(hard.lasar$SAMPLE_DATE)
+hard.lasar$SAMPLE_TIME <- substr(as.character(hard.lasar$SAMPLE_TIME),12,19)
+
+lasar <- rbind(lasar, consal.lasar.max, hard.lasar)
+
+wq <- odbcConnect('WQAssessment')
+sqlSave(wq, lasar, tablename = 'LASAR_Toxics_Query_wcriterianame_wAddOns_07082014', rownames = FALSE)
+odbcCloseAll()

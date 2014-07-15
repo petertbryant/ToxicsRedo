@@ -54,8 +54,8 @@ hardness.crit.calc <- function(df, remove.chromium = TRUE) {
   
   mhc$'Table 30 Toxic Substances - Freshwater Acute' <- ifelse(mhc$Matrix == 'SW',NA,mhc$'Table 30 Toxic Substances - Freshwater Acute')
   mhc$'Table 30 Toxic Substances - Freshwater Chronic' <- ifelse(mhc$Matrix == 'SW',NA,mhc$'Table 30 Toxic Substances - Freshwater Chronic')
-  mhc$'Table 30 Toxic Substances - Saltwater Acute' <- ifelse(mhc$Matrix == 'FW',NA,mhc$'Table 30 Toxic Substances - Saltwater Acute')
-  mhc$'Table 30 Toxic Substances - Saltwater Chronic' <- ifelse(mhc$Matrix == 'FW',NA,mhc$'Table 30 Toxic Substances - Saltwater Chronic')
+  mhc$'Table 30 Toxic Substances - Saltwater Acute' <- ifelse(mhc$Matrix %in% c('FW','ES'),NA,mhc$'Table 30 Toxic Substances - Saltwater Acute')
+  mhc$'Table 30 Toxic Substances - Saltwater Chronic' <- ifelse(mhc$Matrix %in% c('FW','ES'),NA,mhc$'Table 30 Toxic Substances - Saltwater Chronic')
   
   mhc.melted <- melt(mhc, measure.vars = c('Table 30 Toxic Substances - Freshwater Acute', 'Table 30 Toxic Substances - Freshwater Chronic',
                                            'Table 30 Toxic Substances - Saltwater Acute', 'Table 30 Toxic Substances - Saltwater Chronic'))
@@ -185,13 +185,15 @@ ammonia.crit.calc <- function(df, salmonids = 'all') {
     df$salmonids <- FALSE
   } 
   
-  df$relate <- paste(df$SampleRegID, df$Sampled)
+  df$relate <- paste(df$SampleRegID, df$day)
   
   amm <- df[df$criterianame == 'Ammonia as N',]
   
   ph <- df[df$criterianame == 'pH',c('relate','Name','tResult')]
   
-  temp <- df[df$criterianame == 'Temperature',c('relate','Name','tResult')]
+  temp <- df[df$criterianame == 'Temperature',c('relate','Name','tResult','Unit')]
+  temp$tResult <- ifelse(temp$Unit == '°F', (temp$tResult - 32)*(5/9), temp$tResult)
+  temp <- within(temp, rm(Unit))
   
   sal <- df[df$criterianame == 'Salinity',c('relate','Name','tResult')]
   
@@ -205,6 +207,14 @@ ammonia.crit.calc <- function(df, salmonids = 'all') {
   
   #The freshwater criteria
   apt.fw <- apt[apt$Matrix %in% c('FW','ES'),]
+  
+  apt.fw$tResult.ph <- ifelse(apt.fw$tResult.ph < 6.5, 
+                                6.5, 
+                                ifelse(apt.fw$tResult.ph > 9, 
+                                       9, 
+                                       apt.fw$tResult.ph))
+  
+  apt.fw$tResult <- ifelse(apt.fw$tResult > 30, 30, apt.fw$tResult)
   
   for (i in 1:nrow(apt.fw)) {
       apt.fw$TCAP.CMC[i] <- ifelse(apt.fw$salmonids[i] == TRUE,20,25)
@@ -235,9 +245,11 @@ ammonia.crit.calc <- function(df, salmonids = 'all') {
   #The saltwater criteria
   aptc <- merge(apt, sal, by = 'relate', suffixes = c('.temp','.sal'),all.x = TRUE)
   
-  aptc <- aptc[aptc$Matrix %in% c('SW','ES'),]
+  aptc <- aptc[aptc$Matrix %in% c('SW'),]
   
   aptc$tResult.sal <- as.numeric(aptc$tResult.sal)
+  
+  aptc$tResult.sal <- ifelse(is.na(aptc$tResult.sal),10,aptc$tResult.sal)
   
   #for testing let's actually make these conductivities more saline
 #   set.seed(3000)
