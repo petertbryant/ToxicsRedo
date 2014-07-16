@@ -66,7 +66,7 @@ arcpy.JoinField_management(out_fc, 'STATION', in_table, 'Station', ['Estuary_201
 
 #Select all stations that were not sub-setted for estuary analysis and label them freshwater.
 #This only applies to stations that have been approved for use (ie those not labeled "Potential Digitization', or 
-#'Remove')                                                                   
+#'Remove')
 huc4 = "F:/Base_Data/Hydrography/NHD/NHDH_OR_931v210/NHDH_OR.gdb/WBD/WBD_HU8"
 huc4_lyr = "huc4lyr"
 huc4_lyr = "huc4lyr2"
