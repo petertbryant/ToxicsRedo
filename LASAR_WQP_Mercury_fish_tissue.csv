@@ -1,700 +1,700 @@
-STATION_KEY,QA_QC_TYPE,SAMPLE_DATE,NAME,ABBREVIATION,Result_clean,UNIT,SAMPLE_MATRIX,METHOD_REPORTING_LIMIT,LOCATION_DESCRIPTION
-10332,Sample,8/20/2008,Mercury,NA,0.34,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at SP&S RR Bridge (Portland)
-10332,Sample,8/20/2008,Mercury,NA,0.61,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at SP&S RR Bridge (Portland)
-10332,Sample,9/9/2008,Mercury,NA,0.23,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at SP&S RR Bridge (Portland)
-10332,Sample,9/9/2008,Mercury,NA,0.31,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at SP&S RR Bridge (Portland)
-10332,Sample,9/9/2008,Mercury,NA,0.39,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at SP&S RR Bridge (Portland)
-10332,Sample,9/9/2008,Mercury,NA,0.51,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at SP&S RR Bridge (Portland)
-10332,Sample,9/9/2008,Mercury,NA,0.36,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at SP&S RR Bridge (Portland)
-10344,Sample,9/22/2008,Mercury,NA,0.8,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
-10344,Sample,9/22/2008,Mercury,NA,0.33,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
-10344,Sample,9/22/2008,Mercury,NA,0.8,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
-10344,Sample,9/22/2008,Mercury,NA,0.63,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
-10344,Sample,9/22/2008,Mercury,NA,0.63,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
-10344,Sample,9/22/2008,Mercury,NA,0.23,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
-10344,Sample,9/22/2008,Mercury,NA,0.26,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
-10344,Sample,9/8/2010,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
-10344,Sample,9/8/2010,Mercury,NA,0.71,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
-10344,Sample,9/8/2010,Mercury,NA,0.34,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
-10344,Sample,9/8/2010,Mercury,NA,1.57,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
-10344,Sample,9/8/2010,Mercury,NA,0.91,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
-10344,Sample,9/8/2010,Mercury,NA,0.13,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
-10344,Sample,9/8/2010,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
-10344,Sample,9/8/2010,Mercury,NA,0.25,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
-10344,Sample,9/8/2010,Mercury,NA,0.26,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
-10344,Sample,9/8/2010,Mercury,NA,1.23,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
-10344,Sample,9/8/2010,Mercury,NA,1.15,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
-10355,Sample,9/24/2008,Mercury,NA,1.64,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
-10355,Sample,9/24/2008,Mercury,NA,0.76,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
-10355,Sample,9/24/2008,Mercury,NA,0.93,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
-10355,Sample,9/24/2008,Mercury,NA,0.53,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
-10355,Sample,9/24/2008,Mercury,NA,0.51,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
-10355,Sample,9/24/2008,Mercury,NA,0.45,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
-10355,Sample,10/6/2009,Mercury,NA,0.66,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
-10355,Sample,10/6/2009,Mercury,NA,0.48,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
-10355,Sample,10/6/2009,Mercury,NA,0.57,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
-10355,Sample,10/6/2009,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
-10355,Sample,10/6/2009,Mercury,NA,0.26,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
-10355,Sample,10/6/2009,Mercury,NA,1.31,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
-10355,Sample,8/31/2010,Mercury,NA,0.07,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
-10355,Sample,8/31/2010,Mercury,NA,0.07,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
-10355,Sample,8/31/2010,Mercury,NA,0.54,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
-10355,Sample,8/31/2010,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
-10355,Sample,8/31/2010,Mercury,NA,0.31,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
-10355,Sample,8/31/2010,Mercury,NA,0.21,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
-10355,Sample,8/31/2010,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
-10355,Sample,8/31/2010,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
-10355,Sample,8/31/2010,Mercury,NA,0.5,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
-10359,Sample,10/6/2009,Mercury,NA,0.49,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 126 (Springfield)
-10359,Sample,10/6/2009,Mercury,NA,0.52,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 126 (Springfield)
-10359,Sample,10/6/2009,Mercury,NA,1.09,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 126 (Springfield)
-10359,Sample,10/6/2009,Mercury,NA,1.05,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 126 (Springfield)
-10359,Sample,10/6/2009,Mercury,NA,0.47,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 126 (Springfield)
-10376,Sample,9/23/2008,Mercury,NA,0.89,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
-10376,Sample,9/23/2008,Mercury,NA,0.44,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
-10376,Sample,9/23/2008,Mercury,NA,0.46,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
-10376,Sample,10/12/2009,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
-10376,Sample,10/12/2009,Mercury,NA,1.19,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
-10376,Sample,10/12/2009,Mercury,NA,0.39,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
-10376,Sample,10/12/2009,Mercury,NA,0.54,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
-10376,Sample,10/12/2009,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
-10376,Sample,10/12/2009,Mercury,NA,0.13,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
-10376,Sample,10/12/2009,Mercury,NA,0.08,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
-10376,Sample,10/12/2009,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
-10376,Sample,10/12/2009,Mercury,NA,0.29,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
-10376,Sample,10/12/2009,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
-10376,Sample,10/12/2009,Mercury,NA,0.29,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
-10376,Sample,10/12/2009,Mercury,NA,0.16,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
-10376,Sample,8/23/2010,Mercury,NA,0.26,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
-10376,Sample,8/23/2010,Mercury,NA,0.22,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
-10376,Sample,8/23/2010,Mercury,NA,0.22,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
-10376,Sample,8/23/2010,Mercury,NA,0.51,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
-10376,Sample,8/23/2010,Mercury,NA,0.89,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
-10376,Sample,8/23/2010,Mercury,NA,0.45,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
-10379,Sample,10/8/2009,Mercury,NA,0.47,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,10/8/2009,Mercury,NA,0.25,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,10/8/2009,Mercury,NA,0.27,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,10/8/2009,Mercury,NA,0.28,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,10/8/2009,Mercury,NA,0.27,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,10/8/2009,Mercury,NA,1.1,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,10/8/2009,Mercury,NA,0.56,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,10/8/2009,Mercury,NA,0.41,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,10/8/2009,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,10/8/2009,Mercury,NA,0.48,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,8/25/2010,Mercury,NA,0.76,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,8/25/2010,Mercury,NA,0.73,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,8/25/2010,Mercury,NA,0.63,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample - Field Primary,8/25/2010,Mercury,NA,0.63,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,8/25/2010,Mercury,NA,0.74,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,8/25/2010,Mercury,NA,0.26,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,8/25/2010,Mercury,NA,0.33,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,8/25/2010,Mercury,NA,0.29,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample - Field Primary,8/25/2010,Mercury,NA,0.4,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,8/25/2010,Mercury,NA,0.24,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,8/25/2010,Mercury,NA,0.29,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,8/25/2010,Mercury,NA,0.33,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,8/25/2010,Mercury,NA,0.6,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,8/25/2010,Mercury,NA,0.68,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,8/25/2010,Mercury,NA,1.3,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,8/25/2010,Mercury,NA,0.86,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,8/25/2010,Mercury,NA,0.76,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample - Field Duplicate,8/25/2010,Mercury,NA,0.65,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample - Field Duplicate,8/25/2010,Mercury,NA,0.4,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,8/25/2010,Mercury,NA,0.3,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10379,Sample,8/25/2010,Mercury,NA,0.31,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
-10386,Sample,8/24/2010,Mercury,NA,0.16,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Jasper Bridge
-10386,Sample,8/24/2010,Mercury,NA,0.78,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Jasper Bridge
-10386,Sample,8/24/2010,Mercury,NA,0.53,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Jasper Bridge
-10386,Sample,8/24/2010,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Jasper Bridge
-10386,Sample - Field Primary,8/24/2010,Mercury,NA,0.42,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Jasper Bridge
-10386,Sample - Field Duplicate,8/24/2010,Mercury,NA,0.4,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Jasper Bridge
-10411,Sample,6/9/2009,Mercury,NA,0.12,mg/Kg wet,"Fillet, no skin",0.03,Deschutes River at Deschutes River Park
-10411,Sample,6/9/2009,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Deschutes River at Deschutes River Park
-10411,Sample,6/9/2009,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,Deschutes River at Deschutes River Park
-10411,Sample,6/9/2009,Mercury,NA,0.04,mg/Kg wet,"Fillet, no skin",0.03,Deschutes River at Deschutes River Park
-10418,Sample,10/21/2010,Mercury,NA,0.34,mg/Kg wet,"Fillet, no skin",0.03,Rogue River at Robertson Bridge (Merlin)
-10418,Sample,10/21/2010,Mercury,NA,0.41,mg/Kg wet,"Fillet, no skin",0.03,Rogue River at Robertson Bridge (Merlin)
-10418,Sample,10/21/2010,Mercury,NA,0.39,mg/Kg wet,"Fillet, no skin",0.03,Rogue River at Robertson Bridge (Merlin)
-10418,Sample,10/21/2010,Mercury,NA,0.54,mg/Kg wet,"Fillet, no skin",0.03,Rogue River at Robertson Bridge (Merlin)
-10418,Sample,10/21/2010,Mercury,NA,0.52,mg/Kg wet,"Fillet, no skin",0.03,Rogue River at Robertson Bridge (Merlin)
-10422,Sample,6/14/2010,Mercury,NA,0.49,mg/Kg wet,"Fillet, no skin",0.03,Rogue River upstream of Raygold Dam
-10422,Sample,6/14/2010,Mercury,NA,0.53,mg/Kg wet,"Fillet, no skin",0.03,Rogue River upstream of Raygold Dam
-10422,Sample,6/14/2010,Mercury,NA,0.4,mg/Kg wet,"Fillet, no skin",0.03,Rogue River upstream of Raygold Dam
-10422,Sample,6/14/2010,Mercury,NA,0.62,mg/Kg wet,"Fillet, no skin",0.03,Rogue River upstream of Raygold Dam
-10422,Sample,6/14/2010,Mercury,NA,0.57,mg/Kg wet,"Fillet, no skin",0.03,Rogue River upstream of Raygold Dam
-10456,Sample,9/15/2008,Mercury,NA,0.5,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at Boones Ferry Road
-10456,Sample,9/15/2008,Mercury,NA,0.44,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at Boones Ferry Road
-10456,Sample,9/15/2008,Mercury,NA,0.36,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at Boones Ferry Road
-10456,Sample,9/15/2008,Mercury,NA,0.54,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at Boones Ferry Road
-10456,Sample,9/15/2008,Mercury,NA,0.42,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at Boones Ferry Road
-10549,Sample,9/9/2008,Mercury,NA,0.18,mg/Kg wet,"Fillet, no skin",0.03,Multnomah Channel at St. Helens
-10549,Sample,9/9/2008,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Multnomah Channel at St. Helens
-10549,Sample,9/9/2008,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,Multnomah Channel at St. Helens
-10549,Sample,9/9/2008,Mercury,NA,0.18,mg/Kg wet,"Fillet, no skin",0.03,Multnomah Channel at St. Helens
-10549,Sample,9/9/2008,Mercury,NA,0.27,mg/Kg wet,"Fillet, no skin",0.03,Multnomah Channel at St. Helens
-10550,Sample,9/26/2009,Mercury,NA,0.12,mg/Kg wet,"Fillet, no skin",0.03,Multnomah Channel at Coon Island
-10581,Sample,8/25/2009,Mercury,NA,0.45,mg/Kg wet,Whole body,0.03,Columbia River at John Day Dam
-10581,Sample,8/25/2009,Mercury,NA,0.13,mg/Kg wet,Whole body,0.03,Columbia River at John Day Dam
-10581,Sample,8/25/2009,Mercury,NA,0.16,mg/Kg wet,Whole body,0.03,Columbia River at John Day Dam
-10648,Sample,8/27/2008,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Yamhill River at mouth
-10648,Sample,8/27/2008,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Yamhill River at mouth
-10648,Sample,9/10/2008,Mercury,NA,0.43,mg/Kg wet,"Fillet, no skin",0.03,Yamhill River at mouth
-10648,Sample,9/10/2008,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Yamhill River at mouth
-10648,Sample,9/10/2008,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Yamhill River at mouth
-10648,Sample,9/10/2008,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Yamhill River at mouth
-10648,Sample,9/10/2008,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Yamhill River at mouth
-10774,Sample,10/7/2008,Mercury,NA,0.8,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at mouth
-10774,Sample,10/7/2008,Mercury,NA,1.37,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at mouth
-10774,Sample,10/7/2008,Mercury,NA,0.49,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at mouth
-10774,Sample,10/7/2008,Mercury,NA,0.55,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at mouth
-10774,Sample,10/7/2008,Mercury,NA,0.29,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at mouth
-10775,Sample,8/30/2010,Mercury,NA,0.33,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at Jefferson Bridge
-10775,Sample,8/30/2010,Mercury,NA,0.08,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at Jefferson Bridge
-10775,Sample,8/30/2010,Mercury,NA,0.06,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at Jefferson Bridge
-10775,Sample,8/30/2010,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at Jefferson Bridge
-10775,Sample,8/30/2010,Mercury,NA,0.62,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at Jefferson Bridge
-10775,Sample,8/30/2010,Mercury,NA,0.16,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at Jefferson Bridge
-10775,Sample,8/30/2010,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at Jefferson Bridge
-10821,Sample,9/15/2010,Mercury,NA,0.09,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at St. John's Bridge
-10821,Sample,9/15/2010,Mercury,NA,0.07,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at St. John's Bridge
-10821,Sample,10/1/2010,Mercury,NA,0.07,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at St. John's Bridge
-10821,Sample,10/1/2010,Mercury,NA,0.09,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at St. John's Bridge
-10821,Sample,10/1/2010,Mercury,NA,0.09,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at St. John's Bridge
-10821,Sample,10/1/2010,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at St. John's Bridge
-10821,Sample,10/1/2010,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at St. John's Bridge
-10833,Sample,9/9/2010,Mercury,NA,0.06,mg/Kg wet,"Fillet, no skin",0.03,Willamette River 0.5 miles downstream of Tualatin River
-10833,Sample,9/9/2010,Mercury,NA,0.09,mg/Kg wet,"Fillet, no skin",0.03,Willamette River 0.5 miles downstream of Tualatin River
-10833,Sample,9/9/2010,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Willamette River 0.5 miles downstream of Tualatin River
-10833,Sample,9/9/2010,Mercury,NA,0.3,mg/Kg wet,"Fillet, no skin",0.03,Willamette River 0.5 miles downstream of Tualatin River
-10833,Sample - Field Primary,9/9/2010,Mercury,NA,0.44,mg/Kg wet,"Fillet, no skin",0.03,Willamette River 0.5 miles downstream of Tualatin River
-10833,Sample - Field Duplicate,9/9/2010,Mercury,NA,0.39,mg/Kg wet,"Fillet, no skin",0.03,Willamette River 0.5 miles downstream of Tualatin River
-11233,Sample,10/9/2008,Mercury,NA,0.5,mg/Kg wet,"Fillet, no skin",0.03,Clackamas River at High Rocks (Old Hwy 213)
-11233,Sample,10/28/2008,Mercury,NA,2.53,mg/Kg wet,"Fillet, no skin",0.03,Clackamas River at High Rocks (Old Hwy 213)
-11826,Sample,6/8/2009,Mercury,NA,0.41,mg/Kg wet,"Fillet, no skin",0.03,John Day River at Philippi Park
-11826,Sample,6/8/2009,Mercury,NA,0.46,mg/Kg wet,"Fillet, no skin",0.03,John Day River at Philippi Park
-11826,Sample,6/8/2009,Mercury,NA,0.46,mg/Kg wet,"Fillet, no skin",0.03,John Day River at Philippi Park
-11826,Sample,6/8/2009,Mercury,NA,0.36,mg/Kg wet,"Fillet, no skin",0.03,John Day River at Philippi Park
-11826,Sample,6/8/2009,Mercury,NA,0.51,mg/Kg wet,"Fillet, no skin",0.03,John Day River at Philippi Park
-11990,Sample,10/13/2009,Mercury,NA,0.76,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Clearwater Boat Ramp
-11990,Sample,10/13/2009,Mercury,NA,0.42,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Clearwater Boat Ramp
-11990,Sample,10/13/2009,Mercury,NA,0.33,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Clearwater Boat Ramp
-11990,Sample,10/13/2009,Mercury,NA,0.63,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Clearwater Boat Ramp
-11990,Sample,10/13/2009,Mercury,NA,0.46,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Clearwater Boat Ramp
-11990,Sample,10/13/2009,Mercury,NA,0.42,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Clearwater Boat Ramp
-11990,Sample,10/13/2009,Mercury,NA,0.13,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Clearwater Boat Ramp
-11990,Sample,10/13/2009,Mercury,NA,0.13,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Clearwater Boat Ramp
-11990,Sample,10/13/2009,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Clearwater Boat Ramp
-11990,Sample,10/13/2009,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Clearwater Boat Ramp
-11990,Sample,10/13/2009,Mercury,NA,0.08,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Clearwater Boat Ramp
-12012,Sample,6/22/2009,Mercury,NA,0.35,mg/Kg wet,"Fillet, no skin",0.03,Hood River at footbridge downstream of I-84
-12090,Sample,9/13/2010,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River upstream of Three Mile Dam
-12090,Sample,9/13/2010,Mercury,NA,0.07,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River upstream of Three Mile Dam
-12090,Sample,9/13/2010,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River upstream of Three Mile Dam
-12090,Sample,9/13/2010,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River upstream of Three Mile Dam
-12090,Sample,9/13/2010,Mercury,NA,0.08,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River upstream of Three Mile Dam
-12090,Sample,9/13/2010,Mercury,NA,0.06,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River upstream of Three Mile Dam
-12090,Sample,9/13/2010,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River upstream of Three Mile Dam
-12090,Sample,9/13/2010,Mercury,NA,0.07,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River upstream of Three Mile Dam
-12583,Sample,8/4/2004,Mercury,Total,0.332,mg/Kg wet,"Tissue, Fish",0.015,Canyon Creek 2.8 miles upstream of mouth (Road 42.100)
-12583,Sample,8/4/2004,Mercury,Total,0.49,mg/Kg wet,"Tissue, Fish",0.015,Canyon Creek 2.8 miles upstream of mouth (Road 42.100)
-12583,Sample,8/4/2004,Mercury,Total,0.66,mg/Kg wet,"Tissue, Fish",0.015,Canyon Creek 2.8 miles upstream of mouth (Road 42.100)
-13767,Sample,7/15/2011,Mercury,NA,0.33,mg/Kg wet,Whole body,0.03,East Lake at deepest point
-13844,Sample,6/29/2011,Mercury,NA,0.04,mg/Kg wet,Whole body,0.03,Paulina Lake at deepest point
-13844,Sample,6/29/2011,Mercury,NA,0.02,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
-13844,Sample,6/29/2011,Mercury,NA,0.01,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
-13844,Sample,6/29/2011,Mercury,NA,0.01,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
-13844,Sample,6/29/2011,Mercury,NA,0.13,mg/Kg wet,"Fillet, no skin",0.03,Paulina Lake at deepest point
-13844,Sample,6/29/2011,Mercury,NA,0.12,mg/Kg wet,"Fillet, no skin",0.03,Paulina Lake at deepest point
-13844,Sample,6/29/2011,Mercury,NA,0.02,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
-13844,Sample,6/29/2011,Mercury,NA,0.02,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
-13844,Sample,6/29/2011,Mercury,NA,0.02,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
-13844,Sample,6/29/2011,Mercury,NA,0.02,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
-13844,Sample,6/29/2011,Mercury,NA,0.02,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
-13844,Sample,6/29/2011,Mercury,NA,0.02,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
-13844,Sample,6/29/2011,Mercury,NA,0.01,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
-13844,Sample,6/29/2011,Mercury,NA,0.02,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
-13844,Sample,6/29/2011,Mercury,NA,0.02,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
-13844,Sample,6/29/2011,Mercury,NA,0.02,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
-13844,Sample - Field Primary,8/30/2011,Mercury,NA,0.06,mg/Kg wet,Whole body,0.03,Paulina Lake at deepest point
-13844,Sample - Field Duplicate,8/30/2011,Mercury,NA,0.06,mg/Kg wet,Whole body,0.03,Paulina Lake at deepest point
-18390,Sample,10/19/2010,Mercury,NA,0.51,mg/Kg wet,"Fillet, no skin",0.03,Ashland Emigrant Lake
-18390,Sample,10/19/2010,Mercury,NA,2.48,mg/Kg wet,"Fillet, no skin",0.03,Ashland Emigrant Lake
-18390,Sample,10/19/2010,Mercury,NA,0.72,mg/Kg wet,"Fillet, no skin",0.03,Ashland Emigrant Lake
-18390,Sample,10/19/2010,Mercury,NA,1.02,mg/Kg wet,"Fillet, no skin",0.03,Ashland Emigrant Lake
-18390,Sample,10/19/2010,Mercury,NA,0.78,mg/Kg wet,"Fillet, no skin",0.03,Ashland Emigrant Lake
-18390,Sample,10/19/2010,Mercury,NA,0.59,mg/Kg wet,"Fillet, no skin",0.03,Ashland Emigrant Lake
-18390,Sample,10/19/2010,Mercury,NA,0.86,mg/Kg wet,"Fillet, no skin",0.03,Ashland Emigrant Lake
-18390,Sample,10/19/2010,Mercury,NA,0.65,mg/Kg wet,"Fillet, no skin",0.03,Ashland Emigrant Lake
-18390,Sample,10/19/2010,Mercury,NA,0.59,mg/Kg wet,"Fillet, no skin",0.03,Ashland Emigrant Lake
-18390,Sample,10/19/2010,Mercury,NA,0.27,mg/Kg wet,"Fillet, no skin",0.03,Ashland Emigrant Lake
-20824,Sample,5/11/2000,Mercury,Total,0.764,mg/Kg wet,"Tissue, Fish",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
-20824,Sample,5/11/2000,Mercury,Total,0.76,mg/Kg wet,"Tissue, Fish",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
-20824,Sample,5/11/2000,Mercury,Total,0.343,mg/Kg wet,"Tissue, Fish",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
-20824,Sample,5/11/2000,Mercury,Total,0.338,mg/Kg wet,"Tissue, Fish",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
-20824,Sample,5/18/2000,Mercury,Total,0.774,mg/Kg wet,"Fillet, with skin",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
-20824,Sample,5/18/2000,Mercury,Total,0.73,mg/Kg wet,"Fillet, with skin",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
-20824,Sample,5/18/2000,Mercury,Total,0.844,mg/Kg wet,"Fillet, with skin",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
-20824,Sample,5/18/2000,Mercury,Total,0.712,mg/Kg wet,"Fillet, with skin",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
-20824,Sample,5/18/2000,Mercury,Total,0.992,mg/Kg wet,"Fillet, with skin",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
-20824,Sample,5/18/2000,Mercury,Total,0.817,mg/Kg wet,"Fillet, with skin",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
-20824,Sample,5/18/2000,Mercury,Total,1.12,mg/Kg wet,"Fillet, with skin",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
-20824,Sample,5/18/2000,Mercury,Total,0.619,mg/Kg wet,"Fillet, with skin",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
-20824,Sample,5/18/2000,Mercury,Total,0.238,mg/Kg wet,"Fillet, with skin",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
-20824,Sample,5/18/2000,Mercury,Total,0.222,mg/Kg wet,"Fillet, with skin",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
-20824,Sample,5/18/2000,Mercury,Total,0.24,mg/Kg wet,"Fillet, with skin",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
-23485,Sample,5/16/2000,Mercury,Total,0.78,mg/Kg wet,"Tissue, Fish",NA,Galesville Reservoir
-23485,Sample,5/16/2000,Mercury,Total,0.859,mg/Kg wet,"Tissue, Fish",NA,Galesville Reservoir
-23485,Sample,5/16/2000,Mercury,Total,0.747,mg/Kg wet,"Tissue, Fish",NA,Galesville Reservoir
-23485,Sample,5/16/2000,Mercury,Total,0.557,mg/Kg wet,"Tissue, Fish",NA,Galesville Reservoir
-23485,Sample,5/16/2000,Mercury,Total,0.712,mg/Kg wet,"Tissue, Fish",NA,Galesville Reservoir
-23485,Sample,5/16/2000,Mercury,Total,0.558,mg/Kg wet,"Tissue, Fish",NA,Galesville Reservoir
-23485,Sample,5/16/2000,Mercury,Total,0.691,mg/Kg wet,"Tissue, Fish",NA,Galesville Reservoir
-23485,Sample,5/16/2000,Mercury,Total,0.572,mg/Kg wet,"Tissue, Fish",NA,Galesville Reservoir
-24575,Sample,2/5/2001,Mercury,Total,0.018,mg/Kg wet,"Tissue, Fish",NA,Shady Cove Fish Hatchery
-24575,Sample,2/5/2001,Mercury,Total,0.014,mg/Kg wet,"Tissue, Fish",NA,Shady Cove Fish Hatchery
-24575,Sample,2/5/2001,Mercury,Total,0.016,mg/Kg wet,"Tissue, Fish",NA,Shady Cove Fish Hatchery
-24575,Sample,2/5/2001,Mercury,Total,0.013,mg/Kg wet,"Tissue, Fish",NA,Shady Cove Fish Hatchery
-24575,Sample,2/5/2001,Mercury,Total,0.01,mg/Kg wet,"Tissue, Fish",NA,Shady Cove Fish Hatchery
-24575,Sample,2/5/2001,Mercury,Total,0.009,mg/Kg wet,"Tissue, Fish",NA,Shady Cove Fish Hatchery
-24575,Sample,2/5/2001,Mercury,Total,0.015,mg/Kg wet,"Tissue, Fish",NA,Shady Cove Fish Hatchery
-24575,Sample - Field Primary,2/5/2001,Mercury,Total,0.013,mg/Kg wet,"Tissue, Fish",NA,Shady Cove Fish Hatchery
-24575,Sample - Field Duplicate,2/5/2001,Mercury,Total,0.013,mg/Kg wet,"Tissue, Fish",NA,Shady Cove Fish Hatchery
-24575,Sample,2/5/2001,Mercury,Total,0.012,mg/Kg wet,"Tissue, Fish",NA,Shady Cove Fish Hatchery
-24575,Sample,2/5/2001,Mercury,Total,0.027,mg/Kg wet,"Tissue, Fish",NA,Shady Cove Fish Hatchery
-26339,Sample,9/10/2008,Mercury,NA,0.42,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
-26339,Sample,9/10/2008,Mercury,NA,0.48,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
-26339,Sample,9/10/2008,Mercury,NA,0.24,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
-26339,Sample,9/10/2008,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
-26339,Sample,9/10/2008,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
-26339,Sample,9/9/2010,Mercury,NA,0.04,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
-26339,Sample,9/9/2010,Mercury,NA,0.04,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
-26339,Sample,9/9/2010,Mercury,NA,0.04,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
-26339,Sample,9/9/2010,Mercury,NA,0.12,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
-26339,Sample,9/9/2010,Mercury,NA,0.35,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
-26339,Sample,9/9/2010,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
-26339,Sample,9/9/2010,Mercury,NA,0.05,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
-26339,Sample,9/9/2010,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
-26339,Sample,9/9/2010,Mercury,NA,0.21,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
-26339,Sample - Field Primary,9/9/2010,Mercury,NA,0.27,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
-26339,Sample - Field Duplicate,9/9/2010,Mercury,NA,0.26,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
-26773,Sample,9/2/2010,Mercury,NA,0.27,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
-26773,Sample,9/2/2010,Mercury,NA,0.25,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
-26773,Sample,9/2/2010,Mercury,NA,0.44,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
-26773,Sample,9/2/2010,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
-26773,Sample,9/2/2010,Mercury,NA,0.44,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
-26773,Sample - Field Primary,9/2/2010,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
-26773,Sample,9/2/2010,Mercury,NA,0.22,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
-26773,Sample,9/2/2010,Mercury,NA,0.9,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
-26773,Sample,9/2/2010,Mercury,NA,1.1,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
-26773,Sample,9/2/2010,Mercury,NA,1.55,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
-26773,Sample - Field Primary,9/2/2010,Mercury,NA,0.97,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
-26773,Sample - Field Duplicate,9/2/2010,Mercury,NA,0.93,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
-26773,Sample - Field Duplicate,9/2/2010,Mercury,NA,0.22,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
-26773,Sample,9/2/2010,Mercury,NA,0.77,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
-29043,Sample,9/24/2008,Mercury,NA,0.53,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
-29043,Sample,10/7/2008,Mercury,NA,0.34,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
-29043,Sample,10/7/2008,Mercury,NA,1.03,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
-29043,Sample,10/7/2008,Mercury,NA,0.62,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
-29043,Sample,10/7/2008,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
-29043,Sample,10/7/2008,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
-29043,Sample,8/31/2010,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
-29043,Sample,8/31/2010,Mercury,NA,0.09,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
-29043,Sample,8/31/2010,Mercury,NA,0.23,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
-29043,Sample,8/31/2010,Mercury,NA,0.35,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
-29043,Sample - Field Primary,8/31/2010,Mercury,NA,0.34,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
-29043,Sample - Field Duplicate,8/31/2010,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
-29044,Sample,9/30/2008,Mercury,NA,0.56,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
-29044,Sample,9/30/2008,Mercury,NA,0.25,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
-29044,Sample,9/30/2008,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
-29044,Sample,10/12/2009,Mercury,NA,0.12,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
-29044,Sample,10/12/2009,Mercury,NA,0.08,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
-29044,Sample,10/12/2009,Mercury,NA,0.08,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
-29044,Sample,10/12/2009,Mercury,NA,0.23,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
-29044,Sample,10/12/2009,Mercury,NA,0.23,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
-29044,Sample,8/24/2010,Mercury,NA,0.78,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
-29044,Sample,8/24/2010,Mercury,NA,0.77,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
-29044,Sample,8/24/2010,Mercury,NA,0.74,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
-29044,Sample,8/24/2010,Mercury,NA,1.66,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
-29044,Sample - Field Primary,8/24/2010,Mercury,NA,0.73,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
-29044,Sample - Field Duplicate,8/24/2010,Mercury,NA,0.8,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
-29045,Sample,9/1/2010,Mercury,NA,0.93,mg/Kg wet,"Fillet, no skin",0.03,Clackamas River at Riverside Park
-29045,Sample,9/21/2010,Mercury,NA,0.07,mg/Kg wet,"Fillet, no skin",0.03,Clackamas River at Riverside Park
-29045,Sample,9/21/2010,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Clackamas River at Riverside Park
-29045,Sample - Field Primary,9/21/2010,Mercury,NA,0.44,mg/Kg wet,"Fillet, no skin",0.03,Clackamas River at Riverside Park
-29045,Sample - Field Duplicate,9/21/2010,Mercury,NA,0.44,mg/Kg wet,"Fillet, no skin",0.03,Clackamas River at Riverside Park
-30215,Sample,6/13/2003,Mercury,Total,0.237,mg/Kg dry,Whole body,0.05,"OR03-0303 Pacific Ocean, 7.1 nautical miles northwest of Rogue River mouth"
-30220,Sample,6/12/2003,Mercury,Total,0.254,mg/Kg dry,Whole body,0.05,"OR03-0006 Pacific Ocean, 2.8 nautical miles southwest of Siuslaw River mouth"
-30222,Sample,6/6/2003,Mercury,Total,0.108,mg/Kg dry,Whole body,0.05,"OR03-0008 Pacific Ocean, 8.1 nautical miles southwest of Cape Falcon"
-30223,Sample,6/10/2003,Mercury,Total,0.256,mg/Kg dry,Whole body,0.05,"OR03-0009 Pacific Ocean, 8.9 nautical miles southwest of Yaquina Head"
-30224,Sample,6/11/2003,Mercury,Total,0.435,mg/Kg dry,Whole body,0.05,"OR03-0010 Pacific Ocean, 30.5 nautical miles southwest of Heceta Head"
-30228,Sample,6/10/2003,Mercury,Total,0.238,mg/Kg dry,Whole body,0.05,"OR03-0014 Pacific Ocean, 11.8 nautical miles west of Waldport"
-30229,Sample,6/9/2003,Mercury,Total,0.142,mg/Kg dry,Whole body,0.05,"OR03-0015 Pacific Ocean, 3.6 nautical miles southwest of Cascade Head"
-30230,Sample,6/9/2003,Mercury,Total,0.061,mg/Kg dry,Whole body,0.05,"OR03-0016 Pacific Ocean, 7.9 nautical miles southwest of Netarts"
-30231,Sample,6/9/2003,Mercury,Total,0.229,mg/Kg dry,Whole body,0.05,"OR03-0017 Pacific Ocean, 5.3 nautical miles southwest of Cape Lookout"
-30231,Sample,6/9/2003,Mercury,Total,0.082,mg/Kg dry,Whole body,0.05,"OR03-0017 Pacific Ocean, 5.3 nautical miles southwest of Cape Lookout"
-30243,Sample,6/6/2003,Mercury,Total,0.101,mg/Kg dry,Whole body,0.05,"OR03-0029 Pacific Ocean, 2.6 nautical miles west of Rockaway Beach"
-30244,Sample,6/10/2003,Mercury,Total,0.314,mg/Kg dry,Whole body,0.05,"OR03-0030 Pacific Ocean, 4.5 nautical miles west of Yaquina Head"
-30244,Sample,6/10/2003,Mercury,Total,0.151,mg/Kg dry,Whole body,0.05,"OR03-0030 Pacific Ocean, 4.5 nautical miles west of Yaquina Head"
-30245,Sample,6/11/2003,Mercury,Total,0.331,mg/Kg dry,Whole body,0.05,"OR03-0031 Pacific Ocean, 8.4 nautical miles west of Cape Perpetual"
-30250,Sample,6/11/2003,Mercury,Total,0.107,mg/Kg dry,Whole body,0.05,"OR03-0036 Pacific Ocean, 24.9 nautical miles southwest of Cape Perpetual"
-30252,Sample,6/9/2003,Mercury,Total,0.239,mg/Kg dry,Whole body,0.05,"OR03-0038 Pacific Ocean, 6.5 nautical miles southwest of Cape Kiwanda"
-30253,Sample,6/11/2003,Mercury,Total,0.188,mg/Kg dry,Whole body,0.05,"OR03-0039 Pacific Ocean, 5.7 nautical miles southwest of Hecta Head"
-30254,Sample,6/11/2003,Mercury,Total,0.192,mg/Kg dry,Whole body,0.05,"OR03-0040 Pacific Ocean, 12.9 nautical miles southwest of Heceta Head"
-30256,Sample,6/6/2003,Mercury,Total,0.122,mg/Kg dry,Whole body,0.05,"OR03-0042 Pacific Ocean, 11.1 nautical miles west of Seaside"
-30260,Sample,6/11/2003,Mercury,Total,0.154,mg/Kg dry,Whole body,0.05,"OR03-0046 Pacific Ocean, 6.1 nautical miles southwest of Cape Perpetual"
-30262,Sample,6/12/2003,Mercury,Total,0.248,mg/Kg dry,Whole body,0.05,"OR03-0048 Pacific Ocean, 5.5 nautical miles west of Siltcoos river mouth"
-30264,Sample,6/6/2003,Mercury,Total,0.115,mg/Kg dry,Whole body,0.05,"OR03-0050 Pacific Ocean, 6.6 nautical miles south of Cape Falcon"
-31300,Sample,9/24/2003,Mercury,Total,0.123,mg/Kg dry,Whole body,0.05,"OR03-0062, 9.2 nautical miles northwest of Cape Blanco"
-31300,Sample,9/24/2003,Mercury,Total,0.17,mg/Kg dry,Whole body,0.05,"OR03-0062, 9.2 nautical miles northwest of Cape Blanco"
-31303,Sample,9/16/2003,Mercury,Total,0.201,mg/Kg dry,Whole body,0.05,11.3 nautical miles northwest of Cape Perpetua OR03-0051
-31303,Sample,9/16/2003,Mercury,Total,0.176,mg/Kg dry,Whole body,0.05,11.3 nautical miles northwest of Cape Perpetua OR03-0051
-31306,Sample,7/9/2003,Mercury,Total,0.185,mg/Kg dry,Whole body,0.05,"OR03-0053, 3.9 nautical miles northwest of Siletz Bay"
-31306,Sample,7/9/2003,Mercury,Total,0.258,mg/Kg dry,Whole body,0.05,"OR03-0053, 3.9 nautical miles northwest of Siletz Bay"
-31308,Sample,9/17/2003,Mercury,Total,0.168,mg/Kg dry,Whole body,0.05,"OR03-0054, 9.6 nautical miles southwest of Heceta Head"
-31308,Sample,9/17/2003,Mercury,Total,0.19,mg/Kg dry,Whole body,0.05,"OR03-0054, 9.6 nautical miles southwest of Heceta Head"
-31310,Sample,7/9/2003,Mercury,Total,0.095,mg/Kg dry,Whole body,0.05,"OR03-0055, 6.9 nautical miles southwest of Siletz Bay"
-31310,Sample,7/9/2003,Mercury,Total,0.12,mg/Kg dry,Whole body,0.05,"OR03-0055, 6.9 nautical miles southwest of Siletz Bay"
-31312,Sample,9/17/2003,Mercury,Total,0.095,mg/Kg dry,Whole body,0.05,"OR03-0056, 8.2 nautical miles southwest of Siuslaw River mouth"
-31312,Sample,9/17/2003,Mercury,Total,0.108,mg/Kg dry,Whole body,0.05,"OR03-0056, 8.2 nautical miles southwest of Siuslaw River mouth"
-31313,Sample,7/9/2003,Mercury,Total,0.299,mg/Kg dry,Whole body,0.05,"OR03-0057, 4.2 nautical miles northwest of Heceta Head"
-31313,Sample,7/9/2003,Mercury,Total,0.181,mg/Kg dry,Whole body,0.05,"OR03-0057, 4.2 nautical miles northwest of Heceta Head"
-31314,Sample,7/9/2003,Mercury,Total,0.346,mg/Kg dry,Whole body,0.05,"OR03-0058, 14.1 nautical miles west of Yaquina River mouth"
-31314,Sample,7/9/2003,Mercury,Total,0.491,mg/Kg dry,Whole body,0.05,"OR03-0058, 14.1 nautical miles west of Yaquina River mouth"
-31314,Sample,7/9/2003,Mercury,Total,0.281,mg/Kg dry,Whole body,0.05,"OR03-0058, 14.1 nautical miles west of Yaquina River mouth"
-31317,Sample,9/24/2003,Mercury,Total,0.15,mg/Kg dry,Whole body,0.05,"OR03-0063, 4.6 nautical miles southwest of Cape Blanco"
-31317,Sample,9/24/2003,Mercury,Total,0.126,mg/Kg dry,Whole body,0.05,"OR03-0063, 4.6 nautical miles southwest of Cape Blanco"
-31318,Sample,7/11/2003,Mercury,Total,0.173,mg/Kg dry,Whole body,0.05,"OR03-0059, 10.5 nautical miles north-northwest of Coos Bay mouth"
-31318,Sample,7/11/2003,Mercury,Total,0.289,mg/Kg dry,Whole body,0.05,"OR03-0059, 10.5 nautical miles north-northwest of Coos Bay mouth"
-31319,Sample,7/6/2003,Mercury,Total,0.132,mg/Kg dry,Whole body,0.05,"OR03-0060, 7.7 nautical miles northwest of Cannon Beach"
-31319,Sample,7/6/2003,Mercury,Total,0.291,mg/Kg dry,Whole body,0.05,"OR03-0060, 7.7 nautical miles northwest of Cannon Beach"
-31320,Sample,7/10/2003,Mercury,Total,0.135,mg/Kg dry,Whole body,0.05,"OR03-0061, 6.1 nautical miles northwest of Heceta Head"
-31320,Sample,7/10/2003,Mercury,Total,0.106,mg/Kg dry,Whole body,0.05,"OR03-0061, 6.1 nautical miles northwest of Heceta Head"
-31322,Sample,7/10/2003,Mercury,Total,0.182,mg/Kg dry,Whole body,0.05,19 nautical miles west of Yachats River mouth
-31323,Sample,7/10/2003,Mercury,Total,0.141,mg/Kg dry,Whole body,0.05,22 nautical miles west of Yaquina River mouth
-31566,Sample,7/16/2004,Mercury,Total,0.086,mg/Kg dry,Whole body,0.05,Columbia River at River Mile 21 near Rice Island
-31568,Sample,7/15/2004,Mercury,Total,0.125,mg/Kg dry,Whole body,0.05,Columbia River at River Mile 6 near Clatsop Spit
-31569,Sample,7/14/2004,Mercury,Total,0.054,mg/Kg dry,Whole body,0.05,Columbia River at River Mile 11.5 north of Marker #31
-31570,Sample,9/20/2004,Mercury,Total,0.186,mg/Kg dry,"Fillet, no skin",0.05,"Columbia River at River Mile 15.5, 1.6 nautical miles north of Marker #37"
-31572,Sample,7/13/2004,Mercury,Total,0.115,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 14, near south end of Astoria Bridge"
-31573,Sample,8/10/2004,Mercury,Total,0.102,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 8, 1.3 nautical miles south of Chinook Point"
-31574,Sample,7/7/2004,Mercury,Total,0.159,mg/Kg dry,"Fillet, no skin",0.05,"Columbia River at River Mile 18, southeast of Tongue Point"
-31578,Sample,9/21/2004,Mercury,Total,0.135,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 19.5, 1.3 nautical miles south of Grays Point"
-31579,Sample,9/1/2004,Mercury,Total,0.187,mg/Kg dry,Whole body,0.05,Nehalem River North Fork at River Mile 0.9
-31580,Sample,8/19/2004,Mercury,Total,0.119,mg/Kg dry,Whole body,0.05,"Alsea Bay, 0.3 nautical miles east of Devils Bend"
-31582,Sample,7/26/2004,Mercury,Total,0.104,mg/Kg dry,Whole body,0.05,"Siletz Bay at River Mile 0.1, north of Siletz Keys"
-31583,Sample,8/24/2004,Mercury,Total,0.168,mg/Kg dry,Whole body,0.05,Rogue River at River Mile 0.5 in Gold Beach Marina
-31586,Sample,8/25/2004,Mercury,Total,0.175,mg/Kg dry,Whole body,0.05,"Coquille River at River Mile 6.8, northeast shore near Randolph Island"
-31587,Sample,10/7/2004,Mercury,Total,0.222,mg/Kg dry,Whole body,0.05,"Nehalem Bay, 0.5 nautical miles W of Dean Point"
-31588,Sample,9/13/2004,Mercury,Total,0.074,mg/Kg dry,Whole body,0.05,"Sand Lake, 0.4 nautical miles east of Sand Beach Campground"
-31589,Sample,9/28/2004,Mercury,Total,0.068,mg/Kg dry,Whole body,0.05,"Siuslaw River at River Mile 6.2, southwest shore of Cox Island"
-31590,Sample,7/27/2004,Mercury,Total,0.139,mg/Kg dry,Whole body,0.05,"Siletz River at River Mile 5.8, north shore, east of Sunset Landing"
-31591,Sample,10/5/2004,Mercury,Total,0.1,mg/Kg dry,Whole body,0.05,"Netarts Bay, 0.4 nautical miles southwest of Yager CR mouth"
-31594,Sample,8/3/2004,Mercury,Total,0.136,mg/Kg dry,Whole body,0.05,"Coos Bay South Slough, 0.1 nautical miles northeast of Younker Point"
-31595,Sample,8/26/2004,Mercury,Total,0.05,mg/Kg dry,Whole body,0.05,"Coos Bay north of Marshfield Channel, 0.45 nautical miles west of Marker #1"
-31596,Sample,10/6/2004,Mercury,Total,0.091,mg/Kg dry,Whole body,0.05,Tillamook Bay West in south channel
-31597,Sample,8/5/2004,Mercury,Total,0.126,mg/Kg dry,Whole body,0.05,Coos Bay south of Marshfield Channel near 'Q' Green Range Marker
-31598,Sample,7/28/2004,Mercury,Total,0.097,mg/Kg dry,Whole body,0.05,Yaquina River near Marker #38
-31600,Sample,10/6/2004,Mercury,Total,0.23,mg/Kg dry,"Fillet, no skin",0.05,Tillamook Bay east side of Miami Cove
-31600,Sample,10/6/2004,Mercury,Total,0.072,mg/Kg dry,Whole body,0.05,Tillamook Bay east side of Miami Cove
-31602,Sample,8/17/2004,Mercury,Total,0.077,mg/Kg dry,Whole body,0.05,"Umpqua River at River Mile 6.6, north of The Point"
-31603,Sample,8/5/2004,Mercury,Total,0.108,mg/Kg dry,Whole body,0.05,"Coos Bay east side, 0.6 nautical miles west of Pierce Point"
-31604,Sample,8/31/2004,Mercury,Total,0.083,mg/Kg dry,"Fillet, no skin",0.05,"Tillamook Bay, east side in Bay City Channel near Sandstone Point"
-31606,Sample,9/14/2004,Mercury,Total,0.094,mg/Kg dry,Whole body,0.05,"Yaquina Bay at River Mile 3.5, near King Slough"
-31606,Sample,9/14/2004,Mercury,Total,0.099,mg/Kg dry,Whole body,0.05,"Yaquina Bay at River Mile 3.5, near King Slough"
-31606,Sample,9/14/2004,Mercury,Total,0.191,mg/Kg dry,"Fillet, no skin",0.05,"Yaquina Bay at River Mile 3.5, near King Slough"
-31607,Sample,9/21/2004,Mercury,Total,0.133,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 17, north shore south of Knappton"
-31613,Sample,7/29/2004,Mercury,Total,0.16,mg/Kg dry,Whole body,0.05,"Alsea Bay East, 0.3 nautical miles southeast of McKinney Slough"
-31615,Sample,9/28/2004,Mercury,Total,0.121,mg/Kg dry,Whole body,0.05,"Alsea Bay, 0.4 nautical miles north of McKinney Slough"
-31719,Sample,8/4/2004,Mercury,Total,0.55,mg/Kg wet,"Tissue, Fish",0.015,Canyon Creek 3.3 miles upstream of mouth
-31720,Sample,8/4/2004,Mercury,Total,0.561,mg/Kg wet,"Tissue, Fish",0.015,Canyon Creek 3.8 miles upstream of mouth
-31721,Sample,8/4/2004,Mercury,Total,0.478,mg/Kg wet,"Tissue, Fish",0.015,Canyon Creek 1.7 miles upstream of mouth
-31721,Sample,8/4/2004,Mercury,Total,0.348,mg/Kg wet,"Tissue, Fish",0.015,Canyon Creek 1.7 miles upstream of mouth
-31722,Sample,8/4/2004,Mercury,Total,0.065,mg/Kg wet,"Tissue, Fish",0.015,Ochoco Creek 1.6 miles upstream of Canyon Creek Junction
-31722,Sample,8/4/2004,Mercury,Total,0.057,mg/Kg wet,"Tissue, Fish",0.015,Ochoco Creek 1.6 miles upstream of Canyon Creek Junction
-31722,Sample,8/4/2004,Mercury,Total,0.054,mg/Kg wet,"Tissue, Fish",0.015,Ochoco Creek 1.6 miles upstream of Canyon Creek Junction
-32161,Sample,8/17/2005,Mercury,Total,0.154,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 7.5, 1.3 nautical miles southwest of Chinook Point"
-32164,Sample,7/28/2005,Mercury,Total,0.093,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 6.5, 0.1 nautical miles east of Clatsop Spit"
-32167,Sample,8/25/2005,Mercury,Total,0.338,mg/Kg dry,Whole body,0.05,"Yaquina Bay at River Mile 3.5, 0.3 nautical miles west of Coquille Point"
-32168,Sample,8/31/2005,Mercury,Total,0.256,mg/Kg dry,Whole body,0.05,"Coos Bay North Haynes Inlet, 0.2 nautical miles northwest of Green Marker #5"
-32168,Sample,8/31/2005,Mercury,Total,0.077,mg/Kg dry,Whole body,0.05,"Coos Bay North Haynes Inlet, 0.2 nautical miles northwest of Green Marker #5"
-32170,Sample,8/3/2005,Mercury,Total,0.108,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 17.5, 0.7 nautical miles northwest of Tongue Point"
-32170,Sample,8/3/2005,Mercury,Total,0.141,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 17.5, 0.7 nautical miles northwest of Tongue Point"
-32172,Sample,7/27/2005,Mercury,Total,0.113,mg/Kg dry,Whole body,0.05,Columbia River Youngs Bay North Shore near Radio Towers
-32173,Sample,8/18/2005,Mercury,Total,0.136,mg/Kg dry,Whole body,0.05,Nehalem Bay 0.3 nautical miles southwest of Wheeler City Piers
-32173,Sample,8/18/2005,Mercury,Total,0.138,mg/Kg dry,Whole body,0.05,Nehalem Bay 0.3 nautical miles southwest of Wheeler City Piers
-32174,Sample,10/11/2005,Mercury,Total,0.12,mg/Kg dry,Whole body,0.05,"Coos Bay Isthmus Slough, 0.7 nautical miles north of Manning Gulch"
-32175,Sample,8/22/2005,Mercury,Total,0.351,mg/Kg dry,Whole body,0.05,"Umpqua River at River Mile 13.8, 0.9 nautical miles downstream of Koapke Slu"
-32176,Sample,10/10/2005,Mercury,Total,0.15,mg/Kg dry,Whole body,0.05,"Coquille River at River Mile 8, near Parkersburg City"
-32179,Sample,9/12/2005,Mercury,Total,0.12,mg/Kg dry,Whole body,0.05,Nestucca R at RM 2.3 near Woods City (OR2005-0019)
-32180,Sample,8/31/2005,Mercury,Total,0.195,mg/Kg dry,Whole body,0.05,"Coos Bay East, 0.3 nautical miles west of Pierce Point"
-32180,Sample,8/31/2005,Mercury,Total,0.082,mg/Kg dry,Whole body,0.05,"Coos Bay East, 0.3 nautical miles west of Pierce Point"
-32185,Sample,8/9/2005,Mercury,Total,0.14,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 21, 0.5 nautical miles southeast of Red Marker #52"
-32197,Sample,8/24/2005,Mercury,Total,0.081,mg/Kg dry,Whole body,0.05,"Alsea River downstream of Drift Creek, adjecent to kin silver RV park and marina"
-32212,Sample,8/11/2005,Mercury,Total,0.145,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 7, 1.0 nautical miles south of Green Marker #7"
-32212,Sample,8/11/2005,Mercury,Total,0.335,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 7, 1.0 nautical miles south of Green Marker #7"
-32235,Sample,9/14/2005,Mercury,Total,0.071,mg/Kg dry,Whole body,0.05,Tillamook Bay near Memaloosa Boat Ramp
-32272,Sample,9/12/2006,Mercury,Total,0.098,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 11.5, 0.5 nautical miles northeast of green marker #29"
-32276,Sample,8/10/2005,Mercury,Total,0.144,mg/Kg dry,Whole body,0.05,Baker Bay at west end of Sand Island
-32347,Sample,9/26/2006,Mercury,Total,0.128,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 9.5, 0.25 nautical miles west of green marker #27"
-32562,Sample,6/2/2005,Mercury,Total,0.104,mg/Kg wet,"Fillet, no skin",0.03,Cottage Grove Reservoir
-32562,Sample,6/2/2005,Mercury,Total,0.114,mg/Kg wet,"Fillet, no skin",0.03,Cottage Grove Reservoir
-32562,Sample,6/2/2005,Mercury,Total,0.11,mg/Kg wet,"Fillet, no skin",0.03,Cottage Grove Reservoir
-32562,Sample,6/2/2005,Mercury,Total,0.08,mg/Kg wet,"Fillet, no skin",0.03,Cottage Grove Reservoir
-32562,Sample,6/2/2005,Mercury,Total,0.1,mg/Kg wet,"Fillet, no skin",0.03,Cottage Grove Reservoir
-32563,Sample,6/11/2005,Mercury,Total,0.055,mg/Kg wet,"Fillet, no skin",0.03,Dorena Reservoir
-32563,Sample,6/11/2005,Mercury,Total,0.058,mg/Kg wet,"Fillet, no skin",0.03,Dorena Reservoir
-32563,Sample,6/11/2005,Mercury,Total,0.056,mg/Kg wet,"Fillet, no skin",0.03,Dorena Reservoir
-32563,Sample,6/11/2005,Mercury,Total,0.076,mg/Kg wet,"Fillet, no skin",0.03,Dorena Reservoir
-32563,Sample,6/11/2005,Mercury,Total,0.043,mg/Kg wet,"Fillet, no skin",0.03,Dorena Reservoir
-32563,Sample,8/8/2005,Mercury,Total,0.092,mg/Kg wet,"Fillet, no skin",0.03,Dorena Reservoir
-32563,Sample,8/8/2005,Mercury,Total,0.114,mg/Kg wet,"Fillet, no skin",0.03,Dorena Reservoir
-32563,Sample,8/8/2005,Mercury,Total,0.091,mg/Kg wet,"Fillet, no skin",0.03,Dorena Reservoir
-32563,Sample,8/8/2005,Mercury,Total,0.315,mg/Kg wet,"Fillet, no skin",0.03,Dorena Reservoir
-32682,Sample,9/3/2005,Mercury,Total,0.097,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, small mouth bass, station 1"
-32683,Sample,9/3/2005,Mercury,Total,0.055,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, small mouth bass, station 2"
-32684,Sample,9/3/2005,Mercury,Total,0.067,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, small mouth bass, station 3"
-32685,Sample,9/3/2005,Mercury,Total,0.101,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, small mouth bass, station 4"
-32686,Sample,9/3/2005,Mercury,Total,0.096,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, small mouth bass, station 5"
-32687,Sample,9/3/2005,Mercury,Total,0.14,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, small mouth bass, station 6"
-32688,Sample,9/13/2005,Mercury,Total,0.158,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, small mouth bass, station 7"
-32689,Sample,9/24/2005,Mercury,Total,0.112,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, small mouth bass, station 8"
-32692,Sample,9/13/2005,Mercury,Total,0.084,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, rainbow trout, station 1"
-32693,Sample,9/25/2005,Mercury,Total,0.064,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, rainbow trout, station 2"
-32694,Sample,9/26/2005,Mercury,Total,0.069,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, rainbow trout, station 3"
-32695,Sample,9/26/2005,Mercury,Total,0.12,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, rainbow trout, station 4"
-32696,Sample,9/26/2005,Mercury,Total,0.113,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, rainbow trout, station 5"
-32697,Sample,9/30/2005,Mercury,Total,0.105,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, rainbow trout, station 6"
-32698,Sample,9/30/2005,Mercury,Total,0.064,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, rainbow trout, station 7"
-32699,Sample,10/3/2005,Mercury,Total,0.07,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, rainbow trout, station 8"
-32714,Sample,8/31/2005,Mercury,Total,0.735,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, small mouth bass, station 1"
-32715,Sample,8/31/2005,Mercury,Total,0.394,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, small mouth bass, station 2"
-32716,Sample,8/31/2005,Mercury,Total,0.43,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, small mouth bass, station 3"
-32717,Sample,8/31/2005,Mercury,Total,0.832,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, small mouth bass, station 4"
-32718,Sample,9/2/2005,Mercury,Total,2.66,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, small mouth bass, station 5"
-32719,Sample,9/2/2005,Mercury,Total,0.362,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, small mouth bass, station 6"
-32720,Sample,10/17/2005,Mercury,Total,0.643,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, small mouth bass, station 7"
-32721,Sample,10/18/2005,Mercury,Total,0.518,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, small mouth bass, station 8"
-32722,Sample,9/2/2005,Mercury,Total,0.106,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, rainbow trout, station 1"
-32723,Sample,10/17/2005,Mercury,Total,0.11,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, rainbow trout, station 2"
-32724,Sample,10/17/2005,Mercury,Total,0.18,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, rainbow trout, station 3"
-32725,Sample,10/17/2005,Mercury,Total,0.183,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, rainbow trout, station 4"
-32726,Sample,10/17/2005,Mercury,Total,0.158,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, rainbow trout, station 5"
-32727,Sample,10/18/2005,Mercury,Total,0.201,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, rainbow trout, station 6"
-32728,Sample,10/18/2005,Mercury,Total,0.254,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, rainbow trout, station 7"
-32729,Sample,10/18/2005,Mercury,Total,0.251,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, rainbow trout, station 8"
-32730,Sample,9/8/2005,Mercury,Total,0.03,mg/Kg wet,"Fillet, no skin",0.03,"Fish Lake, rainbow trout, station 1"
-32731,Sample,9/8/2005,Mercury,Total,0.044,mg/Kg wet,"Fillet, no skin",0.03,"Fish Lake, rainbow trout, station 2"
-32732,Sample,9/8/2005,Mercury,Total,0.03,mg/Kg wet,"Fillet, no skin",0.03,"Fish Lake, rainbow trout, station 3"
-32733,Sample,9/8/2005,Mercury,Total,0.03,mg/Kg wet,"Fillet, no skin",0.03,"Fish Lake, rainbow trout, station 4"
-32734,Sample,9/8/2005,Mercury,Total,0.03,mg/Kg wet,"Fillet, no skin",0.03,"Fish Lake, rainbow trout, station 5"
-32735,Sample,9/8/2005,Mercury,Total,0.03,mg/Kg wet,"Fillet, no skin",0.03,"Fish Lake, rainbow trout, station 6"
-32736,Sample,9/8/2005,Mercury,Total,0.03,mg/Kg wet,"Fillet, no skin",0.03,"Fish Lake, rainbow trout, station 7"
-32737,Sample,9/8/2005,Mercury,Total,0.03,mg/Kg wet,"Fillet, no skin",0.03,"Fish Lake, rainbow trout, station 8"
-32738,Sample,9/12/2005,Mercury,Total,0.126,mg/Kg wet,"Fillet, no skin",0.03,"Agate Lake, large mouth bass, station 1"
-32739,Sample,9/12/2005,Mercury,Total,0.184,mg/Kg wet,"Fillet, no skin",0.03,"Agate Lake, large mouth bass, station 2"
-32740,Sample,9/12/2005,Mercury,Total,0.264,mg/Kg wet,"Fillet, no skin",0.03,"Agate Lake, large mouth bass, station 3"
-32741,Sample,9/12/2005,Mercury,Total,0.389,mg/Kg wet,"Fillet, no skin",0.03,"Agate Lake, large mouth bass, station 4"
-32742,Sample,9/12/2005,Mercury,Total,0.149,mg/Kg wet,"Fillet, no skin",0.03,"Agate Lake, large mouth bass, station 5"
-32743,Sample,9/12/2005,Mercury,Total,0.444,mg/Kg wet,"Fillet, no skin",0.03,"Agate Lake, large mouth bass, station 6"
-32744,Sample,9/12/2005,Mercury,Total,0.404,mg/Kg wet,"Fillet, no skin",0.03,"Agate Lake, large mouth bass, station 7"
-32745,Sample,9/12/2005,Mercury,Total,0.425,mg/Kg wet,"Fillet, no skin",0.03,"Agate Lake, large mouth bass, station 8"
-32935,Sample,9/26/2006,Mercury,Total,0.08,mg/Kg dry,Whole body,0.05,"Columbia River Youngs Bay, 0.15 nautical miles northeast of Daggett Point"
-32936,Sample,9/20/2006,Mercury,Total,0.084,mg/Kg dry,Whole body,0.05,Smith River at River Mile 0.9 near north tip of Blacks Island
-32937,Sample,8/22/2006,Mercury,Total,0.067,mg/Kg dry,Whole body,0.05,Siletz Bay at River Mile 0.2 west of Siletz Keys
-32938,Sample,7/11/2006,Mercury,Total,0.092,mg/Kg dry,Whole body,0.05,"Coos Bay SE, 0.2 nautical miles east of Iso green marker"
-32939,Sample,9/14/2006,Mercury,Total,0.09,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 21, 0.9 nautical miles east of red marker #4"
-32940,Sample,8/9/2006,Mercury,Total,0.061,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 16.2, 1.0 nautical miles northeast of green marker #39"
-32940,Sample,8/9/2006,Mercury,Total,0.116,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 16.2, 1.0 nautical miles northeast of green marker #39"
-32942,Sample,9/28/2006,Mercury,Total,0.103,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 14, 0.3 nautical miles east of the Astoria Bridge"
-32944,Sample,9/18/2006,Mercury,Total,0.085,mg/Kg dry,Whole body,0.05,"Alsea Bay, 0.44 nautical miles southeast of McKinney Slough"
-32945,Sample,7/25/2006,Mercury,Total,0.088,mg/Kg dry,Whole body,0.05,"Yaquina Bay, 0.12 nautical miles west of green marker #17"
-32946,Sample,7/13/2006,Mercury,Total,0.06,mg/Kg dry,Whole body,0.05,Coos Bay North near Pony Slough mouth
-32947,Sample,9/13/2006,Mercury,Total,0.108,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 6.2, 0.35 nautical miles south of green marker #21"
-32948,Sample,8/24/2006,Mercury,Total,0.153,mg/Kg dry,Whole body,0.05,Columbia River at River Mile 3.5 just north of Sand Island
-32949,Sample,7/20/2006,Mercury,Total,0.069,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 19, 0.4 nautical miles northeast of marker #44"
-32950,Sample,9/27/2006,Mercury,Total,0.181,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 7, 0.3 nautical miles southwest of Desdemona Sands marker"
-32952,Sample,8/17/2006,Mercury,Total,0.103,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 18.5, just north of Taylor Sands"
-32953,Sample,8/15/2006,Mercury,Total,0.101,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 15, 1.3 nautical miles southeast of Point Ellice"
-32955,Sample,8/23/2006,Mercury,Total,0.063,mg/Kg dry,Whole body,0.05,"Tillamook Bay East, 0.6 nautical miles northwest of Sandstone Point"
-32956,Sample,7/26/2006,Mercury,Total,0.154,mg/Kg dry,Whole body,0.05,"Netarts Bay Central, 0.5 nautical miles southwest of Yager CR mouth"
-32957,Sample,9/19/2006,Mercury,Total,0.077,mg/Kg dry,Whole body,0.05,Umpqua River at River Mile 6 west of The Point
-32958,Sample,7/12/2006,Mercury,Total,0.12,mg/Kg dry,Whole body,0.05,"Coos Bay West, 0.05 nautical miles east of red marker #8"
-32959,Sample,8/23/2006,Mercury,Total,0.058,mg/Kg dry,Whole body,0.05,"Tillamook Bay South, 1.0 nautical miles southwest of Bay City"
-33617,Sample,8/17/2009,Mercury,NA,0.06,mg/Kg wet,Whole body,0.03,Willamette River at Willamette Falls directly downstream from locks
-33617,Sample,8/19/2009,Mercury,NA,0.26,mg/Kg wet,Whole body,0.03,Willamette River at Willamette Falls directly downstream from locks
-33617,Sample,8/26/2009,Mercury,NA,0.16,mg/Kg wet,Whole body,0.03,Willamette River at Willamette Falls directly downstream from locks
-33776,Sample,8/16/2006,Mercury,Total,0.032,mg/Kg wet,"Tissue, Fish",0.03,Marks Creek below Peterson Creek
-33777,Sample,8/16/2006,Mercury,Total,0.034,mg/Kg wet,"Tissue, Fish",0.03,Marks Creek above Elliot Creek
-33778,Sample,8/16/2006,Mercury,Total,0.031,mg/Kg wet,"Tissue, Fish",0.03,Marks Creek below Sears Creek
-33779,Sample,8/16/2006,Mercury,Total,0.035,mg/Kg wet,"Tissue, Fish",0.03,Marks Creek at Spears Meadow
-33780,Sample,8/16/2006,Mercury,Total,0.045,mg/Kg wet,"Tissue, Fish",0.03,Marks Creek below Buck Creek
-33781,Sample,8/16/2006,Mercury,Total,0.03,mg/Kg wet,"Tissue, Fish",0.03,Marks Creek above Cougar Campground
-33782,Sample,8/17/2006,Mercury,Total,0.036,mg/Kg wet,"Tissue, Fish",0.03,Marks Creek below Cornez Creek
-33783,Sample,8/17/2006,Mercury,Total,0.036,mg/Kg wet,"Tissue, Fish",0.03,Marks Creek below Longhollow Creek
-33784,Sample,8/17/2006,Mercury,Total,0.03,mg/Kg wet,"Tissue, Fish",0.03,Marks Creek below Crystal Creek
-33785,Sample,8/15/2006,Mercury,Total,0.207,mg/Kg wet,"Tissue, Fish",0.03,Ochoco Creek between Hon and Garden
-33786,Sample,8/15/2006,Mercury,Total,0.219,mg/Kg wet,"Tissue, Fish",0.03,Ochoco Creek below Metal Creek
-33787,Sample,8/14/2006,Mercury,Total,0.051,mg/Kg wet,"Tissue, Fish",0.03,Ochoco Creek at Judy Creek
-33788,Sample,8/15/2006,Mercury,Total,0.03,mg/Kg wet,"Tissue, Fish",0.03,Coyle Creek headwaters below FSR 2610
-33789,Sample,8/15/2006,Mercury,Total,0.175,mg/Kg wet,"Tissue, Fish",0.03,Ochoco Creek between Coyle and Canyon
-33790,Sample,8/16/2006,Mercury,Total,0.15,mg/Kg wet,"Tissue, Fish",0.03,Ochoco Creek below Camp Branch Creek
-33792,Sample,8/15/2006,Mercury,Total,0.045,mg/Kg wet,"Tissue, Fish",0.03,Duncan Creek headwaters
-33793,Sample,8/15/2006,Mercury,Total,0.037,mg/Kg wet,"Tissue, Fish",0.03,Ochoco Creek below Ahalt Creek
-33839,Sample,8/15/2006,Mercury,Total,0.412,mg/Kg wet,"Tissue, Fish",0.03,Canyon Creek headwaters below Cline Creek
-34193,Sample,6/23/2009,Mercury,NA,0.46,mg/Kg wet,"Fillet, no skin",0.03,White Salmon River at mouth (WA) (Columbia)
-34198,Sample,9/14/2010,Mercury,NA,0.09,mg/Kg wet,"Fillet, no skin",0.03,Willamette R at Jon Storm Park boat dock
-34198,Sample,9/14/2010,Mercury,NA,0.06,mg/Kg wet,"Fillet, no skin",0.03,Willamette R at Jon Storm Park boat dock
-34198,Sample,9/14/2010,Mercury,NA,0.47,mg/Kg wet,"Fillet, no skin",0.03,Willamette R at Jon Storm Park boat dock
-34198,Sample,9/14/2010,Mercury,NA,0.44,mg/Kg wet,"Fillet, no skin",0.03,Willamette R at Jon Storm Park boat dock
-34198,Sample - Field Primary,9/14/2010,Mercury,NA,1,mg/Kg wet,"Fillet, no skin",0.03,Willamette R at Jon Storm Park boat dock
-34198,Sample - Field Duplicate,9/14/2010,Mercury,NA,0.98,mg/Kg wet,"Fillet, no skin",0.03,Willamette R at Jon Storm Park boat dock
-35195,Sample,6/23/2008,Mercury,NA,0.49,mg/Kg wet,"Fillet, no skin",0.03,North Tenmile Lake at ODFW STA 1
-35196,Sample,6/23/2008,Mercury,NA,1.43,mg/Kg wet,"Fillet, no skin",0.03,North Tenmile Lake at ODFW STA 3
-35196,Sample,6/23/2008,Mercury,NA,1.36,mg/Kg wet,"Fillet, no skin",0.03,North Tenmile Lake at ODFW STA 3
-35197,Sample,6/23/2008,Mercury,NA,1.16,mg/Kg wet,"Fillet, no skin",0.03,North Tenmile Lake at ODFW STA 4
-35198,Sample,6/23/2008,Mercury,NA,0.29,mg/Kg wet,"Fillet, no skin",0.03,North Tenmile Lake at ODFW STA 5
-35199,Sample,6/23/2008,Mercury,NA,0.8,mg/Kg wet,"Fillet, no skin",0.03,South Tenmile Lake at ODFW STA 1
-35199,Sample,6/23/2008,Mercury,NA,0.96,mg/Kg wet,"Fillet, no skin",0.03,South Tenmile Lake at ODFW STA 1
-35200,Sample,6/23/2008,Mercury,NA,0.65,mg/Kg wet,"Fillet, no skin",0.03,South Tenmile Lake at ODFW STA 4
-35201,Sample,6/23/2008,Mercury,NA,0.74,mg/Kg wet,"Fillet, no skin",0.03,South Tenmile Lake at ODFW STA 7
-35202,Sample,6/23/2008,Mercury,NA,0.71,mg/Kg wet,"Fillet, no skin",0.03,South Tenmile Lake at ODFW STA 8
-35234,Sample,8/6/2008,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Vernita Bridge
-35235,Sample,8/1/2008,Mercury,NA,0.22,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Kennewick-Wade Island
-35236,Sample,7/16/2008,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Bridgeport 
-35237,Sample,7/14/2008,Mercury,NA,0.12,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Chelan 
-35238,Sample,7/29/2008,Mercury,NA,0.17,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at East Vernita Bridge
-35239,Sample,8/3/2008,Mercury,NA,0.41,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Port Kelley 
-35240,Sample,7/12/2008,Mercury,NA,0.23,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Daroga
-35241,Sample,8/5/2008,Mercury,NA,0.07,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Beverly 
-35242,Sample,8/2/2008,Mercury,NA,0.07,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Savage Island 
-35244,Sample,7/11/2008,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Rock Island (Wenatchee)
-35245,Sample,7/3/2008,Mercury,NA,0.28,mg/Kg dry,"Fillet, no skin",0.03,Columbia River at Babcock Bench
-35246,Sample,8/2/2008,Mercury,NA,0.08,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Johnson Island
-35247,Sample,7/9/2008,Mercury,NA,0.75,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Rufus Wood
-35248,Sample,7/11/2008,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Wenatchee Pumpstation
-35249,Sample,7/3/2008,Mercury,NA,0.33,mg/Kg dry,"Fillet, no skin",0.03,Columbia River at Cresent Bar
-35250,Sample,8/1/2008,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Snake River Confluence
-35251,Sample,7/12/2008,Mercury,NA,0.69,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Goose Fall
-35252,Sample,8/3/2008,Mercury,NA,0.43,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Lake Wallula Gap
-35317,Sample,6/25/2009,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Cascade Locks 0.3 Mi US of Channel Marker 12 (St Mi 149.4)
-35317,Sample,6/25/2009,Mercury,NA,0.17,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Cascade Locks 0.3 Mi US of Channel Marker 12 (St Mi 149.4)
-35317,Sample,6/25/2009,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Cascade Locks 0.3 Mi US of Channel Marker 12 (St Mi 149.4)
-35317,Sample,6/25/2009,Mercury,NA,0.09,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Cascade Locks 0.3 Mi US of Channel Marker 12 (St Mi 149.4)
-35318,Sample,6/23/2009,Mercury,NA,0.17,mg/Kg wet,"Fillet, no skin",0.03,Columbia R US of Drano Lake at Channel Marker 30 St Mi 163.6
-35318,Sample,6/23/2009,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Columbia R US of Drano Lake at Channel Marker 30 St Mi 163.6
-35319,Sample,7/2/2009,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Columbia R Lake Umatilla at Channel Marker 18 St Mi 238.7
-35319,Sample,7/2/2009,Mercury,NA,0.18,mg/Kg wet,"Fillet, no skin",0.03,Columbia R Lake Umatilla at Channel Marker 18 St Mi 238.7
-35319,Sample,7/2/2009,Mercury,NA,0.12,mg/Kg wet,"Fillet, no skin",0.03,Columbia R Lake Umatilla at Channel Marker 18 St Mi 238.7
-35319,Sample,7/2/2009,Mercury,NA,0.31,mg/Kg wet,"Fillet, no skin",0.03,Columbia R Lake Umatilla at Channel Marker 18 St Mi 238.7
-35320,Sample,6/30/2009,Mercury,NA,0.75,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Crow Butte Powerline St Mi 263.3
-35320,Sample,6/30/2009,Mercury,NA,0.63,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Crow Butte Powerline St Mi 263.3
-35320,Sample,6/30/2009,Mercury,NA,0.28,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Crow Butte Powerline St Mi 263.3
-35320,Sample,6/30/2009,Mercury,NA,0.54,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Crow Butte Powerline St Mi 263.3
-35320,Sample,6/30/2009,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Crow Butte Powerline St Mi 263.3
-35320,Sample,6/30/2009,Mercury,NA,0.43,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Crow Butte Powerline St Mi 263.3
-35321,Sample,6/25/2009,Mercury,NA,0.24,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Trotter Point St Mi 153.3
-35321,Sample,6/25/2009,Mercury,NA,0.26,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Trotter Point St Mi 153.3
-35321,Sample,6/25/2009,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Trotter Point St Mi 153.3
-35321,Sample,6/25/2009,Mercury,NA,0.2,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Trotter Point St Mi 153.3
-35321,Sample,6/25/2009,Mercury,NA,0.23,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Trotter Point St Mi 153.3
-35322,Sample,7/9/2009,Mercury,NA,0.31,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Wind Mountain St Mi 156.4
-35322,Sample,7/9/2009,Mercury,NA,0.26,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Wind Mountain St Mi 156.4
-35322,Sample,7/9/2009,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Wind Mountain St Mi 156.4
-35322,Sample,7/9/2009,Mercury,NA,0.27,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Wind Mountain St Mi 156.4
-35323,Sample,6/18/2009,Mercury,NA,0.16,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Lake Umatilla Channel Marker 6 St Mi 223.4
-35324,Sample,7/1/2009,Mercury,NA,0.45,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Big Blalock Island St Mi 276.2
-35324,Sample,7/1/2009,Mercury,NA,0.54,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Big Blalock Island St Mi 276.2
-35324,Sample,7/1/2009,Mercury,NA,0.18,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Big Blalock Island St Mi 276.2
-35325,Sample,6/16/2009,Mercury,NA,0.18,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Lake Celilo Channel Marker 1 St Mi 193.1
-35325,Sample,6/16/2009,Mercury,NA,0.21,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Lake Celilo Channel Marker 1 St Mi 193.1
-35326,Sample,6/11/2009,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at East end of Miller Is. St Mi 206
-35326,Sample,6/11/2009,Mercury,NA,0.12,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at East end of Miller Is. St Mi 206
-35326,Sample,6/11/2009,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at East end of Miller Is. St Mi 206
-35326,Sample,6/11/2009,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at East end of Miller Is. St Mi 206
-35327,Sample,7/8/2009,Mercury,NA,0.35,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Arlington Channel Marker 21 St Mi 243.5
-35327,Sample,7/8/2009,Mercury,NA,0.48,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Arlington Channel Marker 21 St Mi 243.5
-35328,Sample,6/24/2009,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Irrigon Channel Marker 64 St Mi 284.3
-35328,Sample,6/24/2009,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Irrigon Channel Marker 64 St Mi 284.3
-35328,Sample,6/24/2009,Mercury,NA,0.13,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Irrigon Channel Marker 64 St Mi 284.3
-35328,Sample,6/24/2009,Mercury,NA,0.07,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Irrigon Channel Marker 64 St Mi 284.3
-35329,Sample,6/18/2009,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Memaloose Channel Marker 48 St Mi 176.8
-35329,Sample,6/18/2009,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Memaloose Channel Marker 48 St Mi 176.8
-35329,Sample,6/18/2009,Mercury,NA,0.08,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Memaloose Channel Marker 48 St Mi 176.8
-35329,Sample,6/18/2009,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Memaloose Channel Marker 48 St Mi 176.8
-35329,Sample,6/18/2009,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Memaloose Channel Marker 48 St Mi 176.8
-35329,Sample,6/18/2009,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Memaloose Channel Marker 48 St Mi 176.8
-35330,Sample,6/10/2009,Mercury,NA,0.17,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Rufus 0.5 Mi US of Channel Marker 41 St Mi 212
-35331,Sample,7/9/2009,Mercury,NA,0.12,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Hepner Jct 1.25 Mi DS of Willow Cr.  St Mi 252.2
-35332,Sample,6/24/2009,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at McNary Dam 0.5 Mi US Channel Marker 1 St Mi 294
-35332,Sample,6/24/2009,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at McNary Dam 0.5 Mi US Channel Marker 1 St Mi 294
-35332,Sample,6/24/2009,Mercury,NA,0.18,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at McNary Dam 0.5 Mi US Channel Marker 1 St Mi 294
-35332,Sample,6/24/2009,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at McNary Dam 0.5 Mi US Channel Marker 1 St Mi 294
-35332,Sample,6/24/2009,Mercury,NA,0.08,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at McNary Dam 0.5 Mi US Channel Marker 1 St Mi 294
-35332,Sample,6/24/2009,Mercury,NA,0.07,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at McNary Dam 0.5 Mi US Channel Marker 1 St Mi 294
-35333,Sample,6/23/2009,Mercury,NA,0.79,mg/Kg wet,"Fillet, no skin",0.03,Columbia R 0.3 Mi DS of Hood River Bridge St Mi 169.4
-35333,Sample,6/23/2009,Mercury,NA,0.5,mg/Kg wet,"Fillet, no skin",0.03,Columbia R 0.3 Mi DS of Hood River Bridge St Mi 169.4
-35334,Sample,6/30/2009,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Crow Butte Channel Marker 35 St Mi 264.6
-35334,Sample,6/30/2009,Mercury,NA,0.27,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Crow Butte Channel Marker 35 St Mi 264.6
-35334,Sample,6/30/2009,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Crow Butte Channel Marker 35 St Mi 264.6
-35334,Sample,6/30/2009,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Crow Butte Channel Marker 35 St Mi 264.6
-35334,Sample,6/30/2009,Mercury,NA,0.12,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Crow Butte Channel Marker 35 St Mi 264.6
-35335,Sample,6/16/2009,Mercury,NA,0.18,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at The Dalles St Mi 189.1
-35335,Sample,6/16/2009,Mercury,NA,0.16,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at The Dalles St Mi 189.1
-35335,Sample,6/16/2009,Mercury,NA,0.18,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at The Dalles St Mi 189.1
-35336,Sample,6/9/2009,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Miller Is (S Channel) 0.2 Mi US Channel Marker 4
-35336,Sample,6/9/2009,Mercury,NA,0.12,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Miller Is (S Channel) 0.2 Mi US Channel Marker 4
-35336,Sample,6/9/2009,Mercury,NA,0.23,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Miller Is (S Channel) 0.2 Mi US Channel Marker 4
-35336,Sample,6/9/2009,Mercury,NA,0.08,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Miller Is (S Channel) 0.2 Mi US Channel Marker 4
-35336,Sample,6/9/2009,Mercury,NA,0.17,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Miller Is (S Channel) 0.2 Mi US Channel Marker 4
-35337,Sample,6/17/2009,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Lake Umatilla 0.6 Mi US Channel Marker 10 St Mi 228.3
-35338,Sample,7/1/2009,Mercury,NA,0.27,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Lake Umatilla N Channel Blalock Islands St Mi 272
-35338,Sample,7/1/2009,Mercury,NA,0.7,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Lake Umatilla N Channel Blalock Islands St Mi 272
-35338,Sample,7/1/2009,Mercury,NA,0.27,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Lake Umatilla N Channel Blalock Islands St Mi 272
-35338,Sample,7/1/2009,Mercury,NA,0.26,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Lake Umatilla N Channel Blalock Islands St Mi 272
-35338,Sample,7/1/2009,Mercury,NA,0.23,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Lake Umatilla N Channel Blalock Islands St Mi 272
-35338,Sample,7/1/2009,Mercury,NA,0.2,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Lake Umatilla N Channel Blalock Islands St Mi 272
-35339,Sample,7/7/2009,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,Columbia River DS of Sixmile Canyon RM 258.5
-35339,Sample,7/7/2009,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Columbia River DS of Sixmile Canyon RM 258.5
-35340,Sample,6/16/2009,Mercury,NA,0.2,mg/Kg wet,"Fillet, no skin",0.03,Columbia R US of the Dalles Locks Channel Marker 1 St Mi 193.2
-35340,Sample,6/16/2009,Mercury,NA,0.16,mg/Kg wet,"Fillet, no skin",0.03,Columbia R US of the Dalles Locks Channel Marker 1 St Mi 193.2
-35340,Sample,6/16/2009,Mercury,NA,0.18,mg/Kg wet,"Fillet, no skin",0.03,Columbia R US of the Dalles Locks Channel Marker 1 St Mi 193.2
-35340,Sample,6/16/2009,Mercury,NA,0.2,mg/Kg wet,"Fillet, no skin",0.03,Columbia R US of the Dalles Locks Channel Marker 1 St Mi 193.2
-35340,Sample,6/16/2009,Mercury,NA,0.34,mg/Kg wet,"Fillet, no skin",0.03,Columbia R US of the Dalles Locks Channel Marker 1 St Mi 193.2
-35341,Sample,6/15/2009,Mercury,NA,0.36,mg/Kg wet,"Fillet, no skin",0.03,Columbia River DS of The Dalles at RM 188 (3584-3774 Klindt Dr)
-35341,Sample,6/15/2009,Mercury,NA,0.16,mg/Kg wet,"Fillet, no skin",0.03,Columbia River DS of The Dalles at RM 188 (3584-3774 Klindt Dr)
-35341,Sample,6/15/2009,Mercury,NA,0.2,mg/Kg wet,"Fillet, no skin",0.03,Columbia River DS of The Dalles at RM 188 (3584-3774 Klindt Dr)
-35341,Sample,6/15/2009,Mercury,NA,0.13,mg/Kg wet,"Fillet, no skin",0.03,Columbia River DS of The Dalles at RM 188 (3584-3774 Klindt Dr)
-35341,Sample,6/15/2009,Mercury,NA,0.21,mg/Kg wet,"Fillet, no skin",0.03,Columbia River DS of The Dalles at RM 188 (3584-3774 Klindt Dr)
-35539,Sample,6/24/2009,Mercury,NA,0.31,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River 0.7 Mi US of Hwy 730
-35539,Sample,6/24/2009,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River 0.7 Mi US of Hwy 730
-35539,Sample,6/24/2009,Mercury,NA,0.34,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River 0.7 Mi US of Hwy 730
-35539,Sample,6/24/2009,Mercury,NA,0.27,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River 0.7 Mi US of Hwy 730
-35539,Sample,6/24/2009,Mercury,NA,0.34,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River 0.7 Mi US of Hwy 730
-36030,Sample,8/17/2009,Mercury,NA,0.25,mg/Kg wet,Whole body,0.03,Deschutes River at Shears Falls Fish Ladder
-36037,Sample,6/23/2009,Mercury,NA,0.52,mg/Kg wet,"Fillet, no skin",0.03,Klickitat R WA at RM 0.4
-36037,Sample,6/23/2009,Mercury,NA,2.32,mg/Kg wet,"Fillet, no skin",0.03,Klickitat R WA at RM 0.4
-36037,Sample,6/23/2009,Mercury,NA,0.77,mg/Kg wet,"Fillet, no skin",0.03,Klickitat R WA at RM 0.4
-36362,Sample,9/15/2010,Mercury,NA,0.18,mg/Kg wet,"Fillet, no skin",0.03,Cold Springs Reservoir; (Centroid) Fish collected in suitable habitat within the reservoir.
-36362,Sample,9/15/2010,Mercury,NA,0.13,mg/Kg wet,"Fillet, no skin",0.03,Cold Springs Reservoir; (Centroid) Fish collected in suitable habitat within the reservoir.
-36362,Sample,9/15/2010,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Cold Springs Reservoir; (Centroid) Fish collected in suitable habitat within the reservoir.
-36362,Sample,9/15/2010,Mercury,NA,0.21,mg/Kg wet,"Fillet, no skin",0.03,Cold Springs Reservoir; (Centroid) Fish collected in suitable habitat within the reservoir.
-36362,Sample,9/15/2010,Mercury,NA,0.17,mg/Kg wet,"Fillet, no skin",0.03,Cold Springs Reservoir; (Centroid) Fish collected in suitable habitat within the reservoir.
-36363,Sample,9/14/2010,Mercury,NA,0.16,mg/Kg wet,"Fillet, no skin",0.03,McKay Reservoir; (Centroid). Fishing took place in suitable habitat within the reservoir.
-36363,Sample,9/14/2010,Mercury,NA,0.16,mg/Kg wet,"Fillet, no skin",0.03,McKay Reservoir; (Centroid). Fishing took place in suitable habitat within the reservoir.
-36363,Sample,9/14/2010,Mercury,NA,0.39,mg/Kg wet,"Fillet, no skin",0.03,McKay Reservoir; (Centroid). Fishing took place in suitable habitat within the reservoir.
-36363,Sample,9/14/2010,Mercury,NA,0.52,mg/Kg wet,"Fillet, no skin",0.03,McKay Reservoir; (Centroid). Fishing took place in suitable habitat within the reservoir.
-36363,Sample,9/14/2010,Mercury,NA,0.99,mg/Kg wet,"Fillet, no skin",0.03,McKay Reservoir; (Centroid). Fishing took place in suitable habitat within the reservoir.
-14161500,Quality Control Sample-Field Replicate,9/19/2005,Mercury,Recoverable,0.1,mg/kg,Fillet,0.0019,"LOOKOUT CREEK NEAR BLUE RIVER, OR"
-14161500,Quality Control Sample-Field Replicate,9/19/2005,Mercury,Recoverable,0.2,mg/kg,Fillet,0.0019,"LOOKOUT CREEK NEAR BLUE RIVER, OR"
-14161500,Quality Control Sample-Field Replicate,9/19/2005,Mercury,Recoverable,0.1,mg/kg,Fillet,0.00191,"LOOKOUT CREEK NEAR BLUE RIVER, OR"
-14161500,Sample-Routine,9/19/2005,Mercury,Recoverable,0.1,mg/kg,Fillet,0.00184,"LOOKOUT CREEK NEAR BLUE RIVER, OR"
-14205400,Sample-Routine,7/23/2002,Mercury,Recoverable,0.746,mg/kg,Fillet,0.001,"EAST FORK DAIRY CREEK NEAR MEACHAM CORNER, OR"
-14205400,Sample-Routine,9/3/2002,Mercury,Recoverable,0.233,mg/kg,"Organism, whole",0.001,"EAST FORK DAIRY CREEK NEAR MEACHAM CORNER, OR"
-14206435,Quality Control Sample-Field Replicate,9/14/2005,Mercury,Recoverable,0.3,mg/kg,Fillet,0.00193,"BEAVERTON CREEK AT SW 216TH AVE, NR ORENCO, OR"
-14206435,Quality Control Sample-Field Replicate,9/14/2005,Mercury,Recoverable,1,mg/kg,Fillet,0.00187,"BEAVERTON CREEK AT SW 216TH AVE, NR ORENCO, OR"
-14206435,Sample-Routine,9/14/2005,Mercury,Recoverable,0.2,mg/kg,Organism minus head and viscera,0.00196,"BEAVERTON CREEK AT SW 216TH AVE, NR ORENCO, OR"
-14206435,Sample-Routine,9/14/2005,Mercury,Recoverable,0.2,mg/kg,Organism minus head and viscera,0.00198,"BEAVERTON CREEK AT SW 216TH AVE, NR ORENCO, OR"
-14206435,Sample-Routine,9/14/2005,Mercury,Recoverable,0.2,mg/kg,Organism minus head and viscera,0.00186,"BEAVERTON CREEK AT SW 216TH AVE, NR ORENCO, OR"
-14206435,Sample-Routine,9/14/2005,Mercury,Recoverable,0.3,mg/kg,Organism minus head and viscera,0.00196,"BEAVERTON CREEK AT SW 216TH AVE, NR ORENCO, OR"
-14206435,Sample-Routine,9/14/2005,Mercury,Recoverable,0.3,mg/kg,Organism minus head and viscera,0.00193,"BEAVERTON CREEK AT SW 216TH AVE, NR ORENCO, OR"
-14206435,Sample-Routine,9/14/2005,Mercury,Recoverable,0.2,mg/kg,Organism minus head and viscera,0.00205,"BEAVERTON CREEK AT SW 216TH AVE, NR ORENCO, OR"
+STATION_KEY,Agency,QA_QC_TYPE,SAMPLE_DATE,NAME,ABBREVIATION,Result_clean,UNIT,SAMPLE_MATRIX,METHOD_REPORTING_LIMIT,LOCATION_DESCRIPTION
+10332,ODEQ,Sample,8/20/2008,Mercury,NA,0.34,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at SP&S RR Bridge (Portland)
+10332,ODEQ,Sample,8/20/2008,Mercury,NA,0.61,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at SP&S RR Bridge (Portland)
+10332,ODEQ,Sample,9/9/2008,Mercury,NA,0.23,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at SP&S RR Bridge (Portland)
+10332,ODEQ,Sample,9/9/2008,Mercury,NA,0.31,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at SP&S RR Bridge (Portland)
+10332,ODEQ,Sample,9/9/2008,Mercury,NA,0.39,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at SP&S RR Bridge (Portland)
+10332,ODEQ,Sample,9/9/2008,Mercury,NA,0.51,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at SP&S RR Bridge (Portland)
+10332,ODEQ,Sample,9/9/2008,Mercury,NA,0.36,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at SP&S RR Bridge (Portland)
+10344,ODEQ,Sample,9/22/2008,Mercury,NA,0.8,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
+10344,ODEQ,Sample,9/22/2008,Mercury,NA,0.33,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
+10344,ODEQ,Sample,9/22/2008,Mercury,NA,0.8,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
+10344,ODEQ,Sample,9/22/2008,Mercury,NA,0.63,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
+10344,ODEQ,Sample,9/22/2008,Mercury,NA,0.63,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
+10344,ODEQ,Sample,9/22/2008,Mercury,NA,0.23,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
+10344,ODEQ,Sample,9/22/2008,Mercury,NA,0.26,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
+10344,ODEQ,Sample,9/8/2010,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
+10344,ODEQ,Sample,9/8/2010,Mercury,NA,0.71,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
+10344,ODEQ,Sample,9/8/2010,Mercury,NA,0.34,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
+10344,ODEQ,Sample,9/8/2010,Mercury,NA,1.57,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
+10344,ODEQ,Sample,9/8/2010,Mercury,NA,0.91,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
+10344,ODEQ,Sample,9/8/2010,Mercury,NA,0.13,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
+10344,ODEQ,Sample,9/8/2010,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
+10344,ODEQ,Sample,9/8/2010,Mercury,NA,0.25,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
+10344,ODEQ,Sample,9/8/2010,Mercury,NA,0.26,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
+10344,ODEQ,Sample,9/8/2010,Mercury,NA,1.23,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
+10344,ODEQ,Sample,9/8/2010,Mercury,NA,1.15,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Wheatland Ferry
+10355,ODEQ,Sample,9/24/2008,Mercury,NA,1.64,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
+10355,ODEQ,Sample,9/24/2008,Mercury,NA,0.76,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
+10355,ODEQ,Sample,9/24/2008,Mercury,NA,0.93,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
+10355,ODEQ,Sample,9/24/2008,Mercury,NA,0.53,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
+10355,ODEQ,Sample,9/24/2008,Mercury,NA,0.51,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
+10355,ODEQ,Sample,9/24/2008,Mercury,NA,0.45,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
+10355,ODEQ,Sample,10/6/2009,Mercury,NA,0.66,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
+10355,ODEQ,Sample,10/6/2009,Mercury,NA,0.48,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
+10355,ODEQ,Sample,10/6/2009,Mercury,NA,0.57,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
+10355,ODEQ,Sample,10/6/2009,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
+10355,ODEQ,Sample,10/6/2009,Mercury,NA,0.26,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
+10355,ODEQ,Sample,10/6/2009,Mercury,NA,1.31,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
+10355,ODEQ,Sample,8/31/2010,Mercury,NA,0.07,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
+10355,ODEQ,Sample,8/31/2010,Mercury,NA,0.07,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
+10355,ODEQ,Sample,8/31/2010,Mercury,NA,0.54,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
+10355,ODEQ,Sample,8/31/2010,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
+10355,ODEQ,Sample,8/31/2010,Mercury,NA,0.31,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
+10355,ODEQ,Sample,8/31/2010,Mercury,NA,0.21,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
+10355,ODEQ,Sample,8/31/2010,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
+10355,ODEQ,Sample,8/31/2010,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
+10355,ODEQ,Sample,8/31/2010,Mercury,NA,0.5,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 99E (Harrisburg)
+10359,ODEQ,Sample,10/6/2009,Mercury,NA,0.49,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 126 (Springfield)
+10359,ODEQ,Sample,10/6/2009,Mercury,NA,0.52,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 126 (Springfield)
+10359,ODEQ,Sample,10/6/2009,Mercury,NA,1.09,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 126 (Springfield)
+10359,ODEQ,Sample,10/6/2009,Mercury,NA,1.05,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 126 (Springfield)
+10359,ODEQ,Sample,10/6/2009,Mercury,NA,0.47,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at Hwy 126 (Springfield)
+10376,ODEQ,Sample,9/23/2008,Mercury,NA,0.89,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
+10376,ODEQ,Sample,9/23/2008,Mercury,NA,0.44,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
+10376,ODEQ,Sample,9/23/2008,Mercury,NA,0.46,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
+10376,ODEQ,Sample,10/12/2009,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
+10376,ODEQ,Sample,10/12/2009,Mercury,NA,1.19,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
+10376,ODEQ,Sample,10/12/2009,Mercury,NA,0.39,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
+10376,ODEQ,Sample,10/12/2009,Mercury,NA,0.54,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
+10376,ODEQ,Sample,10/12/2009,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
+10376,ODEQ,Sample,10/12/2009,Mercury,NA,0.13,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
+10376,ODEQ,Sample,10/12/2009,Mercury,NA,0.08,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
+10376,ODEQ,Sample,10/12/2009,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
+10376,ODEQ,Sample,10/12/2009,Mercury,NA,0.29,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
+10376,ODEQ,Sample,10/12/2009,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
+10376,ODEQ,Sample,10/12/2009,Mercury,NA,0.29,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
+10376,ODEQ,Sample,10/12/2009,Mercury,NA,0.16,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
+10376,ODEQ,Sample,8/23/2010,Mercury,NA,0.26,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
+10376,ODEQ,Sample,8/23/2010,Mercury,NA,0.22,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
+10376,ODEQ,Sample,8/23/2010,Mercury,NA,0.22,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
+10376,ODEQ,Sample,8/23/2010,Mercury,NA,0.51,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
+10376,ODEQ,Sample,8/23/2010,Mercury,NA,0.89,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
+10376,ODEQ,Sample,8/23/2010,Mercury,NA,0.45,mg/Kg wet,"Fillet, no skin",0.03,McKenzie River at Coburg Road
+10379,ODEQ,Sample,10/8/2009,Mercury,NA,0.47,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,10/8/2009,Mercury,NA,0.25,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,10/8/2009,Mercury,NA,0.27,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,10/8/2009,Mercury,NA,0.28,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,10/8/2009,Mercury,NA,0.27,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,10/8/2009,Mercury,NA,1.1,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,10/8/2009,Mercury,NA,0.56,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,10/8/2009,Mercury,NA,0.41,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,10/8/2009,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,10/8/2009,Mercury,NA,0.48,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,8/25/2010,Mercury,NA,0.76,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,8/25/2010,Mercury,NA,0.73,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,8/25/2010,Mercury,NA,0.63,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample - Field Primary,8/25/2010,Mercury,NA,0.63,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,8/25/2010,Mercury,NA,0.74,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,8/25/2010,Mercury,NA,0.26,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,8/25/2010,Mercury,NA,0.33,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,8/25/2010,Mercury,NA,0.29,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample - Field Primary,8/25/2010,Mercury,NA,0.4,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,8/25/2010,Mercury,NA,0.24,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,8/25/2010,Mercury,NA,0.29,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,8/25/2010,Mercury,NA,0.33,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,8/25/2010,Mercury,NA,0.6,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,8/25/2010,Mercury,NA,0.68,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,8/25/2010,Mercury,NA,1.3,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,8/25/2010,Mercury,NA,0.86,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,8/25/2010,Mercury,NA,0.76,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample - Field Duplicate,8/25/2010,Mercury,NA,0.65,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample - Field Duplicate,8/25/2010,Mercury,NA,0.4,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,8/25/2010,Mercury,NA,0.3,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10379,ODEQ,Sample,8/25/2010,Mercury,NA,0.31,mg/Kg wet,"Fillet, no skin",0.03,Coast Fork Willamette River at Hwy 58
+10386,ODEQ,Sample,8/24/2010,Mercury,NA,0.16,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Jasper Bridge
+10386,ODEQ,Sample,8/24/2010,Mercury,NA,0.78,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Jasper Bridge
+10386,ODEQ,Sample,8/24/2010,Mercury,NA,0.53,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Jasper Bridge
+10386,ODEQ,Sample,8/24/2010,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Jasper Bridge
+10386,ODEQ,Sample - Field Primary,8/24/2010,Mercury,NA,0.42,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Jasper Bridge
+10386,ODEQ,Sample - Field Duplicate,8/24/2010,Mercury,NA,0.4,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Jasper Bridge
+10411,ODEQ,Sample,6/9/2009,Mercury,NA,0.12,mg/Kg wet,"Fillet, no skin",0.03,Deschutes River at Deschutes River Park
+10411,ODEQ,Sample,6/9/2009,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Deschutes River at Deschutes River Park
+10411,ODEQ,Sample,6/9/2009,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,Deschutes River at Deschutes River Park
+10411,ODEQ,Sample,6/9/2009,Mercury,NA,0.04,mg/Kg wet,"Fillet, no skin",0.03,Deschutes River at Deschutes River Park
+10418,ODEQ,Sample,10/21/2010,Mercury,NA,0.34,mg/Kg wet,"Fillet, no skin",0.03,Rogue River at Robertson Bridge (Merlin)
+10418,ODEQ,Sample,10/21/2010,Mercury,NA,0.41,mg/Kg wet,"Fillet, no skin",0.03,Rogue River at Robertson Bridge (Merlin)
+10418,ODEQ,Sample,10/21/2010,Mercury,NA,0.39,mg/Kg wet,"Fillet, no skin",0.03,Rogue River at Robertson Bridge (Merlin)
+10418,ODEQ,Sample,10/21/2010,Mercury,NA,0.54,mg/Kg wet,"Fillet, no skin",0.03,Rogue River at Robertson Bridge (Merlin)
+10418,ODEQ,Sample,10/21/2010,Mercury,NA,0.52,mg/Kg wet,"Fillet, no skin",0.03,Rogue River at Robertson Bridge (Merlin)
+10422,ODEQ,Sample,6/14/2010,Mercury,NA,0.49,mg/Kg wet,"Fillet, no skin",0.03,Rogue River upstream of Raygold Dam
+10422,ODEQ,Sample,6/14/2010,Mercury,NA,0.53,mg/Kg wet,"Fillet, no skin",0.03,Rogue River upstream of Raygold Dam
+10422,ODEQ,Sample,6/14/2010,Mercury,NA,0.4,mg/Kg wet,"Fillet, no skin",0.03,Rogue River upstream of Raygold Dam
+10422,ODEQ,Sample,6/14/2010,Mercury,NA,0.62,mg/Kg wet,"Fillet, no skin",0.03,Rogue River upstream of Raygold Dam
+10422,ODEQ,Sample,6/14/2010,Mercury,NA,0.57,mg/Kg wet,"Fillet, no skin",0.03,Rogue River upstream of Raygold Dam
+10456,ODEQ,Sample,9/15/2008,Mercury,NA,0.5,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at Boones Ferry Road
+10456,ODEQ,Sample,9/15/2008,Mercury,NA,0.44,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at Boones Ferry Road
+10456,ODEQ,Sample,9/15/2008,Mercury,NA,0.36,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at Boones Ferry Road
+10456,ODEQ,Sample,9/15/2008,Mercury,NA,0.54,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at Boones Ferry Road
+10456,ODEQ,Sample,9/15/2008,Mercury,NA,0.42,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at Boones Ferry Road
+10549,ODEQ,Sample,9/9/2008,Mercury,NA,0.18,mg/Kg wet,"Fillet, no skin",0.03,Multnomah Channel at St. Helens
+10549,ODEQ,Sample,9/9/2008,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Multnomah Channel at St. Helens
+10549,ODEQ,Sample,9/9/2008,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,Multnomah Channel at St. Helens
+10549,ODEQ,Sample,9/9/2008,Mercury,NA,0.18,mg/Kg wet,"Fillet, no skin",0.03,Multnomah Channel at St. Helens
+10549,ODEQ,Sample,9/9/2008,Mercury,NA,0.27,mg/Kg wet,"Fillet, no skin",0.03,Multnomah Channel at St. Helens
+10550,ODEQ,Sample,9/26/2009,Mercury,NA,0.12,mg/Kg wet,"Fillet, no skin",0.03,Multnomah Channel at Coon Island
+10581,ODEQ,Sample,8/25/2009,Mercury,NA,0.45,mg/Kg wet,Whole body,0.03,Columbia River at John Day Dam
+10581,ODEQ,Sample,8/25/2009,Mercury,NA,0.13,mg/Kg wet,Whole body,0.03,Columbia River at John Day Dam
+10581,ODEQ,Sample,8/25/2009,Mercury,NA,0.16,mg/Kg wet,Whole body,0.03,Columbia River at John Day Dam
+10648,ODEQ,Sample,8/27/2008,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Yamhill River at mouth
+10648,ODEQ,Sample,8/27/2008,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Yamhill River at mouth
+10648,ODEQ,Sample,9/10/2008,Mercury,NA,0.43,mg/Kg wet,"Fillet, no skin",0.03,Yamhill River at mouth
+10648,ODEQ,Sample,9/10/2008,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Yamhill River at mouth
+10648,ODEQ,Sample,9/10/2008,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Yamhill River at mouth
+10648,ODEQ,Sample,9/10/2008,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Yamhill River at mouth
+10648,ODEQ,Sample,9/10/2008,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Yamhill River at mouth
+10774,ODEQ,Sample,10/7/2008,Mercury,NA,0.8,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at mouth
+10774,ODEQ,Sample,10/7/2008,Mercury,NA,1.37,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at mouth
+10774,ODEQ,Sample,10/7/2008,Mercury,NA,0.49,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at mouth
+10774,ODEQ,Sample,10/7/2008,Mercury,NA,0.55,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at mouth
+10774,ODEQ,Sample,10/7/2008,Mercury,NA,0.29,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at mouth
+10775,ODEQ,Sample,8/30/2010,Mercury,NA,0.33,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at Jefferson Bridge
+10775,ODEQ,Sample,8/30/2010,Mercury,NA,0.08,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at Jefferson Bridge
+10775,ODEQ,Sample,8/30/2010,Mercury,NA,0.06,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at Jefferson Bridge
+10775,ODEQ,Sample,8/30/2010,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at Jefferson Bridge
+10775,ODEQ,Sample,8/30/2010,Mercury,NA,0.62,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at Jefferson Bridge
+10775,ODEQ,Sample,8/30/2010,Mercury,NA,0.16,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at Jefferson Bridge
+10775,ODEQ,Sample,8/30/2010,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Santiam River at Jefferson Bridge
+10821,ODEQ,Sample,9/15/2010,Mercury,NA,0.09,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at St. John's Bridge
+10821,ODEQ,Sample,9/15/2010,Mercury,NA,0.07,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at St. John's Bridge
+10821,ODEQ,Sample,10/1/2010,Mercury,NA,0.07,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at St. John's Bridge
+10821,ODEQ,Sample,10/1/2010,Mercury,NA,0.09,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at St. John's Bridge
+10821,ODEQ,Sample,10/1/2010,Mercury,NA,0.09,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at St. John's Bridge
+10821,ODEQ,Sample,10/1/2010,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at St. John's Bridge
+10821,ODEQ,Sample,10/1/2010,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Willamette River at St. John's Bridge
+10833,ODEQ,Sample,9/9/2010,Mercury,NA,0.06,mg/Kg wet,"Fillet, no skin",0.03,Willamette River 0.5 miles downstream of Tualatin River
+10833,ODEQ,Sample,9/9/2010,Mercury,NA,0.09,mg/Kg wet,"Fillet, no skin",0.03,Willamette River 0.5 miles downstream of Tualatin River
+10833,ODEQ,Sample,9/9/2010,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Willamette River 0.5 miles downstream of Tualatin River
+10833,ODEQ,Sample,9/9/2010,Mercury,NA,0.3,mg/Kg wet,"Fillet, no skin",0.03,Willamette River 0.5 miles downstream of Tualatin River
+10833,ODEQ,Sample - Field Primary,9/9/2010,Mercury,NA,0.44,mg/Kg wet,"Fillet, no skin",0.03,Willamette River 0.5 miles downstream of Tualatin River
+10833,ODEQ,Sample - Field Duplicate,9/9/2010,Mercury,NA,0.39,mg/Kg wet,"Fillet, no skin",0.03,Willamette River 0.5 miles downstream of Tualatin River
+11233,ODEQ,Sample,10/9/2008,Mercury,NA,0.5,mg/Kg wet,"Fillet, no skin",0.03,Clackamas River at High Rocks (Old Hwy 213)
+11233,ODEQ,Sample,10/28/2008,Mercury,NA,2.53,mg/Kg wet,"Fillet, no skin",0.03,Clackamas River at High Rocks (Old Hwy 213)
+11826,ODEQ,Sample,6/8/2009,Mercury,NA,0.41,mg/Kg wet,"Fillet, no skin",0.03,John Day River at Philippi Park
+11826,ODEQ,Sample,6/8/2009,Mercury,NA,0.46,mg/Kg wet,"Fillet, no skin",0.03,John Day River at Philippi Park
+11826,ODEQ,Sample,6/8/2009,Mercury,NA,0.46,mg/Kg wet,"Fillet, no skin",0.03,John Day River at Philippi Park
+11826,ODEQ,Sample,6/8/2009,Mercury,NA,0.36,mg/Kg wet,"Fillet, no skin",0.03,John Day River at Philippi Park
+11826,ODEQ,Sample,6/8/2009,Mercury,NA,0.51,mg/Kg wet,"Fillet, no skin",0.03,John Day River at Philippi Park
+11990,ODEQ,Sample,10/13/2009,Mercury,NA,0.76,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Clearwater Boat Ramp
+11990,ODEQ,Sample,10/13/2009,Mercury,NA,0.42,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Clearwater Boat Ramp
+11990,ODEQ,Sample,10/13/2009,Mercury,NA,0.33,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Clearwater Boat Ramp
+11990,ODEQ,Sample,10/13/2009,Mercury,NA,0.63,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Clearwater Boat Ramp
+11990,ODEQ,Sample,10/13/2009,Mercury,NA,0.46,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Clearwater Boat Ramp
+11990,ODEQ,Sample,10/13/2009,Mercury,NA,0.42,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Clearwater Boat Ramp
+11990,ODEQ,Sample,10/13/2009,Mercury,NA,0.13,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Clearwater Boat Ramp
+11990,ODEQ,Sample,10/13/2009,Mercury,NA,0.13,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Clearwater Boat Ramp
+11990,ODEQ,Sample,10/13/2009,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Clearwater Boat Ramp
+11990,ODEQ,Sample,10/13/2009,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Clearwater Boat Ramp
+11990,ODEQ,Sample,10/13/2009,Mercury,NA,0.08,mg/Kg wet,"Fillet, no skin",0.03,Middle Fork Willamette River at Clearwater Boat Ramp
+12012,ODEQ,Sample,6/22/2009,Mercury,NA,0.35,mg/Kg wet,"Fillet, no skin",0.03,Hood River at footbridge downstream of I-84
+12090,ODEQ,Sample,9/13/2010,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River upstream of Three Mile Dam
+12090,ODEQ,Sample,9/13/2010,Mercury,NA,0.07,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River upstream of Three Mile Dam
+12090,ODEQ,Sample,9/13/2010,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River upstream of Three Mile Dam
+12090,ODEQ,Sample,9/13/2010,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River upstream of Three Mile Dam
+12090,ODEQ,Sample,9/13/2010,Mercury,NA,0.08,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River upstream of Three Mile Dam
+12090,ODEQ,Sample,9/13/2010,Mercury,NA,0.06,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River upstream of Three Mile Dam
+12090,ODEQ,Sample,9/13/2010,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River upstream of Three Mile Dam
+12090,ODEQ,Sample,9/13/2010,Mercury,NA,0.07,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River upstream of Three Mile Dam
+12583,ODEQ,Sample,8/4/2004,Mercury,Total,0.332,mg/Kg wet,"Tissue, Fish",0.015,Canyon Creek 2.8 miles upstream of mouth (Road 42.100)
+12583,ODEQ,Sample,8/4/2004,Mercury,Total,0.49,mg/Kg wet,"Tissue, Fish",0.015,Canyon Creek 2.8 miles upstream of mouth (Road 42.100)
+12583,ODEQ,Sample,8/4/2004,Mercury,Total,0.66,mg/Kg wet,"Tissue, Fish",0.015,Canyon Creek 2.8 miles upstream of mouth (Road 42.100)
+13767,ODEQ,Sample,7/15/2011,Mercury,NA,0.33,mg/Kg wet,Whole body,0.03,East Lake at deepest point
+13844,ODEQ,Sample,6/29/2011,Mercury,NA,0.04,mg/Kg wet,Whole body,0.03,Paulina Lake at deepest point
+13844,ODEQ,Sample,6/29/2011,Mercury,NA,0.02,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
+13844,ODEQ,Sample,6/29/2011,Mercury,NA,0.01,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
+13844,ODEQ,Sample,6/29/2011,Mercury,NA,0.01,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
+13844,ODEQ,Sample,6/29/2011,Mercury,NA,0.13,mg/Kg wet,"Fillet, no skin",0.03,Paulina Lake at deepest point
+13844,ODEQ,Sample,6/29/2011,Mercury,NA,0.12,mg/Kg wet,"Fillet, no skin",0.03,Paulina Lake at deepest point
+13844,ODEQ,Sample,6/29/2011,Mercury,NA,0.02,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
+13844,ODEQ,Sample,6/29/2011,Mercury,NA,0.02,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
+13844,ODEQ,Sample,6/29/2011,Mercury,NA,0.02,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
+13844,ODEQ,Sample,6/29/2011,Mercury,NA,0.02,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
+13844,ODEQ,Sample,6/29/2011,Mercury,NA,0.02,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
+13844,ODEQ,Sample,6/29/2011,Mercury,NA,0.02,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
+13844,ODEQ,Sample,6/29/2011,Mercury,NA,0.01,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
+13844,ODEQ,Sample,6/29/2011,Mercury,NA,0.02,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
+13844,ODEQ,Sample,6/29/2011,Mercury,NA,0.02,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
+13844,ODEQ,Sample,6/29/2011,Mercury,NA,0.02,mg/Kg wet,"Fillet, no skin",0.01,Paulina Lake at deepest point
+13844,ODEQ,Sample - Field Primary,8/30/2011,Mercury,NA,0.06,mg/Kg wet,Whole body,0.03,Paulina Lake at deepest point
+13844,ODEQ,Sample - Field Duplicate,8/30/2011,Mercury,NA,0.06,mg/Kg wet,Whole body,0.03,Paulina Lake at deepest point
+18390,ODEQ,Sample,10/19/2010,Mercury,NA,0.51,mg/Kg wet,"Fillet, no skin",0.03,Ashland Emigrant Lake
+18390,ODEQ,Sample,10/19/2010,Mercury,NA,2.48,mg/Kg wet,"Fillet, no skin",0.03,Ashland Emigrant Lake
+18390,ODEQ,Sample,10/19/2010,Mercury,NA,0.72,mg/Kg wet,"Fillet, no skin",0.03,Ashland Emigrant Lake
+18390,ODEQ,Sample,10/19/2010,Mercury,NA,1.02,mg/Kg wet,"Fillet, no skin",0.03,Ashland Emigrant Lake
+18390,ODEQ,Sample,10/19/2010,Mercury,NA,0.78,mg/Kg wet,"Fillet, no skin",0.03,Ashland Emigrant Lake
+18390,ODEQ,Sample,10/19/2010,Mercury,NA,0.59,mg/Kg wet,"Fillet, no skin",0.03,Ashland Emigrant Lake
+18390,ODEQ,Sample,10/19/2010,Mercury,NA,0.86,mg/Kg wet,"Fillet, no skin",0.03,Ashland Emigrant Lake
+18390,ODEQ,Sample,10/19/2010,Mercury,NA,0.65,mg/Kg wet,"Fillet, no skin",0.03,Ashland Emigrant Lake
+18390,ODEQ,Sample,10/19/2010,Mercury,NA,0.59,mg/Kg wet,"Fillet, no skin",0.03,Ashland Emigrant Lake
+18390,ODEQ,Sample,10/19/2010,Mercury,NA,0.27,mg/Kg wet,"Fillet, no skin",0.03,Ashland Emigrant Lake
+20824,ODEQ,Sample,5/11/2000,Mercury,Total,0.764,mg/Kg wet,"Tissue, Fish",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
+20824,ODEQ,Sample,5/11/2000,Mercury,Total,0.76,mg/Kg wet,"Tissue, Fish",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
+20824,ODEQ,Sample,5/11/2000,Mercury,Total,0.343,mg/Kg wet,"Tissue, Fish",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
+20824,ODEQ,Sample,5/11/2000,Mercury,Total,0.338,mg/Kg wet,"Tissue, Fish",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
+20824,ODEQ,Sample,5/18/2000,Mercury,Total,0.774,mg/Kg wet,"Fillet, with skin",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
+20824,ODEQ,Sample,5/18/2000,Mercury,Total,0.73,mg/Kg wet,"Fillet, with skin",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
+20824,ODEQ,Sample,5/18/2000,Mercury,Total,0.844,mg/Kg wet,"Fillet, with skin",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
+20824,ODEQ,Sample,5/18/2000,Mercury,Total,0.712,mg/Kg wet,"Fillet, with skin",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
+20824,ODEQ,Sample,5/18/2000,Mercury,Total,0.992,mg/Kg wet,"Fillet, with skin",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
+20824,ODEQ,Sample,5/18/2000,Mercury,Total,0.817,mg/Kg wet,"Fillet, with skin",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
+20824,ODEQ,Sample,5/18/2000,Mercury,Total,1.12,mg/Kg wet,"Fillet, with skin",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
+20824,ODEQ,Sample,5/18/2000,Mercury,Total,0.619,mg/Kg wet,"Fillet, with skin",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
+20824,ODEQ,Sample,5/18/2000,Mercury,Total,0.238,mg/Kg wet,"Fillet, with skin",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
+20824,ODEQ,Sample,5/18/2000,Mercury,Total,0.222,mg/Kg wet,"Fillet, with skin",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
+20824,ODEQ,Sample,5/18/2000,Mercury,Total,0.24,mg/Kg wet,"Fillet, with skin",NA,"Cooper Creek Reservoir near dam, depth 3 feet"
+23485,ODEQ,Sample,5/16/2000,Mercury,Total,0.78,mg/Kg wet,"Tissue, Fish",NA,Galesville Reservoir
+23485,ODEQ,Sample,5/16/2000,Mercury,Total,0.859,mg/Kg wet,"Tissue, Fish",NA,Galesville Reservoir
+23485,ODEQ,Sample,5/16/2000,Mercury,Total,0.747,mg/Kg wet,"Tissue, Fish",NA,Galesville Reservoir
+23485,ODEQ,Sample,5/16/2000,Mercury,Total,0.557,mg/Kg wet,"Tissue, Fish",NA,Galesville Reservoir
+23485,ODEQ,Sample,5/16/2000,Mercury,Total,0.712,mg/Kg wet,"Tissue, Fish",NA,Galesville Reservoir
+23485,ODEQ,Sample,5/16/2000,Mercury,Total,0.558,mg/Kg wet,"Tissue, Fish",NA,Galesville Reservoir
+23485,ODEQ,Sample,5/16/2000,Mercury,Total,0.691,mg/Kg wet,"Tissue, Fish",NA,Galesville Reservoir
+23485,ODEQ,Sample,5/16/2000,Mercury,Total,0.572,mg/Kg wet,"Tissue, Fish",NA,Galesville Reservoir
+24575,ODEQ,Sample,2/5/2001,Mercury,Total,0.018,mg/Kg wet,"Tissue, Fish",NA,Shady Cove Fish Hatchery
+24575,ODEQ,Sample,2/5/2001,Mercury,Total,0.014,mg/Kg wet,"Tissue, Fish",NA,Shady Cove Fish Hatchery
+24575,ODEQ,Sample,2/5/2001,Mercury,Total,0.016,mg/Kg wet,"Tissue, Fish",NA,Shady Cove Fish Hatchery
+24575,ODEQ,Sample,2/5/2001,Mercury,Total,0.013,mg/Kg wet,"Tissue, Fish",NA,Shady Cove Fish Hatchery
+24575,ODEQ,Sample,2/5/2001,Mercury,Total,0.01,mg/Kg wet,"Tissue, Fish",NA,Shady Cove Fish Hatchery
+24575,ODEQ,Sample,2/5/2001,Mercury,Total,0.009,mg/Kg wet,"Tissue, Fish",NA,Shady Cove Fish Hatchery
+24575,ODEQ,Sample,2/5/2001,Mercury,Total,0.015,mg/Kg wet,"Tissue, Fish",NA,Shady Cove Fish Hatchery
+24575,ODEQ,Sample - Field Primary,2/5/2001,Mercury,Total,0.013,mg/Kg wet,"Tissue, Fish",NA,Shady Cove Fish Hatchery
+24575,ODEQ,Sample - Field Duplicate,2/5/2001,Mercury,Total,0.013,mg/Kg wet,"Tissue, Fish",NA,Shady Cove Fish Hatchery
+24575,ODEQ,Sample,2/5/2001,Mercury,Total,0.012,mg/Kg wet,"Tissue, Fish",NA,Shady Cove Fish Hatchery
+24575,ODEQ,Sample,2/5/2001,Mercury,Total,0.027,mg/Kg wet,"Tissue, Fish",NA,Shady Cove Fish Hatchery
+26339,ODEQ,Sample,9/10/2008,Mercury,NA,0.42,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
+26339,ODEQ,Sample,9/10/2008,Mercury,NA,0.48,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
+26339,ODEQ,Sample,9/10/2008,Mercury,NA,0.24,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
+26339,ODEQ,Sample,9/10/2008,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
+26339,ODEQ,Sample,9/10/2008,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
+26339,ODEQ,Sample,9/9/2010,Mercury,NA,0.04,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
+26339,ODEQ,Sample,9/9/2010,Mercury,NA,0.04,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
+26339,ODEQ,Sample,9/9/2010,Mercury,NA,0.04,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
+26339,ODEQ,Sample,9/9/2010,Mercury,NA,0.12,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
+26339,ODEQ,Sample,9/9/2010,Mercury,NA,0.35,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
+26339,ODEQ,Sample,9/9/2010,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
+26339,ODEQ,Sample,9/9/2010,Mercury,NA,0.05,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
+26339,ODEQ,Sample,9/9/2010,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
+26339,ODEQ,Sample,9/9/2010,Mercury,NA,0.21,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
+26339,ODEQ,Sample - Field Primary,9/9/2010,Mercury,NA,0.27,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
+26339,ODEQ,Sample - Field Duplicate,9/9/2010,Mercury,NA,0.26,mg/Kg wet,"Fillet, no skin",0.03,Willamette River upstream of Newberg Bridge at Rogers Landing
+26773,ODEQ,Sample,9/2/2010,Mercury,NA,0.27,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
+26773,ODEQ,Sample,9/2/2010,Mercury,NA,0.25,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
+26773,ODEQ,Sample,9/2/2010,Mercury,NA,0.44,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
+26773,ODEQ,Sample,9/2/2010,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
+26773,ODEQ,Sample,9/2/2010,Mercury,NA,0.44,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
+26773,ODEQ,Sample - Field Primary,9/2/2010,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
+26773,ODEQ,Sample,9/2/2010,Mercury,NA,0.22,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
+26773,ODEQ,Sample,9/2/2010,Mercury,NA,0.9,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
+26773,ODEQ,Sample,9/2/2010,Mercury,NA,1.1,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
+26773,ODEQ,Sample,9/2/2010,Mercury,NA,1.55,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
+26773,ODEQ,Sample - Field Primary,9/2/2010,Mercury,NA,0.97,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
+26773,ODEQ,Sample - Field Duplicate,9/2/2010,Mercury,NA,0.93,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
+26773,ODEQ,Sample - Field Duplicate,9/2/2010,Mercury,NA,0.22,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
+26773,ODEQ,Sample,9/2/2010,Mercury,NA,0.77,mg/Kg wet,"Fillet, no skin",0.03,Tualatin River at West Linn near SW Borland Road
+29043,ODEQ,Sample,9/24/2008,Mercury,NA,0.53,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
+29043,ODEQ,Sample,10/7/2008,Mercury,NA,0.34,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
+29043,ODEQ,Sample,10/7/2008,Mercury,NA,1.03,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
+29043,ODEQ,Sample,10/7/2008,Mercury,NA,0.62,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
+29043,ODEQ,Sample,10/7/2008,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
+29043,ODEQ,Sample,10/7/2008,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
+29043,ODEQ,Sample,8/31/2010,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
+29043,ODEQ,Sample,8/31/2010,Mercury,NA,0.09,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
+29043,ODEQ,Sample,8/31/2010,Mercury,NA,0.23,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
+29043,ODEQ,Sample,8/31/2010,Mercury,NA,0.35,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
+29043,ODEQ,Sample - Field Primary,8/31/2010,Mercury,NA,0.34,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
+29043,ODEQ,Sample - Field Duplicate,8/31/2010,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Willamette Park boat ramp, Corvallis"
+29044,ODEQ,Sample,9/30/2008,Mercury,NA,0.56,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
+29044,ODEQ,Sample,9/30/2008,Mercury,NA,0.25,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
+29044,ODEQ,Sample,9/30/2008,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
+29044,ODEQ,Sample,10/12/2009,Mercury,NA,0.12,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
+29044,ODEQ,Sample,10/12/2009,Mercury,NA,0.08,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
+29044,ODEQ,Sample,10/12/2009,Mercury,NA,0.08,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
+29044,ODEQ,Sample,10/12/2009,Mercury,NA,0.23,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
+29044,ODEQ,Sample,10/12/2009,Mercury,NA,0.23,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
+29044,ODEQ,Sample,8/24/2010,Mercury,NA,0.78,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
+29044,ODEQ,Sample,8/24/2010,Mercury,NA,0.77,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
+29044,ODEQ,Sample,8/24/2010,Mercury,NA,0.74,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
+29044,ODEQ,Sample,8/24/2010,Mercury,NA,1.66,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
+29044,ODEQ,Sample - Field Primary,8/24/2010,Mercury,NA,0.73,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
+29044,ODEQ,Sample - Field Duplicate,8/24/2010,Mercury,NA,0.8,mg/Kg wet,"Fillet, no skin",0.03,"Willamette River at Greenway bike bridge, Eugene"
+29045,ODEQ,Sample,9/1/2010,Mercury,NA,0.93,mg/Kg wet,"Fillet, no skin",0.03,Clackamas River at Riverside Park
+29045,ODEQ,Sample,9/21/2010,Mercury,NA,0.07,mg/Kg wet,"Fillet, no skin",0.03,Clackamas River at Riverside Park
+29045,ODEQ,Sample,9/21/2010,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Clackamas River at Riverside Park
+29045,ODEQ,Sample - Field Primary,9/21/2010,Mercury,NA,0.44,mg/Kg wet,"Fillet, no skin",0.03,Clackamas River at Riverside Park
+29045,ODEQ,Sample - Field Duplicate,9/21/2010,Mercury,NA,0.44,mg/Kg wet,"Fillet, no skin",0.03,Clackamas River at Riverside Park
+30215,ODEQ,Sample,6/13/2003,Mercury,Total,0.237,mg/Kg dry,Whole body,0.05,"OR03-0303 Pacific Ocean, 7.1 nautical miles northwest of Rogue River mouth"
+30220,ODEQ,Sample,6/12/2003,Mercury,Total,0.254,mg/Kg dry,Whole body,0.05,"OR03-0006 Pacific Ocean, 2.8 nautical miles southwest of Siuslaw River mouth"
+30222,ODEQ,Sample,6/6/2003,Mercury,Total,0.108,mg/Kg dry,Whole body,0.05,"OR03-0008 Pacific Ocean, 8.1 nautical miles southwest of Cape Falcon"
+30223,ODEQ,Sample,6/10/2003,Mercury,Total,0.256,mg/Kg dry,Whole body,0.05,"OR03-0009 Pacific Ocean, 8.9 nautical miles southwest of Yaquina Head"
+30224,ODEQ,Sample,6/11/2003,Mercury,Total,0.435,mg/Kg dry,Whole body,0.05,"OR03-0010 Pacific Ocean, 30.5 nautical miles southwest of Heceta Head"
+30228,ODEQ,Sample,6/10/2003,Mercury,Total,0.238,mg/Kg dry,Whole body,0.05,"OR03-0014 Pacific Ocean, 11.8 nautical miles west of Waldport"
+30229,ODEQ,Sample,6/9/2003,Mercury,Total,0.142,mg/Kg dry,Whole body,0.05,"OR03-0015 Pacific Ocean, 3.6 nautical miles southwest of Cascade Head"
+30230,ODEQ,Sample,6/9/2003,Mercury,Total,0.061,mg/Kg dry,Whole body,0.05,"OR03-0016 Pacific Ocean, 7.9 nautical miles southwest of Netarts"
+30231,ODEQ,Sample,6/9/2003,Mercury,Total,0.229,mg/Kg dry,Whole body,0.05,"OR03-0017 Pacific Ocean, 5.3 nautical miles southwest of Cape Lookout"
+30231,ODEQ,Sample,6/9/2003,Mercury,Total,0.082,mg/Kg dry,Whole body,0.05,"OR03-0017 Pacific Ocean, 5.3 nautical miles southwest of Cape Lookout"
+30243,ODEQ,Sample,6/6/2003,Mercury,Total,0.101,mg/Kg dry,Whole body,0.05,"OR03-0029 Pacific Ocean, 2.6 nautical miles west of Rockaway Beach"
+30244,ODEQ,Sample,6/10/2003,Mercury,Total,0.314,mg/Kg dry,Whole body,0.05,"OR03-0030 Pacific Ocean, 4.5 nautical miles west of Yaquina Head"
+30244,ODEQ,Sample,6/10/2003,Mercury,Total,0.151,mg/Kg dry,Whole body,0.05,"OR03-0030 Pacific Ocean, 4.5 nautical miles west of Yaquina Head"
+30245,ODEQ,Sample,6/11/2003,Mercury,Total,0.331,mg/Kg dry,Whole body,0.05,"OR03-0031 Pacific Ocean, 8.4 nautical miles west of Cape Perpetual"
+30250,ODEQ,Sample,6/11/2003,Mercury,Total,0.107,mg/Kg dry,Whole body,0.05,"OR03-0036 Pacific Ocean, 24.9 nautical miles southwest of Cape Perpetual"
+30252,ODEQ,Sample,6/9/2003,Mercury,Total,0.239,mg/Kg dry,Whole body,0.05,"OR03-0038 Pacific Ocean, 6.5 nautical miles southwest of Cape Kiwanda"
+30253,ODEQ,Sample,6/11/2003,Mercury,Total,0.188,mg/Kg dry,Whole body,0.05,"OR03-0039 Pacific Ocean, 5.7 nautical miles southwest of Hecta Head"
+30254,ODEQ,Sample,6/11/2003,Mercury,Total,0.192,mg/Kg dry,Whole body,0.05,"OR03-0040 Pacific Ocean, 12.9 nautical miles southwest of Heceta Head"
+30256,ODEQ,Sample,6/6/2003,Mercury,Total,0.122,mg/Kg dry,Whole body,0.05,"OR03-0042 Pacific Ocean, 11.1 nautical miles west of Seaside"
+30260,ODEQ,Sample,6/11/2003,Mercury,Total,0.154,mg/Kg dry,Whole body,0.05,"OR03-0046 Pacific Ocean, 6.1 nautical miles southwest of Cape Perpetual"
+30262,ODEQ,Sample,6/12/2003,Mercury,Total,0.248,mg/Kg dry,Whole body,0.05,"OR03-0048 Pacific Ocean, 5.5 nautical miles west of Siltcoos river mouth"
+30264,ODEQ,Sample,6/6/2003,Mercury,Total,0.115,mg/Kg dry,Whole body,0.05,"OR03-0050 Pacific Ocean, 6.6 nautical miles south of Cape Falcon"
+31300,ODEQ,Sample,9/24/2003,Mercury,Total,0.123,mg/Kg dry,Whole body,0.05,"OR03-0062, 9.2 nautical miles northwest of Cape Blanco"
+31300,ODEQ,Sample,9/24/2003,Mercury,Total,0.17,mg/Kg dry,Whole body,0.05,"OR03-0062, 9.2 nautical miles northwest of Cape Blanco"
+31303,ODEQ,Sample,9/16/2003,Mercury,Total,0.201,mg/Kg dry,Whole body,0.05,11.3 nautical miles northwest of Cape Perpetua OR03-0051
+31303,ODEQ,Sample,9/16/2003,Mercury,Total,0.176,mg/Kg dry,Whole body,0.05,11.3 nautical miles northwest of Cape Perpetua OR03-0051
+31306,ODEQ,Sample,7/9/2003,Mercury,Total,0.185,mg/Kg dry,Whole body,0.05,"OR03-0053, 3.9 nautical miles northwest of Siletz Bay"
+31306,ODEQ,Sample,7/9/2003,Mercury,Total,0.258,mg/Kg dry,Whole body,0.05,"OR03-0053, 3.9 nautical miles northwest of Siletz Bay"
+31308,ODEQ,Sample,9/17/2003,Mercury,Total,0.168,mg/Kg dry,Whole body,0.05,"OR03-0054, 9.6 nautical miles southwest of Heceta Head"
+31308,ODEQ,Sample,9/17/2003,Mercury,Total,0.19,mg/Kg dry,Whole body,0.05,"OR03-0054, 9.6 nautical miles southwest of Heceta Head"
+31310,ODEQ,Sample,7/9/2003,Mercury,Total,0.095,mg/Kg dry,Whole body,0.05,"OR03-0055, 6.9 nautical miles southwest of Siletz Bay"
+31310,ODEQ,Sample,7/9/2003,Mercury,Total,0.12,mg/Kg dry,Whole body,0.05,"OR03-0055, 6.9 nautical miles southwest of Siletz Bay"
+31312,ODEQ,Sample,9/17/2003,Mercury,Total,0.095,mg/Kg dry,Whole body,0.05,"OR03-0056, 8.2 nautical miles southwest of Siuslaw River mouth"
+31312,ODEQ,Sample,9/17/2003,Mercury,Total,0.108,mg/Kg dry,Whole body,0.05,"OR03-0056, 8.2 nautical miles southwest of Siuslaw River mouth"
+31313,ODEQ,Sample,7/9/2003,Mercury,Total,0.299,mg/Kg dry,Whole body,0.05,"OR03-0057, 4.2 nautical miles northwest of Heceta Head"
+31313,ODEQ,Sample,7/9/2003,Mercury,Total,0.181,mg/Kg dry,Whole body,0.05,"OR03-0057, 4.2 nautical miles northwest of Heceta Head"
+31314,ODEQ,Sample,7/9/2003,Mercury,Total,0.346,mg/Kg dry,Whole body,0.05,"OR03-0058, 14.1 nautical miles west of Yaquina River mouth"
+31314,ODEQ,Sample,7/9/2003,Mercury,Total,0.491,mg/Kg dry,Whole body,0.05,"OR03-0058, 14.1 nautical miles west of Yaquina River mouth"
+31314,ODEQ,Sample,7/9/2003,Mercury,Total,0.281,mg/Kg dry,Whole body,0.05,"OR03-0058, 14.1 nautical miles west of Yaquina River mouth"
+31317,ODEQ,Sample,9/24/2003,Mercury,Total,0.15,mg/Kg dry,Whole body,0.05,"OR03-0063, 4.6 nautical miles southwest of Cape Blanco"
+31317,ODEQ,Sample,9/24/2003,Mercury,Total,0.126,mg/Kg dry,Whole body,0.05,"OR03-0063, 4.6 nautical miles southwest of Cape Blanco"
+31318,ODEQ,Sample,7/11/2003,Mercury,Total,0.173,mg/Kg dry,Whole body,0.05,"OR03-0059, 10.5 nautical miles north-northwest of Coos Bay mouth"
+31318,ODEQ,Sample,7/11/2003,Mercury,Total,0.289,mg/Kg dry,Whole body,0.05,"OR03-0059, 10.5 nautical miles north-northwest of Coos Bay mouth"
+31319,ODEQ,Sample,7/6/2003,Mercury,Total,0.132,mg/Kg dry,Whole body,0.05,"OR03-0060, 7.7 nautical miles northwest of Cannon Beach"
+31319,ODEQ,Sample,7/6/2003,Mercury,Total,0.291,mg/Kg dry,Whole body,0.05,"OR03-0060, 7.7 nautical miles northwest of Cannon Beach"
+31320,ODEQ,Sample,7/10/2003,Mercury,Total,0.135,mg/Kg dry,Whole body,0.05,"OR03-0061, 6.1 nautical miles northwest of Heceta Head"
+31320,ODEQ,Sample,7/10/2003,Mercury,Total,0.106,mg/Kg dry,Whole body,0.05,"OR03-0061, 6.1 nautical miles northwest of Heceta Head"
+31322,ODEQ,Sample,7/10/2003,Mercury,Total,0.182,mg/Kg dry,Whole body,0.05,19 nautical miles west of Yachats River mouth
+31323,ODEQ,Sample,7/10/2003,Mercury,Total,0.141,mg/Kg dry,Whole body,0.05,22 nautical miles west of Yaquina River mouth
+31566,ODEQ,Sample,7/16/2004,Mercury,Total,0.086,mg/Kg dry,Whole body,0.05,Columbia River at River Mile 21 near Rice Island
+31568,ODEQ,Sample,7/15/2004,Mercury,Total,0.125,mg/Kg dry,Whole body,0.05,Columbia River at River Mile 6 near Clatsop Spit
+31569,ODEQ,Sample,7/14/2004,Mercury,Total,0.054,mg/Kg dry,Whole body,0.05,Columbia River at River Mile 11.5 north of Marker #31
+31570,ODEQ,Sample,9/20/2004,Mercury,Total,0.186,mg/Kg dry,"Fillet, no skin",0.05,"Columbia River at River Mile 15.5, 1.6 nautical miles north of Marker #37"
+31572,ODEQ,Sample,7/13/2004,Mercury,Total,0.115,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 14, near south end of Astoria Bridge"
+31573,ODEQ,Sample,8/10/2004,Mercury,Total,0.102,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 8, 1.3 nautical miles south of Chinook Point"
+31574,ODEQ,Sample,7/7/2004,Mercury,Total,0.159,mg/Kg dry,"Fillet, no skin",0.05,"Columbia River at River Mile 18, southeast of Tongue Point"
+31578,ODEQ,Sample,9/21/2004,Mercury,Total,0.135,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 19.5, 1.3 nautical miles south of Grays Point"
+31579,ODEQ,Sample,9/1/2004,Mercury,Total,0.187,mg/Kg dry,Whole body,0.05,Nehalem River North Fork at River Mile 0.9
+31580,ODEQ,Sample,8/19/2004,Mercury,Total,0.119,mg/Kg dry,Whole body,0.05,"Alsea Bay, 0.3 nautical miles east of Devils Bend"
+31582,ODEQ,Sample,7/26/2004,Mercury,Total,0.104,mg/Kg dry,Whole body,0.05,"Siletz Bay at River Mile 0.1, north of Siletz Keys"
+31583,ODEQ,Sample,8/24/2004,Mercury,Total,0.168,mg/Kg dry,Whole body,0.05,Rogue River at River Mile 0.5 in Gold Beach Marina
+31586,ODEQ,Sample,8/25/2004,Mercury,Total,0.175,mg/Kg dry,Whole body,0.05,"Coquille River at River Mile 6.8, northeast shore near Randolph Island"
+31587,ODEQ,Sample,10/7/2004,Mercury,Total,0.222,mg/Kg dry,Whole body,0.05,"Nehalem Bay, 0.5 nautical miles W of Dean Point"
+31588,ODEQ,Sample,9/13/2004,Mercury,Total,0.074,mg/Kg dry,Whole body,0.05,"Sand Lake, 0.4 nautical miles east of Sand Beach Campground"
+31589,ODEQ,Sample,9/28/2004,Mercury,Total,0.068,mg/Kg dry,Whole body,0.05,"Siuslaw River at River Mile 6.2, southwest shore of Cox Island"
+31590,ODEQ,Sample,7/27/2004,Mercury,Total,0.139,mg/Kg dry,Whole body,0.05,"Siletz River at River Mile 5.8, north shore, east of Sunset Landing"
+31591,ODEQ,Sample,10/5/2004,Mercury,Total,0.1,mg/Kg dry,Whole body,0.05,"Netarts Bay, 0.4 nautical miles southwest of Yager CR mouth"
+31594,ODEQ,Sample,8/3/2004,Mercury,Total,0.136,mg/Kg dry,Whole body,0.05,"Coos Bay South Slough, 0.1 nautical miles northeast of Younker Point"
+31595,ODEQ,Sample,8/26/2004,Mercury,Total,0.05,mg/Kg dry,Whole body,0.05,"Coos Bay north of Marshfield Channel, 0.45 nautical miles west of Marker #1"
+31596,ODEQ,Sample,10/6/2004,Mercury,Total,0.091,mg/Kg dry,Whole body,0.05,Tillamook Bay West in south channel
+31597,ODEQ,Sample,8/5/2004,Mercury,Total,0.126,mg/Kg dry,Whole body,0.05,Coos Bay south of Marshfield Channel near 'Q' Green Range Marker
+31598,ODEQ,Sample,7/28/2004,Mercury,Total,0.097,mg/Kg dry,Whole body,0.05,Yaquina River near Marker #38
+31600,ODEQ,Sample,10/6/2004,Mercury,Total,0.23,mg/Kg dry,"Fillet, no skin",0.05,Tillamook Bay east side of Miami Cove
+31600,ODEQ,Sample,10/6/2004,Mercury,Total,0.072,mg/Kg dry,Whole body,0.05,Tillamook Bay east side of Miami Cove
+31602,ODEQ,Sample,8/17/2004,Mercury,Total,0.077,mg/Kg dry,Whole body,0.05,"Umpqua River at River Mile 6.6, north of The Point"
+31603,ODEQ,Sample,8/5/2004,Mercury,Total,0.108,mg/Kg dry,Whole body,0.05,"Coos Bay east side, 0.6 nautical miles west of Pierce Point"
+31604,ODEQ,Sample,8/31/2004,Mercury,Total,0.083,mg/Kg dry,"Fillet, no skin",0.05,"Tillamook Bay, east side in Bay City Channel near Sandstone Point"
+31606,ODEQ,Sample,9/14/2004,Mercury,Total,0.094,mg/Kg dry,Whole body,0.05,"Yaquina Bay at River Mile 3.5, near King Slough"
+31606,ODEQ,Sample,9/14/2004,Mercury,Total,0.099,mg/Kg dry,Whole body,0.05,"Yaquina Bay at River Mile 3.5, near King Slough"
+31606,ODEQ,Sample,9/14/2004,Mercury,Total,0.191,mg/Kg dry,"Fillet, no skin",0.05,"Yaquina Bay at River Mile 3.5, near King Slough"
+31607,ODEQ,Sample,9/21/2004,Mercury,Total,0.133,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 17, north shore south of Knappton"
+31613,ODEQ,Sample,7/29/2004,Mercury,Total,0.16,mg/Kg dry,Whole body,0.05,"Alsea Bay East, 0.3 nautical miles southeast of McKinney Slough"
+31615,ODEQ,Sample,9/28/2004,Mercury,Total,0.121,mg/Kg dry,Whole body,0.05,"Alsea Bay, 0.4 nautical miles north of McKinney Slough"
+31719,ODEQ,Sample,8/4/2004,Mercury,Total,0.55,mg/Kg wet,"Tissue, Fish",0.015,Canyon Creek 3.3 miles upstream of mouth
+31720,ODEQ,Sample,8/4/2004,Mercury,Total,0.561,mg/Kg wet,"Tissue, Fish",0.015,Canyon Creek 3.8 miles upstream of mouth
+31721,ODEQ,Sample,8/4/2004,Mercury,Total,0.478,mg/Kg wet,"Tissue, Fish",0.015,Canyon Creek 1.7 miles upstream of mouth
+31721,ODEQ,Sample,8/4/2004,Mercury,Total,0.348,mg/Kg wet,"Tissue, Fish",0.015,Canyon Creek 1.7 miles upstream of mouth
+31722,ODEQ,Sample,8/4/2004,Mercury,Total,0.065,mg/Kg wet,"Tissue, Fish",0.015,Ochoco Creek 1.6 miles upstream of Canyon Creek Junction
+31722,ODEQ,Sample,8/4/2004,Mercury,Total,0.057,mg/Kg wet,"Tissue, Fish",0.015,Ochoco Creek 1.6 miles upstream of Canyon Creek Junction
+31722,ODEQ,Sample,8/4/2004,Mercury,Total,0.054,mg/Kg wet,"Tissue, Fish",0.015,Ochoco Creek 1.6 miles upstream of Canyon Creek Junction
+32161,ODEQ,Sample,8/17/2005,Mercury,Total,0.154,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 7.5, 1.3 nautical miles southwest of Chinook Point"
+32164,ODEQ,Sample,7/28/2005,Mercury,Total,0.093,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 6.5, 0.1 nautical miles east of Clatsop Spit"
+32167,ODEQ,Sample,8/25/2005,Mercury,Total,0.338,mg/Kg dry,Whole body,0.05,"Yaquina Bay at River Mile 3.5, 0.3 nautical miles west of Coquille Point"
+32168,ODEQ,Sample,8/31/2005,Mercury,Total,0.256,mg/Kg dry,Whole body,0.05,"Coos Bay North Haynes Inlet, 0.2 nautical miles northwest of Green Marker #5"
+32168,ODEQ,Sample,8/31/2005,Mercury,Total,0.077,mg/Kg dry,Whole body,0.05,"Coos Bay North Haynes Inlet, 0.2 nautical miles northwest of Green Marker #5"
+32170,ODEQ,Sample,8/3/2005,Mercury,Total,0.108,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 17.5, 0.7 nautical miles northwest of Tongue Point"
+32170,ODEQ,Sample,8/3/2005,Mercury,Total,0.141,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 17.5, 0.7 nautical miles northwest of Tongue Point"
+32172,ODEQ,Sample,7/27/2005,Mercury,Total,0.113,mg/Kg dry,Whole body,0.05,Columbia River Youngs Bay North Shore near Radio Towers
+32173,ODEQ,Sample,8/18/2005,Mercury,Total,0.136,mg/Kg dry,Whole body,0.05,Nehalem Bay 0.3 nautical miles southwest of Wheeler City Piers
+32173,ODEQ,Sample,8/18/2005,Mercury,Total,0.138,mg/Kg dry,Whole body,0.05,Nehalem Bay 0.3 nautical miles southwest of Wheeler City Piers
+32174,ODEQ,Sample,10/11/2005,Mercury,Total,0.12,mg/Kg dry,Whole body,0.05,"Coos Bay Isthmus Slough, 0.7 nautical miles north of Manning Gulch"
+32175,ODEQ,Sample,8/22/2005,Mercury,Total,0.351,mg/Kg dry,Whole body,0.05,"Umpqua River at River Mile 13.8, 0.9 nautical miles downstream of Koapke Slu"
+32176,ODEQ,Sample,10/10/2005,Mercury,Total,0.15,mg/Kg dry,Whole body,0.05,"Coquille River at River Mile 8, near Parkersburg City"
+32179,ODEQ,Sample,9/12/2005,Mercury,Total,0.12,mg/Kg dry,Whole body,0.05,Nestucca R at RM 2.3 near Woods City (OR2005-0019)
+32180,ODEQ,Sample,8/31/2005,Mercury,Total,0.195,mg/Kg dry,Whole body,0.05,"Coos Bay East, 0.3 nautical miles west of Pierce Point"
+32180,ODEQ,Sample,8/31/2005,Mercury,Total,0.082,mg/Kg dry,Whole body,0.05,"Coos Bay East, 0.3 nautical miles west of Pierce Point"
+32185,ODEQ,Sample,8/9/2005,Mercury,Total,0.14,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 21, 0.5 nautical miles southeast of Red Marker #52"
+32197,ODEQ,Sample,8/24/2005,Mercury,Total,0.081,mg/Kg dry,Whole body,0.05,"Alsea River downstream of Drift Creek, adjecent to kin silver RV park and marina"
+32212,ODEQ,Sample,8/11/2005,Mercury,Total,0.145,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 7, 1.0 nautical miles south of Green Marker #7"
+32212,ODEQ,Sample,8/11/2005,Mercury,Total,0.335,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 7, 1.0 nautical miles south of Green Marker #7"
+32235,ODEQ,Sample,9/14/2005,Mercury,Total,0.071,mg/Kg dry,Whole body,0.05,Tillamook Bay near Memaloosa Boat Ramp
+32272,ODEQ,Sample,9/12/2006,Mercury,Total,0.098,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 11.5, 0.5 nautical miles northeast of green marker #29"
+32276,ODEQ,Sample,8/10/2005,Mercury,Total,0.144,mg/Kg dry,Whole body,0.05,Baker Bay at west end of Sand Island
+32347,ODEQ,Sample,9/26/2006,Mercury,Total,0.128,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 9.5, 0.25 nautical miles west of green marker #27"
+32562,ODEQ,Sample,6/2/2005,Mercury,Total,0.104,mg/Kg wet,"Fillet, no skin",0.03,Cottage Grove Reservoir
+32562,ODEQ,Sample,6/2/2005,Mercury,Total,0.114,mg/Kg wet,"Fillet, no skin",0.03,Cottage Grove Reservoir
+32562,ODEQ,Sample,6/2/2005,Mercury,Total,0.11,mg/Kg wet,"Fillet, no skin",0.03,Cottage Grove Reservoir
+32562,ODEQ,Sample,6/2/2005,Mercury,Total,0.08,mg/Kg wet,"Fillet, no skin",0.03,Cottage Grove Reservoir
+32562,ODEQ,Sample,6/2/2005,Mercury,Total,0.1,mg/Kg wet,"Fillet, no skin",0.03,Cottage Grove Reservoir
+32563,ODEQ,Sample,6/11/2005,Mercury,Total,0.055,mg/Kg wet,"Fillet, no skin",0.03,Dorena Reservoir
+32563,ODEQ,Sample,6/11/2005,Mercury,Total,0.058,mg/Kg wet,"Fillet, no skin",0.03,Dorena Reservoir
+32563,ODEQ,Sample,6/11/2005,Mercury,Total,0.056,mg/Kg wet,"Fillet, no skin",0.03,Dorena Reservoir
+32563,ODEQ,Sample,6/11/2005,Mercury,Total,0.076,mg/Kg wet,"Fillet, no skin",0.03,Dorena Reservoir
+32563,ODEQ,Sample,6/11/2005,Mercury,Total,0.043,mg/Kg wet,"Fillet, no skin",0.03,Dorena Reservoir
+32563,ODEQ,Sample,8/8/2005,Mercury,Total,0.092,mg/Kg wet,"Fillet, no skin",0.03,Dorena Reservoir
+32563,ODEQ,Sample,8/8/2005,Mercury,Total,0.114,mg/Kg wet,"Fillet, no skin",0.03,Dorena Reservoir
+32563,ODEQ,Sample,8/8/2005,Mercury,Total,0.091,mg/Kg wet,"Fillet, no skin",0.03,Dorena Reservoir
+32563,ODEQ,Sample,8/8/2005,Mercury,Total,0.315,mg/Kg wet,"Fillet, no skin",0.03,Dorena Reservoir
+32682,ODEQ,Sample,9/3/2005,Mercury,Total,0.097,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, small mouth bass, station 1"
+32683,ODEQ,Sample,9/3/2005,Mercury,Total,0.055,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, small mouth bass, station 2"
+32684,ODEQ,Sample,9/3/2005,Mercury,Total,0.067,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, small mouth bass, station 3"
+32685,ODEQ,Sample,9/3/2005,Mercury,Total,0.101,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, small mouth bass, station 4"
+32686,ODEQ,Sample,9/3/2005,Mercury,Total,0.096,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, small mouth bass, station 5"
+32687,ODEQ,Sample,9/3/2005,Mercury,Total,0.14,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, small mouth bass, station 6"
+32688,ODEQ,Sample,9/13/2005,Mercury,Total,0.158,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, small mouth bass, station 7"
+32689,ODEQ,Sample,9/24/2005,Mercury,Total,0.112,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, small mouth bass, station 8"
+32692,ODEQ,Sample,9/13/2005,Mercury,Total,0.084,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, rainbow trout, station 1"
+32693,ODEQ,Sample,9/25/2005,Mercury,Total,0.064,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, rainbow trout, station 2"
+32694,ODEQ,Sample,9/26/2005,Mercury,Total,0.069,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, rainbow trout, station 3"
+32695,ODEQ,Sample,9/26/2005,Mercury,Total,0.12,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, rainbow trout, station 4"
+32696,ODEQ,Sample,9/26/2005,Mercury,Total,0.113,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, rainbow trout, station 5"
+32697,ODEQ,Sample,9/30/2005,Mercury,Total,0.105,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, rainbow trout, station 6"
+32698,ODEQ,Sample,9/30/2005,Mercury,Total,0.064,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, rainbow trout, station 7"
+32699,ODEQ,Sample,10/3/2005,Mercury,Total,0.07,mg/Kg wet,"Fillet, no skin",0.03,"Howard Prairie Reservoir, rainbow trout, station 8"
+32714,ODEQ,Sample,8/31/2005,Mercury,Total,0.735,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, small mouth bass, station 1"
+32715,ODEQ,Sample,8/31/2005,Mercury,Total,0.394,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, small mouth bass, station 2"
+32716,ODEQ,Sample,8/31/2005,Mercury,Total,0.43,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, small mouth bass, station 3"
+32717,ODEQ,Sample,8/31/2005,Mercury,Total,0.832,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, small mouth bass, station 4"
+32718,ODEQ,Sample,9/2/2005,Mercury,Total,2.66,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, small mouth bass, station 5"
+32719,ODEQ,Sample,9/2/2005,Mercury,Total,0.362,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, small mouth bass, station 6"
+32720,ODEQ,Sample,10/17/2005,Mercury,Total,0.643,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, small mouth bass, station 7"
+32721,ODEQ,Sample,10/18/2005,Mercury,Total,0.518,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, small mouth bass, station 8"
+32722,ODEQ,Sample,9/2/2005,Mercury,Total,0.106,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, rainbow trout, station 1"
+32723,ODEQ,Sample,10/17/2005,Mercury,Total,0.11,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, rainbow trout, station 2"
+32724,ODEQ,Sample,10/17/2005,Mercury,Total,0.18,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, rainbow trout, station 3"
+32725,ODEQ,Sample,10/17/2005,Mercury,Total,0.183,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, rainbow trout, station 4"
+32726,ODEQ,Sample,10/17/2005,Mercury,Total,0.158,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, rainbow trout, station 5"
+32727,ODEQ,Sample,10/18/2005,Mercury,Total,0.201,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, rainbow trout, station 6"
+32728,ODEQ,Sample,10/18/2005,Mercury,Total,0.254,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, rainbow trout, station 7"
+32729,ODEQ,Sample,10/18/2005,Mercury,Total,0.251,mg/Kg wet,"Fillet, no skin",0.03,"Emigrant Lake, rainbow trout, station 8"
+32730,ODEQ,Sample,9/8/2005,Mercury,Total,0.03,mg/Kg wet,"Fillet, no skin",0.03,"Fish Lake, rainbow trout, station 1"
+32731,ODEQ,Sample,9/8/2005,Mercury,Total,0.044,mg/Kg wet,"Fillet, no skin",0.03,"Fish Lake, rainbow trout, station 2"
+32732,ODEQ,Sample,9/8/2005,Mercury,Total,0.03,mg/Kg wet,"Fillet, no skin",0.03,"Fish Lake, rainbow trout, station 3"
+32733,ODEQ,Sample,9/8/2005,Mercury,Total,0.03,mg/Kg wet,"Fillet, no skin",0.03,"Fish Lake, rainbow trout, station 4"
+32734,ODEQ,Sample,9/8/2005,Mercury,Total,0.03,mg/Kg wet,"Fillet, no skin",0.03,"Fish Lake, rainbow trout, station 5"
+32735,ODEQ,Sample,9/8/2005,Mercury,Total,0.03,mg/Kg wet,"Fillet, no skin",0.03,"Fish Lake, rainbow trout, station 6"
+32736,ODEQ,Sample,9/8/2005,Mercury,Total,0.03,mg/Kg wet,"Fillet, no skin",0.03,"Fish Lake, rainbow trout, station 7"
+32737,ODEQ,Sample,9/8/2005,Mercury,Total,0.03,mg/Kg wet,"Fillet, no skin",0.03,"Fish Lake, rainbow trout, station 8"
+32738,ODEQ,Sample,9/12/2005,Mercury,Total,0.126,mg/Kg wet,"Fillet, no skin",0.03,"Agate Lake, large mouth bass, station 1"
+32739,ODEQ,Sample,9/12/2005,Mercury,Total,0.184,mg/Kg wet,"Fillet, no skin",0.03,"Agate Lake, large mouth bass, station 2"
+32740,ODEQ,Sample,9/12/2005,Mercury,Total,0.264,mg/Kg wet,"Fillet, no skin",0.03,"Agate Lake, large mouth bass, station 3"
+32741,ODEQ,Sample,9/12/2005,Mercury,Total,0.389,mg/Kg wet,"Fillet, no skin",0.03,"Agate Lake, large mouth bass, station 4"
+32742,ODEQ,Sample,9/12/2005,Mercury,Total,0.149,mg/Kg wet,"Fillet, no skin",0.03,"Agate Lake, large mouth bass, station 5"
+32743,ODEQ,Sample,9/12/2005,Mercury,Total,0.444,mg/Kg wet,"Fillet, no skin",0.03,"Agate Lake, large mouth bass, station 6"
+32744,ODEQ,Sample,9/12/2005,Mercury,Total,0.404,mg/Kg wet,"Fillet, no skin",0.03,"Agate Lake, large mouth bass, station 7"
+32745,ODEQ,Sample,9/12/2005,Mercury,Total,0.425,mg/Kg wet,"Fillet, no skin",0.03,"Agate Lake, large mouth bass, station 8"
+32935,ODEQ,Sample,9/26/2006,Mercury,Total,0.08,mg/Kg dry,Whole body,0.05,"Columbia River Youngs Bay, 0.15 nautical miles northeast of Daggett Point"
+32936,ODEQ,Sample,9/20/2006,Mercury,Total,0.084,mg/Kg dry,Whole body,0.05,Smith River at River Mile 0.9 near north tip of Blacks Island
+32937,ODEQ,Sample,8/22/2006,Mercury,Total,0.067,mg/Kg dry,Whole body,0.05,Siletz Bay at River Mile 0.2 west of Siletz Keys
+32938,ODEQ,Sample,7/11/2006,Mercury,Total,0.092,mg/Kg dry,Whole body,0.05,"Coos Bay SE, 0.2 nautical miles east of Iso green marker"
+32939,ODEQ,Sample,9/14/2006,Mercury,Total,0.09,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 21, 0.9 nautical miles east of red marker #4"
+32940,ODEQ,Sample,8/9/2006,Mercury,Total,0.061,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 16.2, 1.0 nautical miles northeast of green marker #39"
+32940,ODEQ,Sample,8/9/2006,Mercury,Total,0.116,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 16.2, 1.0 nautical miles northeast of green marker #39"
+32942,ODEQ,Sample,9/28/2006,Mercury,Total,0.103,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 14, 0.3 nautical miles east of the Astoria Bridge"
+32944,ODEQ,Sample,9/18/2006,Mercury,Total,0.085,mg/Kg dry,Whole body,0.05,"Alsea Bay, 0.44 nautical miles southeast of McKinney Slough"
+32945,ODEQ,Sample,7/25/2006,Mercury,Total,0.088,mg/Kg dry,Whole body,0.05,"Yaquina Bay, 0.12 nautical miles west of green marker #17"
+32946,ODEQ,Sample,7/13/2006,Mercury,Total,0.06,mg/Kg dry,Whole body,0.05,Coos Bay North near Pony Slough mouth
+32947,ODEQ,Sample,9/13/2006,Mercury,Total,0.108,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 6.2, 0.35 nautical miles south of green marker #21"
+32948,ODEQ,Sample,8/24/2006,Mercury,Total,0.153,mg/Kg dry,Whole body,0.05,Columbia River at River Mile 3.5 just north of Sand Island
+32949,ODEQ,Sample,7/20/2006,Mercury,Total,0.069,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 19, 0.4 nautical miles northeast of marker #44"
+32950,ODEQ,Sample,9/27/2006,Mercury,Total,0.181,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 7, 0.3 nautical miles southwest of Desdemona Sands marker"
+32952,ODEQ,Sample,8/17/2006,Mercury,Total,0.103,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 18.5, just north of Taylor Sands"
+32953,ODEQ,Sample,8/15/2006,Mercury,Total,0.101,mg/Kg dry,Whole body,0.05,"Columbia River at River Mile 15, 1.3 nautical miles southeast of Point Ellice"
+32955,ODEQ,Sample,8/23/2006,Mercury,Total,0.063,mg/Kg dry,Whole body,0.05,"Tillamook Bay East, 0.6 nautical miles northwest of Sandstone Point"
+32956,ODEQ,Sample,7/26/2006,Mercury,Total,0.154,mg/Kg dry,Whole body,0.05,"Netarts Bay Central, 0.5 nautical miles southwest of Yager CR mouth"
+32957,ODEQ,Sample,9/19/2006,Mercury,Total,0.077,mg/Kg dry,Whole body,0.05,Umpqua River at River Mile 6 west of The Point
+32958,ODEQ,Sample,7/12/2006,Mercury,Total,0.12,mg/Kg dry,Whole body,0.05,"Coos Bay West, 0.05 nautical miles east of red marker #8"
+32959,ODEQ,Sample,8/23/2006,Mercury,Total,0.058,mg/Kg dry,Whole body,0.05,"Tillamook Bay South, 1.0 nautical miles southwest of Bay City"
+33617,ODEQ,Sample,8/17/2009,Mercury,NA,0.06,mg/Kg wet,Whole body,0.03,Willamette River at Willamette Falls directly downstream from locks
+33617,ODEQ,Sample,8/19/2009,Mercury,NA,0.26,mg/Kg wet,Whole body,0.03,Willamette River at Willamette Falls directly downstream from locks
+33617,ODEQ,Sample,8/26/2009,Mercury,NA,0.16,mg/Kg wet,Whole body,0.03,Willamette River at Willamette Falls directly downstream from locks
+33776,ODEQ,Sample,8/16/2006,Mercury,Total,0.032,mg/Kg wet,"Tissue, Fish",0.03,Marks Creek below Peterson Creek
+33777,ODEQ,Sample,8/16/2006,Mercury,Total,0.034,mg/Kg wet,"Tissue, Fish",0.03,Marks Creek above Elliot Creek
+33778,ODEQ,Sample,8/16/2006,Mercury,Total,0.031,mg/Kg wet,"Tissue, Fish",0.03,Marks Creek below Sears Creek
+33779,ODEQ,Sample,8/16/2006,Mercury,Total,0.035,mg/Kg wet,"Tissue, Fish",0.03,Marks Creek at Spears Meadow
+33780,ODEQ,Sample,8/16/2006,Mercury,Total,0.045,mg/Kg wet,"Tissue, Fish",0.03,Marks Creek below Buck Creek
+33781,ODEQ,Sample,8/16/2006,Mercury,Total,0.03,mg/Kg wet,"Tissue, Fish",0.03,Marks Creek above Cougar Campground
+33782,ODEQ,Sample,8/17/2006,Mercury,Total,0.036,mg/Kg wet,"Tissue, Fish",0.03,Marks Creek below Cornez Creek
+33783,ODEQ,Sample,8/17/2006,Mercury,Total,0.036,mg/Kg wet,"Tissue, Fish",0.03,Marks Creek below Longhollow Creek
+33784,ODEQ,Sample,8/17/2006,Mercury,Total,0.03,mg/Kg wet,"Tissue, Fish",0.03,Marks Creek below Crystal Creek
+33785,ODEQ,Sample,8/15/2006,Mercury,Total,0.207,mg/Kg wet,"Tissue, Fish",0.03,Ochoco Creek between Hon and Garden
+33786,ODEQ,Sample,8/15/2006,Mercury,Total,0.219,mg/Kg wet,"Tissue, Fish",0.03,Ochoco Creek below Metal Creek
+33787,ODEQ,Sample,8/14/2006,Mercury,Total,0.051,mg/Kg wet,"Tissue, Fish",0.03,Ochoco Creek at Judy Creek
+33788,ODEQ,Sample,8/15/2006,Mercury,Total,0.03,mg/Kg wet,"Tissue, Fish",0.03,Coyle Creek headwaters below FSR 2610
+33789,ODEQ,Sample,8/15/2006,Mercury,Total,0.175,mg/Kg wet,"Tissue, Fish",0.03,Ochoco Creek between Coyle and Canyon
+33790,ODEQ,Sample,8/16/2006,Mercury,Total,0.15,mg/Kg wet,"Tissue, Fish",0.03,Ochoco Creek below Camp Branch Creek
+33792,ODEQ,Sample,8/15/2006,Mercury,Total,0.045,mg/Kg wet,"Tissue, Fish",0.03,Duncan Creek headwaters
+33793,ODEQ,Sample,8/15/2006,Mercury,Total,0.037,mg/Kg wet,"Tissue, Fish",0.03,Ochoco Creek below Ahalt Creek
+33839,ODEQ,Sample,8/15/2006,Mercury,Total,0.412,mg/Kg wet,"Tissue, Fish",0.03,Canyon Creek headwaters below Cline Creek
+34193,ODEQ,Sample,6/23/2009,Mercury,NA,0.46,mg/Kg wet,"Fillet, no skin",0.03,White Salmon River at mouth (WA) (Columbia)
+34198,ODEQ,Sample,9/14/2010,Mercury,NA,0.09,mg/Kg wet,"Fillet, no skin",0.03,Willamette R at Jon Storm Park boat dock
+34198,ODEQ,Sample,9/14/2010,Mercury,NA,0.06,mg/Kg wet,"Fillet, no skin",0.03,Willamette R at Jon Storm Park boat dock
+34198,ODEQ,Sample,9/14/2010,Mercury,NA,0.47,mg/Kg wet,"Fillet, no skin",0.03,Willamette R at Jon Storm Park boat dock
+34198,ODEQ,Sample,9/14/2010,Mercury,NA,0.44,mg/Kg wet,"Fillet, no skin",0.03,Willamette R at Jon Storm Park boat dock
+34198,ODEQ,Sample - Field Primary,9/14/2010,Mercury,NA,1,mg/Kg wet,"Fillet, no skin",0.03,Willamette R at Jon Storm Park boat dock
+34198,ODEQ,Sample - Field Duplicate,9/14/2010,Mercury,NA,0.98,mg/Kg wet,"Fillet, no skin",0.03,Willamette R at Jon Storm Park boat dock
+35195,ODEQ,Sample,6/23/2008,Mercury,NA,0.49,mg/Kg wet,"Fillet, no skin",0.03,North Tenmile Lake at ODFW STA 1
+35196,ODEQ,Sample,6/23/2008,Mercury,NA,1.43,mg/Kg wet,"Fillet, no skin",0.03,North Tenmile Lake at ODFW STA 3
+35196,ODEQ,Sample,6/23/2008,Mercury,NA,1.36,mg/Kg wet,"Fillet, no skin",0.03,North Tenmile Lake at ODFW STA 3
+35197,ODEQ,Sample,6/23/2008,Mercury,NA,1.16,mg/Kg wet,"Fillet, no skin",0.03,North Tenmile Lake at ODFW STA 4
+35198,ODEQ,Sample,6/23/2008,Mercury,NA,0.29,mg/Kg wet,"Fillet, no skin",0.03,North Tenmile Lake at ODFW STA 5
+35199,ODEQ,Sample,6/23/2008,Mercury,NA,0.8,mg/Kg wet,"Fillet, no skin",0.03,South Tenmile Lake at ODFW STA 1
+35199,ODEQ,Sample,6/23/2008,Mercury,NA,0.96,mg/Kg wet,"Fillet, no skin",0.03,South Tenmile Lake at ODFW STA 1
+35200,ODEQ,Sample,6/23/2008,Mercury,NA,0.65,mg/Kg wet,"Fillet, no skin",0.03,South Tenmile Lake at ODFW STA 4
+35201,ODEQ,Sample,6/23/2008,Mercury,NA,0.74,mg/Kg wet,"Fillet, no skin",0.03,South Tenmile Lake at ODFW STA 7
+35202,ODEQ,Sample,6/23/2008,Mercury,NA,0.71,mg/Kg wet,"Fillet, no skin",0.03,South Tenmile Lake at ODFW STA 8
+35234,ODEQ,Sample,8/6/2008,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Vernita Bridge
+35235,ODEQ,Sample,8/1/2008,Mercury,NA,0.22,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Kennewick-Wade Island
+35236,ODEQ,Sample,7/16/2008,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Bridgeport 
+35237,ODEQ,Sample,7/14/2008,Mercury,NA,0.12,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Chelan 
+35238,ODEQ,Sample,7/29/2008,Mercury,NA,0.17,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at East Vernita Bridge
+35239,ODEQ,Sample,8/3/2008,Mercury,NA,0.41,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Port Kelley 
+35240,ODEQ,Sample,7/12/2008,Mercury,NA,0.23,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Daroga
+35241,ODEQ,Sample,8/5/2008,Mercury,NA,0.07,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Beverly 
+35242,ODEQ,Sample,8/2/2008,Mercury,NA,0.07,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Savage Island 
+35244,ODEQ,Sample,7/11/2008,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Rock Island (Wenatchee)
+35245,ODEQ,Sample,7/3/2008,Mercury,NA,0.28,mg/Kg dry,"Fillet, no skin",0.03,Columbia River at Babcock Bench
+35246,ODEQ,Sample,8/2/2008,Mercury,NA,0.08,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Johnson Island
+35247,ODEQ,Sample,7/9/2008,Mercury,NA,0.75,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Rufus Wood
+35248,ODEQ,Sample,7/11/2008,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Wenatchee Pumpstation
+35249,ODEQ,Sample,7/3/2008,Mercury,NA,0.33,mg/Kg dry,"Fillet, no skin",0.03,Columbia River at Cresent Bar
+35250,ODEQ,Sample,8/1/2008,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Snake River Confluence
+35251,ODEQ,Sample,7/12/2008,Mercury,NA,0.69,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Goose Fall
+35252,ODEQ,Sample,8/3/2008,Mercury,NA,0.43,mg/Kg wet,"Fillet, no skin",0.03,Columbia River at Lake Wallula Gap
+35317,ODEQ,Sample,6/25/2009,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Cascade Locks 0.3 Mi US of Channel Marker 12 (St Mi 149.4)
+35317,ODEQ,Sample,6/25/2009,Mercury,NA,0.17,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Cascade Locks 0.3 Mi US of Channel Marker 12 (St Mi 149.4)
+35317,ODEQ,Sample,6/25/2009,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Cascade Locks 0.3 Mi US of Channel Marker 12 (St Mi 149.4)
+35317,ODEQ,Sample,6/25/2009,Mercury,NA,0.09,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Cascade Locks 0.3 Mi US of Channel Marker 12 (St Mi 149.4)
+35318,ODEQ,Sample,6/23/2009,Mercury,NA,0.17,mg/Kg wet,"Fillet, no skin",0.03,Columbia R US of Drano Lake at Channel Marker 30 St Mi 163.6
+35318,ODEQ,Sample,6/23/2009,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Columbia R US of Drano Lake at Channel Marker 30 St Mi 163.6
+35319,ODEQ,Sample,7/2/2009,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Columbia R Lake Umatilla at Channel Marker 18 St Mi 238.7
+35319,ODEQ,Sample,7/2/2009,Mercury,NA,0.18,mg/Kg wet,"Fillet, no skin",0.03,Columbia R Lake Umatilla at Channel Marker 18 St Mi 238.7
+35319,ODEQ,Sample,7/2/2009,Mercury,NA,0.12,mg/Kg wet,"Fillet, no skin",0.03,Columbia R Lake Umatilla at Channel Marker 18 St Mi 238.7
+35319,ODEQ,Sample,7/2/2009,Mercury,NA,0.31,mg/Kg wet,"Fillet, no skin",0.03,Columbia R Lake Umatilla at Channel Marker 18 St Mi 238.7
+35320,ODEQ,Sample,6/30/2009,Mercury,NA,0.75,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Crow Butte Powerline St Mi 263.3
+35320,ODEQ,Sample,6/30/2009,Mercury,NA,0.63,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Crow Butte Powerline St Mi 263.3
+35320,ODEQ,Sample,6/30/2009,Mercury,NA,0.28,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Crow Butte Powerline St Mi 263.3
+35320,ODEQ,Sample,6/30/2009,Mercury,NA,0.54,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Crow Butte Powerline St Mi 263.3
+35320,ODEQ,Sample,6/30/2009,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Crow Butte Powerline St Mi 263.3
+35320,ODEQ,Sample,6/30/2009,Mercury,NA,0.43,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Crow Butte Powerline St Mi 263.3
+35321,ODEQ,Sample,6/25/2009,Mercury,NA,0.24,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Trotter Point St Mi 153.3
+35321,ODEQ,Sample,6/25/2009,Mercury,NA,0.26,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Trotter Point St Mi 153.3
+35321,ODEQ,Sample,6/25/2009,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Trotter Point St Mi 153.3
+35321,ODEQ,Sample,6/25/2009,Mercury,NA,0.2,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Trotter Point St Mi 153.3
+35321,ODEQ,Sample,6/25/2009,Mercury,NA,0.23,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Trotter Point St Mi 153.3
+35322,ODEQ,Sample,7/9/2009,Mercury,NA,0.31,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Wind Mountain St Mi 156.4
+35322,ODEQ,Sample,7/9/2009,Mercury,NA,0.26,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Wind Mountain St Mi 156.4
+35322,ODEQ,Sample,7/9/2009,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Wind Mountain St Mi 156.4
+35322,ODEQ,Sample,7/9/2009,Mercury,NA,0.27,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Wind Mountain St Mi 156.4
+35323,ODEQ,Sample,6/18/2009,Mercury,NA,0.16,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Lake Umatilla Channel Marker 6 St Mi 223.4
+35324,ODEQ,Sample,7/1/2009,Mercury,NA,0.45,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Big Blalock Island St Mi 276.2
+35324,ODEQ,Sample,7/1/2009,Mercury,NA,0.54,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Big Blalock Island St Mi 276.2
+35324,ODEQ,Sample,7/1/2009,Mercury,NA,0.18,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Big Blalock Island St Mi 276.2
+35325,ODEQ,Sample,6/16/2009,Mercury,NA,0.18,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Lake Celilo Channel Marker 1 St Mi 193.1
+35325,ODEQ,Sample,6/16/2009,Mercury,NA,0.21,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Lake Celilo Channel Marker 1 St Mi 193.1
+35326,ODEQ,Sample,6/11/2009,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at East end of Miller Is. St Mi 206
+35326,ODEQ,Sample,6/11/2009,Mercury,NA,0.12,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at East end of Miller Is. St Mi 206
+35326,ODEQ,Sample,6/11/2009,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at East end of Miller Is. St Mi 206
+35326,ODEQ,Sample,6/11/2009,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at East end of Miller Is. St Mi 206
+35327,ODEQ,Sample,7/8/2009,Mercury,NA,0.35,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Arlington Channel Marker 21 St Mi 243.5
+35327,ODEQ,Sample,7/8/2009,Mercury,NA,0.48,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Arlington Channel Marker 21 St Mi 243.5
+35328,ODEQ,Sample,6/24/2009,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Irrigon Channel Marker 64 St Mi 284.3
+35328,ODEQ,Sample,6/24/2009,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Irrigon Channel Marker 64 St Mi 284.3
+35328,ODEQ,Sample,6/24/2009,Mercury,NA,0.13,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Irrigon Channel Marker 64 St Mi 284.3
+35328,ODEQ,Sample,6/24/2009,Mercury,NA,0.07,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Irrigon Channel Marker 64 St Mi 284.3
+35329,ODEQ,Sample,6/18/2009,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Memaloose Channel Marker 48 St Mi 176.8
+35329,ODEQ,Sample,6/18/2009,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Memaloose Channel Marker 48 St Mi 176.8
+35329,ODEQ,Sample,6/18/2009,Mercury,NA,0.08,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Memaloose Channel Marker 48 St Mi 176.8
+35329,ODEQ,Sample,6/18/2009,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Memaloose Channel Marker 48 St Mi 176.8
+35329,ODEQ,Sample,6/18/2009,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Memaloose Channel Marker 48 St Mi 176.8
+35329,ODEQ,Sample,6/18/2009,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Memaloose Channel Marker 48 St Mi 176.8
+35330,ODEQ,Sample,6/10/2009,Mercury,NA,0.17,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Rufus 0.5 Mi US of Channel Marker 41 St Mi 212
+35331,ODEQ,Sample,7/9/2009,Mercury,NA,0.12,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Hepner Jct 1.25 Mi DS of Willow Cr.  St Mi 252.2
+35332,ODEQ,Sample,6/24/2009,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at McNary Dam 0.5 Mi US Channel Marker 1 St Mi 294
+35332,ODEQ,Sample,6/24/2009,Mercury,NA,0.11,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at McNary Dam 0.5 Mi US Channel Marker 1 St Mi 294
+35332,ODEQ,Sample,6/24/2009,Mercury,NA,0.18,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at McNary Dam 0.5 Mi US Channel Marker 1 St Mi 294
+35332,ODEQ,Sample,6/24/2009,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at McNary Dam 0.5 Mi US Channel Marker 1 St Mi 294
+35332,ODEQ,Sample,6/24/2009,Mercury,NA,0.08,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at McNary Dam 0.5 Mi US Channel Marker 1 St Mi 294
+35332,ODEQ,Sample,6/24/2009,Mercury,NA,0.07,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at McNary Dam 0.5 Mi US Channel Marker 1 St Mi 294
+35333,ODEQ,Sample,6/23/2009,Mercury,NA,0.79,mg/Kg wet,"Fillet, no skin",0.03,Columbia R 0.3 Mi DS of Hood River Bridge St Mi 169.4
+35333,ODEQ,Sample,6/23/2009,Mercury,NA,0.5,mg/Kg wet,"Fillet, no skin",0.03,Columbia R 0.3 Mi DS of Hood River Bridge St Mi 169.4
+35334,ODEQ,Sample,6/30/2009,Mercury,NA,0.19,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Crow Butte Channel Marker 35 St Mi 264.6
+35334,ODEQ,Sample,6/30/2009,Mercury,NA,0.27,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Crow Butte Channel Marker 35 St Mi 264.6
+35334,ODEQ,Sample,6/30/2009,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Crow Butte Channel Marker 35 St Mi 264.6
+35334,ODEQ,Sample,6/30/2009,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Crow Butte Channel Marker 35 St Mi 264.6
+35334,ODEQ,Sample,6/30/2009,Mercury,NA,0.12,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Crow Butte Channel Marker 35 St Mi 264.6
+35335,ODEQ,Sample,6/16/2009,Mercury,NA,0.18,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at The Dalles St Mi 189.1
+35335,ODEQ,Sample,6/16/2009,Mercury,NA,0.16,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at The Dalles St Mi 189.1
+35335,ODEQ,Sample,6/16/2009,Mercury,NA,0.18,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at The Dalles St Mi 189.1
+35336,ODEQ,Sample,6/9/2009,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Miller Is (S Channel) 0.2 Mi US Channel Marker 4
+35336,ODEQ,Sample,6/9/2009,Mercury,NA,0.12,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Miller Is (S Channel) 0.2 Mi US Channel Marker 4
+35336,ODEQ,Sample,6/9/2009,Mercury,NA,0.23,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Miller Is (S Channel) 0.2 Mi US Channel Marker 4
+35336,ODEQ,Sample,6/9/2009,Mercury,NA,0.08,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Miller Is (S Channel) 0.2 Mi US Channel Marker 4
+35336,ODEQ,Sample,6/9/2009,Mercury,NA,0.17,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Miller Is (S Channel) 0.2 Mi US Channel Marker 4
+35337,ODEQ,Sample,6/17/2009,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Lake Umatilla 0.6 Mi US Channel Marker 10 St Mi 228.3
+35338,ODEQ,Sample,7/1/2009,Mercury,NA,0.27,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Lake Umatilla N Channel Blalock Islands St Mi 272
+35338,ODEQ,Sample,7/1/2009,Mercury,NA,0.7,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Lake Umatilla N Channel Blalock Islands St Mi 272
+35338,ODEQ,Sample,7/1/2009,Mercury,NA,0.27,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Lake Umatilla N Channel Blalock Islands St Mi 272
+35338,ODEQ,Sample,7/1/2009,Mercury,NA,0.26,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Lake Umatilla N Channel Blalock Islands St Mi 272
+35338,ODEQ,Sample,7/1/2009,Mercury,NA,0.23,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Lake Umatilla N Channel Blalock Islands St Mi 272
+35338,ODEQ,Sample,7/1/2009,Mercury,NA,0.2,mg/Kg wet,"Fillet, no skin",0.03,Columbia R at Lake Umatilla N Channel Blalock Islands St Mi 272
+35339,ODEQ,Sample,7/7/2009,Mercury,NA,0.1,mg/Kg wet,"Fillet, no skin",0.03,Columbia River DS of Sixmile Canyon RM 258.5
+35339,ODEQ,Sample,7/7/2009,Mercury,NA,0.14,mg/Kg wet,"Fillet, no skin",0.03,Columbia River DS of Sixmile Canyon RM 258.5
+35340,ODEQ,Sample,6/16/2009,Mercury,NA,0.2,mg/Kg wet,"Fillet, no skin",0.03,Columbia R US of the Dalles Locks Channel Marker 1 St Mi 193.2
+35340,ODEQ,Sample,6/16/2009,Mercury,NA,0.16,mg/Kg wet,"Fillet, no skin",0.03,Columbia R US of the Dalles Locks Channel Marker 1 St Mi 193.2
+35340,ODEQ,Sample,6/16/2009,Mercury,NA,0.18,mg/Kg wet,"Fillet, no skin",0.03,Columbia R US of the Dalles Locks Channel Marker 1 St Mi 193.2
+35340,ODEQ,Sample,6/16/2009,Mercury,NA,0.2,mg/Kg wet,"Fillet, no skin",0.03,Columbia R US of the Dalles Locks Channel Marker 1 St Mi 193.2
+35340,ODEQ,Sample,6/16/2009,Mercury,NA,0.34,mg/Kg wet,"Fillet, no skin",0.03,Columbia R US of the Dalles Locks Channel Marker 1 St Mi 193.2
+35341,ODEQ,Sample,6/15/2009,Mercury,NA,0.36,mg/Kg wet,"Fillet, no skin",0.03,Columbia River DS of The Dalles at RM 188 (3584-3774 Klindt Dr)
+35341,ODEQ,Sample,6/15/2009,Mercury,NA,0.16,mg/Kg wet,"Fillet, no skin",0.03,Columbia River DS of The Dalles at RM 188 (3584-3774 Klindt Dr)
+35341,ODEQ,Sample,6/15/2009,Mercury,NA,0.2,mg/Kg wet,"Fillet, no skin",0.03,Columbia River DS of The Dalles at RM 188 (3584-3774 Klindt Dr)
+35341,ODEQ,Sample,6/15/2009,Mercury,NA,0.13,mg/Kg wet,"Fillet, no skin",0.03,Columbia River DS of The Dalles at RM 188 (3584-3774 Klindt Dr)
+35341,ODEQ,Sample,6/15/2009,Mercury,NA,0.21,mg/Kg wet,"Fillet, no skin",0.03,Columbia River DS of The Dalles at RM 188 (3584-3774 Klindt Dr)
+35539,ODEQ,Sample,6/24/2009,Mercury,NA,0.31,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River 0.7 Mi US of Hwy 730
+35539,ODEQ,Sample,6/24/2009,Mercury,NA,0.32,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River 0.7 Mi US of Hwy 730
+35539,ODEQ,Sample,6/24/2009,Mercury,NA,0.34,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River 0.7 Mi US of Hwy 730
+35539,ODEQ,Sample,6/24/2009,Mercury,NA,0.27,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River 0.7 Mi US of Hwy 730
+35539,ODEQ,Sample,6/24/2009,Mercury,NA,0.34,mg/Kg wet,"Fillet, no skin",0.03,Umatilla River 0.7 Mi US of Hwy 730
+36030,ODEQ,Sample,8/17/2009,Mercury,NA,0.25,mg/Kg wet,Whole body,0.03,Deschutes River at Shears Falls Fish Ladder
+36037,ODEQ,Sample,6/23/2009,Mercury,NA,0.52,mg/Kg wet,"Fillet, no skin",0.03,Klickitat R WA at RM 0.4
+36037,ODEQ,Sample,6/23/2009,Mercury,NA,2.32,mg/Kg wet,"Fillet, no skin",0.03,Klickitat R WA at RM 0.4
+36037,ODEQ,Sample,6/23/2009,Mercury,NA,0.77,mg/Kg wet,"Fillet, no skin",0.03,Klickitat R WA at RM 0.4
+36362,ODEQ,Sample,9/15/2010,Mercury,NA,0.18,mg/Kg wet,"Fillet, no skin",0.03,Cold Springs Reservoir; (Centroid) Fish collected in suitable habitat within the reservoir.
+36362,ODEQ,Sample,9/15/2010,Mercury,NA,0.13,mg/Kg wet,"Fillet, no skin",0.03,Cold Springs Reservoir; (Centroid) Fish collected in suitable habitat within the reservoir.
+36362,ODEQ,Sample,9/15/2010,Mercury,NA,0.15,mg/Kg wet,"Fillet, no skin",0.03,Cold Springs Reservoir; (Centroid) Fish collected in suitable habitat within the reservoir.
+36362,ODEQ,Sample,9/15/2010,Mercury,NA,0.21,mg/Kg wet,"Fillet, no skin",0.03,Cold Springs Reservoir; (Centroid) Fish collected in suitable habitat within the reservoir.
+36362,ODEQ,Sample,9/15/2010,Mercury,NA,0.17,mg/Kg wet,"Fillet, no skin",0.03,Cold Springs Reservoir; (Centroid) Fish collected in suitable habitat within the reservoir.
+36363,ODEQ,Sample,9/14/2010,Mercury,NA,0.16,mg/Kg wet,"Fillet, no skin",0.03,McKay Reservoir; (Centroid). Fishing took place in suitable habitat within the reservoir.
+36363,ODEQ,Sample,9/14/2010,Mercury,NA,0.16,mg/Kg wet,"Fillet, no skin",0.03,McKay Reservoir; (Centroid). Fishing took place in suitable habitat within the reservoir.
+36363,ODEQ,Sample,9/14/2010,Mercury,NA,0.39,mg/Kg wet,"Fillet, no skin",0.03,McKay Reservoir; (Centroid). Fishing took place in suitable habitat within the reservoir.
+36363,ODEQ,Sample,9/14/2010,Mercury,NA,0.52,mg/Kg wet,"Fillet, no skin",0.03,McKay Reservoir; (Centroid). Fishing took place in suitable habitat within the reservoir.
+36363,ODEQ,Sample,9/14/2010,Mercury,NA,0.99,mg/Kg wet,"Fillet, no skin",0.03,McKay Reservoir; (Centroid). Fishing took place in suitable habitat within the reservoir.
+14161500,USGS,Quality Control Sample-Field Replicate,9/19/2005,Mercury,Recoverable,0.1,mg/kg,Fillet,0.0019,"LOOKOUT CREEK NEAR BLUE RIVER, OR"
+14161500,USGS,Quality Control Sample-Field Replicate,9/19/2005,Mercury,Recoverable,0.2,mg/kg,Fillet,0.0019,"LOOKOUT CREEK NEAR BLUE RIVER, OR"
+14161500,USGS,Quality Control Sample-Field Replicate,9/19/2005,Mercury,Recoverable,0.1,mg/kg,Fillet,0.00191,"LOOKOUT CREEK NEAR BLUE RIVER, OR"
+14161500,USGS,Sample-Routine,9/19/2005,Mercury,Recoverable,0.1,mg/kg,Fillet,0.00184,"LOOKOUT CREEK NEAR BLUE RIVER, OR"
+14205400,USGS,Sample-Routine,7/23/2002,Mercury,Recoverable,0.746,mg/kg,Fillet,0.001,"EAST FORK DAIRY CREEK NEAR MEACHAM CORNER, OR"
+14205400,USGS,Sample-Routine,9/3/2002,Mercury,Recoverable,0.233,mg/kg,"Organism, whole",0.001,"EAST FORK DAIRY CREEK NEAR MEACHAM CORNER, OR"
+14206435,USGS,Quality Control Sample-Field Replicate,9/14/2005,Mercury,Recoverable,0.3,mg/kg,Fillet,0.00193,"BEAVERTON CREEK AT SW 216TH AVE, NR ORENCO, OR"
+14206435,USGS,Quality Control Sample-Field Replicate,9/14/2005,Mercury,Recoverable,1,mg/kg,Fillet,0.00187,"BEAVERTON CREEK AT SW 216TH AVE, NR ORENCO, OR"
+14206435,USGS,Sample-Routine,9/14/2005,Mercury,Recoverable,0.2,mg/kg,Organism minus head and viscera,0.00196,"BEAVERTON CREEK AT SW 216TH AVE, NR ORENCO, OR"
+14206435,USGS,Sample-Routine,9/14/2005,Mercury,Recoverable,0.2,mg/kg,Organism minus head and viscera,0.00198,"BEAVERTON CREEK AT SW 216TH AVE, NR ORENCO, OR"
+14206435,USGS,Sample-Routine,9/14/2005,Mercury,Recoverable,0.2,mg/kg,Organism minus head and viscera,0.00186,"BEAVERTON CREEK AT SW 216TH AVE, NR ORENCO, OR"
+14206435,USGS,Sample-Routine,9/14/2005,Mercury,Recoverable,0.3,mg/kg,Organism minus head and viscera,0.00196,"BEAVERTON CREEK AT SW 216TH AVE, NR ORENCO, OR"
+14206435,USGS,Sample-Routine,9/14/2005,Mercury,Recoverable,0.3,mg/kg,Organism minus head and viscera,0.00193,"BEAVERTON CREEK AT SW 216TH AVE, NR ORENCO, OR"
+14206435,USGS,Sample-Routine,9/14/2005,Mercury,Recoverable,0.2,mg/kg,Organism minus head and viscera,0.00205,"BEAVERTON CREEK AT SW 216TH AVE, NR ORENCO, OR"

@@ -1,120 +1,120 @@
-criterianame.x,Pollutant_ID,Pollutant,LASAR_PARAMETER_KEY,Evaluation_ID
-"2,4-D",2182,"Chlorophenoxy Herbicides (2,4-D)",NA,NA
-"2,4-Dinitrotoluene",2231,"Dinitrotoluene 2,4",NA,NA
-Acenaphthene,2201,Acenaphthene,NA,NA
-Aldrin,2204,Aldrin,1305,NA
-Alkalinity,2205,Alkalinity,NA,NA
-Ammonia as N,2206,Ammonia,NA,NA
-Anthracene,12644,Anthracene,538,NA
-Antimony,2207,Antimony,541,NA
-Arsenic (inorganic),2208,Arsenic,NA,NA
-Barium,2212,Barium,604,NA
-Benz(a)anthracene,1648,Benzo(A)anthracene,NA,NA
-Benzene,2213,Benzene,676,NA
-Benzo(a)pyrene,12649,Benzo(A)pyrene,NA,NA
-"Benzo(b)fluoranthene 3,4",NA,NA,NA,NA
-Benzo[k]fluoranthene,NA,NA,NA,NA
-BHC Alpha,NA,NA,NA,NA
-BHC Beta,NA,NA,NA,NA
-BHC Gamma (Lindane),NA,NA,NA,NA
-Bromoform,NA,NA,NA,NA
-Butylbenzyl Phthalate,NA,NA,NA,NA
-Cadmium,2217,Cadmium,765,NA
-Carbon Tetrachloride,2218,Carbon Tetrachloride,1792,NA
-Chlordane,2219,Chlordane,865,NA
-Chloride,2220,Chloride,868,NA
-Chlorine,2223,Chlorine,874,NA
-Chlorobenzene,NA,NA,NA,NA
-Chlorodibromomethane,NA,NA,NA,NA
-Chloroethyl Ether bis 2,2225,Chloroethyl Ether (bis-2),NA,NA
-Chloroform,2226,Chloroform,2329,NA
-Chloroisopropyl Ether bis 2,2177,Chloroisopropyl Ether (bis-2),NA,NA
-Chloronaphthalene 2,NA,NA,NA,NA
-Chlorophenol 2,2179,Chlorophenol 2,NA,NA
-"Chlorophenoxy Herbicide (2,4,5,-TP)",2181,"Chlorophenoxy Herbicides (2,4,5-TP) - Silvex",NA,NA
-Chlorpyrifos,2183,Chlorpyrifos,1863,NA
-Chromium VI ,12712,Chromium,NA,NA
-Chrysene,12661,Chrysene,48,NA
-Copper,2187,Copper,927,NA
-Cyanide,2188,Cyanide,957,NA
-"DDD 4,4'",12665,DDD,NA,NA
-"DDE 4,4'",2190,DDT Metabolite (DDE),NA,NA
-"DDT 4,4'",2189,DDT,NA,NA
-Di-n-butyl Phthalate,NA,NA,NA,NA
-"Dibenz[a,h]anthracene",NA,NA,NA,NA
-"Dichlorobenzene(m) 1,3",NA,NA,NA,NA
-"Dichlorobenzene(o) 1,2",NA,NA,NA,NA
-"Dichlorobenzene(p) 1,4",NA,NA,NA,NA
-"Dichlorobenzidine 3,3'",2195,Dichlorobenzidine,NA,NA
-Dichlorobromomethane,NA,NA,NA,NA
-"Dichloroethane 1,2",2196,"Dichloroethane 1,2",NA,NA
-"Dichloroethylene 1,1",NA,NA,NA,NA
-"Dichloroethylene trans 1,2",NA,NA,NA,NA
-"Dichlorophenol 2,4",2198,"Dichlorophenol 2,4",NA,NA
-"Dichloropropane 1,2",2199,Dichloropropane,NA,NA
-Dieldrin,2227,Dieldrin,503,NA
-Diethyl Phthalate,2228,Diethylphthalate,NA,NA
-Dimethyl Phthalate,2230,Dimethyl Phthalate,NA,NA
-"Dimethylphenol 2,4",2229,"Dimethyl Phenol 2,4",NA,NA
-"Dinitrophenol 2,4",NA,NA,NA,NA
-"Dioxin (2,3,7,8-TCDD)",2235,"Dioxin (2,3,7,8-TCDD)",NA,NA
-"Diphenylhydrazine 1,2",2237,"Diphenylhydrazine 1,2",NA,NA
-Endosulfan,2239,Endosulfan,NA,NA
-Endosulfan Alpha,12719,Endosulfan I,NA,NA
-Endosulfan Beta,12720,Endosulfan II,NA,NA
-Endosulfan Sulfate,12721,Endosulfan Sulfate,NA,NA
-Endrin,2240,Endrin,926,NA
-Endrin Aldehyde,12722,Endrin Aldehyde,NA,NA
-Ethylbenzene,2241,Ethylbenzene,10404,NA
-Ethylhexyl Phthalate bis 2,NA,NA,NA,NA
-Fluoranthene,2242,Fluoranthene,672,NA
-Fluorene,NA,NA,NA,NA
-Guthion,2243,Guthion,9903,NA
-Heptachlor,2246,Heptachlor,1296,NA
-Heptachlor Epoxide,NA,NA,NA,NA
-Hexachlorobenzene,2248,Hexachlorobenzene,656,NA
-Hexachlorobutadiene,2249,Hexachlorobutadiene,9870,NA
-Hexachlorocyclo-hexane-Technical,2253,Hexachlorocyclohexane-technical,NA,NA
-Hexachlorocyclopentadiene,2254,Hexachlorocyclopentadiene,1791,NA
-Hexachloroethane,2247,Hexachloroethane,1103,NA
-"Indeno[1,2,3-cd]pyrene",NA,NA,NA,NA
-Iron (total),2255,Iron,NA,NA
-Isophorone,2256,Isophorone,330,NA
-Lead,2257,Lead,1430,NA
-Malathion,2258,Malathion,1898,NA
-Manganese,2259,Manganese,1491,NA
-Mercury (total),2260,Mercury,NA,NA
-Methoxychlor,2261,Methoxychlor,5387,NA
-"Methyl-4,6-dinitrophenol 2",NA,NA,NA,NA
-Methyl Bromide,NA,NA,NA,NA
-Methylene Chloride,NA,NA,NA,NA
-Mirex,2262,Mirex,6316,NA
-Nickel,2265,Nickel,1642,NA
-Nitrates,2266,Nitrates,NA,NA
-Nitrobenzene,2267,Nitrobenzene,1719,NA
-Nitrosamines,2269,Nitrosamines,NA,NA
-"Nitrosodi-n-propylamine, N",NA,NA,NA,NA
-"Nitrosodiphenylamine, N",2273,Nitrosodiphenylamine N,NA,NA
-Parathion,2275,Parathion,1666,NA
-Pentachlorophenol,2279,Pentachlorophenol,1783,NA
-Phenol,2280,Phenol,1741,NA
-Phosphate Phosphorus,12709,Phosphate Phosphorus,NA,NA
-Phosphorus Elemental,2281,Phosphorus Elemental,NA,NA
-Polychlorinated Biphenyls (PCBs),2276,PCBs,NA,NA
-Pyrene,12697,Pyrene,674,NA
-Selenium,2284,Selenium,2083,NA
-Silver,2285,Silver,2105,NA
-"Tetrachlorobenzene, 1,2,4,5-",2288,"Tetrachlorobenzene 1,2,4,5",NA,NA
-"Tetrachloroethane 1,1,2,2",2289,"Tetrachloroethane 1,1,2,2",NA,NA
-Tetrachloroethylene,2291,Tetrachloroethylene,6348,NA
-Thallium,2293,Thallium,2252,NA
-Toluene,2294,Toluene,1519,NA
-Total DDT,NA,NA,NA,NA
-Toxaphene,2295,Toxaphene,794,NA
-"Trichlorobenzene 1,2,4",NA,NA,NA,NA
-"Trichloroethane 1,1,2",2298,"Trichloroethane 1,1,2",NA,NA
-Trichloroethylene,2299,Trichloroethylene,2200,NA
-"Trichlorophenol 2,4,6",2301,"Trichlorophenol 2,4,6",NA,NA
-"Trichlorophenol, 2, 4, 5-",2300,"Trichlorophenol 2,4,5",NA,NA
-Vinyl Chloride,2302,Vinyl Chloride,1121,NA
-Zinc,2303,Zinc,2436,NA
+criterianame.x,Pollutant_ID,Pollutant,LASAR_PARAMETER_KEY,Evaluation_ID,Former_Group_Name,Former_Group_Name_Pollutant_ID
+"2,4-D",2182,"Chlorophenoxy Herbicides (2,4-D)",NA,NA,,
+"2,4-Dinitrotoluene",2231,"Dinitrotoluene 2,4",NA,NA,,
+Acenaphthene,2201,Acenaphthene,NA,NA,,
+Aldrin,2204,Aldrin,1305,NA,,
+Alkalinity,2205,Alkalinity,NA,NA,,
+Ammonia as N,2206,Ammonia,NA,NA,,
+Anthracene,12644,Anthracene,538,NA,,
+Antimony,2207,Antimony,541,NA,,
+Arsenic (inorganic),2208,Arsenic,NA,NA,,
+Barium,2212,Barium,604,NA,,
+Benz(a)anthracene,1648,Benzo(A)anthracene,NA,NA,,
+Benzene,2213,Benzene,676,NA,,
+Benzo(a)pyrene,12649,Benzo(A)pyrene,NA,NA,,
+"Benzo(b)fluoranthene 3,4",NA,NA,NA,NA,,
+Benzo[k]fluoranthene,NA,NA,NA,NA,,
+BHC Alpha,NA,NA,NA,NA,,
+BHC Beta,NA,NA,NA,NA,,
+BHC Gamma (Lindane),NA,NA,NA,NA,,
+Bromoform,NA,NA,NA,NA,,
+Butylbenzyl Phthalate,NA,NA,NA,NA,,
+Cadmium,2217,Cadmium,765,NA,,
+Carbon Tetrachloride,2218,Carbon Tetrachloride,1792,NA,,
+Chlordane,2219,Chlordane,865,NA,,
+Chloride,2220,Chloride,868,NA,,
+Chlorine,2223,Chlorine,874,NA,,
+Chlorobenzene,NA,NA,NA,NA,,
+Chlorodibromomethane,NA,NA,NA,NA,,
+Chloroethyl Ether bis 2,2225,Chloroethyl Ether (bis-2),NA,NA,,
+Chloroform,2226,Chloroform,2329,NA,,
+Chloroisopropyl Ether bis 2,2177,Chloroisopropyl Ether (bis-2),NA,NA,,
+Chloronaphthalene 2,NA,NA,NA,NA,,
+Chlorophenol 2,2179,Chlorophenol 2,NA,NA,,
+"Chlorophenoxy Herbicide (2,4,5,-TP)",2181,"Chlorophenoxy Herbicides (2,4,5-TP) - Silvex",NA,NA,,
+Chlorpyrifos,2183,Chlorpyrifos,1863,NA,,
+Chromium VI ,12712,Chromium,NA,NA,,
+Chrysene,12661,Chrysene,48,NA,,
+Copper,2187,Copper,927,NA,,
+Cyanide,2188,Cyanide,957,NA,,
+"DDD 4,4'",12665,DDD,NA,NA,,
+"DDE 4,4'",2190,DDT Metabolite (DDE),NA,NA,,
+"DDT 4,4'",2189,DDT,NA,NA,,
+Di-n-butyl Phthalate,NA,NA,NA,NA,,
+"Dibenz[a,h]anthracene",NA,NA,NA,NA,,
+"Dichlorobenzene(m) 1,3",NA,NA,NA,NA,Dichlorobenzenes,2194
+"Dichlorobenzene(o) 1,2",NA,NA,NA,NA,Dichlorobenzenes,2194
+"Dichlorobenzene(p) 1,4",NA,NA,NA,NA,Dichlorobenzenes,2194
+"Dichlorobenzidine 3,3'",2195,Dichlorobenzidine,NA,NA,,
+Dichlorobromomethane,NA,NA,NA,NA,,
+"Dichloroethane 1,2",2196,"Dichloroethane 1,2",NA,NA,,
+"Dichloroethylene 1,1",NA,NA,NA,NA,,
+"Dichloroethylene trans 1,2",NA,NA,NA,NA,,
+"Dichlorophenol 2,4",2198,"Dichlorophenol 2,4",NA,NA,,
+"Dichloropropane 1,2",2199,Dichloropropane,NA,NA,,
+Dieldrin,2227,Dieldrin,503,NA,,
+Diethyl Phthalate,2228,Diethylphthalate,NA,NA,,
+Dimethyl Phthalate,2230,Dimethyl Phthalate,NA,NA,,
+"Dimethylphenol 2,4",2229,"Dimethyl Phenol 2,4",NA,NA,,
+"Dinitrophenol 2,4",NA,NA,NA,NA,,
+"Dioxin (2,3,7,8-TCDD)",2235,"Dioxin (2,3,7,8-TCDD)",NA,NA,,
+"Diphenylhydrazine 1,2",2237,"Diphenylhydrazine 1,2",NA,NA,,
+Endosulfan,2239,Endosulfan,NA,NA,,
+Endosulfan Alpha,12719,Endosulfan I,NA,NA,,
+Endosulfan Beta,12720,Endosulfan II,NA,NA,,
+Endosulfan Sulfate,12721,Endosulfan Sulfate,NA,NA,,
+Endrin,2240,Endrin,926,NA,,
+Endrin Aldehyde,12722,Endrin Aldehyde,NA,NA,,
+Ethylbenzene,2241,Ethylbenzene,10404,NA,,
+Ethylhexyl Phthalate bis 2,NA,NA,NA,NA,,
+Fluoranthene,2242,Fluoranthene,672,NA,,
+Fluorene,NA,NA,NA,NA,,
+Guthion,2243,Guthion,9903,NA,,
+Heptachlor,2246,Heptachlor,1296,NA,,
+Heptachlor Epoxide,NA,NA,NA,NA,,
+Hexachlorobenzene,2248,Hexachlorobenzene,656,NA,,
+Hexachlorobutadiene,2249,Hexachlorobutadiene,9870,NA,,
+Hexachlorocyclo-hexane-Technical,2253,Hexachlorocyclohexane-technical,NA,NA,,
+Hexachlorocyclopentadiene,2254,Hexachlorocyclopentadiene,1791,NA,,
+Hexachloroethane,2247,Hexachloroethane,1103,NA,,
+"Indeno[1,2,3-cd]pyrene",NA,NA,NA,NA,,
+Iron (total),2255,Iron,NA,NA,,
+Isophorone,2256,Isophorone,330,NA,,
+Lead,2257,Lead,1430,NA,,
+Malathion,2258,Malathion,1898,NA,,
+Manganese,2259,Manganese,1491,NA,,
+Mercury (total),2260,Mercury,NA,NA,,
+Methoxychlor,2261,Methoxychlor,5387,NA,,
+"Methyl-4,6-dinitrophenol 2",NA,NA,NA,NA,,
+Methyl Bromide,NA,NA,NA,NA,,
+Methylene Chloride,NA,NA,NA,NA,,
+Mirex,2262,Mirex,6316,NA,,
+Nickel,2265,Nickel,1642,NA,,
+Nitrates,2266,Nitrates,NA,NA,,
+Nitrobenzene,2267,Nitrobenzene,1719,NA,,
+Nitrosamines,2269,Nitrosamines,NA,NA,,
+"Nitrosodi-n-propylamine, N",NA,NA,NA,NA,,
+"Nitrosodiphenylamine, N",2273,Nitrosodiphenylamine N,NA,NA,,
+Parathion,2275,Parathion,1666,NA,,
+Pentachlorophenol,2279,Pentachlorophenol,1783,NA,,
+Phenol,2280,Phenol,1741,NA,,
+Phosphate Phosphorus,12709,Phosphate Phosphorus,NA,NA,,
+Phosphorus Elemental,2281,Phosphorus Elemental,NA,NA,,
+Polychlorinated Biphenyls (PCBs),2276,PCBs,NA,NA,,
+Pyrene,12697,Pyrene,674,NA,,
+Selenium,2284,Selenium,2083,NA,,
+Silver,2285,Silver,2105,NA,,
+"Tetrachlorobenzene, 1,2,4,5-",2288,"Tetrachlorobenzene 1,2,4,5",NA,NA,,
+"Tetrachloroethane 1,1,2,2",2289,"Tetrachloroethane 1,1,2,2",NA,NA,,
+Tetrachloroethylene,2291,Tetrachloroethylene,6348,NA,,
+Thallium,2293,Thallium,2252,NA,,
+Toluene,2294,Toluene,1519,NA,,
+Total DDT,NA,NA,NA,NA,,
+Toxaphene,2295,Toxaphene,794,NA,,
+"Trichlorobenzene 1,2,4",NA,NA,NA,NA,,
+"Trichloroethane 1,1,2",2298,"Trichloroethane 1,1,2",NA,NA,,
+Trichloroethylene,2299,Trichloroethylene,2200,NA,,
+"Trichlorophenol 2,4,6",2301,"Trichlorophenol 2,4,6",NA,NA,,
+"Trichlorophenol, 2, 4, 5-",2300,"Trichlorophenol 2,4,5",NA,NA,,
+Vinyl Chloride,2302,Vinyl Chloride,1121,NA,,
+Zinc,2303,Zinc,2436,NA,,

@@ -10,9 +10,6 @@ con <- odbcConnect('WQAssessment')
 
 wqp.data <- sqlFetch(con, 'WQPData_05022014')
 
-#add in phosphate data that we missed the first time
-names(tmp.phos.data) <- gsub('\\.','',names(tmp.phos.data))
-wqp.data <- rbind(wqp.data, tmp.phos.data)
 
 wqp.data$x <- apply(wqp.data[,names(wqp.data)],1,paste,collapse=',')
 wqp.data <- wqp.data[!duplicated(wqp.data$x),]
@@ -23,18 +20,45 @@ st <- sqlFetch(con, 'WQPQueryStatus_05052014')
 
 wqp.data <- merge(wqp.data, wqp.stations[,c('MonitoringLocationIdentifier','MonitoringLocationName')], all.x = TRUE)
 
+#add in phosphate data that we missed the first time
+#names(tmp.phos.data) <- gsub('\\.','',names(tmp.phos.data))
+wqp.data <- rbind(wqp.data, tmp.phos.data)
+
 #str(wqp.data)
 
 #There seem to be a lot of NAs in this field. 
 #table(wqp.data$ResultMeasureValue, useNA = "always") #Need to discern if they are ND's or what
 #table(wqp.data[is.na(wqp.data$ResultMeasureValue),'MeasureQualifierCode'],useNA = 'always') #No qualifiers associated
-wqp.data <- wqp.data[!is.na(wqp.data$ResultMeasureValue),] #Let's just remove them
+#wqp.data <- wqp.data[!is.na(wqp.data$ResultMeasureValue),] #Let's just remove them
+#Actually it turns out that we want to keep them in since there is another explanatory field explaining why they are NA
+#The ResultDetectionConditionText stores whether the sample was a ND. But there are a few that are Not Reported that we do want to remove.
+#We will take the subset of data initially excluded for having NA and then run only those data through the QC below and then append 
+#to the dataset that has already received subsequent processing. This note is updated as of 07162014.
+wqp.ND <- wqp.data[is.na(wqp.data$ResultMeasureValue),] 
+wqp.ND[!wqp.ND$ResultDetectionConditionText %in% c('Not Reported'),'ResultMeasureValue'] <- 0
+#Now we can remove the rest
+wqp.ND <- wqp.ND[!is.na(wqp.ND$ResultMeasureValue),] 
+wqp.ND <- wqp.ND[wqp.ND$OrganizationFormalName != 'Bureau of Reclamation',]
+wqp.ND <- wqp.ND[-grep('Qualifier=Q',wqp.ND$ResultCommentText),]
+wqp.ND$Tempid <- NA
+# wqp.data.wOrtho <- sqlFetch(con, 'WQPData_wOrthophos_07092014')
+# wqp.data.wND <- rbind(wqp.data.wOrtho, wqp.ND)
+# sqlSave(con, wqp.data.wND, tablename = 'WQPData_wND_07162014', rownames = FALSE)
+
+MORE.stations.to.locate <- unique(wqp.ND$MonitoringLocationIdentifier[!wqp.ND$MonitoringLocationIdentifier %in% wqp.data.wOrtho$MonitoringLocationIdentifier])
+MORE.stl.info <- wqp.stations[wqp.stations$MonitoringLocationIdentifier %in% MORE.stations.to.locate,]
+#These are all usgs stations and some of them were used in the draft too so were included in the first list I gave MIke
+sul2012 <- read.dbf('C:/Users/pbryant/Desktop/Stations_2012_Analysis.dbf')
+MORE.stl.info$site_only <- gsub('USGS-','',MORE.stl.info$MonitoringLocationIdentifier)
+MORE.stl.info <- MORE.stl.info[!MORE.stl.info$site_only %in% sul2012$STATION,]
+#write.csv(MORE.stl.info, 'StationstoLocate/MORE_stations_to_locate_07162014.csv', row.names = FALSE)
 
 #looks like there's some groundwater that crept in
-wqp.data <- wqp.data[wqp.data$ActivityMediaSubdivisionName != 'Groundwater',]
+wqp.data <- wqp.data[which(wqp.data$ActivityMediaSubdivisionName != 'Groundwater'),]
 
-#remove NA rows
-wqp.data <- wqp.data[!is.na(wqp.data$OrganizationFormalName),]
+#remove NA rows - Not needed anymore. Figured out that ActivityMediaSubdivisionName had 133 rows of NA which after doing the 
+#previous line forced the whole row to be NA
+#wqp.data <- wqp.data[!is.na(wqp.data$OrganizationFormalName),]
 
 #look at who collected these data
 #table(wqp.data$OrganizationFormalName)

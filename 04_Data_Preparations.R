@@ -19,7 +19,7 @@ source('//deqhq1/wqassessment/2012_WQAssessment/ToxicsRedo/TMP-RCode/hardness_ev
 
 #### Pull in the raw data and criteria ####
 con <- odbcConnect('WQAssessment')
-wqp.data <- sqlFetch(con, 'WQPData_wOrthophos_07092014')
+wqp.data <- sqlFetch(con, 'WQPData_wND_07162014')
 wqp.stations <- sqlFetch(con, 'WQPStations_wUpdatedLatLon_06132014')
 lasar <- sqlFetch(con, 'LASAR_Toxics_Query_wcriterianame_wAddOns_07082014')
 odbcCloseAll()
@@ -592,6 +592,9 @@ dcc.w.calcs <- rbind(dcc.wo.amm, amm)
 #### EVALUATION ####
 #regenerate this so it is new as long as any(duplicated(rownames(dcc.w.calcs))) evaluates to false
 dcc.w.calcs$index <- rownames(dcc.w.calcs)
+
+#Make sure criteria value is numeric so the appropriate minimum can be taken
+dcc.w.calcs$value <- as.numeric(dcc.w.calcs$value)
 
 #Take the minimum criteria
 #dplyr can't return whole rows efficiently yet. this is a data table solution retrieved from this 
