@@ -1,0 +1,13 @@
+"STATION_KEY","LOCATION_DESCRIPTION","LLID_Stream_Lake","Stream_Lake_Name","Str_RM","Latitude","Longitude","DATUM"
+10422,"Rogue River upstream of Raygold Dam","1244292424210","Rogue River",125.7,42.437222,-122.98225,"Assumed NAD83"
+10549,"Multnomah Channel at St. Helens","1227863458618","Multnomah Channel",1.3,45.845833,-122.798611,"Assumed NAD83"
+10550,"Multnomah Channel at Coon Island","1227863458618","Multnomah Channel",7.1,45.781806,-122.807278,"Assumed NAD83"
+10774,"Santiam River at mouth","1231425447502","Santiam River",0,44.750306,-123.140444,"Assumed NAD83"
+12090,"Umatilla River upstream of Three Mile Dam","1193384459144/1193211458791","Umatilla River/Three Mile Falls Pool",3.9,45.882472,-119.321722,"Assumed NAD83"
+13767,"East Lake at deepest point","1212241437275/1212089437288","East Lake/East Lake",0,43.728722,-121.203361,"Assumed NAD83"
+13844,"Paulina Lake at deepest point","1214804437619/1212599437205","Paulina Creek/Paulina Lake",13.3,43.723348,-121.266314,"Assumed NAD83"
+18390,"Ashland Emigrant Lake","1226509421932/1226067421567","Emigrant Creek/Unnamed Lake",3.7,42.151111,-122.625,"Assumed NAD83"
+23485,"Galesville Reservoir",NA,NA,NA,NA,NA,NA
+24575,"Shady Cove Fish Hatchery",NA,NA,NA,NA,NA,NA
+36362,"Cold Springs Reservoir; (Centroid) Fish collected in suitable habitat within the reservoir.","1191730458634/1191556458611","Cold Springs Canyon/Cold Springs Reservoir",0,45.863713,-119.14946,"Assumed NAD83"
+36363,"McKay Reservoir; (Centroid). Fishing took place in suitable habitat within the reservoir.",NA,NA,NA,45.595204,-118.785535,"Assumed NAD83"

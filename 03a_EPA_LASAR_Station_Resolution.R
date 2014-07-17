@@ -39,7 +39,7 @@ epa.orgs.not.EMAP <- c("EPA National Aquatic Resource Survey Data","EPA National
 #write.csv(wqp.stations[wqp.stations$OrganizationFormalName == 'EPA National Aquatic Resource Survey Data',],'NARS_List_for_SH.csv')
 #Pointed to access database Shannon 'maintains'. This takes care of 139 of 175 stations that had truncated lat/lon. Either
 #need to leave out the reaminging 36, locate them as is or try and track down better coordinates (as of 5/28/14). Will leave them out as of 5/29/14.
-nars.con <- odbcConnectAccess('//deqlead01/biomon/databases/Biomon_Phoenix.mdb')
+nars.con <- odbcConnectAccess('//deqlab1/biomon/databases/Biomon_Phoenix.mdb')
 nars.ref <- sqlFetch(nars.con, 'STATION')
 wqp.stations$site_only <- gsub('NARS-','',wqp.stations$site_only)
 wqp.stations$site_only <- gsub('NARS_WQX-','',wqp.stations$site_only)
