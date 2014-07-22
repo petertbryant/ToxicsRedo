@@ -1,161 +1,161 @@
-"Pollutant","lasar.name"
+Pollutant,lasar.name
 "2,4-D","2,4-D"
 "2,4-Dinitrotoluene","2,4-Dinitrotoluene"
 "4,4`-DDD","4,4`-DDD"
 "4,4`-DDE","4,4`-DDE"
 "4,4`-DDT","4,4`-DDT"
-"Acenaphthene","Acenaphthene"
-"Acrolein","Acrolein"
-"Acrylonitrile","Acrylonitrile"
-"Aldrin","Aldrin"
-"Alkalinity","Alkalinity as Calcium Carbonate"
-"alpha-BHC","alpha-BHC"
-"Anthracene","Anthracene"
-"Antimony, Total recoverable","Antimony"
-"Arsenic, Dissolved","Arsenic"
-"Arsenic, Total inorganic","Arsenic"
-"Arsenic, Total recoverable","Arsenic"
-"Azinphos methyl","Azinphos Methyl"
-"Barium, Total recoverable","Barium"
-"Benzene","Benzene"
-"Benzidine","Benzidine"
-"Benzo(a)anthracene","Benzo(a)anthracene"
-"Benzo(a)pyrene","Benzo(a)pyrene"
-"Benzo[b]fluoranthene","Benzo[b]fluoranthene"
-"Benzo[k]fluoranthene","Benzo[k]fluoranthene"
-"beta-BHC","beta-BHC"
-"Bis(2-ethylhexyl)phthalate","Bis(2-ethylhexyl)phthalate"
-"Bromoform","Bromoform"
-"Butylbenzylphthalate","Butylbenzylphthalate"
-"Cadmium, Dissolved","Cadmium"
-"Carbon Tetrachloride","Carbon Tetrachloride"
-"Chlordane","Chlordane"
-"Chloride","Chloride"
-"Chlorine","Chlorine"
-"Chlorobenzene","Chlorobenzene"
-"Chlorodibromomethane","Dibromochloromethane"
-"Chloroethyl Ether bis 2","Bis(2-chloroethyl)ether"
-"Chloroform","Chloroform"
-"Chloroisopropyl Ether bis 2","Bis(2-chloroisopropyl) ether"
-"Chloromethyl ether, bis","bis(Chloromethyl)ether"
-"Chloronaphthalene 2","2-Chloronaphthalene"
-"Chlorophenol 2","2-Chlorophenol"
-"Chlorophenoxy Herbicide (2,4,5,-TP)","Silvex"
-"Chlorpyrifos (Dursban)","Chlorpyrifos (Dursban)"
-"Chromium (Hex)","Chromium, hexavalent"
-"Chromium, Dissolved","Chromium"
-"Chrysene","Chrysene"
-"Copper, Dissolved","Copper"
-"Copper, Total recoverable","Copper"
-"Cyanide","Cyanide"
-"Demeton","Demeton"
-"Di-n-butyl Phthalate","di-n-Butylphthalate"
+Acenaphthene,Acenaphthene
+Acrolein,Acrolein
+Acrylonitrile,Acrylonitrile
+Aldrin,Aldrin
+Alkalinity,Alkalinity as Calcium Carbonate
+alpha-BHC,alpha-BHC
+Anthracene,Anthracene
+"Antimony, Total recoverable",Antimony
+"Arsenic, Dissolved",Arsenic
+"Arsenic, Total inorganic",Arsenic
+"Arsenic, Total recoverable",Arsenic
+Azinphos methyl,Azinphos Methyl
+"Barium, Total recoverable",Barium
+Benzene,Benzene
+Benzidine,Benzidine
+Benzo(a)anthracene,Benzo(a)anthracene
+Benzo(a)pyrene,Benzo(a)pyrene
+Benzo[b]fluoranthene,Benzo[b]fluoranthene
+Benzo[k]fluoranthene,Benzo[k]fluoranthene
+beta-BHC,beta-BHC
+Bis(2-ethylhexyl)phthalate,Bis(2-ethylhexyl)phthalate
+Bromoform,Bromoform
+Butylbenzylphthalate,Butylbenzylphthalate
+"Cadmium, Dissolved",Cadmium
+Carbon Tetrachloride,Carbon Tetrachloride
+Chlordane,Chlordane
+Chloride,Chloride
+Chlorine,Chlorine
+Chlorobenzene,Chlorobenzene
+Chlorodibromomethane,Dibromochloromethane
+Chloroethyl Ether bis 2,Bis(2-chloroethyl)ether
+Chloroform,Chloroform
+Chloroisopropyl Ether bis 2,Bis(2-chloroisopropyl) ether
+"Chloromethyl ether, bis",bis(Chloromethyl)ether
+Chloronaphthalene 2,2-Chloronaphthalene
+Chlorophenol 2,2-Chlorophenol
+"Chlorophenoxy Herbicide (2,4,5,-TP)",Silvex
+Chlorpyrifos (Dursban),Chlorpyrifos (Dursban)
+Chromium (Hex),"Chromium, hexavalent"
+Chromium VI,Chromium
+Chrysene,Chrysene
+"Copper, Dissolved",Copper
+"Copper, Total recoverable",Copper
+Cyanide,Cyanide
+Demeton,Demeton
+Di-n-butyl Phthalate,di-n-Butylphthalate
 "Dibenz[a,h]anthracene","Dibenz[a,h]anthracene"
 "Dichlorobenzene(m) 1,3","1,3-Dichlorobenzene"
 "Dichlorobenzene(o) 1,2","1,2-Dichlorobenzene"
 "Dichlorobenzene(p) 1,4","1,4-Dichlorobenzene"
 "Dichlorobenzidine 3,3'","3,3`-Dichlorobenzidine"
-"Dichlorobromomethane","Bromodichloromethane"
+Dichlorobromomethane,Bromodichloromethane
 "Dichloroethane 1,2","1,2-Dichloroethane"
 "Dichloroethylene 1,1","1,1-Dichloroethylene"
 "Dichloroethylene trans 1,2","trans-1,2-Dichloroethylene"
 "Dichlorophenol 2,4","2,4-Dichlorophenol"
 "Dichloropropane 1,2","1,2-Dichloropropane"
 "Dichloropropene 1,3","1,3-Dichloropropene"
-"Dieldrin","Dieldrin"
-"Diethylphthalate","Diethylphthalate"
+Dieldrin,Dieldrin
+Diethylphthalate,Diethylphthalate
 "Dimethylphenol 2,4","2,4-Dimethylphenol"
-"Dimethylphthalate","Dimethylphthalate"
+Dimethylphthalate,Dimethylphthalate
 "Dinitrophenol 2,4","2,4-Dinitrophenol"
-"Dinitrophenols","Dinitrophenol"
+Dinitrophenols,Dinitrophenol
 "Dioxin (2,3,7,8-TCDD)","2,3,7,8-TCDD"
 "Diphenylhydrazine 1,2","1,2-Diphenylhydrazine"
-"Endosulfan","5-Norbornene-2, 3-dimethanol, 1,4,5,6,7,7-hexachloro cyclic sulfite"
-"Endosulfan I","Endosulfan I"
-"Endosulfan II","Endosulfan II"
-"Endosulfan Sulfate","Endosulfan sulfate"
-"Endrin","Endrin"
-"Endrin Aldehyde","Endrin Aldehyde"
-"Ethylbenzene","Ethylbenzene"
-"Fluoranthene","Fluoranthene"
-"Fluorene","Fluorene"
-"Guthion","Guthion"
-"Heptachlor","Heptachlor"
-"Heptachlor Epoxide","Heptachlor epoxide"
-"Hexachlorobenzene","Hexachlorobenzene"
-"Hexachlorobutadiene","Hexachlorobutadiene"
-"Hexachlorocyclo-hexane-Technical","HCH"
-"Hexachlorocyclopentadiene","Hexachlorocyclopentadiene"
-"Hexachloroethane","Hexachloroethane"
+Endosulfan,"5-Norbornene-2, 3-dimethanol, 1,4,5,6,7,7-hexachloro cyclic sulfite"
+Endosulfan I,Endosulfan I
+Endosulfan II,Endosulfan II
+Endosulfan Sulfate,Endosulfan sulfate
+Endrin,Endrin
+Endrin Aldehyde,Endrin Aldehyde
+Ethylbenzene,Ethylbenzene
+Fluoranthene,Fluoranthene
+Fluorene,Fluorene
+Guthion,Guthion
+Heptachlor,Heptachlor
+Heptachlor Epoxide,Heptachlor epoxide
+Hexachlorobenzene,Hexachlorobenzene
+Hexachlorobutadiene,Hexachlorobutadiene
+Hexachlorocyclo-hexane-Technical,HCH
+Hexachlorocyclopentadiene,Hexachlorocyclopentadiene
+Hexachloroethane,Hexachloroethane
 "Indeno[1,2,3-cd]pyrene","Indeno[1,2,3-cd]pyrene"
-"Iron, Total recoverable","Iron"
-"Isophorone","Isophorone"
-"Lead, Dissolved","Lead"
-"Lindane","Lindane"
-"Malathion","Malathion"
-"Manganese, Total recoverable","Manganese"
-"Mercury","Mercury"
-"Methoxychlor","Methoxychlor"
+"Iron, Total recoverable",Iron
+Isophorone,Isophorone
+"Lead, Dissolved",Lead
+Lindane,Lindane
+Malathion,Malathion
+"Manganese, Total recoverable",Manganese
+Mercury,Mercury
+Methoxychlor,Methoxychlor
 "Methyl-4,6-dinitrophenol 2","2-Methyl-4,6-dinitrophenol"
-"Methyl Bromide","Bromomethane"
-"Methylene Chloride","Methylene Chloride"
-"Mirex","Mirex"
-"Nickel, Dissolved","Nickel"
-"Nickel, Total recoverable","Nickel"
-"Nitrates","Nitrate/nitrite as N"
-"Nitrobenzene","Nitrobenzene"
-"Nitrosamines","Nitrosamine, NOS"
-"Nitrosodi-n-propylamine, N","n-Nitroso-di-n-propylamine"
-"Nitrosodibutylamine, N","n-Nitroso-di-n-butylamine"
-"Nitrosodiethylamine, N","n-Nitrosodiethylamine"
-"Nitrosodimethylamine, N","n-Nitrosodimethylamine"
-"Nitrosodiphenylamine, N","n-Nitrosodiphenylamine"
-"Nitrosopyrrolidine, N","n-Nitrosopyrrolidine"
-"Parathion","Parathion"
-"Pentachlorobenzene","Pentachlorobenzene"
-"Pentachlorophenol","Pentachlorophenol"
-"Phenol","Phenol"
-"Phosphorus Elemental","Phosphorus"
-"Polychlorinated Biphenyls (PCBs)","Polychlorinated Biphenyls (PCBs)"
-"Pyrene","Pyrene"
-"Selenium, Dissolved","Selenium"
-"Selenium, Total recoverable","Selenium"
-"Silver, Dissolved","Silver"
-"Sulfide Hydrogen Sulfide","Hydrogen Sulfide"
+Methyl Bromide,Bromomethane
+Methylene Chloride,Methylene Chloride
+Mirex,Mirex
+"Nickel, Dissolved",Nickel
+"Nickel, Total recoverable",Nickel
+Nitrates,Nitrate/nitrite as N
+Nitrobenzene,Nitrobenzene
+Nitrosamines,"Nitrosamine, NOS"
+"Nitrosodi-n-propylamine, N",n-Nitroso-di-n-propylamine
+"Nitrosodibutylamine, N",n-Nitroso-di-n-butylamine
+"Nitrosodiethylamine, N",n-Nitrosodiethylamine
+"Nitrosodimethylamine, N",n-Nitrosodimethylamine
+"Nitrosodiphenylamine, N",n-Nitrosodiphenylamine
+"Nitrosopyrrolidine, N",n-Nitrosopyrrolidine
+Parathion,Parathion
+Pentachlorobenzene,Pentachlorobenzene
+Pentachlorophenol,Pentachlorophenol
+Phenol,Phenol
+Phosphorus Elemental,Phosphorus
+Polychlorinated Biphenyls (PCBs),Polychlorinated Biphenyls (PCBs)
+Pyrene,Pyrene
+"Selenium, Dissolved",Selenium
+"Selenium, Total recoverable",Selenium
+"Silver, Dissolved",Silver
+Sulfide Hydrogen Sulfide,Hydrogen Sulfide
 "Tetrachlorobenzene, 1,2,4,5-","1,2,4,5-Tetrachlorobenzene"
 "Tetrachloroethane 1,1,2,2","1,1,2,2-Tetrachloroethane"
-"Tetrachloroethylene","Tetrachloroethylene"
-"Thallium, Total recoverable","Thallium"
-"Toluene","Toluene"
-"Total DDT","Total DDT"
-"Toxaphene","Toxaphene (technical)"
-"Tributyltin","Tributyltin"
+Tetrachloroethylene,Tetrachloroethylene
+"Thallium, Total recoverable",Thallium
+Toluene,Toluene
+Total DDT,Total DDT
+Toxaphene,Toxaphene (technical)
+Tributyltin,Tributyltin
 "Trichlorobenzene 1,2,4","1,2,4-Trichlorobenzene"
 "Trichloroethane 1,1,2","1,1,2-Trichloroethane"
-"Trichloroethylene","Trichloroethylene"
+Trichloroethylene,Trichloroethylene
 "Trichlorophenol 2,4,6","2,4,6-Trichlorophenol"
 "Trichlorophenol, 2, 4, 5-","2,4,5-Trichlorophenol"
-"Vinyl Chloride","Vinyl Chloride"
-"Zinc, Dissolved","Zinc"
-"Zinc, Total recoverable","Zinc"
-"Alkalinity","Carbonate Alkalinity as Calcium Carbonate"
+Vinyl Chloride,Vinyl Chloride
+"Zinc, Dissolved",Zinc
+"Zinc, Total recoverable",Zinc
+Alkalinity,Carbonate Alkalinity as Calcium Carbonate
 "Arsenic, Total inorganic","Arsenic, ion (As3+)"
 "Arsenic, Total inorganic","Arsenic, ion (As5+)"
-"Azinphos methyl","Azinophos Methyl"
-"Azinphos methyl","Guthion"
-"Azinphos methyl","Guthion (Azinphosmethyl)"
-"Chloroethyl Ether bis 2","Bis(2-Chloroethyl) ether"
+Azinphos methyl,Azinophos Methyl
+Azinphos methyl,Guthion
+Azinphos methyl,Guthion (Azinphosmethyl)
+Chloroethyl Ether bis 2,Bis(2-Chloroethyl) ether
 "Chlorophenoxy Herbicide (2,4,5,-TP)","2,4,5-TP (Silvex)"
 "Chromium, Dissolved","Chromium, trivalent"
 "Dichlorobenzidine 3,3'","1,1`-Biphenyl-4,4`-diamine, 3,3`-dichloro-"
-"Dichloroethane 1,2","Ethylene dichloride"
+"Dichloroethane 1,2",Ethylene dichloride
 "Dichloroethylene 1,1","1,1-Dichloroethene"
 "Dichloroethylene trans 1,2","trans-1,2-Dichloroethene"
 "Dichloropropene 1,3","Propene, 1,3-dichloro-"
 "Methyl-4,6-dinitrophenol 2","4,6-Dinitro-2-methylphenol"
-"Nitrates","Nitrate"
-"Nitrates","Nitrate as N"
+Nitrates,Nitrate
+Nitrates,Nitrate as N
 "Nitrosodibutylamine, N","1-Butanamine, N-butyl-N-nitroso-"
 "Nitrosodimethylamine, N","Methanamine, N-methyl-N-nitroso"
 "Nitrosopyrrolidine, N","Pyrrole, tetrahydro-N-nitroso-"
-"Phosphorus Elemental","Total Phosphorus"
+Phosphorus Elemental,Total Phosphorus

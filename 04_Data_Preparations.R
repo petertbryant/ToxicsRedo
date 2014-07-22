@@ -64,6 +64,13 @@ Table3040.applicable <- rbind(Table3040.applicable, T3040.ES)
 Table3040.applicable$variable <- as.character(Table3040.applicable$variable)
 #We have a benchmark we use for Orthophosphate as P
 Table3040.applicable <- rbind(Table3040.applicable, c('Criteria.name.full' = 'Phosphate Phosphorus', 'variable' = 'EPA Benchmark', 'value' = 50, 'Matrix' = 'FW', 'ID' = 'Phosphate Phosphorus FW', 'criterianame' = 'Phosphate Phosphorus'))
+#For now I will take care of this here because there are permissions issues on the criteria table at the lab
+Table3040.applicable <- Table3040.applicable[Table3040.applicable$Criteria.Name.full != 'Chromium, Dissolved',]
+Table3040.applicable[Table3040.applicable$Criteria.Name.full == 'Chromium (Hex)','Criteria.Name.full'] <- 'Chromium (Hex), Dissolved'
+#For some reason criteria name full for Mercury doesn't indicate that it's for Total recoverable
+Table3040.applicable[Table3040.applicable$Criteria.Name.full == 'Mercury','Criteria.Name.full'] <- 'Mercury, Total recoverable'
+#Similarly Arsenic isn't handled well at this point either
+Table3040.applicable <- Table3040.applicable[Table3040.applicable$Criteria.Name.full != 'Arsenic, Total inorganic',]
 
 #### First the Water Quality Portal data ####
 #Remove Bed Sediment and Suspended samples
@@ -139,7 +146,7 @@ lasar <- lasar[!duplicated(lasar$x),]
 lasar <- within(lasar, rm(x))
 #Pulls in the updated criterianame column
 lasar <- merge(lasar, unique(Table3040.applicable[,c('Criteria.Name.full','criterianame')]), by = 'Criteria.Name.full', all.x = TRUE)
-lasar$criterianame <- ifelse(is.na(lasar$criterianame),lasar$NAME,lasar$criterianame)
+lasar$criterianame <- ifelse(is.na(lasar$criterianame),ifelse(lasar$NAME == 'Chromium','Chromium VI',lasar$NAME),lasar$criterianame)
 
 #Make recoverable lower case to be consistent 
 lasar$ABBREVIATION <- gsub('R','r',lasar$ABBREVIATION)
@@ -229,7 +236,7 @@ gresham.sub <- gresham[,names(wqp.data.sub)]
 #### Pulling wqp.data and lasar and gresham together now! ####
 data.complete <- rbind(lasar.new.names, wqp.data.sub, gresham.sub)
 #I had vector allocation issues so I am keeping my workingspace a little lighter
-#rm(wqp.data, wqp.stations, gresham, lasar)
+rm(wqp.data, wqp.stations, gresham, lasar)
 
 #makes sure orthophosphate can match to the criteria
 data.complete[grep('hospha',data.complete$Name),c('criterianame')] <- 'Phosphate Phosphorus'
@@ -249,21 +256,21 @@ data.complete$tMRL <- as.numeric(data.complete$tMRL)
 #for the purposes of calculating pentachlorophenol and ammonia criteria 
 data.complete$Unit <- str_trim(data.complete$Unit)
 data.complete <- data.complete[!data.complete$Unit %in% c('%','mg/Kg wet','ng/SPMD','ueq/L'),]
-data.complete[data.complete$Unit %in% c('mg/L','mg/l','mg/l as N'),'tResult'] <- data.complete[data.complete$Unit %in% c('mg/L','mg/l','mg/l as N'),'tResult']*1000
-data.complete[data.complete$Unit %in% c('mg/L','mg/l','mg/l as N'),'Unit'] <- 'µg/L'
+data.complete[data.complete$Unit %in% c('mg/L','mg/l','mg/l as N',"mg/l CaCO3"),'tResult'] <- data.complete[data.complete$Unit %in% c('mg/L','mg/l','mg/l as N',"mg/l CaCO3"),'tResult']*1000
+data.complete[data.complete$Unit %in% c('mg/L','mg/l','mg/l as N',"mg/l CaCO3"),'Unit'] <- 'µg/L'
 data.complete[data.complete$Unit %in% c('ng/L', 'ng/l'),'tResult'] <- data.complete[data.complete$Unit %in% c('ng/L', 'ng/l'),'tResult']/1000
 data.complete[data.complete$Unit %in% c('ng/L', 'ng/l'),'Unit'] <- 'µg/L'
 data.complete[data.complete$Unit %in% c('pg/L', 'pg/l'),'tResult'] <- data.complete[data.complete$Unit %in% c('pg/L', 'pg/l'),'tResult']/1000000
 data.complete[data.complete$Unit %in% c('pg/L', 'pg/l'),'Unit'] <- 'µg/L'
-
+data.complete[is.na(data.complete$Unit),'Unit'] <- 'µg/L'
 data.complete[data.complete$Unit == 'ppb','Unit'] <- 'µg/L'
 data.complete[data.complete$Unit == 'ug/l','Unit'] <- 'µg/L'
 
 #for the MRL units too
 data.complete$tMRLUnit <- str_trim(data.complete$tMRLUnit)
 data.complete <- data.complete[!data.complete$tMRLUnit %in% c('%','mg/Kg wet','ng/SPMD','ueq/L'),]
-data.complete[data.complete$tMRLUnit %in% c('mg/L','mg/l','mg/l as N'),'tMRL'] <- data.complete[data.complete$tMRLUnit %in% c('mg/L','mg/l','mg/l as N'),'tMRL']*1000
-data.complete[data.complete$tMRLUnit %in% c('mg/L','mg/l','mg/l as N'),'tMRLUnit'] <- 'µg/L'
+data.complete[data.complete$tMRLUnit %in% c('mg/L','mg/l','mg/l as N',"mg/l CaCO3"),'tMRL'] <- data.complete[data.complete$tMRLUnit %in% c('mg/L','mg/l','mg/l as N',"mg/l CaCO3"),'tMRL']*1000
+data.complete[data.complete$tMRLUnit %in% c('mg/L','mg/l','mg/l as N',"mg/l CaCO3"),'tMRLUnit'] <- 'µg/L'
 data.complete[data.complete$tMRLUnit %in% c('ng/L', 'ng/l'),'tMRL'] <- data.complete[data.complete$tMRLUnit %in% c('ng/L', 'ng/l'),'tMRL']/1000
 data.complete[data.complete$tMRLUnit %in% c('ng/L', 'ng/l'),'tMRLUnit'] <- 'µg/L'
 data.complete[data.complete$tMRLUnit %in% c('pg/L', 'pg/l'),'tMRL'] <- data.complete[data.complete$tMRLUnit %in% c('pg/L', 'pg/l'),'tMRL']/1000000
@@ -319,7 +326,7 @@ data.complete.wo.dups <- remove.dups(data.complete.wo.dup.MRLs)
 
 #### Select only those stations that mapped to a stream or lake ####
 #This section also serves the purpose of adding in the Matrix (or station type)
-sul2012 <- read.dbf('C:/Users/pbryant/Desktop/Stations_2012_Analysis.dbf')
+sul2012 <- read.csv('//Deqhq1/wqassessment/2012_WQAssessment/ToxicsRedo/StationsToLocate/stUseFinalList2012.csv')
 sul2012 <- rename(sul2012, c('MATRIX' = 'Matrix'))
 data.complete.w.matrix <- merge(data.complete.wo.dups, sul2012[,c('STATION','Matrix')], by.x = 'SampleRegID', by.y = 'STATION')
 
@@ -528,10 +535,16 @@ dcwd.w.totals[grep('ardnes',dcwd.w.totals$Name.full),'tResult'] <- dcwd.w.totals
 dcwd.w.totals[grep('ardnes',dcwd.w.totals$Name.full),'criterianame'] <- dcwd.w.totals[grep('ardnes',dcwd.w.totals$Name.full),'Name.full']
 dcwd.w.totals <- dcwd.w.totals[!is.na(dcwd.w.totals$tResult),]
 
+#Since I made the code numeric to improve processing of the duplicate resolution prior to doing the totals
+#there is now a discrepancy in that field. To resolve I will regenerate the concatenated form in order to appropriately
+#remove duplicates with the following function which operates on the code field
+dcwd.w.totals$code <- paste(dcwd.w.totals$SampleRegID, dcwd.w.totals$Name.full, dcwd.w.totals$day)
+dcwd.w.totals$code <- as.numeric(as.factor(dcwd.w.totals$code))
+
 #we want the max between endosulfan and its sum of isomers, between chlordane
 #and is sum of isomers and between sum of pcb congeners and aroclors.
 dcwd.w.totals <- remove.dups(dcwd.w.totals)
-rm(list = ls()[grep('aroclor|calmag|chlordane|endo|hch|nitrosamines|pcb',ls())])
+rm(list = ls()[grep('aroclor|calmag|chlordane|endo|hch|nitrosamines|pcb|data.complete',ls())])
 
 #### Associate with criteria ####
 #Not sure where the best place is for this but we need to fix some of the issues with Arsenic and Dissolved/Total/Total inorganic
@@ -586,7 +599,7 @@ amm <- ammonia.crit.calc(dcwd.w.totals)
 amm <- amm[,names(dcc.hm)]
 dcc.wo.amm <- dcc.hm[!dcc.hm$ID %in% amm$ID,]
 #We need to clean up the workspace because I was running into problems with memory allocation
-#rm(list = setdiff(ls(), c('dcc.wo.amm', 'amm', 'td.conv')))
+rm(list = setdiff(ls(), c('dcc.wo.amm', 'amm', 'td.conv')))
 dcc.w.calcs <- rbind(dcc.wo.amm, amm)
 
 #### EVALUATION ####
@@ -606,7 +619,7 @@ dt.min <- dt[J(unique(code)), mult="first"]
 dcc.min <- as.data.frame(dt.min)
 rm(dt, dt.min)
 
-#Select appropriate sample fraction when both available and convert when NOT except where the sample is ND. 
+#Convert to appropriate sample fraction when appropriate fraction is NOT available EXCEPT where the sample is ND. 
 dcc.min$tResult.old <- dcc.min$tResult
 dissolved.metals.criteria <- unique(dcc.min[grep('Dissolved',dcc.min$Criteria.Name.full),c('Criteria.Name.full')])
 sub1 <- dcc.min[dcc.min$Criteria.Name.full %in% dissolved.metals.criteria,]
@@ -616,9 +629,9 @@ sub2 <- sub2[!duplicated(sub2$x),]
 sub2 <- within(sub2, rm(x))
 sub3 <- sub2[sub2$Criteria.Name.full != sub2$Name.full,]
 sub4 <- sub3[sub3$dnd == 1,] 
-sub4[sub4$Criteria.Name.full == 'Chromium, Dissolved',c('CFA')] <- 0.982 
-sub4[sub4$Criteria.Name.full == 'Chromium, Dissolved',c('CFC')] <- 0.962
-sub4[sub4$Criteria.Name.full == 'Chromium, Dissolved',c('CFA_SW','CFC_SW')] <- 0.993
+sub4[sub4$Criteria.Name.full == 'Chromium (Hex), Dissolved',c('CFA')] <- 0.982 
+sub4[sub4$Criteria.Name.full == 'Chromium (Hex), Dissolved',c('CFC')] <- 0.962
+sub4[sub4$Criteria.Name.full == 'Chromium (Hex), Dissolved',c('CFA_SW','CFC_SW')] <- 0.993
 sub4[sub4$Criteria.Name.full == 'Selenium, Dissolved', 'CFA'] <- 0.996
 sub4[sub4$Criteria.Name.full == 'Selenium, Dissolved', 'CFC'] <- 0.922
 sub4[sub4$Criteria.Name.full == 'Selenium, Dissolved', c('CFC_SW','CFA_SW')] <- 0.998 
@@ -651,6 +664,19 @@ dtc$Valid <- ifelse(dtc$tResult > dtc$value,ifelse(dtc$Valid == 0,0,1),0)
 dcc.min.wo.dtc <- dcc.min[!dcc.min$index %in% dtc$index,]
 dcc.min <- rbind(dcc.min.wo.dtc, dtc)
 
-
-
-
+#When we have both Total and Dissolved for a sample we only want to continue with the appropriate fraction for the standard
+dcc.min$newcode <- ifelse(is.na(dcc.min$Criteria.Name.full),'',paste(dcc.min$SampleRegID, dcc.min$Sampled, dcc.min$Criteria.Name.full))
+td.dup <- dcc.min[dcc.min$newcode %in% dcc.min[duplicated(dcc.min$newcode),'newcode'] & dcc.min$newcode != '',]
+td.dup$remove <- ifelse(td.dup$Name.full != td.dup$Criteria.Name.full,1,0)
+#There's always a complication and for Chromium, we have both Chrom 6 and Non-specific chrom. We want to take the non-specific chrom when the 
+#Chrom 6 MRL is above the criterion in the cases below
+cr6 <- names(table(dcc.min[dcc.min$newcode %in% dcc.min[duplicated(dcc.min$newcode),'newcode'] & dcc.min$newcode != '','newcode'])[table(dcc.min[dcc.min$newcode %in% dcc.min[duplicated(dcc.min$newcode),'newcode'] & dcc.min$newcode != '','newcode']) > 2])
+td.dup[td.dup$newcode == 'LW2-W011 2006-11-03 10:30:00 Chromium (Hex), Dissolved' & td.dup$Name.full == 'Chromium(VI), Total recoverable','remove'] <- 0
+td.dup[td.dup$newcode == 'LW2-W016-2 2004-11-30 14:30:00 Chromium (Hex), Dissolved' & td.dup$Name.full == 'Chromium(VI), Total recoverable','remove'] <- 0
+td.dup[td.dup$newcode == 'LW2-W016 2004-11-30 13:35:00 Chromium (Hex), Dissolved' & td.dup$Name.full == 'Chromium(VI), Total recoverable','remove'] <- 0
+td.dup[td.dup$newcode == 'LW2-W016 2005-03-15 09:23:00 Chromium (Hex), Dissolved' & td.dup$Name.full == 'Chromium, Dissolved','remove'] <- 0
+td.dup[td.dup$newcode == 'LW2-W016 2005-07-18 09:03:00 Chromium (Hex), Dissolved' & td.dup$Name.full == 'Chromium, Dissolved','remove'] <- 0
+dcc.min.wo.td.dup <- dcc.min[!dcc.min$index %in% td.dup$index,]
+td.keep <- td.dup[td.dup$remove == 0,]
+td.keep <- within(td.keep, rm(remove))
+dcc.min <- rbind(dcc.min.wo.td.dup, td.keep)
