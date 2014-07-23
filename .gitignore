@@ -4,3 +4,5 @@
 .Rproj
 .gitignore
 schema.ini
+.RDataTmp
+Thumbs.db
