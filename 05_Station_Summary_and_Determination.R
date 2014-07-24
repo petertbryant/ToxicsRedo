@@ -31,9 +31,10 @@ dma.summary$cat <- ifelse(dma.summary$exceed >= 2,
                                         '3')))
 
 #We can pull LLID information back in here
-sul2012 <- read.csv('//Deqhq1/wqassessment/2012_WQAssessment/ToxicsRedo/StationsToLocate/stUseList2012_Final.csv')
-sul2012 <- rename(sul2012, c('MATRIX' = 'Matrix'))
-sul2012 <- sul2012[!duplicated(sul2012$STATION),]
+con <- odbcConnect('WQAssessment')
+sul2012 <- sqlFetch(con, 'StationUseList_2012')
+odbcCloseAll()
+sul2012 <- rename(sul2012, c('Water_Type' = 'Matrix'))
 dma.summary <- merge(dma.summary, sul2012[,c('STATION','STREAM_LLID','Stream_Name','LAKE_LLID','LAKE_NAME','RIVER_MILE')], by.x = 'SampleRegID', by.y = 'STATION')
 
 #Build the LLID_Stream_Lake field

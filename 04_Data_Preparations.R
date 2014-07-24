@@ -339,8 +339,11 @@ data.complete.wo.dups <- remove.dups(data.complete.wo.dup.MRLs)
 
 #### Select only those stations that mapped to a stream or lake ####
 #This section also serves the purpose of adding in the Matrix (or station type)
-sul2012 <- read.csv('//Deqhq1/wqassessment/2012_WQAssessment/ToxicsRedo/StationsToLocate/stUseList2012_Final.csv')
-sul2012 <- rename(sul2012, c('MATRIX' = 'Matrix'))
+con <- odbcConnect('WQAssessment')
+sul2012 <- sqlFetch(con, 'StationUseList_2012')
+odbcCloseAll()
+sul2012 <- sul2012[sul2012$USE_Final == 1,]
+sul2012 <- rename(sul2012, c('Water_Type' = 'Matrix'))
 data.complete.w.matrix <- merge(data.complete.wo.dups, sul2012[,c('STATION','Matrix')], by.x = 'SampleRegID', by.y = 'STATION')
 
 #### Grouping parameters to be compared to composite criteria ####
@@ -677,7 +680,7 @@ dcc.min$tResult <- as.numeric(dcc.min$tResult)
 dcc.min$value <- as.numeric(dcc.min$value)
 
 #evaluate exceedances to the minimum criteria
-dcc.min$exceed <- ifelse(dcc.min$criterianame.x == 'Alkalinity',ifelse(dcc.min$tResult > dcc.min$value,0,1),ifelse(dcc.min$tResult < dcc.min$value,0,1))
+dcc.min$exceed <- ifelse(dcc.min$criterianame.x == 'Alkalinity',ifelse(dcc.min$tResult >= dcc.min$value,0,1),ifelse(dcc.min$tResult <= dcc.min$value,0,1))
 
 #### Determining which are valid exceedances ####
 #Where the MRL is greater than the criteria we can't use that sample to determine attainment or non-attainment

@@ -37,6 +37,7 @@ snt.no.LLID <- merge(snt.no.LLID, LLID.Streams.sub, by.x = 'STREAM_LLID', by.y =
 
 snt.no.LLID$exceed <- as.numeric(snt.no.LLID$exceed)
 snt.no.LLID$total_n <- as.numeric(snt.no.LLID$total_n)
+snt.no.LLID$value <- ifelse(suppressWarnings(is.na(as.numeric(snt.no.LLID$value))),snt.no.LLID$value,paste(snt.no.LLID$value, "µg/L"))
 
 #this makes a table with counts of categories by LLID + Pollutant. no ordering is preserved. the rownames
 #are the LLID + Pollutant code. tox.mixed.cat means that there are cat 2 and cat 5 for that code
@@ -59,6 +60,18 @@ tox.cat2 <- process(tox.cat2, snt.no.LLID)
 tox.cat3 <- process(tox.cat3, snt.no.LLID)
 tox.cat3B <- process(tox.cat3B, snt.no.LLID)
 tox.cat5 <- process(tox.cat5, snt.no.LLID)
+
+tox.cat2$code <- paste(tox.cat2$LLID_Stream_Lake, tox.cat2$Pollutant_ID)
+tox.cat3$code <- paste(tox.cat3$LLID_Stream_Lake, tox.cat3$Pollutant_ID)
+tox.cat3B$code <- paste(tox.cat3B$LLID_Stream_Lake, tox.cat3B$Pollutant_ID)
+tox.cat5$code <- paste(tox.cat5$LLID_Stream_Lake, tox.cat5$Pollutant_ID)
+
+View(arrange(tox.cat2[tox.cat2$code %in% tox.cat2[duplicated(tox.cat2$code),'code'],],code))
+View(arrange(tox.cat3[tox.cat3$code %in% tox.cat3[duplicated(tox.cat3$code),'code'],],code))
+#Not currently an issue for them
+#View(arrange(tox.cat3B[tox.cat3B$code %in% tox.cat3B[duplicated(tox.cat3B$code),'code'],],code))
+#View(arrange(tox.cat5[tox.cat5$code %in% tox.cat5[duplicated(tox.cat5$code),'code'],],code))
+
 
 #Since we did the subsetting above this allows us to wholesale apply the status assignments
 tox.cat2$Status <- '2'
