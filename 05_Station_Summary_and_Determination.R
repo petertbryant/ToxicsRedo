@@ -7,7 +7,11 @@ library(dplyr)
 #a little inconsistency in agency
 dma[dma$Agency == 'EPA National Aquatic Resource Survey Data','Agency'] <- "EPA National Aquatic Resources Survey" 
 
-dma.groups <- group_by(dma, Agency, SampleRegID, SampleAlias, criterianame.x, variable)
+source('TMP-Rcode/hardness_eval_functions_Element_names.R')
+dma.for.summary <- dma
+dma.for.summary$value <- ifelse(dma.for.summary$criterianame.x %in% constants$Name.alone,'hardness dependent',ifelse(dma.for.summary$criterianame.x == 'Ammonia as N','pH and temeperature dependent',dma.for.summary$value))
+
+dma.groups <- group_by(dma.for.summary, Agency, SampleRegID, SampleAlias, criterianame.x, variable, value)
 dma.summary <- summarise(dma.groups, exceed = sum(exceed*Valid),
                          valid_n = sum(Valid),
                          total_n = length(Valid), 
@@ -53,19 +57,19 @@ redo.relate <- sqlFetch(wt, 'Criteria_Pollutant_Lookup')
 dma.pollutant <- merge(dma.summary, redo.relate[,c('criterianame','Pollutant','Pollutant_ID','Former_Group_Pollutant_Name')], by.x = 'criterianame.x', by.y = 'criterianame', all.x = TRUE)
 
 #for review let's put the tables into access
-# rm(list = setdiff(ls(), c('dma', 'dma.summary')))
-# access <- odbcConnectAccess('//deqhq1/wqassessment/2012_WQAssessment/2012_WorkingTables.mdb')
+# #rm(list = setdiff(ls(), c('dma', 'dma.summary')))
+# #access <- odbcConnectAccess('//deqhq1/wqassessment/2012_WQAssessment/2012_WorkingTables.mdb')
 # con <- odbcConnect('WQAssessment')
 # dma.save <- within(dma, rm('id','Matrix.y','index','day.POSIX'))
 # dma.save$relate <- paste(dma.save$SampleRegID, dma.save$criterianame.x)
-# sqlSave(con, dma.save, 'IR2012_ToxicsRedo_Data')
+# sqlSave(con, dma.save, 'IR2012_ToxicsRedo_Data2')
 # dma.save.pollutant <- within(dma.pollutant, rm(Former_Group_Pollutant_Name))
 # dma.save.pollutant$min_date <- strftime(dma.save.pollutant$min_date, format = '%m/%d/%Y')
 # dma.save.pollutant$max_date <- strftime(dma.save.pollutant$max_date, format = '%m/%d/%Y')
 # dma.save.pollutant$relate <- paste(dma.save.pollutant$SampleRegID, dma.save.pollutant$criterianame.x)
 # dma.save.pollutant$RIVER_MILE <- as.numeric(dma.save.pollutant$RIVER_MILE)
 # dma.save.pollutant$LAKE_LLID <- as.numeric(dma.save.pollutant$LAKE_LLID)
-# sqlSave(con, dma.save.pollutant, 'IR2012_ToxicsRedo_StationSummaries')
+# sqlSave(con, dma.save.pollutant, 'IR2012_ToxicsRedo_StationSummaries2')
 
 #Now let's match to the ars to identify existing records and where new records need to be created
 ref.con <- odbcConnect('WQAssessment')

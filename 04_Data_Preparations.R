@@ -377,12 +377,12 @@ data.complete.w.matrix <- merge(data.complete.wo.dups, sul2012[,c('STATION','Mat
 # dcwd.ddt <- rbind(data.complete.wo.dups, ddt.melted)
 
 #Now Total Endosulfan
-endo <- data.complete.w.matrix[data.complete.w.matrix$Name %in% c("Endosulfan I", "Endosulfan II", "Endosulfan sulfate", ".alpha.-Endosulfan", ".beta.-Endosulfan"),]
+endo <- data.complete.w.matrix[data.complete.w.matrix$Name %in% c("Endosulfan I", "Endosulfan II", ".alpha.-Endosulfan", ".beta.-Endosulfan"),]
 endo$tResult <- endo$tResult*endo$dnd
 endo.casted <- dcast(endo, Agency + SampleRegID + SampleAlias + Matrix + Fraction +
                        Sampled +  SpecificMethod ~ Name, value.var = 'tResult')
-endo.casted$Endosulfan <- rowSums(endo.casted[,c("Endosulfan I", "Endosulfan II", "Endosulfan sulfate",".alpha.-Endosulfan", ".beta.-Endosulfan")],na.rm=TRUE)
-endo.casted.sub <- within(endo.casted, rm("Endosulfan I", "Endosulfan II", "Endosulfan sulfate",".alpha.-Endosulfan", ".beta.-Endosulfan"))
+endo.casted$Endosulfan <- rowSums(endo.casted[,c("Endosulfan I", "Endosulfan II", ".alpha.-Endosulfan", ".beta.-Endosulfan")],na.rm=TRUE)
+endo.casted.sub <- within(endo.casted, rm("Endosulfan I", "Endosulfan II", ".alpha.-Endosulfan", ".beta.-Endosulfan"))
 endo.melted <- melt(endo.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SpecificMethod','Fraction'),variable.name = 'Name',value.name = 'tResult')#melt
 endo.melted$dnd <- ifelse(endo.melted$tResult > 0,1,0)
 endo.melted.addons <- data.frame('tMRLUnit' = rep('µg/L',nrow(endo.melted)),
