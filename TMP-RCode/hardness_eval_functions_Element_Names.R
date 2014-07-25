@@ -335,3 +335,36 @@ remove.dups <- function(tname) {
   tname$tResult <- tname$tResult.x
   tname <- within(tname, rm(tResult.x, tResult.y))
 }
+
+text.summary <- function(x) {
+  x <- arrange(x, RIVER_MILE)
+  y <- x[x$cat == 3,]
+  z <- x[x$cat != 3,]
+  cat3 <- ifelse(nrow(z) > 0,
+                 ifelse(nrow(y) > 1, 
+                        paste('Additionally, there are ', nrow(y), ' stations with insufficient data', sep = ''), 
+                        ifelse(nrow(y) == 1,
+                               paste('Additionally, there is 1 station with insufficient data', sep = ''),
+                               '')),
+                 ifelse(nrow(y) > 1, 
+                        paste('There are ', nrow(y), ' stations with insufficient data', sep = ''), 
+                        ifelse(nrow(y) == 1,
+                               paste('There is 1 station with insufficient data', sep = ''),
+                                     '')))
+  text <- ifelse(nrow(z) > 0, 
+                 paste('[', z$Agency, '] STATION ', z$SampleRegID, ' at RM ', z$RIVER_MILE, ' for ', z$total_n, ' samples from ',
+                       strftime(z$min_date, '%m/%d/%Y'), ' to ', strftime(z$max_date, '%m/%d/%Y'), ', ', z$exceed, ' of ', 
+                       z$valid_n, ' valid samples exceed the ', z$value, ' criteria',
+                       sep = '', collapse = ';\r\n'), 
+                 "")
+  ifelse(text == '',
+         cat3,
+         ifelse(cat3 == '',
+                text,
+                paste(text, cat3, sep = ';\r\n')))
+}
+
+process <- function(df, source.df) {
+  df.us <- source.df[source.df$code %in% rownames(df),]
+  df.summary <- ddply(df.us, .(LLID_Stream_Lake, Stream_Name, STREAM_LLID, LAKE_LLID, LAKE_NAME, Pollutant, Pollutant_ID, RM_MIN, RM_MAX, value), text.summary)
+}

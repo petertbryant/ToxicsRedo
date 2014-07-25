@@ -91,12 +91,22 @@ wqp.data$criterianame <- ifelse(is.na(wqp.data$criterianame),wqp.data$Characteri
 wqp.data <- merge(wqp.data, wqp.stations[,c('MonitoringLocationIdentifier','site_only')], by = 'MonitoringLocationIdentifier', all.x = TRUE)
 wqp.data$site_only <- gsub('USGS-|11NPSWRD-|NARSTEST-|R10PORTLANDHARBOR-','',wqp.data$site_only)
 
+#we need to put in a detect/nondetect column here so we can accomodate the specific data sources qualifiers
+wqp.data[grep('Original Qualifier: U',wqp.data$ResultCommentText),'ResultMeasureValue'] <- 0
+wqp.data$ResultMeasureValue <- as.numeric(wqp.data$ResultMeasureValue)
+wqp.data$DetectionQuantitationLimitMeasureMeasureValue <- as.numeric(wqp.data$DetectionQuantitationLimitMeasureMeasureValue)
+wqp.data$dnd <- ifelse(wqp.data$ResultMeasureValue == 0,
+                       0,
+                       ifelse(wqp.data$ResultMeasureValue < wqp.data$DetectionQuantitationLimitMeasureMeasureValue,
+                              0,
+                              1))
+
 #Let's pull out only those columns we need to make this business work
 wqp.data.sub <- wqp.data[,c('site_only','OrganizationFormalName',
                             'Sampled', 'CharacteristicName','ResultSampleFractionText',
                             'ResultMeasureValue','ResultMeasureMeasureUnitCode','MeasureQualifierCode',
                             'ActivityTypeCode','DetectionQuantitationLimitMeasureMeasureValue','DetectionQuantitationLimitMeasureMeasureUnitCode',
-                            'MonitoringLocationName', 'criterianame','ResultAnalyticalMethodMethodIdentifier')]
+                            'MonitoringLocationName', 'criterianame','ResultAnalyticalMethodMethodIdentifier', 'dnd')]
 
 #Now we make the names match the script I built for the Toxics Monitroing Program
 wqp.data.sub <- rename(wqp.data.sub, c('site_only' = 'SampleRegID',
@@ -164,6 +174,17 @@ lasar <- lasar[!lasar$QA_QC_TYPE %in% c('Equipment Blank - Field',
                                         'Matrix Spike Duplicate - Field', 
                                         'Transfer Blank'),]
 
+#We need to put detect/non-detect in here since it is based on the old Result column from lasar
+lasar$Result_clean <- as.numeric(lasar$Result_clean)
+lasar$METHOD_REPORTING_LIMIT <- as.numeric(lasar$METHOD_REPORTING_LIMIT)
+lasar$dnd <- ifelse(grepl('<',lasar$Result),
+                    0,
+                    ifelse(is.na(lasar$METHOD_REPORTING_LIMIT),
+                           1,
+                           ifelse(lasar$Result_clean < lasar$METHOD_REPORTING_LIMIT,
+                                  0,
+                                  1)))
+
 #Make the lasar names match the script and be consistent with the new wqp names
 lasar.new.names <- rename(lasar, c('NAME' = 'Name',
                                    'ABBREVIATION' = 'Fraction',
@@ -173,13 +194,16 @@ lasar.new.names <- rename(lasar, c('NAME' = 'Name',
                                    'Result_clean' = 'tResult',
                                    'METHOD_REPORTING_LIMIT' = 'tMRL',
                                    'UNIT' = 'Unit',
-                                   'STATUS' = 'Status'))
+                                   'STATUS' = 'Status',
+                                   'dnd' = 'dnd'))
 lasar.new.names$Agency <- 'ODEQ'
 lasar.new.names$tMRLUnit <- lasar.new.names$Unit
 
 #I had to pull method out from the lasar dataset since I didn't know where to get accurate method information related
 #to the method_key in the parameter_result table. Until i find out where to get that info I'll populate a column with NAs
 lasar.new.names$SpecificMethod <- NA
+
+
 
 #This subsets the lasasr dataframe to only have the columns to be used for aggregation
 lasar.new.names <- lasar.new.names[,names(wqp.data.sub)]
@@ -191,7 +215,9 @@ gresham$posix_time <- as.POSIXct(strptime(gresham$SAMPLE_TIME, format = '%H:%M')
 #make a date-time field
 gresham$Sampled <- paste(as.character(gresham$posix_date), substr(as.character(gresham$posix_time),12,19))
 #Make a numeric tResult column
-gresham$tResult <- ifelse(is.na(as.numeric(gresham$RESULT)),gresham$REPORTING_LIMIT,as.numeric(gresham$RESULT))
+gresham$tResult <- ifelse(is.na(as.numeric(gresham$RESULT)),0,as.numeric(gresham$RESULT))
+#Determine detect/non-detect status. For gresham this is easy because the NDs were reported as <MRL which were converted to 0 in the last line.
+gresham$dnd <- ifelse(gresham$tResult == 0,0,1)
 #Make a Fraction column for teh metals
 gresham$Fraction <- ifelse(grepl('Dissolved',gresham$PARAMETER),'Dissolved',ifelse(grepl('Total',gresham$PARAMETER),'Total recoverable',''))
 #This will make the Names consistent with LASAR
@@ -242,15 +268,6 @@ rm(wqp.data, wqp.stations, gresham, lasar)
 data.complete[grep('hospha',data.complete$Name),c('criterianame')] <- 'Phosphate Phosphorus'
 
 #### Cleaning up the complete dataset and making some fields for consistent future processing ####
-#should have a numeric result and mrl fields
-data.complete$tResult <- as.numeric(data.complete$tResult)
-data.complete[which(data.complete$tMRL == '0.0105 Est'),'tMRL'] <- 0.0105
-data.complete[which(data.complete$tMRL == '0.0030 Est'),'tMRL'] <- 0.0030
-data.complete[which(data.complete$tMRL == '0.0035 Est'),'tMRL'] <- 0.0035
-data.complete[which(data.complete$tMRL == '0.02                                 0.02'),'tMRL'] <- 0.02
-data.complete[which(data.complete$tMRL == '0.10                                                                                                                                                                        0.10'),'tMRL'] <- 0.10
-data.complete$tMRL <- as.numeric(data.complete$tMRL)
-
 #result should also be in micrograms since all the criteria are as well
 #first there are several improperply labeled units as well as some pH ones labeled with None for unit. pH is inlcuded in this analysis
 #for the purposes of calculating pentachlorophenol and ammonia criteria 
@@ -278,10 +295,6 @@ data.complete[data.complete$tMRLUnit %in% c('pg/L', 'pg/l'),'tMRLUnit'] <- 'µg/
 
 data.complete[which(data.complete$tMRLUnit == 'ppb'),'tMRLUnit'] <- 'µg/L'
 data.complete[which(data.complete$tMRLUnit == 'ug/l'),'tMRLUnit'] <- 'µg/L'
-
-#need to determine detect/non-detect in order to accurately select maximum concentration in case there are more than one method
-#reported for a specific sample
-data.complete$dnd <- ifelse(is.na(data.complete$tMRL),1,ifelse(data.complete$tResult<=data.complete$tMRL,0,1))
 
 #This is the sample's name.full to be used to compare to the criteria.name.full
 total.to.recoverable <- c('Arsenic','Mercury','Copper','Zinc','Nickel','Lead','Selenium',
@@ -326,8 +339,11 @@ data.complete.wo.dups <- remove.dups(data.complete.wo.dup.MRLs)
 
 #### Select only those stations that mapped to a stream or lake ####
 #This section also serves the purpose of adding in the Matrix (or station type)
-sul2012 <- read.csv('//Deqhq1/wqassessment/2012_WQAssessment/ToxicsRedo/StationsToLocate/stUseFinalList2012.csv')
-sul2012 <- rename(sul2012, c('MATRIX' = 'Matrix'))
+con <- odbcConnect('WQAssessment')
+sul2012 <- sqlFetch(con, 'StationUseList_2012')
+odbcCloseAll()
+sul2012 <- sul2012[sul2012$USE_Final == 1,]
+sul2012 <- rename(sul2012, c('Water_Type' = 'Matrix'))
 data.complete.w.matrix <- merge(data.complete.wo.dups, sul2012[,c('STATION','Matrix')], by.x = 'SampleRegID', by.y = 'STATION')
 
 #### Grouping parameters to be compared to composite criteria ####
@@ -364,19 +380,21 @@ data.complete.w.matrix <- merge(data.complete.wo.dups, sul2012[,c('STATION','Mat
 # dcwd.ddt <- rbind(data.complete.wo.dups, ddt.melted)
 
 #Now Total Endosulfan
-endo <- data.complete.w.matrix[data.complete.w.matrix$Name %in% c("Endosulfan I", "Endosulfan II", "Endosulfan sulfate", ".alpha.-Endosulfan", ".beta.-Endosulfan"),]
+endo <- data.complete.w.matrix[data.complete.w.matrix$Name %in% c("Endosulfan I", "Endosulfan II", ".alpha.-Endosulfan", ".beta.-Endosulfan"),]
 endo$tResult <- endo$tResult*endo$dnd
 endo.casted <- dcast(endo, Agency + SampleRegID + SampleAlias + Matrix + Fraction +
                        Sampled +  SpecificMethod ~ Name, value.var = 'tResult')
-endo.casted$Endosulfan <- rowSums(endo.casted[,c("Endosulfan I", "Endosulfan II", "Endosulfan sulfate",".alpha.-Endosulfan", ".beta.-Endosulfan")],na.rm=TRUE)
-endo.casted.sub <- within(endo.casted, rm("Endosulfan I", "Endosulfan II", "Endosulfan sulfate",".alpha.-Endosulfan", ".beta.-Endosulfan"))
+endo.casted$Endosulfan <- rowSums(endo.casted[,c("Endosulfan I", "Endosulfan II", ".alpha.-Endosulfan", ".beta.-Endosulfan")],na.rm=TRUE)
+endo.casted.sub <- within(endo.casted, rm("Endosulfan I", "Endosulfan II", ".alpha.-Endosulfan", ".beta.-Endosulfan"))
 endo.melted <- melt(endo.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SpecificMethod','Fraction'),variable.name = 'Name',value.name = 'tResult')#melt
 endo.melted$dnd <- ifelse(endo.melted$tResult > 0,1,0)
-endo.melted.addons <- data.frame('tMRL' = rep(0,nrow(endo.melted)), 
-                                 'tMRLUnit' = rep('µg/L',nrow(endo.melted)),
+endo.melted.addons <- data.frame('tMRLUnit' = rep('µg/L',nrow(endo.melted)),
                                  'Unit' = rep('µg/L',nrow(endo.melted)), 
                                  'Status' = rep('A',nrow(endo.melted)))
 endo.melted <- cbind(endo.melted, endo.melted.addons)
+endo.tMRL <- ddply(endo, .(Agency, SampleRegID, SampleAlias, Matrix, Fraction, Sampled, SpecificMethod), summarize, tMRL = min(tMRL))
+endo.melted <- cbind(endo.melted, endo.tMRL$tMRL)
+endo.melted <- rename(endo.melted, c('endo.tMRL$tMRL' = 'tMRL'))
 endo.melted$Name.full <- endo.melted$Name
 endo.melted$id <- paste(endo.melted$SampleRegID, endo.melted$Name.full, endo.melted$Sampled)
 endo.melted$day <- substr(endo.melted$Sampled,1,10)
@@ -395,11 +413,13 @@ nitrosamines.casted$Nitrosamines <- rowSums(nitrosamines.casted[,c("n-Nitrosodip
 nitrosamines.casted.sub <- within(nitrosamines.casted, rm("n-Nitrosodiphenylamine", "N-Nitrosodi-n-propylamine", "N-Nitrosodimethylamine", "N-Nitrosodiphenylamine"))
 nitrosamines.melted <- melt(nitrosamines.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SpecificMethod','Fraction'),variable.name = 'Name',value.name = 'tResult')#melt
 nitrosamines.melted$dnd <- ifelse(nitrosamines.melted$tResult > 0,1,0)
-nitrosamines.melted.addons <- data.frame('tMRL' = rep(0,nrow(nitrosamines.melted)), 
-                                 'tMRLUnit' = rep('µg/L',nrow(nitrosamines.melted)),
+nitrosamines.melted.addons <- data.frame('tMRLUnit' = rep('µg/L',nrow(nitrosamines.melted)),
                                  'Unit' = rep('µg/L',nrow(nitrosamines.melted)), 
                                  'Status' = rep('A',nrow(nitrosamines.melted)))
 nitrosamines.melted <- cbind(nitrosamines.melted, nitrosamines.melted.addons)
+nitrosamines.tMRL <- ddply(nitrosamines, .(Agency, SampleRegID, SampleAlias, Matrix, Fraction, Sampled, SpecificMethod), summarize, tMRL = min(tMRL))
+nitrosamines.melted <- cbind(nitrosamines.melted, nitrosamines.tMRL$tMRL)
+nitrosamines.melted <- rename(nitrosamines.melted, c('nitrosamines.tMRL$tMRL' = 'tMRL'))
 nitrosamines.melted$Name.full <- nitrosamines.melted$Name
 nitrosamines.melted$id <- paste(nitrosamines.melted$SampleRegID, nitrosamines.melted$Name.full, nitrosamines.melted$Sampled)
 nitrosamines.melted$day <- substr(nitrosamines.melted$Sampled,1,10)
@@ -418,11 +438,13 @@ hch.casted$'Hexachlorocyclo-hexane-Technical' <- rowSums(hch.casted[,c("beta-BHC
 hch.casted.sub <- within(hch.casted, rm("beta-BHC", "alpha-BHC", ".beta.-Hexachlorocyclohexane", ".alpha.-Hexachlorocyclohexane","Lindane"))
 hch.melted <- melt(hch.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SpecificMethod','Fraction'),variable.name = 'Name',value.name = 'tResult')#melt
 hch.melted$dnd <- ifelse(hch.melted$tResult > 0,1,0)
-hch.melted.addons <- data.frame('tMRL' = rep(0,nrow(hch.melted)), 
-                                         'tMRLUnit' = rep('µg/L',nrow(hch.melted)),
+hch.melted.addons <- data.frame('tMRLUnit' = rep('µg/L',nrow(hch.melted)),
                                          'Unit' = rep('µg/L',nrow(hch.melted)), 
                                          'Status' = rep('A',nrow(hch.melted)))
 hch.melted <- cbind(hch.melted, hch.melted.addons)
+hch.tMRL <- ddply(hch, .(Agency, SampleRegID, SampleAlias, Matrix, Fraction, Sampled, SpecificMethod), summarize, tMRL = min(tMRL))
+hch.melted <- cbind(hch.melted, hch.tMRL$tMRL)
+hch.melted <- rename(hch.melted, c('hch.tMRL$tMRL' = 'tMRL'))
 hch.melted$Name.full <- hch.melted$Name
 hch.melted$id <- paste(hch.melted$SampleRegID, hch.melted$Name.full, hch.melted$Sampled)
 hch.melted$day <- substr(hch.melted$Sampled,1,10)
@@ -441,11 +463,13 @@ chlordane.casted$Chlordane <- rowSums(chlordane.casted[,c("Oxychlordane", "cis-C
 chlordane.casted.sub <- within(chlordane.casted, rm("Oxychlordane", "cis-Chlordane", 'trans-Chlordane',"trans-Nonachlor", "cis-Nonachlor"))
 chlordane.melted <- melt(chlordane.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SpecificMethod','Fraction'),variable.name = 'Name',value.name = 'tResult')#melt
 chlordane.melted$dnd <- ifelse(chlordane.melted$tResult > 0,1,0)
-chlordane.melted.addons <- data.frame('tMRL' = rep(0,nrow(chlordane.melted)), 
-                                      'tMRLUnit' = rep('µg/L',nrow(chlordane.melted)),
+chlordane.melted.addons <- data.frame('tMRLUnit' = rep('µg/L',nrow(chlordane.melted)),
                                       'Unit' = rep('µg/L',nrow(chlordane.melted)), 
                                       'Status' = rep('A',nrow(chlordane.melted)))
 chlordane.melted <- cbind(chlordane.melted, chlordane.melted.addons)
+chlordane.tMRL <- ddply(chlordane, .(Agency, SampleRegID, SampleAlias, Matrix, Fraction, Sampled, SpecificMethod), summarize, tMRL = min(tMRL))
+chlordane.melted <- cbind(chlordane.melted, chlordane.tMRL$tMRL)
+chlordane.melted <- rename(chlordane.melted, c('chlordane.tMRL$tMRL' = 'tMRL'))
 chlordane.melted$Name.full <- chlordane.melted$Name
 chlordane.melted$id <- paste(chlordane.melted$SampleRegID, chlordane.melted$Name.full, chlordane.melted$Sampled)
 chlordane.melted$day <- substr(chlordane.melted$Sampled,1,10)
@@ -465,11 +489,13 @@ pcb.casted$'Polychlorinated Biphenyls (PCBs)' <- rowSums(pcb.casted[,unique(dcwd
 pcb.casted.sub <- pcb.casted[,!names(pcb.casted) %in% unique(dcwd.endo.nitrosamines.hch.chlord[grep('PCB',dcwd.endo.nitrosamines.hch.chlord$Name),'Name'])]
 pcb.melted <- melt(pcb.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SpecificMethod','Fraction'),variable.name = 'Name',value.name = 'tResult')#melt
 pcb.melted$dnd <- ifelse(pcb.melted$tResult > 0,1,0)
-pcb.melted.addons <- data.frame('tMRL' = rep(0,nrow(pcb.melted)), 
-                                'tMRLUnit' = rep('µg/L',nrow(pcb.melted)),
+pcb.melted.addons <- data.frame('tMRLUnit' = rep('µg/L',nrow(pcb.melted)),
                                 'Unit' = rep('µg/L',nrow(pcb.melted)), 
                                 'Status' = rep('A',nrow(pcb.melted)))
 pcb.melted <- cbind(pcb.melted, pcb.melted.addons)
+pcb.tMRL <- ddply(pcb, .(Agency, SampleRegID, SampleAlias, Matrix, Fraction, Sampled, SpecificMethod), summarize, tMRL = min(tMRL))
+pcb.melted <- cbind(pcb.melted, pcb.tMRL$tMRL)
+pcb.melted <- rename(pcb.melted, c('pcb.tMRL$tMRL' = 'tMRL'))
 pcb.melted$Name.full <- pcb.melted$Name
 pcb.melted$id <- paste(pcb.melted$SampleRegID, pcb.melted$Name.full, pcb.melted$Sampled)
 pcb.melted$day <- substr(pcb.melted$Sampled,1,10)
@@ -488,11 +514,13 @@ aroclor.casted$'Polychlorinated Biphenyls (PCBs)' <- rowSums(aroclor.casted[,uni
 aroclor.casted.sub <- aroclor.casted[,!names(aroclor.casted) %in% unique(dcwd.endo.nitrosamines.hch.chlord.pcb[grep('roclor',dcwd.endo.nitrosamines.hch.chlord.pcb$Name),'Name'])]
 aroclor.melted <- melt(aroclor.casted.sub, id.vars = c('Agency','SampleRegID','SampleAlias','Sampled','Matrix','SpecificMethod','Fraction'),variable.name = 'Name',value.name = 'tResult')#melt
 aroclor.melted$dnd <- ifelse(aroclor.melted$tResult > 0,1,0)
-aroclor.melted.addons <- data.frame('tMRL' = rep(0,nrow(aroclor.melted)), 
-                                'tMRLUnit' = rep('µg/L',nrow(aroclor.melted)),
+aroclor.melted.addons <- data.frame('tMRLUnit' = rep('µg/L',nrow(aroclor.melted)),
                                 'Unit' = rep('µg/L',nrow(aroclor.melted)), 
                                 'Status' = rep('A',nrow(aroclor.melted)))
 aroclor.melted <- cbind(aroclor.melted, aroclor.melted.addons)
+aroclor.tMRL <- ddply(aroclor, .(Agency, SampleRegID, SampleAlias, Matrix, Fraction, Sampled, SpecificMethod), summarize, tMRL = min(tMRL))
+aroclor.melted <- cbind(aroclor.melted, aroclor.tMRL$tMRL)
+aroclor.melted <- rename(aroclor.melted, c('aroclor.tMRL$tMRL' = 'tMRL'))
 aroclor.melted$Name.full <- aroclor.melted$Name
 aroclor.melted$id <- paste(aroclor.melted$SampleRegID, aroclor.melted$Name.full, aroclor.melted$Sampled)
 aroclor.melted$day <- substr(aroclor.melted$Sampled,1,10)
@@ -652,7 +680,7 @@ dcc.min$tResult <- as.numeric(dcc.min$tResult)
 dcc.min$value <- as.numeric(dcc.min$value)
 
 #evaluate exceedances to the minimum criteria
-dcc.min$exceed <- ifelse(dcc.min$criterianame.x == 'Alkalinity',ifelse(dcc.min$tResult > dcc.min$value,0,1),ifelse(dcc.min$tResult < dcc.min$value,0,1))
+dcc.min$exceed <- ifelse(dcc.min$criterianame.x == 'Alkalinity',ifelse(dcc.min$tResult >= dcc.min$value,0,1),ifelse(dcc.min$tResult <= dcc.min$value,0,1))
 
 #### Determining which are valid exceedances ####
 #Where the MRL is greater than the criteria we can't use that sample to determine attainment or non-attainment
