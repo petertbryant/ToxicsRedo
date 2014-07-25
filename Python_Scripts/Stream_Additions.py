@@ -9,6 +9,11 @@ import arcpy
 from arcpy import env
 import os.path
 from __builtin__ import any
+custom_script_location = r'E:\GitHub\ToxicsRedo\Python_Scripts'
+if custom_script_location not in sys.path:
+    sys.path.append(custom_script_location)
+
+from IR2012_Functions import *
 
 arcpy.env.overwriteOutput = True
 workspace = "C:/Users/MPsaris/DEQ_Stream_Lake_Additions"
@@ -207,13 +212,48 @@ with arcpy.da.UpdateCursor(out_fc, ['LLID', 'RIVER_MILE', 'Estuary_2010']) as cu
             row[2] = upstreamEstuary(str("{:13.0f}".format(row[0])), row[1], stations_2010)
         cursor.updateRow(row)
 
+#Merge updated fcs together
+stations_new = 'C:/Users/MPsaris/DEQ_Stream_Lake_Additions/Additions.gdb/All_stations_final_est_unfinalized_manual_update'
+out_fc = 'C:/Users/MPsaris/DEQ_Stream_Lake_Additions/Additions.gdb/stations_subset_est2010'
+
+#Select freshwater stations
+stations_update = 'stations_update'
+arcpy.MakeFeatureLayer_management(stations_new, stations_update)
+arcpy.SelectLayerByLocation_management(stations_update, 'INTERSECT', huc4_lyr)
+arcpy.SelectLayerByLocation_management(stations_update, 'INTERSECT', huc4_lyr, None, 'SWITCH_SELECTION')
+
+#Merge
+merge_fc = 'C:/Users/MPsaris/DEQ_Stream_Lake_Additions/Additions.gdb/Additions_est_manual'
+arcpy.Merge_management([stations_update, out_fc], merge_fc)
+arcpy.CalculateField_management(merge_fc, 'Est_Final', '[Estuary_2010]')
+
+#At this point I manually inspected each station and gave it a final estuary designation
+
+#Fill in Matrix field
+code_block = """def Reclass(matrix):
+    if matrix == 'Estuary':
+        return 'ES'
+    elif matrix == 'Marine':
+        return 'SW'
+    elif matrix is None:
+        return None
+    else:
+        return 'FW'"""
+expression = 'Reclass(!Est_Final!)'
+arcpy.CalculateField_management(merge_fc, 'MATRIX', expression, 'PYTHON_9.3', code_block)
 ###################################################################################################################
+
+
 
 #Merge updated dataset back up with master dataset
 in_fc = '//deqhq1/mpsaris/GitHub/ToxicsRedo/Estuary_Analysis/Estuaries.gdb/All_stations_final_est'
 in_fc_lyr = 'new_wb_needed'
 out_fc = "C:/Users/MPsaris/DEQ_Stream_Lake_Additions/Additions.gdb/All_stations_final_est_pd"
 query = """"QAQC2" not in ( 'Further Review Needed' , 'Potential Digitization' )"""
-merge_fc = 'C:/Users/MPsaris/DEQ_Stream_Lake_Additions/Additions.gdb/All_stations_final_est_unfinalized_manual'
+merge_fc = 'C:/Users/MPsaris/DEQ_Stream_Lake_Additions/Additions.gdb/Additions_est_manual'
 arcpy.MakeFeatureLayer_management(in_fc, in_fc_lyr, query)
 arcpy.Merge_management([in_fc_lyr, merge_fc], out_fc)
+renameField(out_fc, 'LLID', 'LLID_temp', 'TEXT')
+renameField(out_fc, 'LLID_temp', 'LLID')
+renameField(out_fc, 'LAKE_LLID', 'LAKE_LLID_temp', 'TEXT')
+renameField(out_fc, 'LAKE_LLID_temp', 'LAKE_LLID')
