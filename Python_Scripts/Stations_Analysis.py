@@ -113,7 +113,7 @@ in_fc = "Master_List_of_Stations_Results_Tol12000_II_Edits.gdb/qc_needs_review"
 out_fc = "Master_List_of_Stations_Results_Tol12000_II_Edits.gdb/qc_needs_review_update"
 in_table = "needs_review_table.csv"
 arcpy.CopyFeatures_management(in_fc, out_fc)
-replace_attributes(out_path, in_fc, in_table)
+replace_attributes(out_path, out_fc, in_table)
 removeDuplicates(out_fc)
 
 

@@ -4,5 +4,9 @@
 .Rproj
 .gitignore
 schema.ini
+<<<<<<< HEAD
+.idea
+=======
 .RDataTmp
 Thumbs.db
+>>>>>>> 77b8d0f4f9ededb65f286ed680c100f1bae4f427
