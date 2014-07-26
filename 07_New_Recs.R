@@ -2,6 +2,7 @@ library(RODBC)
 ref.con <- odbcConnect('WQAssessment')
 LLID.Streams <- sqlQuery(ref.con, 'SELECT * FROM LookupStreams_LLID')
 LLID.Lakes <- sqlQuery(ref.con, 'SELECT * FROM LookupLakes_LLID')
+segments <- sqlQuery(ref.con, 'SELECT * FROM Assessment_Segment')
 
 LLID.Streams$RM_MIN <- round(as.numeric(LLID.Streams$RM_MIN), 1)
 LLID.Streams$RM_MAX <- round(as.numeric(LLID.Streams$RM_MAX), 1)
@@ -9,6 +10,9 @@ LLID.Streams.sub <- LLID.Streams[,c('LLID','NAME','RM_MIN','RM_MAX')]
 
 #A spot fix to make it consistent with an existing segment
 #LLID.Streams.sub[LLID.Streams.sub$LLID == '1231108446399','RM_MAX'] <- 78.0
+
+stations.newrecs$value <- ifelse(suppressWarnings(is.na(as.numeric(stations.newrecs$value))),stations.newrecs$value,paste(stations.newrecs$value, "µg/L"))
+#stations.newrecs <- merge(stations.newrecs, sul2012[,c('STATION','Matrix')], by.x = 'SampleRegID', by.y = 'STATION', all.x = TRUE)
 
 #this looks to see if there are any segments on the LLID that don't capture the 
 #stations evaluated
@@ -27,7 +31,7 @@ snt.w.LLIDs <- stations.newrecs[stations.newrecs$code %in% LLIDs.w.snt$code,]
 #segment created on part of the LLID for that pollutant but no segment exists that encompassess those stations.
 #The code manually creates those segments for the stations to map to by filling in the gap with a new segment.
 #The result of this sourcing is a data frame called newsegs.exceptions
-source('//deqhq1/wqassessment/2012_WQAssessment/Segmentation/R_scripts/2012 IR New Recs Exceptions.R')
+#source('//deqhq1/wqassessment/2012_WQAssessment/Segmentation/R_scripts/2012 IR New Recs Exceptions.R')
 
 #This pulls in LLID info into our unmatched stations
 
@@ -37,7 +41,6 @@ snt.no.LLID <- merge(snt.no.LLID, LLID.Streams.sub, by.x = 'STREAM_LLID', by.y =
 
 snt.no.LLID$exceed <- as.numeric(snt.no.LLID$exceed)
 snt.no.LLID$total_n <- as.numeric(snt.no.LLID$total_n)
-snt.no.LLID$value <- ifelse(suppressWarnings(is.na(as.numeric(snt.no.LLID$value))),snt.no.LLID$value,paste(snt.no.LLID$value, "µg/L"))
 
 #this makes a table with counts of categories by LLID + Pollutant. no ordering is preserved. the rownames
 #are the LLID + Pollutant code. tox.mixed.cat means that there are cat 2 and cat 5 for that code
@@ -61,17 +64,16 @@ tox.cat3 <- process(tox.cat3, snt.no.LLID)
 tox.cat3B <- process(tox.cat3B, snt.no.LLID)
 tox.cat5 <- process(tox.cat5, snt.no.LLID)
 
-tox.cat2$code <- paste(tox.cat2$LLID_Stream_Lake, tox.cat2$Pollutant_ID)
-tox.cat3$code <- paste(tox.cat3$LLID_Stream_Lake, tox.cat3$Pollutant_ID)
-tox.cat3B$code <- paste(tox.cat3B$LLID_Stream_Lake, tox.cat3B$Pollutant_ID)
-tox.cat5$code <- paste(tox.cat5$LLID_Stream_Lake, tox.cat5$Pollutant_ID)
-
-View(arrange(tox.cat2[tox.cat2$code %in% tox.cat2[duplicated(tox.cat2$code),'code'],],code))
-View(arrange(tox.cat3[tox.cat3$code %in% tox.cat3[duplicated(tox.cat3$code),'code'],],code))
+# tox.cat2$code <- paste(tox.cat2$LLID_Stream_Lake, tox.cat2$Pollutant_ID)
+# tox.cat3$code <- paste(tox.cat3$LLID_Stream_Lake, tox.cat3$Pollutant_ID)
+# tox.cat3B$code <- paste(tox.cat3B$LLID_Stream_Lake, tox.cat3B$Pollutant_ID)
+# tox.cat5$code <- paste(tox.cat5$LLID_Stream_Lake, tox.cat5$Pollutant_ID)
+# 
+# View(arrange(tox.cat2[tox.cat2$code %in% tox.cat2[duplicated(tox.cat2$code),'code'],],code))
+# View(arrange(tox.cat3[tox.cat3$code %in% tox.cat3[duplicated(tox.cat3$code),'code'],],code))
 #Not currently an issue for them
 #View(arrange(tox.cat3B[tox.cat3B$code %in% tox.cat3B[duplicated(tox.cat3B$code),'code'],],code))
 #View(arrange(tox.cat5[tox.cat5$code %in% tox.cat5[duplicated(tox.cat5$code),'code'],],code))
-
 
 #Since we did the subsetting above this allows us to wholesale apply the status assignments
 tox.cat2$Status <- '2'
@@ -79,119 +81,125 @@ tox.cat3$Status <- '3'
 tox.cat3B$Status <- '3B'
 tox.cat5$Status <- '5'
 
-#now we have to deal with those mixed.cat situations. probably have to do this one by hand
-tox.mixed.cat<- snt.no.LLID[snt.no.LLID$code %in% rownames(tox.mixed.cat.count),]
-tox.mixed.cat$Str_RM <- round(as.numeric(tox.mixed.cat$Str_RM), 1)
-tox.mixed.cat<- arrange(tox.mixed.cat, Str_LLID, Pollutant, Str_RM)
-
-#this for loop splits the segments and adds the summary field. it only works if the first station
-#is cat 5 and all upstream sites are cat 2 or vice versa but if there is any switching along the way
-#definitely will not work. 
-newsegs <- data.frame('LLID_Stream_Lake' = character(), 'Str_name' = character(), 'Str_LLID' = character(), 
-                      'LAKE_LLID' = character(),'LAKE_NAME' = character(),'RM_MIN' = character(), 
-                      'RM_MAX' = character(), 'crit_val'= character(),'Segment_ID' = character(), 
-                      'Status' = character(), 'Record_ID' = character(), 'Pollutant' = character(),
-                      'Pollutant_ID' = character(), 'Summary' = character(), stringsAsFactors = F)
-
-for (i in 1:length(unique(tox.mixed.cat$code))) {
-  sub <- tox.mixed.cat[tox.mixed.cat$code == unique(tox.mixed.cat$code)[i],]
-  sub$seg <- NA
-  sub.3 <- sub[(sub$cat == '3' | sub$cat == '3B'),]
-  sub <- sub[!(sub$cat == '3' | sub$cat == '3B'),]
-  seg <- subset(sub[1,], select = c('code','LLID_Stream_Lake','Str_name','Str_LLID','LAKE_LLID','LAKE_NAME','Pollutant', 'Pollutant_ID','RM_MIN', 'RM_MAX','crit_val'))
-  
-  for (j in 1:(nrow(sub)-1)) {
-    if (j == 1) {
-      if (sub$cat[j] != sub$cat[j+1]) {
-        if (sub$cat[j] == 5) {
-          sub$seg[j] = 1L
-          sub$seg[j+1] = 2L
-          ds.seg <- seg
-          ds.seg$RM_MAX[j] <- sub$Str_RM[j+1]
-          ds.seg$Status[j] <- '5'
-          us.seg <- seg
-          us.seg$RM_MIN[j] <- sub$Str_RM[j+1]
-          us.seg$Status[j] <- '2'
-        }else {
-          sub$seg[j] = 1L
-          sub$seg[j+1] = 2L
-          ds.seg <- seg
-          ds.seg$RM_MAX[j] <- sub$Str_RM[j] + (sub$Str_RM[j+1]-sub$Str_RM[j])/2 
-          ds.seg$Status <- '2'
-          us.seg <- seg
-          us.seg$RM_MIN[j] <- ds.seg$RM_MAX[j]
-          us.seg$Status <- '5'
-        }
-      }else if (sub$cat[j] == sub$cat[j+1]) {
-        sub$seg[j] = 1L
-        sub$seg[j+1] = 1L
-      } 
-    }
-    else {
-      if (sub$cat[j] != sub$cat[j+1]) {
-        sub$seg[j+1] = j 
-      }else if (sub$cat[j] == sub$cat[j+1]) {
-        sub$seg[j+1] = sub$seg[j]
-      }
-    }
-  }
-  
-  if (nrow(sub.3) == 1) {
-    sub.3$seg <- 1
-    sub <- rbind(sub.3, sub)
-  }
-  
-  sub$combo <- paste(sub$code, sub$seg)
-  sub.summary <- ddply(sub, .(combo), text.summary)
-  
-  #ds.seg$Status <- '5'
-  ds.seg$combo <- paste(ds.seg$code, '1')
-  #us.seg$Status <- '2'
-  us.seg$combo <- paste(us.seg$code, '2')
-  
-  subsegs <- rbind(ds.seg, us.seg)
-  
-  subsegs <- merge(subsegs, sub.summary, by = 'combo', all.y = T)
-  subsegs <- within(subsegs, rm(combo))
-  
-  newsegs <- rbind(newsegs, subsegs)
-  
-}
+#Currrently, these don't seem to be an issue
+# #now we have to deal with those mixed.cat situations. probably have to do this one by hand
+# tox.mixed.cat<- snt.no.LLID[snt.no.LLID$code %in% rownames(tox.mixed.cat.count),]
+# tox.mixed.cat$Str_RM <- round(as.numeric(tox.mixed.cat$Str_RM), 1)
+# tox.mixed.cat<- arrange(tox.mixed.cat, Str_LLID, Pollutant, Str_RM)
+# 
+# #this for loop splits the segments and adds the summary field. it only works if the first station
+# #is cat 5 and all upstream sites are cat 2 or vice versa but if there is any switching along the way
+# #definitely will not work. 
+# newsegs <- data.frame('LLID_Stream_Lake' = character(), 'Str_name' = character(), 'Str_LLID' = character(), 
+#                       'LAKE_LLID' = character(),'LAKE_NAME' = character(),'RM_MIN' = character(), 
+#                       'RM_MAX' = character(), 'crit_val'= character(),'Segment_ID' = character(), 
+#                       'Status' = character(), 'Record_ID' = character(), 'Pollutant' = character(),
+#                       'Pollutant_ID' = character(), 'Summary' = character(), stringsAsFactors = F)
+# 
+# for (i in 1:length(unique(tox.mixed.cat$code))) {
+#   sub <- tox.mixed.cat[tox.mixed.cat$code == unique(tox.mixed.cat$code)[i],]
+#   sub$seg <- NA
+#   sub.3 <- sub[(sub$cat == '3' | sub$cat == '3B'),]
+#   sub <- sub[!(sub$cat == '3' | sub$cat == '3B'),]
+#   seg <- subset(sub[1,], select = c('code','LLID_Stream_Lake','Str_name','Str_LLID','LAKE_LLID','LAKE_NAME','Pollutant', 'Pollutant_ID','RM_MIN', 'RM_MAX','crit_val'))
+#   
+#   for (j in 1:(nrow(sub)-1)) {
+#     if (j == 1) {
+#       if (sub$cat[j] != sub$cat[j+1]) {
+#         if (sub$cat[j] == 5) {
+#           sub$seg[j] = 1L
+#           sub$seg[j+1] = 2L
+#           ds.seg <- seg
+#           ds.seg$RM_MAX[j] <- sub$Str_RM[j+1]
+#           ds.seg$Status[j] <- '5'
+#           us.seg <- seg
+#           us.seg$RM_MIN[j] <- sub$Str_RM[j+1]
+#           us.seg$Status[j] <- '2'
+#         }else {
+#           sub$seg[j] = 1L
+#           sub$seg[j+1] = 2L
+#           ds.seg <- seg
+#           ds.seg$RM_MAX[j] <- sub$Str_RM[j] + (sub$Str_RM[j+1]-sub$Str_RM[j])/2 
+#           ds.seg$Status <- '2'
+#           us.seg <- seg
+#           us.seg$RM_MIN[j] <- ds.seg$RM_MAX[j]
+#           us.seg$Status <- '5'
+#         }
+#       }else if (sub$cat[j] == sub$cat[j+1]) {
+#         sub$seg[j] = 1L
+#         sub$seg[j+1] = 1L
+#       } 
+#     }
+#     else {
+#       if (sub$cat[j] != sub$cat[j+1]) {
+#         sub$seg[j+1] = j 
+#       }else if (sub$cat[j] == sub$cat[j+1]) {
+#         sub$seg[j+1] = sub$seg[j]
+#       }
+#     }
+#   }
+#   
+#   if (nrow(sub.3) == 1) {
+#     sub.3$seg <- 1
+#     sub <- rbind(sub.3, sub)
+#   }
+#   
+#   sub$combo <- paste(sub$code, sub$seg)
+#   sub.summary <- ddply(sub, .(combo), text.summary)
+#   
+#   #ds.seg$Status <- '5'
+#   ds.seg$combo <- paste(ds.seg$code, '1')
+#   #us.seg$Status <- '2'
+#   us.seg$combo <- paste(us.seg$code, '2')
+#   
+#   subsegs <- rbind(ds.seg, us.seg)
+#   
+#   subsegs <- merge(subsegs, sub.summary, by = 'combo', all.y = T)
+#   subsegs <- within(subsegs, rm(combo))
+#   
+#   newsegs <- rbind(newsegs, subsegs)
+#   
+# }
 
 
 #now let's put all these new segments together for the toxics
-newsegs <- within(newsegs, rm(code))
-newsegs <- rbind(newsegs, tox.cat2, tox.cat3, tox.cat3B, tox.cat5)
-newsegs.tox <- rename(newsegs, c('V1'='Summary', 'RM_MIN' = 'RM1', 'RM_MAX' = 'RM2'))
-newsegs.tox <- rbind(newsegs.tox, newsegs.exceptions)
+# newsegs <- within(newsegs, rm(code))
+# newsegs <- rbind(newsegs, tox.cat2, tox.cat3, tox.cat3B, tox.cat5)
+newsegs <- rbind(tox.cat2, tox.cat3, tox.cat3B, tox.cat5)
+newsegs <- rename(newsegs, c('V1'='Summary', 'RM_MIN' = 'RM1', 'RM_MAX' = 'RM2'))
+#newsegs.tox <- rbind(newsegs.tox, newsegs.exceptions)
 
 #Pull the criteria back in so we can fill in the Criteria and NumericCriteria ID columns later on
-criteria <- read.csv('//DEQHQ1/wqassessment/2012_WQAssessment/Segmentation/Data_used/Pollutants_complete.csv', stringsAsFactors = F)
-criteria <- within(criteria, rm(crit_val, AffectedUses))
-newsegs.tox <- merge(newsegs.tox, criteria, by = 'Pollutant')
+stations.newrecs$variable <- gsub('( -.*)','',stations.newrecs$variable)
+
+newsegs$code <- paste(newsegs$Pollutant, newsegs$LLID_Stream_Lake)
+stations.newrecs$code <- paste(stations.newrecs$Pollutant, stations.newrecs$LLID_Stream_Lake)
+newsegs <- merge(newsegs, unique(stations.newrecs[,c('code','variable')]), by = 'code', all.x = TRUE)
+newsegs[newsegs$variable == 'EPA Benchmark','variable'] <- unique(existsegs[grep('[Bb]enchmark',existsegs$Criteria),'Criteria'])
+newsegs$Criteria <- newsegs$variable
+newsegs <- within(newsegs, rm(variable))
 
 #fleshing out the newsegs.tox fields to match the newsegs.do
-newsegs.tox$Season <- 'Year Round'
-newsegs.tox$Season_ID <- 3
-newsegs.tox <- within(newsegs.tox, rm(crit_val))
-newsegs.tox$Stream_Lake_Name <- ifelse(is.na(newsegs.tox$LAKE_NAME), 
-                                       newsegs.tox$Str_name,
-                                       ifelse(is.na(newsegs.tox$Str_name),
-                                              newsegs.tox$LAKE_NAME,
-                                              paste(newsegs.tox$Str_name, newsegs.tox$LAKE_NAME, sep = '/')))
-newsegs.tox <- rename(newsegs.tox, c('Category' = 'Criteria', 'LAKE_LLID' = 'LLID_Lake', 
-                                     'LAKE_NAME' = 'Lake_Name', 'Str_name' = 'Stream_Name'))
+newsegs$Season <- 'Year Round'
+newsegs$Season_ID <- 3
+#newsegs <- within(newsegs, rm(crit_val))
+newsegs$Stream_Lake_Name <- ifelse(is.na(newsegs$LAKE_NAME), 
+                                       newsegs$Stream_Name,
+                                       ifelse(is.na(newsegs$Stream_Name),
+                                              newsegs$LAKE_NAME,
+                                              paste(newsegs$Stream_Name, newsegs$LAKE_NAME, sep = '/')))
+newsegs <- rename(newsegs, c('LAKE_LLID' = 'LLID_Lake', 'LAKE_NAME' = 'Lake_Name'))
 
 
 #put the newsegs.tox and the newsegs.do together now
-newsegs <- rbind(newsegs.tox, newsegs.do)
+#newsegs <- rbind(newsegs.tox, newsegs.do)
 
 #check for existing segmentIDs
 newsegs$RM1 <- round(as.numeric(newsegs$RM1), 1)
 newsegs$RM2 <- round(as.numeric(newsegs$RM2), 1)
 newsegs$segcheck <- paste(newsegs$LLID_Stream_Lake, newsegs$RM1, newsegs$RM2)
-segments$RM1 <- round(segments$RM1, 1)
-segments$RM2 <- round(segments$RM2, 1)
+segments$RM1 <- round(as.numeric(segments$RM1), 1)
+segments$RM2 <- round(as.numeric(segments$RM2), 1)
 segments$LLID_Stream_Lake <- ifelse(is.na(segments$LLID_Lake),
                                     segments$LLID_Stream,
                                     paste(segments$LLID_Stream, segments$LLID_Lake, sep = '/'))

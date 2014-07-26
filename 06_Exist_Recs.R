@@ -190,6 +190,7 @@ existsegs <- merge(existsegs, unique(stations.existrecs[,c('RecordID','variable'
 existsegs[existsegs$variable == 'EPA Benchmark','variable'] <- existsegs[existsegs$variable == 'EPA Benchmark','Criteria']
 existsegs$Criteria <- existsegs$variable
 existsegs <- within(existsegs, rm(variable))
+existsegs$Criteria <- gsub('( -.*)','',existsegs$Criteria)
 #still need to update numeric criteria ID
 
 #Assessment IDs need updating as does assessment year but that must be done in a later script.

@@ -71,6 +71,8 @@ Table3040.applicable[Table3040.applicable$Criteria.Name.full == 'Chromium (Hex)'
 Table3040.applicable[Table3040.applicable$Criteria.Name.full == 'Mercury','Criteria.Name.full'] <- 'Mercury, Total recoverable'
 #Similarly Arsenic isn't handled well at this point either
 Table3040.applicable <- Table3040.applicable[Table3040.applicable$Criteria.Name.full != 'Arsenic, Total inorganic',]
+#Not sure why Azinphos methyl is persisted as a Criteria.Name.full
+Table3040.applicable <- Table3040.applicable[which(Table3040.applicable$Criteria.Name.full != 'Azinphos methyl'),]
 
 #### First the Water Quality Portal data ####
 #Remove Bed Sediment and Suspended samples
@@ -684,7 +686,7 @@ dcc.min$exceed <- ifelse(dcc.min$criterianame.x == 'Alkalinity',ifelse(dcc.min$t
 
 #### Determining which are valid exceedances ####
 #Where the MRL is greater than the criteria we can't use that sample to determine attainment or non-attainment
-dcc.min$Valid <- ifelse(dcc.min$dnd == 1,1,ifelse(dcc.min$tMRL <= dcc.min$value, 1, 0))
+dcc.min$Valid <- ifelse(dcc.min$dnd == 1,1,ifelse(dcc.min$tMRL <= dcc.min$value, ifelse(dcc.min$tMRL == 0, 0, 1), 0))
 
 #Dissolved versus total criteria
 dtc <- dcc.min[dcc.min$Criteria.Name.full != dcc.min$Name.full & dcc.min$Fraction == 'Dissolved' & grepl('Total',dcc.min$Criteria.Name.full),]
