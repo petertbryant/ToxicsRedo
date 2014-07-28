@@ -17,8 +17,8 @@ stations<-rename(stations, c('LLID'='STREAM_LLID', 'DESCRIPTIO'='DESCRIPTION', '
                              'QAQC1'='Init_Loc_Status', 'QAQC2'='Manual_Loc_Status', 'Comments'='Process_Comments',
                              'Est_Commen'='Comments', 'MATRIX'='Water_Type'))
 
-#Columbia River station fix
-cr.fix<-readOGR(inshape, 'Columbia_station_error_fix')
+#Station error fix
+cr.fix<-readOGR(inshape, 'Station_error_fix')
 cr.data<-cr.fix@data
 cr.data<-rename(cr.data, c('LLID'='STREAM_LLID', 'DESCRIPTIO'='DESCRIPTION', 'GIS_STREAM'='Stream_Name', 
                              'GIS_Sour_1'='GIS_Source_LAKE', 'HU_6_Name'='HUC_3rd_Field', 'QAQC1'='Init_Loc_Status', 
