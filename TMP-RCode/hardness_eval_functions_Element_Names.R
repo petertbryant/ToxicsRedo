@@ -336,7 +336,13 @@ remove.dups <- function(tname) {
   tname <- within(tname, rm(tResult.x, tResult.y))
 }
 
-text.summary <- function(x) {
+text.summary <- function(x) {x <- arrange(x, RIVER_MILE)
+                             paste('[', x$Agency, '] STATION ', x$SampleRegID, ' at RM ', x$RIVER_MILE, ' for ', x$total_n, ' samples from ',
+                                   strftime(x$min_date, '%m/%d/%Y'), ' to ', strftime(x$max_date, '%m/%d/%Y'), ', ', x$exceed, ' of ', 
+                                   x$valid_n, ' valid samples exceed the ', x$value, ' criteria ',
+                                   sep = '', collapse = ';\r\n')}
+
+text.summary.general <- function(x) {
   x <- arrange(x, RIVER_MILE)
   y <- x[x$cat == 3,]
   z <- x[x$cat != 3,]
@@ -366,5 +372,5 @@ text.summary <- function(x) {
 
 process <- function(df, source.df) {
   df.us <- source.df[source.df$code %in% rownames(df),]
-  df.summary <- ddply(df.us, .(LLID_Stream_Lake, Stream_Name, STREAM_LLID, LAKE_LLID, LAKE_NAME, Pollutant, Pollutant_ID, RM_MIN, RM_MAX, value), text.summary)
+  df.summary <- ddply(df.us, .(LLID_Stream_Lake, Stream_Name, STREAM_LLID, LAKE_LLID, LAKE_NAME, Pollutant, Pollutant_ID, RM_MIN, RM_MAX), text.summary)
 }
