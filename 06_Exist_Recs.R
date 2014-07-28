@@ -118,8 +118,10 @@ for (i in 1:nrow(status.comparison)) {
       status.comparison$Status_Final[i] <- "Potentially Delistable"
       
     } 
-  } else {
+  } else if (status.comparison$Draft_2012[i] == 'Cat 4A: Water quality limited, TMDL approved') {
     status.comparison$Status_Final[i] <- status.comparison$Draft_2012[i]
+  } else {
+    status.comparison$Status_Final[i] <- status.comparison$Status_2012[i]
   }
   
 }
@@ -133,7 +135,7 @@ status.comparison.same <- status.comparison[which(status.comparison$Status_2010 
 status.comparison.same$Action <- 'No status change'
 status.comparison.same$Action_ID <- '13'
 
-status.comparison.diff <- status.comparison[which(status.comparison$Status_2010 != status.comparison$Status_Final),]
+status.comparison.diff <- status.comparison[which(status.comparison$Status_2010 != status.comparison$Status_Final & status.comparison$Action != 'Added to database'),]
 status.comparison.diff[which(status.comparison.diff$Status_Final == "Cat 2: Attaining some criteria/uses"),'Action'] <- 'Status modification - Attaining criteria/uses'
 status.comparison.diff[which(status.comparison.diff$Status_Final == "Cat 2: Attaining some criteria/uses"),'Action_ID'] <- '2'
 status.comparison.diff[which(status.comparison.diff$Status_Final == "Cat 3B: Potential concern"),'Action'] <- 'Status modification - Potential concern'
@@ -144,7 +146,10 @@ status.comparison.diff[which(status.comparison.diff$Status_Final == "Cat 5: Wate
 status.comparison.na <- status.comparison[is.na(status.comparison$Status_2010),]
 status.comparison.na$Action_ID <- 14
 
-status.comparison <- rbind(status.comparison.same, status.comparison.diff, status.comparison.na)
+status.comparison.added <- status.comparison[status.comparison$Action == 'Added to database',]
+status.comparison.added$Action_ID <- 7
+
+status.comparison <- rbind(status.comparison.same, status.comparison.diff, status.comparison.na, status.comparison.added)
 
 status.comparison <- arrange(status.comparison, Record_ID)
 status.comparison.final <- status.comparison[,c('Record_ID', 'Status_Final', 'Action', 'Action_ID')]
@@ -167,6 +172,7 @@ stations.existrecs.summary <- rename(stations.existrecs.summary, c('RecordID' = 
 existsegs <- ars[ars$Record_ID %in% status.comparison$Record_ID,]
 #existsegs$Summary <- as.character(existsegs$Summary)
 existsegs <- arrange(existsegs, Record_ID)
+existsegs[existsegs$Action == 'Added to database','Summary'] <- ''
 existsegs$Summary <- gsub('^.*\r\n\r\n','',existsegs$Summary)
 existsegs <- merge(existsegs, stations.existrecs.summary, by = 'Record_ID')
 existsegs$V1 <- paste('2012 Data:', existsegs$V1, sep = '\r\n')

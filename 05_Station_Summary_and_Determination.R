@@ -89,11 +89,11 @@ ars$RM1 <- as.numeric(ars$RM1)
 ars$RM2 <- as.numeric(ars$RM2)
 ars[ars$Pollutant %in% dma.pollutant$Pollutant & ars$Season == 'Undefined','Season'] <- 'Year Round'
 ars[ars$Pollutant == 'Phosphate Phosphorus','Season'] <- 'Year Round'
-dma.pollutant$RIVER_MILE <- as.numeric(dma.pollutant$RIVER_MILE)
+dma.pollutant$RIVER_MILE <- round(as.numeric(dma.pollutant$RIVER_MILE),1)
 dma.pollutant[is.na(dma.pollutant$RIVER_MILE),'RIVER_MILE'] <- 0
 dma.pollutant$GroupReview <- NA
 dma.pollutant$MatrixReview <- NA
-
+dma.pollutant$Draft_Update <- NA
 dma.pollutant.pre.assign <- dma.pollutant
 
 #then we look to see which segments have stations within their bounds
@@ -102,22 +102,24 @@ for (i in 1:nrow(dma.pollutant)) {
   matched.seg.pol <- subset(matched.seg, matched.seg$Pollutant %in% c(dma.pollutant$Pollutant[i], dma.pollutant$Former_Group_Pollutant_Name[i]))
   #matched.seg.pol.seas <- subset(matched.seg.pol, matched.seg.pol$Season == dma.pollutant$Season[i])
   #matched.seg.pol.seas.crit <- subset(matched.seg.pol.seas, matched.seg.pol.seas$Criteria == dma.pollutant$Criteria[i])
-  
+  matched.seg.pol <- arrange(matched.seg.pol, desc(SampleMatrix_ID))
   
   if (nrow(matched.seg.pol) > 0) {
     for (j in 1:nrow(matched.seg.pol)) {
       if(dma.pollutant$RIVER_MILE[i] >= matched.seg.pol$RM1[j] & dma.pollutant$RIVER_MILE[i] <= matched.seg.pol$RM2[j]) {
         
-        if (matched.seg.pol$Action[j] != 'Added to database') {
-          dma.pollutant$SegmentID[i] <- matched.seg.pol$Segment_ID[j]
-          if (dma.pollutant$Pollutant[i] == matched.seg.pol$Pollutant[j]) {
-            dma.pollutant$RecordID[i] <- matched.seg.pol$Record_ID[j]
-          } 
-          else {
-            dma.pollutant$GroupReview[i] <- 'Check group match'
-          }
-        }
+        dma.pollutant$SegmentID[i] <- matched.seg.pol$Segment_ID[j]
                 
+        if (matched.seg.pol$Action[j] == 'Added to database') {
+          dma.pollutant$Draft_Update[i] <- 'Needs fields updated'          
+        } 
+        
+        if (dma.pollutant$Pollutant[i] == matched.seg.pol$Pollutant[j]) {
+          dma.pollutant$RecordID[i] <- matched.seg.pol$Record_ID[j]
+        } else {
+          dma.pollutant$GroupReview[i] <- 'Check group match'
+        }
+        
         if (dma.pollutant$SampleMatrix_ID[i] != matched.seg.pol$SampleMatrix_ID[j])
         {
           dma.pollutant$RecordID[i] <- NA

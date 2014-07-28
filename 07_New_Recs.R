@@ -31,7 +31,7 @@ snt.w.LLIDs <- stations.newrecs[stations.newrecs$code %in% LLIDs.w.snt$code,]
 #segment created on part of the LLID for that pollutant but no segment exists that encompassess those stations.
 #The code manually creates those segments for the stations to map to by filling in the gap with a new segment.
 #The result of this sourcing is a data frame called newsegs.exceptions
-#source('//deqhq1/wqassessment/2012_WQAssessment/Segmentation/R_scripts/2012 IR New Recs Exceptions.R')
+source('07a_2012_IR_New_Recs_Exceptions.R')
 
 #This pulls in LLID info into our unmatched stations
 
@@ -167,7 +167,7 @@ tox.cat5$Status <- '5'
 # newsegs <- rbind(newsegs, tox.cat2, tox.cat3, tox.cat3B, tox.cat5)
 newsegs <- rbind(tox.cat2, tox.cat3, tox.cat3B, tox.cat5)
 newsegs <- rename(newsegs, c('V1'='Summary', 'RM_MIN' = 'RM1', 'RM_MAX' = 'RM2'))
-#newsegs.tox <- rbind(newsegs.tox, newsegs.exceptions)
+newsegs <- rbind(newsegs, newsegs.exceptions)
 
 #Pull the criteria back in so we can fill in the Criteria and NumericCriteria ID columns later on
 stations.newrecs$variable <- gsub('( -.*)','',stations.newrecs$variable)
