@@ -194,6 +194,10 @@ newsegs <- rename(newsegs, c('LAKE_LLID' = 'LLID_Lake', 'LAKE_NAME' = 'Lake_Name
 #put the newsegs.tox and the newsegs.do together now
 #newsegs <- rbind(newsegs.tox, newsegs.do)
 
+#add in fish tissue data
+source('//deqhq1/wqassessment/2012_WQAssessment/Segmentation/R_scripts/Mercury_Fish_Tissue_Incorporate.R')
+newsegs <- rbind(newsegs, newsegs.hg)
+
 #check for existing segmentIDs
 newsegs$RM1 <- round(as.numeric(newsegs$RM1), 1)
 newsegs$RM2 <- round(as.numeric(newsegs$RM2), 1)
@@ -206,10 +210,6 @@ segments$LLID_Stream_Lake <- ifelse(is.na(segments$LLID_Lake),
 segments$segcheck <- paste(segments$LLID_Stream_Lake, segments$RM1, segments$RM2)
 segments.sub <- segments[segments$Current_Segment == 1,c('segcheck', 'Segment_ID')]
 newsegs <- merge(newsegs, segments.sub, by = 'segcheck', all.x = TRUE)
-
-#add in fish tissue data
-source('//deqhq1/wqassessment/2012_WQAssessment/Segmentation/R_scripts/Mercury_Fish_Tissue_Incorporate.R')
-newsegs <- rbind(newsegs, newsegs.hg)
 
 #filling in the segment id we only want to consider unique LLID, RM1, RM2 combinations 
 unique.newsegs <- data.frame('segcheck' = unique(newsegs[is.na(newsegs$Segment_ID),'segcheck'], stringsAsFactors = F))
@@ -238,6 +238,8 @@ for (i in 1:nrow(newsegs)) {
 }
 
 #Adding in the HUC information (this works for when there are two or less segments on an LLID but I have a feeling it may not if there are more than two)
+sul2012 <- sqlFetch(ref.con, 'StationUseList_2012')
+
 newsegs$LLID_Stream <- newsegs$Str_LLID
 newsegs <- within(newsegs, rm(Str_LLID))
 

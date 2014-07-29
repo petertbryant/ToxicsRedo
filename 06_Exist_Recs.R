@@ -199,4 +199,6 @@ existsegs <- within(existsegs, rm(variable))
 existsegs$Criteria <- gsub('( -.*)','',existsegs$Criteria)
 #still need to update numeric criteria ID
 
+
+
 #Assessment IDs need updating as does assessment year but that must be done in a later script.

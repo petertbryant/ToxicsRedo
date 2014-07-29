@@ -47,7 +47,7 @@ newsegs$RM2 <- NA
 segments$RM1 <- as.numeric(segments$RM1)
 segments$RM2 <- as.numeric(segments$RM2)
 i <- 5
-cat3.tdw <- unique(newsegs[newsegs$Status == '3',c('LLID_Stream_Lake','Pollutant_ID')])
+cat2.tdw <- unique(newsegs[newsegs$Status == '2',c('LLID_Stream_Lake','Pollutant_ID')])
 View(ars[which(ars$LLID_Stream_Lake == cat2.tdw[i,1] & ars$Pollutant_ID == cat2.tdw[i,2]),])
 View(arrange(segments[which(segments$LLID_Stream == substr(cat3.tdw[i,1], 1, 13)),],RM1,RM2))
 arrange(stations.newrecs[stations.newrecs$LLID_Stream_Lake == cat2.tdw[i,1] & stations.newrecs$Pollutant_ID == cat2.tdw[i,2],],RIVER_MILE)
@@ -57,8 +57,18 @@ newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '
 newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '2181'),c('RM1', 'RM2')] <- c('24.8', '186.6')
 newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '2183'),c('RM1', 'RM2')] <- c('24.8', '186.6')
 newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '12697'),c('RM1', 'RM2')] <- c('24.8', '186.6')
-newsegs[which(newsegs$STREAM_LLID == '1169731440585' & newsegs$Pollutant_ID %in% c('2227','2189'),c('RM1','RM2')] <- c('67.0', '186.1')
+newsegs[which(newsegs$STREAM_LLID == '1169731440585' & newsegs$Pollutant_ID %in% c('2227','2189')),c('RM1','RM2')] <- c('67.0', '186.1')
 
+# #This Willamette River one has a segment in the middle so we need to create two new segments. One above and one below.
+newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '2258'),c('RM1', 'RM2', 'Status')] <- c('24.8', '108', '2')
+newrow <- newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '2258'),]
+newrow$Summary <- gsub('\r\n','',strsplit(newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '2258'),'Summary'], split = ';')[[1]][4])
+newsegs[which(newsegs$STREAM_LLID == '1227618456580' & 
+          newsegs$Pollutant_ID == '2258'),'Summary'] <- paste(strsplit(newsegs[which(newsegs$STREAM_LLID == '1227618456580' & 
+                                                                                newsegs$Pollutant_ID == '2258'),'Summary'], split = ';')[[1]][1:3], 
+                                                             collapse = ';')
+newrow[,c('RM1', 'RM2', 'Status')] <- c('148.8', '186.6', '2')
+newsegs <- rbind(newsegs, newrow)
 
 # #### These are the ones where we have to apply the segmentation logic ####
 # #The farthest upstream station is attaining while the stations from 44.7 to 72.9 (the RM of the attaining station) are 5,5,3,3,3,5 
