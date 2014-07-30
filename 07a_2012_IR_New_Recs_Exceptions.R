@@ -6,24 +6,26 @@
 to.deal.with <- unique(snt.w.LLIDs$code)
 snt.w.LLIDs$exceed <- round(as.numeric(snt.w.LLIDs$exceed), 1)
 snt.w.LLIDs$total_n <- round(as.numeric(snt.w.LLIDs$total_n), 1)
-snt.w.LLIDs <- arrange(snt.w.LLIDs, RIVER_MILE)
-ars$code <- paste(ars$LLID_Stream_Lake, ars$Pollutant_ID)
+snt.w.LLIDs <- plyr::arrange(snt.w.LLIDs, RIVER_MILE)
+ars$code <- paste(ars$LLID_Stream, ars$Pollutant_ID)
 
 newsegs <- data.frame('STREAM_LLID' = character(), 'NAME' = character(),'SegmentID' = character(), 
                       'RecordID' = character(), 'Pollutant' = character(), 'value' = character(),
                       'Pollutant_ID' = character(), 'Summary' = character(), 'LLID_Stream_Lake' = character(),
-                      'LAKE_LLID' = character(), 'LAKE_NAME' = character(), 'Stream_Name' = character(), stringsAsFactors = F)
+                      'LAKE_LLID' = character(), 'LAKE_NAME' = character(),
+                      'Stream_Name' = character(), stringsAsFactors = F) 
 
 for (i in 1:length(to.deal.with)) {
   stations.of.interest <- snt.w.LLIDs[snt.w.LLIDs$code == to.deal.with[i],]
   ars.of.interest <- ars[ars$code == to.deal.with[i],]
+  #Add if else here for LLID match. There are only STReam LLIDs in this set so we don't have to make it smarter.
   LLID.of.interest <- LLID.Streams[LLID.Streams$LLID == substr(to.deal.with[i], 1, 13),]
   segments.of.interest <- segments[which(segments$LLID_Stream == substr(to.deal.with[i], 1, 13)),]
   
   Summary.text <- ddply(stations.of.interest, .(code), text.summary)[,2]
   
-  seg.of.interest <- stations.of.interest[1,c('STREAM_LLID', 'SegmentID', 'RecordID', 'Pollutant', 'Pollutant_ID','LLID_Stream_Lake',
-                                              'LAKE_LLID', 'LAKE_NAME', 'Stream_Name','value')]
+  seg.of.interest <- stations.of.interest[1,c('STREAM_LLID', 'SegmentID', 'RecordID', 'Pollutant', 'Pollutant_ID','Stream_Name','value')] #'LLID_Stream_Lake',
+                                                                                                                                          #'LAKE_LLID', 'LAKE_NAME', 
   seg.of.interest$NAME <- ars.of.interest[1,'Stream_Lake_Name']
   seg.of.interest$Summary <- Summary.text
   
@@ -46,18 +48,27 @@ newsegs$RM2 <- NA
 
 segments$RM1 <- as.numeric(segments$RM1)
 segments$RM2 <- as.numeric(segments$RM2)
+<<<<<<< HEAD
 i <- 45
 cat3.tdw <- unique(newsegs[newsegs$Status == '3',c('LLID_Stream_Lake','Pollutant_ID')])
 View(ars[which(ars$LLID_Stream_Lake == cat3.tdw[i,1] & ars$Pollutant_ID == cat3.tdw[i,2]),])
 View(arrange(segments[which(segments$LLID_Stream == substr(cat3.tdw[i,1], 1, 13)),],RM1,RM2))
 arrange(stations.newrecs[stations.newrecs$LLID_Stream_Lake == cat3.tdw[i,1] & stations.newrecs$Pollutant_ID == cat3.tdw[i,2],],RIVER_MILE)
 LLID.Streams.sub[LLID.Streams.sub$LLID == cat3.tdw[i,'LLID_Stream_Lake'],]
+=======
+i <- 5
+cat2.tdw <- unique(newsegs[newsegs$Status == '2',c('LLID_Stream','Pollutant_ID')])
+View(ars[which(ars$LLID_Stream == cat2.tdw[i,1] & ars$Pollutant_ID == cat2.tdw[i,2]),])
+View(arrange(segments[which(segments$LLID_Stream == substr(cat3.tdw[i,1], 1, 13)),],RM1,RM2))
+arrange(stations.newrecs[stations.newrecs$LLID_Stream == cat2.tdw[i,1] & stations.newrecs$Pollutant_ID == cat2.tdw[i,2],],RIVER_MILE)
+>>>>>>> 07936b7a19af8dddb31a98a0916e56cda1745de8
 
 #### These are all the simple ones where we don't have to do any additional cutting ####
 newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '2182'),c('RM1', 'RM2')] <- c('24.8', '186.6')
 newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '2181'),c('RM1', 'RM2')] <- c('24.8', '186.6')
 newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '2183'),c('RM1', 'RM2')] <- c('24.8', '186.6')
 newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '12697'),c('RM1', 'RM2')] <- c('24.8', '186.6')
+<<<<<<< HEAD
 newsegs[which(newsegs$STREAM_LLID == '1169731440585' & newsegs$Pollutant_ID %in% c('2227','2189'),c('RM1','RM2')] <- c('67.0', '186.1')
 newsegs[which(newsegs$STREAM_LLID == '1226500453377' & newsegs$Pollutant_ID == '2182'),c('RM1', 'RM2')] <- c('44.7', '80.7')
 # newsegs[which(newsegs$STREAM_LLID == '1215146456436' & newsegs$Pollutant_ID == '2205'),c('RM1', 'RM2')] <- c('1.5', '1.8') #Karla updated the current segment so no new segment is needed
@@ -103,7 +114,20 @@ newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '
 newsegs[which(newsegs$STREAM_LLID == '1231445452258' & newsegs$Pollutant_ID == '2265'),c('RM1', 'RM2')] <- c('18.1', '61.7')
 newsegs[which(newsegs$STREAM_LLID == '1239194460155' & newsegs$Pollutant_ID == '2266'),c('RM1', 'RM2')] <- c('0.2', '4.0')
 
+=======
+newsegs[which(newsegs$STREAM_LLID == '1169731440585' & newsegs$Pollutant_ID %in% c('2227','2189')),c('RM1','RM2')] <- c('67.0', '186.1')
+>>>>>>> 07936b7a19af8dddb31a98a0916e56cda1745de8
 
+# #This Willamette River one has a segment in the middle so we need to create two new segments. One above and one below.
+newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '2258'),c('RM1', 'RM2', 'Status')] <- c('24.8', '108', '2')
+newrow <- newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '2258'),]
+newrow$Summary <- gsub('\r\n','',strsplit(newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '2258'),'Summary'], split = ';')[[1]][4])
+newsegs[which(newsegs$STREAM_LLID == '1227618456580' & 
+          newsegs$Pollutant_ID == '2258'),'Summary'] <- paste(strsplit(newsegs[which(newsegs$STREAM_LLID == '1227618456580' & 
+                                                                                newsegs$Pollutant_ID == '2258'),'Summary'], split = ';')[[1]][1:3], 
+                                                             collapse = ';')
+newrow[,c('RM1', 'RM2', 'Status')] <- c('148.8', '186.6', '2')
+newsegs <- rbind(newsegs, newrow)
 
 # #### These are the ones where we have to apply the segmentation logic ####
 # #The farthest upstream station is attaining while the stations from 44.7 to 72.9 (the RM of the attaining station) are 5,5,3,3,3,5 
