@@ -49,10 +49,10 @@ newsegs$RM2 <- NA
 segments$RM1 <- as.numeric(segments$RM1)
 segments$RM2 <- as.numeric(segments$RM2)
 i <- 5
-cat2.tdw <- unique(newsegs[newsegs$Status == '2',c('LLID_Stream','Pollutant_ID')])
-View(ars[which(ars$LLID_Stream == cat2.tdw[i,1] & ars$Pollutant_ID == cat2.tdw[i,2]),])
+cat3.tdw <- unique(newsegs[newsegs$Status == '3',c('STREAM_LLID','Pollutant_ID')])
+View(ars[which(ars$LLID_Stream == 1240483462464 & ars$Pollutant_ID == 2260),])
 View(arrange(segments[which(segments$LLID_Stream == substr(cat3.tdw[i,1], 1, 13)),],RM1,RM2))
-arrange(stations.newrecs[stations.newrecs$LLID_Stream == cat2.tdw[i,1] & stations.newrecs$Pollutant_ID == cat2.tdw[i,2],],RIVER_MILE)
+arrange(stations.newrecs[stations.newrecs$STREAM_LLID == 1240483462464 & stations.newrecs$Pollutant_ID == 2260,],RIVER_MILE)
 
 #### These are all the simple ones where we don't have to do any additional cutting ####
 newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '2182'),c('RM1', 'RM2')] <- c('24.8', '186.6')
@@ -115,7 +115,10 @@ newsegs <- rbind(newsegs, newrow)
 # newsegs <- rbind(newsegs, newrow1)
 # newsegs.exceptions <- rbind(newsegs, newrow2)
 
-newsegs.exceptions <- within(newsegs, rm(SegmentID, RecordID, NAME))
+newsegs.exceptions <- within(newsegs, rm(SegmentID, RecordID, NAME, value))
+
+newsegs.exceptions$LAKE_LLID <- NA
+newsegs.exceptions$LAKE_NAME <- NA
 
 #rm(list = setdiff(ls()[sapply(ls(),function(n){!is.function(get(n))})], 
 #   c('newsegs.exceptions', 'stations.newrecs.toxics', 'stations.newrecs.do', 

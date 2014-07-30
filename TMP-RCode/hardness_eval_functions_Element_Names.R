@@ -372,5 +372,18 @@ text.summary.general <- function(x) {
 
 process <- function(df, source.df) {
   df.us <- source.df[source.df$code %in% rownames(df),]
-  df.summary <- ddply(df.us, .(LLID_Stream_Lake, Stream_Name, STREAM_LLID, LAKE_LLID, LAKE_NAME, Pollutant, Pollutant_ID, RM_MIN, RM_MAX), text.summary)
+  
+  df.us.stream <- df.us[!is.na(df.us$STREAM_LLID),]
+  df.summary.stream <- ddply(df.us.stream, .(Stream_Name, STREAM_LLID, Pollutant, Pollutant_ID, RM_MIN, RM_MAX), text.summary)
+  df.summary.stream$LAKE_NAME <- NA
+  df.summary.stream$LAKE_LLID <- NA
+  
+  df.us.lake <- df.us[is.na(df.us$STREAM_LLID),]
+  if (nrow(df.us.lake) > 0) {
+    df.summary.lake <- ddply(df.us.lake, .(LAKE_NAME, LAKE_LLID, Pollutant, Pollutant_ID, RM_MIN, RM_MAX), text.summary)
+    df.summary.lake$STREAM_LLID <- NA
+    df.summary.lake$Stream_Name <- NA
+  }
+    
+  df.summary <- rbind(df.summary.stream, df.summary.lake)
 }

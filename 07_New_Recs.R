@@ -34,7 +34,8 @@ snt.w.LLIDs <- stations.newrecs[stations.newrecs$code %in% LLIDs.w.snt$code,]
 #segment created on part of the LLID for that pollutant but no segment exists that encompassess those stations.
 #The code manually creates those segments for the stations to map to by filling in the gap with a new segment.
 #The result of this sourcing is a data frame called newsegs.exceptions
-source('07a_2012_IR_New_Recs_Exceptions.R')
+#This may have to run manually
+#source('07a_2012_IR_New_Recs_Exceptions.R')
 
 #This pulls in LLID info into our unmatched stations
 
@@ -171,16 +172,22 @@ tox.cat5$Status <- '5'
 newsegs <- rbind(tox.cat2, tox.cat3, tox.cat3B, tox.cat5)
 newsegs <- rename(newsegs, c('V1'='Summary', 'RM_MIN' = 'RM1', 'RM_MAX' = 'RM2'))
 newsegs <- rbind(newsegs, newsegs.exceptions)
+newsegs$SampleMatrix_ID <- 1
+
+#add in fish tissue data
+source('04a_Mercury_Fish_Tissue.R')
+newsegs <- rbind(newsegs, newsegs.hg)
 
 #Pull the criteria back in so we can fill in the Criteria and NumericCriteria ID columns later on
 stations.newrecs$variable <- gsub('( -.*)','',stations.newrecs$variable)
 
-newsegs$code <- paste(newsegs$Pollutant, newsegs$LLID_Stream)
+newsegs$code <- paste(newsegs$Pollutant, newsegs$STREAM_LLID)
 stations.newrecs$code <- paste(stations.newrecs$Pollutant, stations.newrecs$STREAM_LLID)
 newsegs <- merge(newsegs, unique(stations.newrecs[,c('code','variable')]), by = 'code', all.x = TRUE)
-newsegs[newsegs$variable == 'EPA Benchmark','variable'] <- unique(existsegs[grep('[Bb]enchmark',existsegs$Criteria),'Criteria'])
-newsegs$Criteria <- newsegs$variable
-newsegs <- within(newsegs, rm(variable))
+newsegs[newsegs$SampleMatrix_ID == 2,'variable.y'] <- 'Table 40 Human Health Criteria for Toxic Pollutants'
+newsegs[newsegs$variable.y == 'EPA Benchmark','variable.y'] <- unique(existsegs[grep('[Bb]enchmark',existsegs$Criteria),'Criteria'])
+newsegs$Criteria <- newsegs$variable.y
+newsegs <- within(newsegs, rm(variable.x,variable.y))
 
 #fleshing out the newsegs.tox fields to match the newsegs.do
 newsegs$Season <- 'Year Round'
@@ -191,26 +198,29 @@ newsegs$Stream_Lake_Name <- ifelse(is.na(newsegs$LAKE_NAME),
                                        ifelse(is.na(newsegs$Stream_Name),
                                               newsegs$LAKE_NAME,
                                               paste(newsegs$Stream_Name, newsegs$LAKE_NAME, sep = '/')))
+newsegs$LLID_Stream_Lake <- ifelse(is.na(newsegs$LAKE_LLID), 
+                                       newsegs$STREAM_LLID,
+                                       ifelse(is.na(newsegs$STREAM_LLID),
+                                              newsegs$LAKE_LLID,
+                                              paste(newsegs$STREAM_LLID, newsegs$LAKE_LLID, sep = '/')))
 newsegs <- rename(newsegs, c('LAKE_LLID' = 'LLID_Lake', 'LAKE_NAME' = 'Lake_Name'))
 
 
 #put the newsegs.tox and the newsegs.do together now
 #newsegs <- rbind(newsegs.tox, newsegs.do)
 
-#add in fish tissue data
-source('//deqhq1/wqassessment/2012_WQAssessment/Segmentation/R_scripts/Mercury_Fish_Tissue_Incorporate.R')
-newsegs <- rbind(newsegs, newsegs.hg)
+
 
 #check for existing segmentIDs
 newsegs$RM1 <- round(as.numeric(newsegs$RM1), 1)
 newsegs$RM2 <- round(as.numeric(newsegs$RM2), 1)
-newsegs$segcheck <- paste(newsegs$LLID_Stream, newsegs$RM1, newsegs$RM2)
+newsegs$segcheck <- paste(newsegs$LLID_Stream_Lake, newsegs$RM1, newsegs$RM2)
 segments$RM1 <- round(as.numeric(segments$RM1), 1)
 segments$RM2 <- round(as.numeric(segments$RM2), 1)
 # segments$LLID_Stream_Lake <- ifelse(is.na(segments$LLID_Lake),
 #                                     segments$LLID_Stream,
 #                                     paste(segments$LLID_Stream, segments$LLID_Lake, sep = '/'))
-segments$segcheck <- paste(segments$LLID_Stream, segments$RM1, segments$RM2)
+segments$segcheck <- paste(segments$LLID_Stream_Lake, segments$RM1, segments$RM2)
 segments.sub <- segments[segments$Current_Segment == 1,c('segcheck', 'Segment_ID')]
 newsegs <- merge(newsegs, segments.sub, by = 'segcheck', all.x = TRUE)
 
