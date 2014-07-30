@@ -51,9 +51,9 @@ segments$RM2 <- as.numeric(segments$RM2)
 <<<<<<< HEAD
 i <- 32
 cat3.tdw <- unique(newsegs[newsegs$Status == '3',c('STREAM_LLID','Pollutant_ID')])
-View(ars[which(ars$LLID_Stream_Lake == cat3.tdw[i,1] & ars$Pollutant_ID == cat3.tdw[i,2]),])
+View(ars[which(ars$LLID_Stream == cat3.tdw[i,1] & ars$Pollutant_ID == cat3.tdw[i,2]),])
 View(arrange(segments[which(segments$LLID_Stream == substr(cat3.tdw[i,1], 1, 13)),],RM1,RM2))
-arrange(stations.newrecs[stations.newrecs$LLID_Stream_Lake == cat3.tdw[i,1] & stations.newrecs$Pollutant_ID == cat3.tdw[i,2],],RIVER_MILE)
+arrange(stations.newrecs[which(stations.newrecs$STREAM_LLID == cat3.tdw[i,1] & stations.newrecs$Pollutant_ID == cat3.tdw[i,2]),],RIVER_MILE)
 LLID.Streams.sub[LLID.Streams.sub$LLID == cat3.tdw[i,'STREAM_LLID'],]
 =======
 i <- 5
@@ -109,7 +109,7 @@ newsegs[which(newsegs$STREAM_LLID == '1227161452842' & newsegs$Pollutant_ID == '
 newsegs[which(newsegs$STREAM_LLID == '1227161452842' & newsegs$Pollutant_ID == '2257'),c('RM1', 'RM2')] <- c('35.4', '61.7')
 newsegs[which(newsegs$STREAM_LLID == '1238951456889' & newsegs$Pollutant_ID == '2257'),c('RM1', 'RM2')] <- c('22.0', '120.0')
 newsegs[which(newsegs$STREAM_LLID == '1226500453377' & newsegs$Pollutant_ID == '2258'),c('RM1', 'RM2')] <- c('44.7', '80.7')
-newsegs[which(newsegs$STREAM_LLID == '1240483462464' & newsegs$Pollutant_ID == '2260'),c('RM1', 'RM2')] <- c('142.0', '287.1') #This one appears to already have an assessment unit
+newsegs[which(newsegs$STREAM_LLID == '1240483462464' & newsegs$Pollutant_ID == '2260'),c('RM1', 'RM2')] <- c('142.0', '303.9')
 newsegs[which(newsegs$STREAM_LLID == '1231445452258' & newsegs$Pollutant_ID == '2260'),c('RM1', 'RM2')] <- c('18.1', '61.7')
 newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '2261'),c('RM1', 'RM2')] <- c('24.8', '186.6')
 newsegs[which(newsegs$STREAM_LLID == '1231445452258' & newsegs$Pollutant_ID == '2265'),c('RM1', 'RM2')] <- c('18.1', '61.7')
