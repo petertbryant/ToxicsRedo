@@ -2,6 +2,8 @@ library(plyr)
 require(RODBC)
 require(lubridate)
 
+
+#Get sul from Stations_Use_List.R
 pHdata<-'I:/2012_WQAssessment/ToxicsRedo/allph.RData'
 load(pHdata) #pH
 pH$STATION<-pH$SampleRegID
