@@ -16,11 +16,14 @@ stations.newrecs$value <- ifelse(suppressWarnings(is.na(as.numeric(stations.newr
 
 #this looks to see if there are any segments on the LLID that don't capture the 
 #stations evaluated
-stations.newrecs$code <- paste(stations.newrecs$LLID_Stream_Lake, 
-                                      stations.newrecs$Pollutant_ID)
+stations.newrecs$code <- ifelse(is.na(stations.newrecs$STREAM_LLID), 
+                                paste(stations.newrecs$LAKE_LLID, stations.newrecs$Pollutant_ID),
+                                 paste(stations.newrecs$STREAM_LLID, stations.newrecs$Pollutant_ID))
 
 ars.wo <- ars[ars$SampleMatrix_ID == 1,]
-ars.wo$code <- paste(ars.wo$LLID_Stream_Lake, ars.wo$Pollutant_ID)
+ars.wo$code <- ifelse(is.na(ars.wo$LLID_Stream), 
+                       paste(ars.wo$LLID_Lake, ars.wo$Pollutant_ID),
+                       paste(ars.wo$LLID_Stream, ars.wo$Pollutant_ID))
 LLIDs.w.snt <- ars.wo[ars.wo$code %in% stations.newrecs$code,]
 snt.w.LLIDs <- stations.newrecs[stations.newrecs$code %in% LLIDs.w.snt$code,] 
 #snt.w.LLIDs.NOTtable20 <- snt.w.LLIDs[snt.w.LLIDs$Category %in% c('HHWO', 'HHO', 'MCL'),]
@@ -172,8 +175,8 @@ newsegs <- rbind(newsegs, newsegs.exceptions)
 #Pull the criteria back in so we can fill in the Criteria and NumericCriteria ID columns later on
 stations.newrecs$variable <- gsub('( -.*)','',stations.newrecs$variable)
 
-newsegs$code <- paste(newsegs$Pollutant, newsegs$LLID_Stream_Lake)
-stations.newrecs$code <- paste(stations.newrecs$Pollutant, stations.newrecs$LLID_Stream_Lake)
+newsegs$code <- paste(newsegs$Pollutant, newsegs$LLID_Stream)
+stations.newrecs$code <- paste(stations.newrecs$Pollutant, stations.newrecs$STREAM_LLID)
 newsegs <- merge(newsegs, unique(stations.newrecs[,c('code','variable')]), by = 'code', all.x = TRUE)
 newsegs[newsegs$variable == 'EPA Benchmark','variable'] <- unique(existsegs[grep('[Bb]enchmark',existsegs$Criteria),'Criteria'])
 newsegs$Criteria <- newsegs$variable
@@ -201,13 +204,13 @@ newsegs <- rbind(newsegs, newsegs.hg)
 #check for existing segmentIDs
 newsegs$RM1 <- round(as.numeric(newsegs$RM1), 1)
 newsegs$RM2 <- round(as.numeric(newsegs$RM2), 1)
-newsegs$segcheck <- paste(newsegs$LLID_Stream_Lake, newsegs$RM1, newsegs$RM2)
+newsegs$segcheck <- paste(newsegs$LLID_Stream, newsegs$RM1, newsegs$RM2)
 segments$RM1 <- round(as.numeric(segments$RM1), 1)
 segments$RM2 <- round(as.numeric(segments$RM2), 1)
-segments$LLID_Stream_Lake <- ifelse(is.na(segments$LLID_Lake),
-                                    segments$LLID_Stream,
-                                    paste(segments$LLID_Stream, segments$LLID_Lake, sep = '/'))
-segments$segcheck <- paste(segments$LLID_Stream_Lake, segments$RM1, segments$RM2)
+# segments$LLID_Stream_Lake <- ifelse(is.na(segments$LLID_Lake),
+#                                     segments$LLID_Stream,
+#                                     paste(segments$LLID_Stream, segments$LLID_Lake, sep = '/'))
+segments$segcheck <- paste(segments$LLID_Stream, segments$RM1, segments$RM2)
 segments.sub <- segments[segments$Current_Segment == 1,c('segcheck', 'Segment_ID')]
 newsegs <- merge(newsegs, segments.sub, by = 'segcheck', all.x = TRUE)
 
@@ -245,7 +248,7 @@ newsegs <- within(newsegs, rm(Str_LLID))
 
 names(luHUC4)[names(luHUC4) == 'Stream_LLID'] <- 'LLID_Stream'
 
-newsegs$code <- paste(newsegs$LLID_Stream_Lake, newsegs$Pollutant_ID, newsegs$RM1, newsegs$RM2)
+newsegs$code <- paste(newsegs$LLID_Stream, newsegs$Pollutant_ID, newsegs$RM1, newsegs$RM2)
 
 newsegs.HUC4 <- merge(newsegs, luHUC4, by = 'LLID_Stream')
 

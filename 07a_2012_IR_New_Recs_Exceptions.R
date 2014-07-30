@@ -6,24 +6,26 @@
 to.deal.with <- unique(snt.w.LLIDs$code)
 snt.w.LLIDs$exceed <- round(as.numeric(snt.w.LLIDs$exceed), 1)
 snt.w.LLIDs$total_n <- round(as.numeric(snt.w.LLIDs$total_n), 1)
-snt.w.LLIDs <- arrange(snt.w.LLIDs, RIVER_MILE)
-ars$code <- paste(ars$LLID_Stream_Lake, ars$Pollutant_ID)
+snt.w.LLIDs <- plyr::arrange(snt.w.LLIDs, RIVER_MILE)
+ars$code <- paste(ars$LLID_Stream, ars$Pollutant_ID)
 
 newsegs <- data.frame('STREAM_LLID' = character(), 'NAME' = character(),'SegmentID' = character(), 
                       'RecordID' = character(), 'Pollutant' = character(), 'value' = character(),
                       'Pollutant_ID' = character(), 'Summary' = character(), 'LLID_Stream_Lake' = character(),
-                      'LAKE_LLID' = character(), 'LAKE_NAME' = character(), 'Stream_Name' = character(), stringsAsFactors = F)
+                      'LAKE_LLID' = character(), 'LAKE_NAME' = character(),
+                      'Stream_Name' = character(), stringsAsFactors = F) 
 
 for (i in 1:length(to.deal.with)) {
   stations.of.interest <- snt.w.LLIDs[snt.w.LLIDs$code == to.deal.with[i],]
   ars.of.interest <- ars[ars$code == to.deal.with[i],]
+  #Add if else here for LLID match. There are only STReam LLIDs in this set so we don't have to make it smarter.
   LLID.of.interest <- LLID.Streams[LLID.Streams$LLID == substr(to.deal.with[i], 1, 13),]
   segments.of.interest <- segments[which(segments$LLID_Stream == substr(to.deal.with[i], 1, 13)),]
   
   Summary.text <- ddply(stations.of.interest, .(code), text.summary)[,2]
   
-  seg.of.interest <- stations.of.interest[1,c('STREAM_LLID', 'SegmentID', 'RecordID', 'Pollutant', 'Pollutant_ID','LLID_Stream_Lake',
-                                              'LAKE_LLID', 'LAKE_NAME', 'Stream_Name','value')]
+  seg.of.interest <- stations.of.interest[1,c('STREAM_LLID', 'SegmentID', 'RecordID', 'Pollutant', 'Pollutant_ID','Stream_Name','value')] #'LLID_Stream_Lake',
+                                                                                                                                          #'LAKE_LLID', 'LAKE_NAME', 
   seg.of.interest$NAME <- ars.of.interest[1,'Stream_Lake_Name']
   seg.of.interest$Summary <- Summary.text
   
@@ -47,10 +49,10 @@ newsegs$RM2 <- NA
 segments$RM1 <- as.numeric(segments$RM1)
 segments$RM2 <- as.numeric(segments$RM2)
 i <- 5
-cat2.tdw <- unique(newsegs[newsegs$Status == '2',c('LLID_Stream_Lake','Pollutant_ID')])
-View(ars[which(ars$LLID_Stream_Lake == cat2.tdw[i,1] & ars$Pollutant_ID == cat2.tdw[i,2]),])
+cat2.tdw <- unique(newsegs[newsegs$Status == '2',c('LLID_Stream','Pollutant_ID')])
+View(ars[which(ars$LLID_Stream == cat2.tdw[i,1] & ars$Pollutant_ID == cat2.tdw[i,2]),])
 View(arrange(segments[which(segments$LLID_Stream == substr(cat3.tdw[i,1], 1, 13)),],RM1,RM2))
-arrange(stations.newrecs[stations.newrecs$LLID_Stream_Lake == cat2.tdw[i,1] & stations.newrecs$Pollutant_ID == cat2.tdw[i,2],],RIVER_MILE)
+arrange(stations.newrecs[stations.newrecs$LLID_Stream == cat2.tdw[i,1] & stations.newrecs$Pollutant_ID == cat2.tdw[i,2],],RIVER_MILE)
 
 #### These are all the simple ones where we don't have to do any additional cutting ####
 newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '2182'),c('RM1', 'RM2')] <- c('24.8', '186.6')

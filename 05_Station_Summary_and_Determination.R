@@ -32,18 +32,18 @@ dma.summary$cat <- ifelse(dma.summary$exceed >= 2,
 
 #We can pull LLID information back in here
 con <- odbcConnect('WQAssessment')
-sul2012 <- sqlFetch(con, 'StationUseList_2012')
+sul2012 <- sqlFetch(con, 'StationUseList')
 odbcCloseAll()
 sul2012 <- rename(sul2012, c('Water_Type' = 'Matrix'))
 dma.summary <- merge(dma.summary, sul2012[,c('STATION','STREAM_LLID','Stream_Name','LAKE_LLID','LAKE_NAME','RIVER_MILE')], by.x = 'SampleRegID', by.y = 'STATION')
 
 #Build the LLID_Stream_Lake field
-dma.summary$LAKE_LLID <- ifelse(dma.summary$LAKE_LLID %in% c(0,NA), NA, dma.summary$LAKE_LLID)
-dma.summary$LLID_Stream_Lake <- ifelse(is.na(dma.summary$LAKE_LLID), 
-                                        dma.summary$STREAM_LLID,
-                                        ifelse(is.na(dma.summary$STREAM_LLID),
-                                               dma.summary$LAKE_LLID,
-                                               paste(dma.summary$STREAM_LLID, dma.summary$LAKE_LLID, sep = '/')))
+#dma.summary$LAKE_LLID <- ifelse(dma.summary$LAKE_LLID %in% c(0,NA), NA, dma.summary$LAKE_LLID)
+# dma.summary$LLID_Stream_Lake <- ifelse(is.na(dma.summary$LAKE_LLID), 
+#                                         dma.summary$STREAM_LLID,
+#                                         ifelse(is.na(dma.summary$STREAM_LLID),
+#                                                dma.summary$LAKE_LLID,
+#                                                paste(dma.summary$STREAM_LLID, dma.summary$LAKE_LLID, sep = '/')))
 
 #Map to Assessment_Pollutant table to get Pollutant ID and start matching to AU's
 # unique(dmas.wo.invalid$criterianame.x)[!unique(dmas.wo.invalid$criterianame.x) %in% pollutants$Pollutant]
@@ -76,7 +76,7 @@ dma.pollutant <- merge(dma.summary, redo.relate[,c('criterianame','Pollutant','P
 #Now let's match to the ars to identify existing records and where new records need to be created
 ref.con <- odbcConnect('WQAssessment')
 ars <- sqlQuery(ref.con, 'SELECT * FROM Assessment_Report_Summary')
-table(ars[ars$Pollutant %in% dma.pollutant$Pollutant,'Season'])
+#table(ars[ars$Pollutant %in% dma.pollutant$Pollutant,'Season'])
 record <- sqlQuery(ref.con, 'SELECT * FROM Assessment_Record')
 
 ars <- merge(ars, record[,c('Record_ID','SampleMatrix_ID')], by = 'Record_ID', all.x = TRUE)
@@ -98,11 +98,15 @@ dma.pollutant.pre.assign <- dma.pollutant
 
 #then we look to see which segments have stations within their bounds
 for (i in 1:nrow(dma.pollutant)) {
-  matched.seg <- subset(ars, ars$LLID_Stream_Lake == dma.pollutant$LLID_Stream_Lake[i])
+  if (any(ars$LLID_Stream == dma.pollutant$STREAM_LLID[i], na.rm = TRUE)) {
+    matched.seg <- ars[which(ars$LLID_Stream == dma.pollutant$STREAM_LLID[i]),]
+  } else {
+    matched.seg <- ars[which(ars$LLID_Lake == dma.pollutant$LAKE_LLID[i]),]
+  }                        
   matched.seg.pol <- subset(matched.seg, matched.seg$Pollutant %in% c(dma.pollutant$Pollutant[i], dma.pollutant$Former_Group_Pollutant_Name[i]))
   #matched.seg.pol.seas <- subset(matched.seg.pol, matched.seg.pol$Season == dma.pollutant$Season[i])
   #matched.seg.pol.seas.crit <- subset(matched.seg.pol.seas, matched.seg.pol.seas$Criteria == dma.pollutant$Criteria[i])
-  matched.seg.pol <- arrange(matched.seg.pol, desc(SampleMatrix_ID))
+  matched.seg.pol <- plyr::arrange(matched.seg.pol, desc(SampleMatrix_ID))
   
   if (nrow(matched.seg.pol) > 0) {
     for (j in 1:nrow(matched.seg.pol)) {

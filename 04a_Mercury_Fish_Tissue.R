@@ -119,7 +119,7 @@ for (i in 1:nrow(hg.LLID)) {
       rec.match <- record[record$Record_ID == matched.seg.pol.seas$Record_ID[j],]
       if(hg.LLID$Str_RM[i] >= matched.seg.pol.seas$RM1[j] & 
            hg.LLID$Str_RM[i] <= matched.seg.pol.seas$RM2[j] &
-           rec.match$SampleMatrix_ID == 2 & !rec.match$NarCriteria_ID %in% 9) {
+           rec.match$SampleMatrix_ID == 2 & !rec.match$NarCriteria_ID %in% c(9,17)) {
         hg.LLID$SegmentID[i] <- matched.seg.pol.seas$Segment_ID[j]
         hg.LLID$RecordID[i] <- matched.seg.pol.seas$Record_ID[j]
       } 
@@ -139,6 +139,7 @@ hg.LLID <- cbind(hg.LLID, colsplit(hg.LLID$LLID_Stream_Lake, pattern = '/', name
 hg.LLID$Pollutant_ID <- 2260
 hg.LLID$Season_ID <- 3
 
+hg.LLID$Str_RM <- round(as.numeric(hg.LLID$Str_RM), 1)
 hg.new <- hg.LLID[is.na(hg.LLID$RecordID),]
 hg.exist <- hg.LLID[!is.na(hg.LLID$RecordID),]
 
