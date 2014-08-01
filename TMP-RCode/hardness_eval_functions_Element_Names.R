@@ -387,3 +387,11 @@ process <- function(df, source.df) {
     
   df.summary <- rbind(df.summary.stream, df.summary.lake)
 }
+
+text.summary.hg <- function(x) {x <- arrange(x, Str_RM)
+                                paste('[', x$Agency, '] STATION ', x$site_no, ' at RM ', x$Str_RM, ' from ',
+                                      x$SAMPLE_DATE_START, ' to ', x$SAMPLE_DATE_END, ifelse(x$Valid_n > 1,', the geometric mean of ',', the result of '), 
+                                      round(x$Geo.Mean, 3), ' mg/Kg from ', 
+                                      x$Valid_n, ' valid individual fish tissue ',ifelse(x$Valid_n > 1, 'samples ', 'sample '),  
+                                      ifelse(x$Geo.Mean < 0.04, 'does not exceed','exceeds'), ' the 0.040 mg/kg criteria ',
+                                      sep = '', collapse = ';\r\n')}

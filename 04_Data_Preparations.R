@@ -99,9 +99,11 @@ wqp.data$ResultMeasureValue <- as.numeric(wqp.data$ResultMeasureValue)
 wqp.data$DetectionQuantitationLimitMeasureMeasureValue <- as.numeric(wqp.data$DetectionQuantitationLimitMeasureMeasureValue)
 wqp.data$dnd <- ifelse(wqp.data$ResultMeasureValue == 0,
                        0,
-                       ifelse(wqp.data$ResultMeasureValue < wqp.data$DetectionQuantitationLimitMeasureMeasureValue,
-                              0,
-                              1))
+                       ifelse(is.na(wqp.data$DetectionQuantitationLimitMeasureMeasureValue),
+                              1,
+                              ifelse(wqp.data$ResultMeasureValue < wqp.data$DetectionQuantitationLimitMeasureMeasureValue,
+                                     0,
+                                     1)))
 
 #Let's pull out only those columns we need to make this business work
 wqp.data.sub <- wqp.data[,c('site_only','OrganizationFormalName',
@@ -186,6 +188,7 @@ lasar$dnd <- ifelse(grepl('<',lasar$Result),
                            ifelse(lasar$Result_clean < lasar$METHOD_REPORTING_LIMIT,
                                   0,
                                   1)))
+lasar[grepl('<',lasar$Result),'METHOD_REPORTING_LIMIT'] <- lasar[grepl('<',lasar$Result),'Result_clean']
 
 #Make the lasar names match the script and be consistent with the new wqp names
 lasar.new.names <- rename(lasar, c('NAME' = 'Name',

@@ -1,5 +1,16 @@
+library(RODBC)
 ref.con <- odbcConnect('WQAssessment')
 status <- sqlFetch(ref.con, 'Assessment_Status')
+LLID.Streams <- sqlQuery(ref.con, 'SELECT * FROM LookupStreams_LLID')
+LLID.Lakes <- sqlQuery(ref.con, 'SELECT * FROM LookupLakes_LLID')
+segments <- sqlQuery(ref.con, 'SELECT * FROM Assessment_Segment')
+luHUC4 <- sqlQuery(ref.con, 'SELECT * FROM LookupStreams_HUC4')
+luHUC3 <- sqlQuery(ref.con, 'SELECT * FROM LookupStreams_HUC3')
+numcrit <- sqlQuery(ref.con, 'SELECT * FROM Assessment_NumericCriteria')
+odbcCloseAll()
+
+source('TMP-RCode/hardness_eval_functions_Element_names.R')
+source('04a_Mercury_Fish_Tissue.R')
 
 existars <- ars[ars$Record_ID %in% stations.existrecs$RecordID, c('Listing_Status', 'Record_ID','Action','PreviousAction','PreviousStatus','ListingYear','Pollutant')]
 
@@ -166,10 +177,12 @@ stations.existrecs.summary$RecordID <- as.integer(stations.existrecs.summary$Rec
 stations.existrecs.summary <- arrange(stations.existrecs.summary, RecordID) 
 stations.existrecs.summary <- rename(stations.existrecs.summary, c('RecordID' = 'Record_ID'))
 
+stations.existrecs.summary <- rbind(stations.existrecs.summary, hg.exist.summary[,c('Record_ID','V1')])
+
 #Take the existing records and update the summary field
 # ars <- rename(ars, c('Pollutant_ID.x' = 'Pollutant_ID', 'Season_ID.x' = 'Season_ID'))
 # ars <- within(ars, rm(Segment_ID.y, Pollutant_ID.y, Season_ID.y, SampleMatrix_ID, NarCriteria_ID, NumCriteria_ID, YearAdded, recTimeStamp))
-existsegs <- ars[ars$Record_ID %in% status.comparison$Record_ID,]
+existsegs <- ars[ars$Record_ID %in% c(status.comparison$Record_ID, hg.exist.summary$Record_ID),]
 #existsegs$Summary <- as.character(existsegs$Summary)
 existsegs <- arrange(existsegs, Record_ID)
 existsegs[existsegs$Action == 'Added to database','Summary'] <- ''
@@ -180,25 +193,28 @@ existsegs$Summary <- paste(existsegs$V1, existsegs$Summary, sep = '\r\n\r\n')
 existsegs <- within(existsegs, rm(V1))
 
 
-existsegs <- merge(existsegs, status.comparison.final, by = 'Record_ID')
+existsegs <- merge(existsegs, status.comparison.final, by = 'Record_ID', all.x = TRUE)
 #existsegs$PreviousStatus <- paste('Previous Status:', existsegs$Listing_Status)
 existsegs$Listing_Status <- existsegs$Status_Final
+existsegs[existsegs$SampleMatrix_ID == 2,'Listing_Status'] <- 'Cat 5: Water quality limited, 303(d) list, TMDL needed'
+existsegs[existsegs$Stream_Name == 'Paulina Creek' & existsegs$SampleMatrix_ID == 2,'Listing_Status'] <- 'Cat 2: Attaining some criteria/uses'
 #existsegs$PreviousAction <- paste('Previous Action:', existsegs$Action.x)
 #existsegs$ListingYear <- paste('Previous Assessment Year:', existsegs$AssessmentYear)
 existsegs <- within(existsegs, rm(Status_Final, Action.x, Action_ID.x))
 existsegs <- rename(existsegs, c('Action.y' = 'Action', 'Action_ID.y' = 'Action_ID'))
+existsegs[existsegs$SampleMatrix_ID == 2,'Action'] <- 'Added to database'
+existsegs[existsegs$SampleMatrix_ID == 2,'Action_ID'] <- 7
 existsegs <- merge(existsegs, status, by = 'Listing_Status', all.x = TRUE)
 existsegs <- within(existsegs, rm(Status_ID.x))
 existsegs <- rename(existsegs, c('Status_ID.y' = 'Status_ID'))
 
 #criteria name
 existsegs <- merge(existsegs, unique(stations.existrecs[,c('RecordID','variable')]), by.x = 'Record_ID', by.y = 'RecordID', all.x = TRUE)
+existsegs[existsegs$SampleMatrix_ID == 2, 'variable'] <- existsegs[existsegs$SampleMatrix_ID == 2, 'Criteria']
 existsegs[existsegs$variable == 'EPA Benchmark','variable'] <- existsegs[existsegs$variable == 'EPA Benchmark','Criteria']
 existsegs$Criteria <- existsegs$variable
 existsegs <- within(existsegs, rm(variable))
 existsegs$Criteria <- gsub('( -.*)','',existsegs$Criteria)
 #still need to update numeric criteria ID
-
-
 
 #Assessment IDs need updating as does assessment year but that must be done in a later script.

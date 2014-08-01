@@ -1,8 +1,10 @@
-library(RODBC)
-ref.con <- odbcConnect('WQAssessment')
-LLID.Streams <- sqlQuery(ref.con, 'SELECT * FROM LookupStreams_LLID')
-LLID.Lakes <- sqlQuery(ref.con, 'SELECT * FROM LookupLakes_LLID')
-segments <- sqlQuery(ref.con, 'SELECT * FROM Assessment_Segment')
+# library(RODBC)
+# ref.con <- odbcConnect('WQAssessment')
+# LLID.Streams <- sqlQuery(ref.con, 'SELECT * FROM LookupStreams_LLID')
+# LLID.Lakes <- sqlQuery(ref.con, 'SELECT * FROM LookupLakes_LLID')
+# segments <- sqlQuery(ref.con, 'SELECT * FROM Assessment_Segment')
+# luHUC4 <- sqlQuery(ref.con, 'SELECT * FROM LookupStreams_HUC4')
+# luHUC3 <- sqlQuery(ref.con, 'SELECT * FROM LookupStreams_HUC3')
 
 LLID.Streams$RM_MIN <- round(as.numeric(LLID.Streams$RM_MIN), 1)
 LLID.Streams$RM_MAX <- round(as.numeric(LLID.Streams$RM_MAX), 1)
@@ -35,7 +37,7 @@ snt.w.LLIDs <- stations.newrecs[stations.newrecs$code %in% LLIDs.w.snt$code,]
 #The code manually creates those segments for the stations to map to by filling in the gap with a new segment.
 #The result of this sourcing is a data frame called newsegs.exceptions
 #This may have to run manually
-#source('07a_2012_IR_New_Recs_Exceptions.R')
+source('07a_2012_IR_New_Recs_Exceptions.R')
 
 #This pulls in LLID info into our unmatched stations
 
@@ -85,87 +87,6 @@ tox.cat3$Status <- '3'
 tox.cat3B$Status <- '3B'
 tox.cat5$Status <- '5'
 
-#Currrently, these don't seem to be an issue
-# #now we have to deal with those mixed.cat situations. probably have to do this one by hand
-# tox.mixed.cat<- snt.no.LLID[snt.no.LLID$code %in% rownames(tox.mixed.cat.count),]
-# tox.mixed.cat$Str_RM <- round(as.numeric(tox.mixed.cat$Str_RM), 1)
-# tox.mixed.cat<- arrange(tox.mixed.cat, Str_LLID, Pollutant, Str_RM)
-# 
-# #this for loop splits the segments and adds the summary field. it only works if the first station
-# #is cat 5 and all upstream sites are cat 2 or vice versa but if there is any switching along the way
-# #definitely will not work. 
-# newsegs <- data.frame('LLID_Stream_Lake' = character(), 'Str_name' = character(), 'Str_LLID' = character(), 
-#                       'LAKE_LLID' = character(),'LAKE_NAME' = character(),'RM_MIN' = character(), 
-#                       'RM_MAX' = character(), 'crit_val'= character(),'Segment_ID' = character(), 
-#                       'Status' = character(), 'Record_ID' = character(), 'Pollutant' = character(),
-#                       'Pollutant_ID' = character(), 'Summary' = character(), stringsAsFactors = F)
-# 
-# for (i in 1:length(unique(tox.mixed.cat$code))) {
-#   sub <- tox.mixed.cat[tox.mixed.cat$code == unique(tox.mixed.cat$code)[i],]
-#   sub$seg <- NA
-#   sub.3 <- sub[(sub$cat == '3' | sub$cat == '3B'),]
-#   sub <- sub[!(sub$cat == '3' | sub$cat == '3B'),]
-#   seg <- subset(sub[1,], select = c('code','LLID_Stream_Lake','Str_name','Str_LLID','LAKE_LLID','LAKE_NAME','Pollutant', 'Pollutant_ID','RM_MIN', 'RM_MAX','crit_val'))
-#   
-#   for (j in 1:(nrow(sub)-1)) {
-#     if (j == 1) {
-#       if (sub$cat[j] != sub$cat[j+1]) {
-#         if (sub$cat[j] == 5) {
-#           sub$seg[j] = 1L
-#           sub$seg[j+1] = 2L
-#           ds.seg <- seg
-#           ds.seg$RM_MAX[j] <- sub$Str_RM[j+1]
-#           ds.seg$Status[j] <- '5'
-#           us.seg <- seg
-#           us.seg$RM_MIN[j] <- sub$Str_RM[j+1]
-#           us.seg$Status[j] <- '2'
-#         }else {
-#           sub$seg[j] = 1L
-#           sub$seg[j+1] = 2L
-#           ds.seg <- seg
-#           ds.seg$RM_MAX[j] <- sub$Str_RM[j] + (sub$Str_RM[j+1]-sub$Str_RM[j])/2 
-#           ds.seg$Status <- '2'
-#           us.seg <- seg
-#           us.seg$RM_MIN[j] <- ds.seg$RM_MAX[j]
-#           us.seg$Status <- '5'
-#         }
-#       }else if (sub$cat[j] == sub$cat[j+1]) {
-#         sub$seg[j] = 1L
-#         sub$seg[j+1] = 1L
-#       } 
-#     }
-#     else {
-#       if (sub$cat[j] != sub$cat[j+1]) {
-#         sub$seg[j+1] = j 
-#       }else if (sub$cat[j] == sub$cat[j+1]) {
-#         sub$seg[j+1] = sub$seg[j]
-#       }
-#     }
-#   }
-#   
-#   if (nrow(sub.3) == 1) {
-#     sub.3$seg <- 1
-#     sub <- rbind(sub.3, sub)
-#   }
-#   
-#   sub$combo <- paste(sub$code, sub$seg)
-#   sub.summary <- ddply(sub, .(combo), text.summary)
-#   
-#   #ds.seg$Status <- '5'
-#   ds.seg$combo <- paste(ds.seg$code, '1')
-#   #us.seg$Status <- '2'
-#   us.seg$combo <- paste(us.seg$code, '2')
-#   
-#   subsegs <- rbind(ds.seg, us.seg)
-#   
-#   subsegs <- merge(subsegs, sub.summary, by = 'combo', all.y = T)
-#   subsegs <- within(subsegs, rm(combo))
-#   
-#   newsegs <- rbind(newsegs, subsegs)
-#   
-# }
-
-
 #now let's put all these new segments together for the toxics
 # newsegs <- within(newsegs, rm(code))
 # newsegs <- rbind(newsegs, tox.cat2, tox.cat3, tox.cat3B, tox.cat5)
@@ -175,7 +96,6 @@ newsegs <- rbind(newsegs, newsegs.exceptions)
 newsegs$SampleMatrix_ID <- 1
 
 #add in fish tissue data
-source('04a_Mercury_Fish_Tissue.R')
 newsegs <- rbind(newsegs, newsegs.hg)
 
 #Pull the criteria back in so we can fill in the Criteria and NumericCriteria ID columns later on
@@ -184,10 +104,10 @@ stations.newrecs$variable <- gsub('( -.*)','',stations.newrecs$variable)
 newsegs$code <- paste(newsegs$Pollutant, newsegs$STREAM_LLID)
 stations.newrecs$code <- paste(stations.newrecs$Pollutant, stations.newrecs$STREAM_LLID)
 newsegs <- merge(newsegs, unique(stations.newrecs[,c('code','variable')]), by = 'code', all.x = TRUE)
-newsegs[newsegs$SampleMatrix_ID == 2,'variable.y'] <- 'Table 40 Human Health Criteria for Toxic Pollutants'
-newsegs[newsegs$variable.y == 'EPA Benchmark','variable.y'] <- unique(existsegs[grep('[Bb]enchmark',existsegs$Criteria),'Criteria'])
-newsegs$Criteria <- newsegs$variable.y
-newsegs <- within(newsegs, rm(variable.x,variable.y))
+newsegs[newsegs$SampleMatrix_ID == 2,'variable'] <- 'Table 40 Human Health Criteria for Toxic Pollutants'
+newsegs[newsegs$variable == 'EPA Benchmark','variable'] <- unique(existsegs[grep('[Bb]enchmark',existsegs$Criteria),'Criteria'])
+newsegs$Criteria <- newsegs$variable
+newsegs <- within(newsegs, rm(variable))
 
 #fleshing out the newsegs.tox fields to match the newsegs.do
 newsegs$Season <- 'Year Round'
@@ -226,7 +146,7 @@ newsegs <- merge(newsegs, segments.sub, by = 'segcheck', all.x = TRUE)
 
 #filling in the segment id we only want to consider unique LLID, RM1, RM2 combinations 
 unique.newsegs <- data.frame('segcheck' = unique(newsegs[is.na(newsegs$Segment_ID),'segcheck'], stringsAsFactors = F))
-
+max.segment.id <- max(segments$Segment_ID)
 new.segment.id <- max.segment.id + 1
 for (i in 1:nrow(unique.newsegs)) {
   unique.newsegs$Segment_ID[i] <- new.segment.id
@@ -244,6 +164,7 @@ newsegs <- rbind(newsegs.x, newsegs.y)
 newsegs$Segment_ID <- as.integer(newsegs$Segment_ID)
 
 #then we add the record id
+max.record.id <- max(record$Record_ID)
 new.record.id <- max.record.id + 1
 for (i in 1:nrow(newsegs)) {
   newsegs$Record_ID[i] <- new.record.id
@@ -251,10 +172,11 @@ for (i in 1:nrow(newsegs)) {
 }
 
 #Adding in the HUC information (this works for when there are two or less segments on an LLID but I have a feeling it may not if there are more than two)
-sul2012 <- sqlFetch(ref.con, 'StationUseList_2012')
+ref.con <- odbcConnect('WQAssessment')
+sul2012 <- sqlFetch(ref.con, 'StationUseList')
 
-newsegs$LLID_Stream <- newsegs$Str_LLID
-newsegs <- within(newsegs, rm(Str_LLID))
+newsegs$LLID_Stream <- newsegs$STREAM_LLID
+newsegs <- within(newsegs, rm(STREAM_LLID))
 
 names(luHUC4)[names(luHUC4) == 'Stream_LLID'] <- 'LLID_Stream'
 
@@ -281,8 +203,8 @@ newsegs.lakes <- newsegs[is.na(newsegs$HUC_4th_Name),]
 lakes.to.update <- LLID.Lakes[LLID.Lakes$Lake_LLID %in% unique(newsegs.lakes$LLID_Lake),c('Lake_LLID','Lake_Name', 'Stream_LLID','HUC_3rd_Name', 'HUC_4th_Field', 
                                                                                           'HUC_4th_Name', 'Stream_RM_Min', 'Stream_RM_Max')]
 names(lakes.to.update) <- c('LLID_Lake', 'Lake_Name', 'LLID_Stream', 'HUC_3rd_Name', 'HUC_4th_Code', 'HUC_4th_Name', 'RM1', 'RM2')
-lakes.to.update$RM1 <- round(lakes.to.update$RM1, 1)
-lakes.to.update$RM2 <- round(lakes.to.update$RM2, 1)
+lakes.to.update$RM1 <- round(as.numeric(lakes.to.update$RM1), 1)
+lakes.to.update$RM2 <- round(as.numeric(lakes.to.update$RM2), 1)
 lakes.to.update[is.na(lakes.to.update$RM1),c('RM1', 'RM2')] <- 0
 lakes.to.update <- merge(lakes.to.update, newsegs.lakes, by = 'LLID_Lake', all.x = TRUE)
 lakes.to.update <- within(lakes.to.update, rm(HUC_4th_Name.y, HUC_4th_Code.y, LLID_Stream.y, RM1.y, RM2.y, Lake_Name.y))
@@ -370,17 +292,6 @@ criteria <- read.csv('//DEQHQ1/wqassessment/2012_WQAssessment/Segmentation/Data_
 criteria <- within(criteria, rm(Category, crit_val))
 newsegs <- merge(newsegs, criteria, by = 'Pollutant', all.x = TRUE)
 
-#for the DO will come later
-
-#There are no narrative criteria for Toxics or Dissolved Oxygen so we don't have to worry about that (except for Beryllium)
-#We do have to map the criteria to Table 20 or Table 40 which is pretty straightforward
-newsegs[newsegs$Criteria %in% c('HHO', 'HHWO'),'Criteria'] <- 'Table 40 Human Health Criteria for Toxic Pollutants'
-newsegs[newsegs$Criteria == 'FWCHRONIC','Criteria'] <- 'Table 20 Toxic Substances'
-numcrit <- numcrit[,c('Criteria', 'NumericCriteria_ID')]
-newsegs <- merge(newsegs, numcrit, by = 'Criteria', all.x = TRUE)
-newsegs[newsegs$Pollutant == 'Beryllium','NumericCriteria_ID'] <- 9
-newsegs[newsegs$Pollutant == 'Beryllium','Criteria'] <- narcrit[narcrit$NarrativeCriteria_ID == 9,'NarrativeText']
-
 #making sure the fish tissue mercury affected use is human health
 newsegs[newsegs$Pollutant == 'Mercury' & newsegs$Criteria == 'Table 40 Human Health Criteria for Toxic Pollutants','AffectedUses'] <- 'Human Health'
 
@@ -393,10 +304,14 @@ newsegs$PreviousStatus <- ''
 newsegs$PreviousAction <- ''
 newsegs$Comments <- ''
 
-newsegs$Record_ID <- unlist(newsegs$Record_ID)
+#newsegs$Record_ID <- unlist(newsegs$Record_ID)
 
 #Let's add '2012 Data:' to the Summary text here
 newsegs$Summary <- paste('2012 Data: ',newsegs$Summary, sep = '\r\n')
 
 #Removing some intermediate variables
 newsegs <- within(newsegs, rm(code, segcheck))
+
+#Pull in numeric criteria ID
+newsegs[newsegs$Criteria == 'Table 30 Toxic Substances','Criteria'] <- 'Table 30 Aquatic Life Criteria for Toxic Pollutants'
+newsegs <- merge(newsegs, numcrit[,c('NumericCriteria_ID','Criteria')], by = 'Criteria', all.x = TRUE)

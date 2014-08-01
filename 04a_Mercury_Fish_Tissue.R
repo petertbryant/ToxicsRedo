@@ -139,7 +139,7 @@ for (i in 1:nrow(hg.LLID)) {
 }
 
 #hg.LLID <- cbind(hg.LLID, colsplit(hg.LLID$Stream_Lake_Name, pattern = '/', names = c('Stream_Name', 'Lake_Name')))
-hg.LLID <- cbind(hg.LLID, colsplit(hg.LLID$LLID_Stream_Lake, pattern = '/', names = c('Str_LLID', 'LLID_Lake')))
+#hg.LLID <- cbind(hg.LLID, colsplit(hg.LLID$LLID_Stream_Lake, pattern = '/', names = c('Str_LLID', 'LLID_Lake')))
 hg.LLID$Pollutant_ID <- 2260
 hg.LLID$Season_ID <- 3
 
@@ -173,7 +173,7 @@ hg.new.lake.grouped[hg.new.lake.grouped$LAKE_LLID == '1223929422233','STREAM_LLI
 hg.new.lake.grouped[hg.new.lake.grouped$LAKE_LLID == '1227683424103','STREAM_LLID'] <- '1228061424457'
 hg.new.summary <- rbind(hg.new.wo.singles.summary, hg.new.lake.grouped[,c('STREAM_LLID','LAKE_LLID','Summary')])
 hg.exist.summary <- ddply(hg.exist, .(RecordID), text.summary.hg)
-hg.exist.summary <- rename(hg.exist.summary, c('V1' = 'Summary'))
+hg.exist.summary <- rename(hg.exist.summary, c('RecordID' = 'Record_ID'))
 
 newsegs.hg <- hg.new.summary
 newsegs.hg$Pollutant <- 'Mercury'
@@ -184,7 +184,7 @@ newsegs.hg$Status <- NA
 newsegs.hg[newsegs.hg$STREAM_LLID == '1193384459144',c('RM1','RM2','Status')] <- c(0,56,'5')
 newsegs.hg[newsegs.hg$STREAM_LLID == '1206499457318',c('RM1','RM2','Status')] <- c(0,277.6,'5')
 newsegs.hg[newsegs.hg$STREAM_LLID == '1209151456389',c('RM1','RM2','Status')] <- c(0,244.2,'5')
-newsegs.hg[newsegs.hg$STREAM_LLID == '1215067457204  ',c('RM1','RM2','Status')] <- c(0,14.6,'3B')
+newsegs.hg[newsegs.hg$STREAM_LLID == '1215067457204',c('RM1','RM2','Status')] <- c(0,14.6,'3B')
 newsegs.hg[newsegs.hg$STREAM_LLID == '1222619442061',c('RM1','RM2','Status')] <- c(0,9.7,'3B')
 newsegs.hg[newsegs.hg$STREAM_LLID == '1229133455196',c('RM1','RM2','Status')] <- c(0,9.8,'3B')
 newsegs.hg[newsegs.hg$STREAM_LLID == '1230436438208',c('RM1','RM2','Status')] <- c(7.3,11.9,'5')
@@ -206,5 +206,3 @@ newsegs.hg <- merge(newsegs.hg, LLID.Streams[,c('LLID','NAME')], by.x = 'STREAM_
 newsegs.hg <- rename(newsegs.hg, c('Lake_Name' = 'LAKE_NAME', 'NAME' = 'Stream_Name'))
 newsegs.hg$SampleMatrix_ID <- 2
 
-existsegs.hg <- unique(hg.exist[,c('LAKE_LLID','STREAM_LLID','LLID_Stream_Lake','Pollutant','Season','SegmentID','RecordID','Pollutant_ID','Season_ID')])
-existsegs.hg <- merge(existsegs.hg, hg.exist.summary, by = 'RecordID')
