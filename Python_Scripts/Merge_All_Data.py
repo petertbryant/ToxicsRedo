@@ -127,12 +127,12 @@ toKeep =['RID', 'MEAS', 'Organizat_1', 'site_only', 'Monitori_1', 'LatitudeMe', 
 delAllExcept(in_file, toKeep)
 arcpy.CopyFeatures_management(in_file, out_fc_ac)
 
-#Fix Columbia River error - export the two stations needing updating
+#Fix errors - export the stations needing updating
 in_fc = r'E:\GitHub\ToxicsRedo\StationsToLocate\FinalList\All_Final.gdb\All_stations_final'
-out_fc = r'E:\GitHub\ToxicsRedo\StationsToLocate\FinalList\All_Final.gdb\Columbia_station_error_fix'
-final_fc = r'E:\GitHub\ToxicsRedo\Shapefiles_for_Access\Columbia_station_error_fix.shp'
+out_fc = r'E:\GitHub\ToxicsRedo\StationsToLocate\FinalList\All_Final.gdb\Station_error_fix'
+final_fc = r'E:\GitHub\ToxicsRedo\Shapefiles_for_Access\Station_error_fix.shp'
 in_lyr = 'asf'
-expression = """ "STATION" ='35331' or "LAKE_LLID"=1200313429768 """
+expression = """ "STATION" in ('35331', '14201', '36720', '36228') """
 arcpy.MakeFeatureLayer_management(in_fc,in_lyr,expression)
 arcpy.GetCount_management(in_lyr)[0]
 arcpy.CopyFeatures_management(in_lyr, out_fc)

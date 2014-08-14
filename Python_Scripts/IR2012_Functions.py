@@ -27,3 +27,24 @@ def delAllExcept(fc, fields_to_keep):
             fields_to_drop.append(field.name)
     arcpy.DeleteField_management(fc, fields_to_drop)
 
+def removeDuplicates(in_fc, field):
+    in_file = in_fc
+    expression = 'isDuplicate( !%s! )' % field
+    codeblock = """uniqueList = []
+def isDuplicate(inValue):
+    if inValue in uniqueList:
+        return 1
+    else:
+        uniqueList.append(inValue)
+        return 0"""
+
+    arcpy.AddField_management(in_file, "Duplicate", "SHORT")
+
+    arcpy.CalculateField_management(in_file, "Duplicate", expression, "PYTHON_9.3",
+                                    codeblock)
+    with arcpy.da.UpdateCursor(in_file, "Duplicate") as cursor:
+        for row in cursor:
+            if row[0] == 1:
+                cursor.deleteRow()
+
+    arcpy.DeleteField_management(in_fc, 'Duplicate')

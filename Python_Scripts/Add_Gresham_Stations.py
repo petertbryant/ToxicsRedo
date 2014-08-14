@@ -9,6 +9,7 @@ import arcpy
 from arcpy import env
 import os.path
 import pyodbc
+import numpy
 
 arcpy.env.overwriteOutput = True
 location = r"E:\GitHub\ToxicsRedo\StationsToLocate\FinalList"
@@ -25,7 +26,7 @@ cnxn   = pyodbc.connect(access_con_string)
 cursor = cnxn.cursor()
 cursor.execute("select * from Gresham_STATIONS")
 rows = cursor.fetchall()
-array = rec.fromrecords(rows)
+array = numpy.rec.fromrecords(rows)
 array.dtype.names = attribute_array
 
 table = workspace + '/' + 'xydata'
