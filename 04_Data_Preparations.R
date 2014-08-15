@@ -342,7 +342,7 @@ data.complete.wo.dups <- remove.dups(data.complete.wo.dup.MRLs)
 #### Select only those stations that mapped to a stream or lake ####
 #This section also serves the purpose of adding in the Matrix (or station type)
 con <- odbcConnect('WQAssessment')
-sul2012 <- sqlFetch(con, 'StationUseList_2012')
+sul2012 <- sqlFetch(con, 'StationUseList')
 odbcCloseAll()
 sul2012 <- sul2012[sul2012$USE_Final == 1,]
 sul2012 <- rename(sul2012, c('Water_Type' = 'Matrix'))

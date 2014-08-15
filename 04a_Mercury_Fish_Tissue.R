@@ -3,8 +3,8 @@ library(RODBC)
 library(psych)
 
 con <- odbcConnect('WQAssessment')
-sul2010 <- sqlFetch(con, 'StationUseList')
-sul2012 <- sqlFetch(con, 'StationUseList_2012')
+sul2010 <- sqlFetch(con, 'StationUseList_2010')
+sul2012 <- sqlFetch(con, 'StationUseList')
 odbcCloseAll()
 
 
