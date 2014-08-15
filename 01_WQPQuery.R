@@ -128,6 +128,14 @@ success.table <- rbind(success.table, data.frame('Characteristic' = c('Ammonia',
 wqp.stations <- sqlFetch(con, 'WQPStations_05022014')
 wqp.stations <- within(wqp.stations, rm(x))
 
+#I set up a loop to pass queries because I was having problems with the query taking way too long to run and when 
+#problems came up it meants having to start over. The loop queries each parameter in the list one by one and adds the data
+#to the whole data table. The stations are queried first and if there is no data then is.character(tmp.stations) returns false.
+#Otherwise, the data query runs. There is a validator script available within the WQP REST framework but I found it easier and faster
+#to just see if any stations return. Since we are constantly hitting their server sometimes they reject the request. In this case the loop will
+#break and you'll need to wait a few minutes and use the iterator specified in the prompt to plug into the start of the for loop. If the 
+#query is successful the data table is added to. The stations are added to a dataframe and duplicates are removed at the end of the loop and
+#then can be written to the database after the loop with the success table.
 for (i in 259:length(to.query)) {
   tmp.stations <- wqp.station.query(stateCode = Oregon, 
                                     siteType = siteType, 
@@ -196,15 +204,16 @@ for (i in 259:length(to.query)) {
   wqp.stations <- within(wqp.stations, rm(x))
 }
 
-
+#This removes additional duplicate stations that have differences in other fields that don't matter so we only use the ID and the VerticalMeasure
 wqp.stations$x <- apply(wqp.stations[,c('MonitoringLocationIdentifier', 'VerticalMeasureMeasureValue')],1,paste, collapse = ',')
 wqp.stations.dups.removed <- wqp.stations[!duplicated(wqp.stations$x),]
 wqp.stations.dups.removed <- within(wqp.stations.dups.removed, rm(x))
 
+#This is where you can save the updated tables to the database
 #sqlSave(con, wqp.stations.dups.removed, 'WQPStations_05022014', rownames = FALSE)
 #sqlSave(con, success.table, 'WQPQuery_Status', rownames = FALSE)
 
-
+#This pulls the data from the database
 wqp.data <- sqlFetch(con, 'WQPData_05022014')
 #wqp.data[wqp.data$CharacteristicName == '']
 
