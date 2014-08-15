@@ -20,9 +20,10 @@ if not arcpy.Exists(workspace):
 
 arcpy.env.workspace = workspace
 
+# Pull data from database
 accb = r"\\deqhq1\wqassessment\2012_WqAssessment\WQ_2012_Assessment_Working\2012_303d_Toxics.accdb"
 access_con_string = r"Driver={Microsoft Access Driver (*.mdb, *.accdb)};Dbq=%s" % accb
-cnxn   = pyodbc.connect(access_con_string)
+cnxn = pyodbc.connect(access_con_string)
 cursor = cnxn.cursor()
 cursor.execute("select * from Gresham_STATIONS")
 rows = cursor.fetchall()

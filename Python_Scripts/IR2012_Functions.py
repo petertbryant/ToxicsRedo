@@ -13,11 +13,11 @@ def renameField(fc, old_name, new_name, dtype = []):
         dtype = [x.type for x in fields if x.name == old_name]
     else:
         dtype = [dtype]
-    arcpy.AddField_management(fc, new_name, dtype[0])
+    arcpy.AddField_management(fc, new_name, str(dtype[0]))
     arcpy.CalculateField_management(fc, new_name, "!%s!" % old_name, "PYTHON_9.3")
     arcpy.DeleteField_management(fc, old_name)
 
-def delAllExcept(fc, fields_to_keep):
+def delAllExcept(fc=None, fields_to_keep=None):
     fieldList = arcpy.ListFields(fc)
     fields_to_keep.append(fieldList[0].name)
     fields_to_keep.append(fieldList[1].name)
@@ -26,6 +26,8 @@ def delAllExcept(fc, fields_to_keep):
         if field.name not in fields_to_keep:
             fields_to_drop.append(field.name)
     arcpy.DeleteField_management(fc, fields_to_drop)
+    fields_to_keep.remove(fieldList[0].name)
+    fields_to_keep.remove(fieldList[1].name)
 
 def removeDuplicates(in_fc, field):
     in_file = in_fc

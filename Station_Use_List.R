@@ -259,9 +259,9 @@ write.csv(stUseList2012, 'I:/2012_WQAssessment/ToxicsRedo/StationsToLocate/stUse
 write.csv(sul2012, 'I:/2012_WQAssessment/ToxicsRedo/StationsToLocate/stUseList2012_Final.csv',
           row.names=F)
 wqa<-odbcConnect('WQAssessment')
-sqlSave(wqadb, stUseList2012, tablename='StationUseList_2012', rownames=FALSE)
+#sqlSave(wqa, stUseList2012, tablename='StationUseList_2012_TEST', rownames=FALSE)
 odbcCloseAll()
 
 wqa<-odbcConnect('WQAssessment')
 test<-sul[sul$STATION=='36228',c('STATION', 'STREAM_LLID')]
-sqlUpdate(wqa, test, 'StationUseList_2012','STATION')
+#sqlUpdate(wqa, test, 'StationUseList_2012','STATION')

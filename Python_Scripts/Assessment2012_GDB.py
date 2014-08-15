@@ -41,9 +41,11 @@ out_post_toxics = workspace + '/' + assessment_gdb + '/' + 'post_toxics'
 cotd = r'E:/GitHub/ToxicsRedo/StationsToLocate\Post_ToxicsRedo_Stations\CityOfTheDalles.shp'
 out_cotd = workspace + '/' + assessment_gdb + '/' + 'cotd'
 
+# Create list of all nine stations
 in_st = [lasar, st2010, stations, gresh, merc1, merc2, more, post_toxics, cotd]
 out_st = [out_lasar, out_st2010, out_stations, out_gresh, out_merc1, out_merc2, out_more, out_post_toxics, out_cotd]
 
+#Copy all nine stations, synchronize station fields to 'STATION', and merge all stations into the 'master' station list
 map(arcpy.CopyFeatures_management, in_st, out_st)
 fields_needing_updating = [out_st[0]] + out_st[3:7]
 old_field_names = ['STATION_KE', 'STATION_ID', 'STATION_ID', 'STATI', 'site_only']
@@ -60,34 +62,39 @@ out_st.reverse()
 #Merge all fcs and create one master STATION list
 arcpy.Merge_management(out_st, master_stations)
 
+# Check for and remove any station duplicates
 print arcpy.GetCount_management(master_stations)[0]
 removeDuplicates(master_stations, 'STATION')
 print arcpy.GetCount_management(master_stations)[0]
 st2012 = workspace + '/' + assessment_gdb + '/' + 'stations2012_temp'
 
-#Start here when recreating station use list gdb
+
+# Make a copy of the master station list and use it to being creating the station use list in the Assessment2012 GDB.
 arcpy.Copy_management(master_stations, st2012)
 
-#Pull StationUseList from sql server and join to the STATION list
+#Pull the current StationUseList from sql server and join to the STATION list
 db = 'WQAssessment'
 access_con_string = r"Driver={SQL Server};Server=DEQSQL2\DEV;database=%s" % db
 cnxn = pyodbc.connect(access_con_string)
 cursor = cnxn.cursor()
-cursor.execute("select * from StationUseList where USE_Final = 1 and Year_Added IN (2010, 2012)")
+cursor.execute("SELECT * FROM StationUseList WHERE USE_Final = 1 AND Year_Added IN (2010, 2012)")
 rows = cursor.fetchall()
-#numpy.rec.fromrecords()
 st2012data = numpy.rec.fromrecords(rows)
 col_names = [str(x.column_name) for x in cursor.columns(table='StationUseList')]
 st2012data.dtype.names = col_names
 st2012data = pandas.DataFrame(st2012data)
-assessment_fields = ['AGENCY', 'AGENCY_ID', 'STATION', 'DESCRIPTION', 'Water_Type', 'RIVER_MILE', 'Stream_Name',
-                     'STREAM_LLID', 'LAKE_NAME', 'LAKE_LLID', 'GIS_Source', 'GIS_Source_LAKE', 'HUC_3rd_Field',
-                     'HU_8_Name', 'DEC_LAT', 'DEC_LONG', 'DATUM']
-gdb_fields = ['AGENCY', 'AGENCY_ID', 'STATION', 'DESCRIPTION', 'WATER_TYPE', 'RIVER_MILE', 'STREAM_NAME',
-                     'STREAM_LLID', 'LAKE_NAME', 'LAKE_LLID', 'GIS_SOURCE_STREAM', 'GIS_SOURCE_LAKE', 'HUC3_NAME',
-                     'HUC4_NAME', 'DEC_LAT', 'DEC_LONG', 'DATUM']
+
+# Define which fields I want, and in which order I want them
+assessment_fields = ['STATION', 'DESCRIPTION', 'Water_Type', 'LAKE_NAME', 'LAKE_LLID', 'Stream_Name', 'STREAM_LLID',
+                     'BEACH_NAME', 'EPA_BEACH_ID', 'RIVER_MILE', 'AGENCY', 'AGENCY_ID', 'GIS_Source', 'GIS_Source_LAKE',
+                     'HUC_3rd_Field', 'HU_8_Name', 'DEC_LAT', 'DEC_LONG', 'DATUM']
+gdb_fields = ['STATION', 'DESCRIPTION', 'WATER_TYPE', 'LAKE_NAME', 'LAKE_LLID', 'STREAM_NAME', 'STREAM_LLID',
+                     'BEACH_NAME', 'BEACH_ID', 'RIVER_MILE', 'AGENCY', 'AGENCY_ID', 'GIS_SOURCE_STREAM', 'GIS_SOURCE_LAKE',
+                     'HUC3_NAME', 'HUC4_NAME', 'DEC_LAT', 'DEC_LONG', 'DATUM']
 st2012data = st2012data[assessment_fields]
 st2012data.columns = gdb_fields
+
+# Make sure stations beginning with letters are on top so the station field is read in as type 'TEXT' by ArcGIS
 st2012data = st2012data.sort(['STATION'], ascending=0)
 temp = 'C:/sul2012_temp.csv'
 st2012data.to_csv(temp)
@@ -99,23 +106,30 @@ with arcpy.da.UpdateCursor(st2012, 'STATION') as cursor:
         if row[0] not in sf:
             cursor.deleteRow()
 
+# Join the attribute table to the station list
 out_table = 'dataTable2012'
 arcpy.TableToTable_conversion(temp, (workspace + '/' + assessment_gdb), out_table)
 arcpy.JoinField_management(st2012, 'STATION', (workspace + '/' + assessment_gdb + '/' + out_table), 'STATION')
 
+# Remove any unwanted fields, sort rows first by AGENCY, second by STATION, and finally change the ordering of the
+# columns
 delAllExcept(st2012, gdb_fields)
 st2012final = workspace + '/' + assessment_gdb + '/' + 'stations2012'
 arcpy.Sort_management(st2012, st2012final, [['AGENCY', 'ASCENDING'], ['STATION', 'ASCENDING']])
 reorder_temp = [x+'temp' for x in gdb_fields]
 reorder_final = gdb_fields
 map(renameField, [st2012final]*len(reorder_final), reorder_final, reorder_temp)
+# This next lineline threw an exception when I ran it, but the output looked correct
 map(renameField, [st2012final]*len(reorder_final), reorder_temp, reorder_final)
 
-#Cleanup
+# Remove temporary files
 os.remove(temp)
 arcpy.Delete_management((workspace + '/' + assessment_gdb + '/' + out_table))
 arcpy.Delete_management(st2012)
 map(arcpy.Delete_management, out_st)
 
-#Copy gdb to public drive
+# Copy gdb to public drive
 arcpy.Copy_management((workspace + '/' + assessment_gdb), r'I:\2012_WQAssessment\ToxicsRedo\Assessment2012.gdb')
+
+
+renameField(st2012final, reorder_final[20], reorder_temp[20])

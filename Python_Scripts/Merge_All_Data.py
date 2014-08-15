@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Jul 14 10:16:25 2014
-
-@author: MPsaris
-"""
-
 import arcpy
 from arcpy import env
 import os.path
@@ -14,13 +7,14 @@ if custom_script_location not in sys.path:
 
 from IR2012_Functions import *
 
+# Set up environment and write privileges
 arcpy.env.overwriteOutput = True
 workspace = r'E:\GitHub\ToxicsRedo'
 arcpy.env.workspace = workspace
 
-#This script does final analysis and preps data for inclusion in the 2012 IR Access table
+# This script does some final analysis and preps data for inclusion in the 2012 IR Access table
 
-#First, stations inside tribal lands need to be labeled as such
+# First, stations inside tribal lands need to be labeled as such
 in_fc = r'C:\Users\MPsaris\DEQ_Stream_Lake_Additions\Additions.gdb\All_stations_final_est_pd'
 out_fc = r'E:\GitHub\ToxicsRedo\Shapefiles_for_Access\All_stations_final_est_pd.shp'
 arcpy.CopyFeatures_management(in_fc, out_fc)
@@ -37,11 +31,11 @@ arcpy.SelectLayerByLocation_management(all_st_lyr, 'INTERSECT', tribal_lyr)
 print arcpy.GetCount_management(all_st_lyr)[0]
 arcpy.CalculateField_management(all_st_lyr, 'TRIBAL', 1)
 
-#Then, rejoin DATUM
+# Then, rejoin DATUM
 join_fc = r'E:\GitHub\ToxicsRedo\StationsToLocate\FinalList\All_Final.gdb\All_stations'
 arcpy.JoinField_management(out_fc, 'STATION', join_fc, 'STATION', 'DATUM')
 
-#Export Gresham stations to shapefile
+# Export Gresham stations to shapefile
 in_fc = r'E:\GitHub\ToxicsRedo\StationsToLocate\Gresham_Stations_Edits.gdb\qc_needs_review'
 out_fc = r'E:\GitHub\ToxicsRedo\StationsToLocate\Gresham_Stations_Edits.gdb\qc_needs_review_huc3'
 huc3 = "F:/Base_Data/Hydrography/NHD/NHDH_OR_931v210/NHDH_OR.gdb/WBD/WBD_HU6"
@@ -57,7 +51,7 @@ stream_names = "F:/Base_Data/DEQ_Data/WQ_2010_IntegratedReport_V3/WQ_2010_Integr
 lake_names = "F:/Base_Data/DEQ_Data/WQ_2010_IntegratedReport_V3/WQ_2010_IntegratedReport_V3/Assessment.gdb/DEQLakes_14JUN2013"
 arcpy.JoinField_management(in_file, 'RID', stream_names, 'LLID', ['NAME', 'SOURCE'])
 arcpy.JoinField_management(in_file, 'LAKE_LLID', lake_names, 'WATERBODYI', ['NAME', 'SOURCE'])
-#Change these new field names to meaningful ones.
+# Change these new field names to meaningful ones.
 renameField(in_file, "NAME", "GIS_STREAMNAME")
 renameField(in_file, "NAME_1", "LAKE_NAME")
 renameField(in_file, "Source", "GIS_Source")
@@ -68,10 +62,10 @@ toKeep =['STATION_ID', 'RID', 'MEAS', 'SITE_DESCRIPTION_LOCATION', 'LATITUDE_DEC
 delAllExcept(in_file, toKeep)
 arcpy.CopyFeatures_management(in_file, out_fc_ac)
 
-#Merge and export Mercury stations to shapefile
+# Merge and export Mercury stations to shapefile
 merge_fc1 = r'E:\GitHub\ToxicsRedo\StationsToLocate\Mercury_Stations_Edits.gdb\outside_threshold_Manual'
 merge_fc2 = r'E:\GitHub\ToxicsRedo\StationsToLocate\Mercury_Stations_Edits.gdb\qc_needs_review_Manual'
-#renameField(merge_fc2, 'Lake_LLLID', 'LAKE_LLID') #Fixed an error in the field name
+# renameField(merge_fc2, 'Lake_LLLID', 'LAKE_LLID') #Fixed an error in the field name
 out_fc = r'E:\GitHub\ToxicsRedo\StationsToLocate\Mercury_Stations_Edits.gdb\final'
 arcpy.Merge_management([merge_fc1, merge_fc2], out_fc)
 in_fc = r'E:\GitHub\ToxicsRedo\StationsToLocate\Mercury_Stations_Edits.gdb\final'
@@ -88,7 +82,7 @@ stream_names = "F:/Base_Data/DEQ_Data/WQ_2010_IntegratedReport_V3/WQ_2010_Integr
 lake_names = "F:/Base_Data/DEQ_Data/WQ_2010_IntegratedReport_V3/WQ_2010_IntegratedReport_V3/Assessment.gdb/DEQLakes_14JUN2013"
 arcpy.JoinField_management(in_file, 'RID', stream_names, 'LLID', ['NAME', 'SOURCE'])
 arcpy.JoinField_management(in_file, 'LAKE_LLID', lake_names, 'WATERBODYI', ['NAME', 'SOURCE'])
-#Change these new field names to meaningful ones.
+# Change these new field names to meaningful ones.
 renameField(in_file, "NAME", "GIS_STREAMNAME")
 renameField(in_file, "NAME_1", "LAKE_NAME")
 renameField(in_file, "Source", "GIS_Source")
@@ -100,7 +94,7 @@ delAllExcept(in_file, toKeep)
 arcpy.CopyFeatures_management(in_file, out_fc_ac)
 
 
-#Export MORE stations to shapefile
+# Export MORE stations to shapefile
 in_fc = r'E:\GitHub\ToxicsRedo\StationsToLocate\MORE_Stations_Edits.gdb\qc_needs_review'
 out_fc = r'E:\GitHub\ToxicsRedo\StationsToLocate\MORE_Stations_Edits.gdb\qc_needs_review_huc3'
 huc3 = "F:/Base_Data/Hydrography/NHD/NHDH_OR_931v210/NHDH_OR.gdb/WBD/WBD_HU6"
@@ -116,7 +110,7 @@ stream_names = "F:/Base_Data/DEQ_Data/WQ_2010_IntegratedReport_V3/WQ_2010_Integr
 lake_names = "F:/Base_Data/DEQ_Data/WQ_2010_IntegratedReport_V3/WQ_2010_IntegratedReport_V3/Assessment.gdb/DEQLakes_14JUN2013"
 arcpy.JoinField_management(in_file, 'RID', stream_names, 'LLID', ['NAME', 'SOURCE'])
 arcpy.JoinField_management(in_file, 'LAKE_LLID', lake_names, 'WATERBODYI', ['NAME', 'SOURCE'])
-#Change these new field names to meaningful ones.
+# Change these new field names to meaningful ones.
 renameField(in_file, "NAME", "GIS_STREAMNAME")
 renameField(in_file, "NAME_1", "LAKE_NAME")
 renameField(in_file, "Source", "GIS_Source")
@@ -127,14 +121,14 @@ toKeep =['RID', 'MEAS', 'Organizat_1', 'site_only', 'Monitori_1', 'LatitudeMe', 
 delAllExcept(in_file, toKeep)
 arcpy.CopyFeatures_management(in_file, out_fc_ac)
 
-#Fix errors - export the stations needing updating
+# Fix errors - export the stations needing updating
 in_fc = r'E:\GitHub\ToxicsRedo\StationsToLocate\FinalList\All_Final.gdb\All_stations_final'
 out_fc = r'E:\GitHub\ToxicsRedo\StationsToLocate\FinalList\All_Final.gdb\Station_error_fix'
 final_fc = r'E:\GitHub\ToxicsRedo\Shapefiles_for_Access\Station_error_fix.shp'
 in_lyr = 'asf'
 expression = """ "STATION" in ('35331', '14201', '36720', '36228') """
 arcpy.MakeFeatureLayer_management(in_fc,in_lyr,expression)
-arcpy.GetCount_management(in_lyr)[0]
+print arcpy.GetCount_management(in_lyr)[0]
 arcpy.CopyFeatures_management(in_lyr, out_fc)
 map_out_fc = [out_fc]*2
 in_fields = ['LLID', 'LAKE_LLID']
