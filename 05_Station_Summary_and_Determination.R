@@ -31,14 +31,14 @@ dma.summary$cat <- ifelse(dma.summary$exceed >= 2,
                                         '3')))
 
 #We can pull LLID information back in here
-con <- odbcConnect('WQAssessment')
-sul2012 <- sqlFetch(con, 'StationUseList')
+ref.con <- odbcConnect('WQAssessment')
+sul2012 <- sqlFetch(ref.con, 'StationUseList')
 odbcCloseAll()
 sul2012 <- rename(sul2012, c('Water_Type' = 'Matrix'))
 dma.summary <- merge(dma.summary, sul2012[,c('STATION','STREAM_LLID','Stream_Name','LAKE_LLID','LAKE_NAME','RIVER_MILE')], by.x = 'SampleRegID', by.y = 'STATION')
 
 #Build the LLID_Stream_Lake field
-#dma.summary$LAKE_LLID <- ifelse(dma.summary$LAKE_LLID %in% c(0,NA), NA, dma.summary$LAKE_LLID)
+# dma.summary$LAKE_LLID <- ifelse(dma.summary$LAKE_LLID %in% c(0,NA), NA, dma.summary$LAKE_LLID)
 # dma.summary$LLID_Stream_Lake <- ifelse(is.na(dma.summary$LAKE_LLID), 
 #                                         dma.summary$STREAM_LLID,
 #                                         ifelse(is.na(dma.summary$STREAM_LLID),
@@ -60,18 +60,23 @@ dma.pollutant <- merge(dma.summary, redo.relate[,c('criterianame','Pollutant','P
 #for review let's put the tables into access
 # #rm(list = setdiff(ls(), c('dma', 'dma.summary')))
 # #access <- odbcConnectAccess('//deqhq1/wqassessment/2012_WQAssessment/2012_WorkingTables.mdb')
-# con <- odbcConnect('WQAssessment')
+# ref.con <- odbcConnect('WQAssessment')
+# sqlDrop(ref.con, 'IR2012_ToxicsRedo_Data')
+# sqlDrop(ref.con, 'IR2012_ToxicsRedo_StationSummaries')
 # dma.save <- within(dma, rm('id','Matrix.y','index','day.POSIX'))
 # dma.save$exceed_final <- dma.save$exceed * dma.save$Valid
 # dma.save$relate <- paste(dma.save$SampleRegID, dma.save$criterianame.x)
-# sqlSave(con, dma.save, 'IR2012_ToxicsRedo_Data')
+# sqlSave(ref.con, dma.save, 'IR2012_ToxicsRedo_Data')
+# dma.pollutant$LAKE_LLID <- ifelse(dma.pollutant$LAKE_LLID %in% c(0,NA), NA, dma.pollutant$LAKE_LLID)
 # dma.save.pollutant <- within(dma.pollutant, rm(Former_Group_Pollutant_Name))
 # dma.save.pollutant$min_date <- strftime(dma.save.pollutant$min_date, format = '%m/%d/%Y')
 # dma.save.pollutant$max_date <- strftime(dma.save.pollutant$max_date, format = '%m/%d/%Y')
 # dma.save.pollutant$relate <- paste(dma.save.pollutant$SampleRegID, dma.save.pollutant$criterianame.x)
 # dma.save.pollutant$RIVER_MILE <- as.numeric(dma.save.pollutant$RIVER_MILE)
 # dma.save.pollutant$LAKE_LLID <- as.numeric(dma.save.pollutant$LAKE_LLID)
-# sqlSave(con, dma.save.pollutant, 'IR2012_ToxicsRedo_StationSummaries')
+# sqlSave(ref.con, dma.save.pollutant, 'IR2012_ToxicsRedo_StationSummaries')
+# odbcCloseAll()
+# rm(dma.save, dma.save.pollutant)
 
 #Now let's match to the ars to identify existing records and where new records need to be created
 ref.con <- odbcConnect('WQAssessment')
@@ -140,3 +145,5 @@ for (i in 1:nrow(dma.pollutant)) {
 
 stations.newrecs <- dma.pollutant[is.na(dma.pollutant$RecordID),]
 stations.existrecs <- dma.pollutant[!is.na(dma.pollutant$RecordID),]
+
+rm(list = setdiff(ls(), c('stations.newrecs','stations.existrecs', 'ars')))

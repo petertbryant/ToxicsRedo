@@ -48,28 +48,21 @@ newsegs$RM2 <- NA
 
 segments$RM1 <- as.numeric(segments$RM1)
 segments$RM2 <- as.numeric(segments$RM2)
-<<<<<<< HEAD
-i <- 32
-cat3.tdw <- unique(newsegs[newsegs$Status == '3',c('STREAM_LLID','Pollutant_ID')])
+
+i <- 2
+cat3.tdw <- unique(newsegs[newsegs$Status == '3B',c('STREAM_LLID','Pollutant_ID')])
 View(ars[which(ars$LLID_Stream == cat3.tdw[i,1] & ars$Pollutant_ID == cat3.tdw[i,2]),])
 View(arrange(segments[which(segments$LLID_Stream == substr(cat3.tdw[i,1], 1, 13)),],RM1,RM2))
 arrange(stations.newrecs[which(stations.newrecs$STREAM_LLID == cat3.tdw[i,1] & stations.newrecs$Pollutant_ID == cat3.tdw[i,2]),],RIVER_MILE)
 LLID.Streams.sub[LLID.Streams.sub$LLID == cat3.tdw[i,'STREAM_LLID'],]
-=======
-i <- 5
-cat2.tdw <- unique(newsegs[newsegs$Status == '2',c('LLID_Stream','Pollutant_ID')])
-View(ars[which(ars$LLID_Stream == cat2.tdw[i,1] & ars$Pollutant_ID == cat2.tdw[i,2]),])
-View(arrange(segments[which(segments$LLID_Stream == substr(cat3.tdw[i,1], 1, 13)),],RM1,RM2))
-arrange(stations.newrecs[stations.newrecs$LLID_Stream == cat2.tdw[i,1] & stations.newrecs$Pollutant_ID == cat2.tdw[i,2],],RIVER_MILE)
->>>>>>> 07936b7a19af8dddb31a98a0916e56cda1745de8
 
 #### These are all the simple ones where we don't have to do any additional cutting ####
 newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '2182'),c('RM1', 'RM2')] <- c('24.8', '186.6')
 newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '2181'),c('RM1', 'RM2')] <- c('24.8', '186.6')
 newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '2183'),c('RM1', 'RM2')] <- c('24.8', '186.6')
 newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '12697'),c('RM1', 'RM2')] <- c('24.8', '186.6')
-<<<<<<< HEAD
-newsegs[which(newsegs$STREAM_LLID == '1169731440585' & newsegs$Pollutant_ID %in% c('2227','2189'),c('RM1','RM2')] <- c('67.0', '186.1')
+newsegs[which(newsegs$STREAM_LLID == '1169731440585' & newsegs$Pollutant_ID %in% c('2227','2189')),c('RM1','RM2')] <- c('67.0', '186.1')
+newsegs[which(newsegs$STREAM_LLID == '1238576461676' & newsegs$Pollutant_ID == '2205'),c('RM1', 'RM2')] <- c('8.5', '27.5')
 
 #Mike's edits
 newsegs[which(newsegs$STREAM_LLID == '1226500453377' & newsegs$Pollutant_ID == '2182'),c('RM1', 'RM2')] <- c('44.7', '80.7')
@@ -114,10 +107,6 @@ newsegs[which(newsegs$STREAM_LLID == '1231445452258' & newsegs$Pollutant_ID == '
 newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '2261'),c('RM1', 'RM2')] <- c('24.8', '186.6')
 newsegs[which(newsegs$STREAM_LLID == '1231445452258' & newsegs$Pollutant_ID == '2265'),c('RM1', 'RM2')] <- c('18.1', '61.7')
 newsegs[which(newsegs$STREAM_LLID == '1239194460155' & newsegs$Pollutant_ID == '2266'),c('RM1', 'RM2')] <- c('0.2', '4.0')
-
-=======
-newsegs[which(newsegs$STREAM_LLID == '1169731440585' & newsegs$Pollutant_ID %in% c('2227','2189')),c('RM1','RM2')] <- c('67.0', '186.1')
->>>>>>> 07936b7a19af8dddb31a98a0916e56cda1745de8
 
 # #This Willamette River one has a segment in the middle so we need to create two new segments. One above and one below.
 newsegs[which(newsegs$STREAM_LLID == '1227618456580' & newsegs$Pollutant_ID == '2258'),c('RM1', 'RM2', 'Status')] <- c('24.8', '108', '2')
@@ -173,7 +162,10 @@ newsegs <- rbind(newsegs, newrow)
 # newsegs <- rbind(newsegs, newrow1)
 # newsegs.exceptions <- rbind(newsegs, newrow2)
 
-newsegs.exceptions <- within(newsegs, rm(SegmentID, RecordID, NAME))
+newsegs.exceptions <- within(newsegs, rm(SegmentID, RecordID, NAME, value))
+
+newsegs.exceptions$LAKE_LLID <- NA
+newsegs.exceptions$LAKE_NAME <- NA
 
 #rm(list = setdiff(ls()[sapply(ls(),function(n){!is.function(get(n))})], 
 #   c('newsegs.exceptions', 'stations.newrecs.toxics', 'stations.newrecs.do', 
