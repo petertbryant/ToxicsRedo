@@ -1,16 +1,31 @@
-dma <- dcc.min[!is.na(dcc.min$value),]
+#This file summarises the data to a pollutant at a station, assings the station an assessment category and 
+#then checks the assessment report summary to see if the station-parameter falls within an existing assessment unit
 
-dma$day.POSIX <- as.POSIXct(strptime(dma$day, format = '%Y-%m-%d'))
-
+#Using dplyr allows for faster processing with this large of a data set
 library(dplyr)
 
-#a little inconsistency in agency
+#pulls in functions that are used in processing steps below
+source('TMP-Rcode/hardness_eval_functions_Element_names.R')
+
+#This removes all the ancillary data that were carried in order to caculate condition scpecific criteria
+dma <- dcc.min[!is.na(dcc.min$value),]
+
+#This makes a POSIX formatted day column
+dma$day.POSIX <- as.POSIXct(strptime(dma$day, format = '%Y-%m-%d'))
+
+#a little inconsistency in agency names can be corrected here
 dma[dma$Agency == 'EPA National Aquatic Resource Survey Data','Agency'] <- "EPA National Aquatic Resources Survey" 
 
-source('TMP-Rcode/hardness_eval_functions_Element_names.R')
+#This isolates the hardness dependent and ph and temperature dependent criteria and changes their value so we can include
+#the value in each station summary and actually be able to roll up to unique station-parameter-criteria value.
 dma.for.summary <- dma
-dma.for.summary$value <- ifelse(dma.for.summary$criterianame.x %in% constants$Name.alone,'hardness dependent',ifelse(dma.for.summary$criterianame.x == 'Ammonia as N','pH and temeperature dependent',dma.for.summary$value))
+dma.for.summary$value <- ifelse(dma.for.summary$criterianame.x %in% constants$Name.alone,
+                                'hardness dependent',
+                                ifelse(dma.for.summary$criterianame.x == 'Ammonia as N',
+                                       'pH and temeperature dependent',
+                                       dma.for.summary$value))
 
+#Here we use dplyr syntax to create groups and then summarise according to those groups
 dma.groups <- group_by(dma.for.summary, Agency, SampleRegID, SampleAlias, criterianame.x, variable, value)
 dma.summary <- summarise(dma.groups, exceed = sum(exceed*Valid),
                          valid_n = sum(Valid),
@@ -19,7 +34,7 @@ dma.summary <- summarise(dma.groups, exceed = sum(exceed*Valid),
                          min_date = min(day.POSIX),
                          max_date = max(day.POSIX))
 
-#station status determination
+#station status determination per assessment methodology
 dma.summary$cat <- ifelse(dma.summary$exceed >= 2,
                           ifelse(dma.summary$criterianame.x %in% c('Alkalinity','Phosphate Phosphorus'),
                                  '3B',
@@ -30,14 +45,17 @@ dma.summary$cat <- ifelse(dma.summary$exceed >= 2,
                                         '2',
                                         '3')))
 
-#We can pull LLID information back in here
+#We can pull LLID information back in here from Mike's processing steps
 ref.con <- odbcConnect('WQAssessment')
 sul2012 <- sqlFetch(ref.con, 'StationUseList')
 odbcCloseAll()
+#I used Matrix as the column name for this field in my processing
 sul2012 <- rename(sul2012, c('Water_Type' = 'Matrix'))
+#Here we actually put the LLID info into each station parameter
 dma.summary <- merge(dma.summary, sul2012[,c('STATION','STREAM_LLID','Stream_Name','LAKE_LLID','LAKE_NAME','RIVER_MILE')], by.x = 'SampleRegID', by.y = 'STATION')
 
-#Build the LLID_Stream_Lake field
+#Build the LLID_Stream_Lake field ----- We don't want to use this as the basis for Assessment Unit determination. This is actually just
+#inlcuded in the ARS in order to make the text searching work on the Web Interface
 # dma.summary$LAKE_LLID <- ifelse(dma.summary$LAKE_LLID %in% c(0,NA), NA, dma.summary$LAKE_LLID)
 # dma.summary$LLID_Stream_Lake <- ifelse(is.na(dma.summary$LAKE_LLID), 
 #                                         dma.summary$STREAM_LLID,
@@ -143,6 +161,7 @@ for (i in 1:nrow(dma.pollutant)) {
   }
 }
 
+#This splits the stations into two sets
 stations.newrecs <- dma.pollutant[is.na(dma.pollutant$RecordID),]
 stations.existrecs <- dma.pollutant[!is.na(dma.pollutant$RecordID),]
 

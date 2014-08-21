@@ -1,6 +1,7 @@
 require(RODBC)
 require(rgdal)
 require(plyr)
+require(foreign)
 options(stringsAsFactors=F)
 options('scipen'=100)
 
@@ -253,15 +254,16 @@ View(stUseList2012[order(stUseList2012$RIVER_MILE),c('Year_Added', 'STATION', 'D
 View(sul2012[order(sul2012$RIVER_MILE),c('Year_Added', 'STATION', 'DESCRIPTION', 'STREAM_LLID', 'LAKE_LLID', 'RIVER_MILE')])
 View(stations[order(stations$RIVER_MILE),c('STATION', 'DESCRIPTION', 'STREAM_LLID', 'LAKE_LLID', 'RIVER_MILE')])
 
-#Final use tables csv
-write.csv(stUseList2012, 'I:/2012_WQAssessment/ToxicsRedo/StationsToLocate/stUseList2012.csv',
-          row.names=F)
-write.csv(sul2012, 'I:/2012_WQAssessment/ToxicsRedo/StationsToLocate/stUseList2012_Final.csv',
-          row.names=F)
-wqa<-odbcConnect('WQAssessment')
-sqlSave(wqadb, stUseList2012, tablename='StationUseList_2012', rownames=FALSE)
-odbcCloseAll()
+#Final use tables csv and sql table. Do not run unless you want to overwrite data.
+# write.csv(stUseList2012, 'I:/2012_WQAssessment/ToxicsRedo/StationsToLocate/stUseList2012.csv',
+#           row.names=F)
+# write.csv(sul2012, 'I:/2012_WQAssessment/ToxicsRedo/StationsToLocate/stUseList2012_Final.csv',
+#           row.names=F)
+# wqa<-odbcConnect('WQAssessment')
+# sqlSave(wqadb, stUseList2012, tablename='StationUseList_2012', rownames=FALSE)
+# odbcCloseAll()
+# 
+# wqa<-odbcConnect('WQAssessment')
+# test<-sul[sul$STATION=='36228',c('STATION', 'STREAM_LLID')]
+# sqlUpdate(wqa, test, 'StationUseList_2012','STATION')
 
-wqa<-odbcConnect('WQAssessment')
-test<-sul[sul$STATION=='36228',c('STATION', 'STREAM_LLID')]
-sqlUpdate(wqa, test, 'StationUseList_2012','STATION')

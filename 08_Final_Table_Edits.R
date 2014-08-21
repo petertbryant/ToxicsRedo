@@ -1,5 +1,8 @@
+#This brings in the updates to the existing assessment units and the new assessment units into a single dataframe that is
+#the set of records affected by new 2012 data evaluations
 allrecs <- rbind(existsegs, newsegs)
 
+#Here we fill in assessment IDs and some final columns
 max.assess.id <- max(ars$Assessment_ID)
 nextid <- max.assess.id[1] + 1
 for (i in 1:nrow(allrecs)) {
@@ -11,6 +14,7 @@ allrecs$AssessmentYear <- 2012
 allrecs$AssessmentDate <- Sys.Date()
 allrecs[allrecs$Criteria == 'Table 30 Toxic Substances','Criteria'] <- 'Table 30 Aquatic Life Criteria for Toxic Pollutants'
 
+#Now we can pull out the Record_IDs for the new assessments from the 2010 version so the updated ones can take their place
 ars.slim <- ars[!ars$Record_ID %in% allrecs$Record_ID,]
 ars.slim[which(ars.slim$Action != 'No 2010 action'),'PreviousAction'] <- paste('Previous Action:', ars.slim[which(ars.slim$Action != 'No 2010 action'),'Action'])
 ars.slim[which(ars.slim$AssessmentYear == 2012),'PreviousAction'] <- NA
@@ -19,6 +23,7 @@ ars.slim[which(ars.slim$AssessmentYear != 2012),'Action_ID'] <- 21
 ars.slim <- ars.slim[ars.slim$Listing_Status != 'Inactive',]
 ars.slim <- within(ars.slim, rm(code))
 
+#Here is the complete draft 2012 assessment
 ars.2012 <- rbind(ars.slim, allrecs)
 
 #Ensuring RM are all to 1 decimal place and the miles field reflects that
@@ -34,7 +39,11 @@ ars.2012[ars.2012$Listing_Status == "Cat 3: Insufficient data",'Status_ID'] <- 1
 ars.2012[ars.2012$Listing_Status == "Cat 3B:  Potential concern",'Listing_Status'] <- "Cat 3B: Potential concern"
 ars.2012[ars.2012$Listing_Status == "Cat 3B: Potential concern",'Status_ID'] <- 19
 
-#associating stations to records
+#Output the table so it can be added to the database
+write.csv(ars.2012, '//deqhq1/wqassessment/2012_WQassessment/2012IR_ToxicsRedo_DRAFT.csv')
+
+#associating stations to records. this was an attempt to relate the record_id back to the stations so we could have a way 
+#to look up the stations based on the record_id.
 # for (i in 1:nrow(stations.newrecs)) {
 #   if (any(newsegs$LLID_Stream == stations.newrecs$STREAM_LLID[i], na.rm = TRUE)) {
 #     matched.seg <- newsegs[which(newsegs$LLID_Stream == stations.newrecs$STREAM_LLID[i]),]

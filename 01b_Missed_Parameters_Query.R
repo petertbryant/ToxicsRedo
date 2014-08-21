@@ -1,3 +1,5 @@
+#this file was run many times in pieces and should NOT be run from top to bottom in whole. This is just a collection of code
+#used to add data for more missed parameters after the whole datasets were established. 
 library(RCurl)
 library(XML)
 library(RODBC)

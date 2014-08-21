@@ -1,3 +1,7 @@
+#We needed to determine which stations hadn't been located before since we don't want to duplicate effort. So this file pulls in previous
+#station locate efforts and found that previous efforts weren't consistent. Therefore, it was decided that we would re-locate them. The result of
+#this file is the list of stations to locate from the USGS dataset. The reason it separated out by organization is that I didn't have the 
+#QC completed for the EPA and I didn't have the LASAR query complete and we had Mike Psaris starting and ready for a dataset to start working on.
 ##### loading required libraries #####
 library(RCurl)
 library(XML)

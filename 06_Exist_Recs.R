@@ -1,3 +1,5 @@
+#Here we group the stations to existing assessment units and apply the methodology to determine the new status
+#which also informs the action and previous tracking columns. 
 library(RODBC)
 ref.con <- odbcConnect('WQAssessment')
 status <- sqlFetch(ref.con, 'Assessment_Status')
@@ -9,13 +11,18 @@ luHUC3 <- sqlQuery(ref.con, 'SELECT * FROM LookupStreams_HUC3')
 numcrit <- sqlQuery(ref.con, 'SELECT * FROM Assessment_NumericCriteria')
 odbcCloseAll()
 
+#This pulls in some functions I made for this processing
 source('TMP-RCode/hardness_eval_functions_Element_names.R')
+#This handles the analysis and summary of the fish tissue in mercury analyses
 source('04a_Mercury_Fish_Tissue.R')
 
+#Pulling out the Assessment Report Summary records that we will be updating 
 existars <- ars[ars$Record_ID %in% stations.existrecs$RecordID, c('Listing_Status', 'Record_ID','Action','PreviousAction','PreviousStatus','ListingYear','Pollutant')]
 
+#Associate the individual stations to each assesssment unit
 stations.existrecs <- merge(stations.existrecs,existars,by.x='RecordID',by.y='Record_ID')
 
+#Get the status counts by RecordID
 status.count.2012 <- table(stations.existrecs$RecordID, stations.existrecs$cat)
 
 #creates an empty list to write 2012 assessment statuses to
@@ -46,6 +53,8 @@ status.2012$Record_ID <- as.integer(as.character(status.2012$Record_ID))
 status.2012 <- arrange(status.2012, Record_ID)
 
 #orders and combines 2010 status with 2012 status for ease of comparison
+#We had to include the Draft 2012 as a separate column since we don't actually want those statuses to be placed
+#in the previous status column.
 status.comparison <- merge(existars, status.2012, by = 'Record_ID')
 status.comparison$Status_2010 <- gsub('Previous Status: ','',status.comparison$PreviousStatus)
 status.comparison <- rename(status.comparison, c('Listing_Status' = 'Draft_2012', 'Status' = 'Status_2012'))
@@ -61,7 +70,8 @@ levels(status.comparison$Status_2010) <- revalue(levels(status.comparison$Status
 status.comparison$Status_2010 <- as.character(status.comparison$Status_2010)
 
 #goes through Appendix 1 table comparing 2012 status to 2010 status to make a final
-#determination on 2012 status
+#determination on 2012 status. Added a check at the bottom since most of the 4a determinations
+#were done in the first draft manually we want to preserve those.
 for (i in 1:nrow(status.comparison)) {
   if (!is.na(status.comparison$Status_2010[i])){
     if (status.comparison$Status_2010[i] == "Cat 5: Water quality limited, 303(d) list, TMDL needed") {
@@ -146,6 +156,7 @@ status.comparison.same <- status.comparison[which(status.comparison$Status_2010 
 status.comparison.same$Action <- 'No status change'
 status.comparison.same$Action_ID <- '13'
 
+#This handles the assessment units where the status changed
 status.comparison.diff <- status.comparison[which(status.comparison$Status_2010 != status.comparison$Status_Final & status.comparison$Action != 'Added to database'),]
 status.comparison.diff[which(status.comparison.diff$Status_Final == "Cat 2: Attaining some criteria/uses"),'Action'] <- 'Status modification - Attaining criteria/uses'
 status.comparison.diff[which(status.comparison.diff$Status_Final == "Cat 2: Attaining some criteria/uses"),'Action_ID'] <- '2'
@@ -154,14 +165,18 @@ status.comparison.diff[which(status.comparison.diff$Status_Final == "Cat 3B: Pot
 status.comparison.diff[which(status.comparison.diff$Status_Final == "Cat 5: Water quality limited, 303(d) list, TMDL needed"),'Action'] <- 'Status modification - Added to 303(d) list'
 status.comparison.diff[which(status.comparison.diff$Status_Final == "Cat 5: Water quality limited, 303(d) list, TMDL needed"),'Action_ID'] <- '10'
 
+#This identifies the Cat4a with appropriate action
 status.comparison.na <- status.comparison[is.na(status.comparison$Status_2010),]
 status.comparison.na$Action_ID <- 14
 
+#This handles the assessment units that were new in the first draft
 status.comparison.added <- status.comparison[status.comparison$Action == 'Added to database',]
 status.comparison.added$Action_ID <- 7
 
+#Brings those dfs back together
 status.comparison <- rbind(status.comparison.same, status.comparison.diff, status.comparison.na, status.comparison.added)
 
+#Sub out just the columns we care about moving forward with
 status.comparison <- arrange(status.comparison, Record_ID)
 status.comparison.final <- status.comparison[,c('Record_ID', 'Status_Final', 'Action', 'Action_ID')]
 
@@ -217,4 +232,4 @@ existsegs <- within(existsegs, rm(variable))
 existsegs$Criteria <- gsub('( -.*)','',existsegs$Criteria)
 #still need to update numeric criteria ID
 
-#Assessment IDs need updating as does assessment year but that must be done in a later script.
+#Assessment IDs need updating as does assessment year but that is done in a later script.

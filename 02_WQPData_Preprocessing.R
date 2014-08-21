@@ -1,5 +1,10 @@
-#This file is to pre process the WQP data to handle flags, NA's, duplicates, and to make sure we've got everything we should
-
+#This file is the documentation for the QAQC processing conducted on the Water Quality Portal Data. Each decision should be relatively 
+#well defined below. In summary we used what comment data was included to determine data usability by organization. If none existed, we determined that 
+#we could not assume the data were of adequate quality. This association to organization is based on the STORET structure that individual 
+#organizations push data independently and are ultimately the only ones responsible for their data. Once we determined that the organization
+#had included QAQC data in their STORET push we were able to parse the comments themselves for flags and information that would constitute
+#a downgrade of the data according to our processing here at the DEQ. Since we use A+, A and B level data for the Integrated Report most of the
+#comments only indicated a downgrade to B level data. 
 library(RODBC)
 library(plyr)
 #library(dplyr) #note that this package has some overlap with plyr

@@ -1,3 +1,8 @@
+#So a lot of the data that came from EPA in STORET was from the CEMAP sampling efforts. DEQ conducted that sampling and had at the time decided
+#to add the data collected into LASAR instead of relying on EPA to manage it. This means that there is duplication between data we got from the
+#most recent WQP data query and the most recent LASAR query. This file then identifies the stations and data that are duplicated so we don't
+#re-locate stations that were already in the 2010 Station Use List and so we don't inflate numbers of samples by using the same value reported
+#fromt two different Organizations.
 library(plyr)
 library(RODBC)
 

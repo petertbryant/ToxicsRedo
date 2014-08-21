@@ -1,20 +1,12 @@
-# library(RODBC)
-# ref.con <- odbcConnect('WQAssessment')
-# LLID.Streams <- sqlQuery(ref.con, 'SELECT * FROM LookupStreams_LLID')
-# LLID.Lakes <- sqlQuery(ref.con, 'SELECT * FROM LookupLakes_LLID')
-# segments <- sqlQuery(ref.con, 'SELECT * FROM Assessment_Segment')
-# luHUC4 <- sqlQuery(ref.con, 'SELECT * FROM LookupStreams_HUC4')
-# luHUC3 <- sqlQuery(ref.con, 'SELECT * FROM LookupStreams_HUC3')
+#Here we handle the stations that did not fall within existing assessment units
 
+#This is the source for pulling the RMs for new streams
 LLID.Streams$RM_MIN <- round(as.numeric(LLID.Streams$RM_MIN), 1)
 LLID.Streams$RM_MAX <- round(as.numeric(LLID.Streams$RM_MAX), 1)
 LLID.Streams.sub <- LLID.Streams[,c('LLID','NAME','RM_MIN','RM_MAX')]
 
-#A spot fix to make it consistent with an existing segment
-#LLID.Streams.sub[LLID.Streams.sub$LLID == '1231108446399','RM_MAX'] <- 78.0
-
+#Formatting for pretty summary field compilation
 stations.newrecs$value <- ifelse(suppressWarnings(is.na(as.numeric(stations.newrecs$value))),stations.newrecs$value,paste(stations.newrecs$value, "µg/L"))
-#stations.newrecs <- merge(stations.newrecs, sul2012[,c('STATION','Matrix')], by.x = 'SampleRegID', by.y = 'STATION', all.x = TRUE)
 
 #this looks to see if there are any segments on the LLID that don't capture the 
 #stations evaluated
@@ -109,7 +101,7 @@ newsegs[newsegs$variable == 'EPA Benchmark','variable'] <- unique(existsegs[grep
 newsegs$Criteria <- newsegs$variable
 newsegs <- within(newsegs, rm(variable))
 
-#fleshing out the newsegs.tox fields to match the newsegs.do
+#fleshing out the newsegs.tox fields
 newsegs$Season <- 'Year Round'
 newsegs$Season_ID <- 3
 #newsegs <- within(newsegs, rm(crit_val))
@@ -125,21 +117,12 @@ newsegs$LLID_Stream_Lake <- ifelse(is.na(newsegs$LAKE_LLID),
                                               paste(newsegs$STREAM_LLID, newsegs$LAKE_LLID, sep = '/')))
 newsegs <- rename(newsegs, c('LAKE_LLID' = 'LLID_Lake', 'LAKE_NAME' = 'Lake_Name'))
 
-
-#put the newsegs.tox and the newsegs.do together now
-#newsegs <- rbind(newsegs.tox, newsegs.do)
-
-
-
 #check for existing segmentIDs
 newsegs$RM1 <- round(as.numeric(newsegs$RM1), 1)
 newsegs$RM2 <- round(as.numeric(newsegs$RM2), 1)
 newsegs$segcheck <- paste(newsegs$LLID_Stream_Lake, newsegs$RM1, newsegs$RM2)
 segments$RM1 <- round(as.numeric(segments$RM1), 1)
 segments$RM2 <- round(as.numeric(segments$RM2), 1)
-# segments$LLID_Stream_Lake <- ifelse(is.na(segments$LLID_Lake),
-#                                     segments$LLID_Stream,
-#                                     paste(segments$LLID_Stream, segments$LLID_Lake, sep = '/'))
 segments$segcheck <- paste(segments$LLID_Stream_Lake, segments$RM1, segments$RM2)
 segments.sub <- segments[segments$Current_Segment == 1,c('segcheck', 'Segment_ID')]
 newsegs <- merge(newsegs, segments.sub, by = 'segcheck', all.x = TRUE)
