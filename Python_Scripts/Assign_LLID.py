@@ -12,6 +12,7 @@ import os.path
 
 arcpy.env.overwriteOutput = True
 
+# Script parameters
 temp_location = "C:/"
 workspace = "C:/assign_llid_temp.gdb"
 temp_gdb = "assign_llid_temp.gdb"
@@ -129,49 +130,49 @@ elif int(arcpy.GetCount_management(qc_lyr).getOutput(0)) < len(successful_featur
 arcpy.CopyFeatures_management(output_fail, (temp_location + final_gdb + '/' + outside_threshold))
 arcpy.SelectLayerByAttribute_management(qc_lyr, "CLEAR_SELECTION")
 
-#The following attempted to use spatial location and character matching to force the station be properly
-#addressed. It was never completed due to time constraints.
+# The following attempted to use spatial location and character matching to force the station be properly
+# addressed. It was never completed due to time constraints.
 
-#Begin secondary review
+# Begin secondary review
 
-#List of Unique_IDs needing review
-#arcpy.AddField_management((temp_location + temp_gdb + "/" + qc_review), "names_tmp", "STRING")
-#with arcpy.da.UpdateCursor((temp_location + temp_gdb + "/" + qc_review), [station_river_name_field,'names_tmp']) as cursor:
+# List of Unique_IDs needing review
+# arcpy.AddField_management((temp_location + temp_gdb + "/" + qc_review), "names_tmp", "STRING")
+# with arcpy.da.UpdateCursor((temp_location + temp_gdb + "/" + qc_review), [station_river_name_field,'names_tmp']) as cursor:
 #    for row in cursor:
 #        row[1] = row[0].replace(" ", "").lower()
 #        cursor.updateRow(row)
-
-unique_ids_needing_review = arcpy.da.TableToNumPyArray((temp_location + temp_gdb + "/" + qc_review), ['Unique_ID'])['Unique_ID']
-unique_ids_needing_review2 = unique_ids_needing_review[660:670]
-
-#n=[]
-n2=[]
-for uid in unique_ids_needing_review:
-    #uid = unique_ids_needing_review[0]
-    arcpy.MakeFeatureLayer_management((temp_location + temp_gdb + "/" + qc_review), qc2_stations)
-    arcpy.MakeFeatureLayer_management(stream_network, qc2_streams)
-    arcpy.SelectLayerByAttribute_management(qc2_stations, "NEW_SELECTION", """ "UNIQUE_ID" = {} """.format(uid))
-    station_stream_name = arcpy.da.TableToNumPyArray(qc2_stations, [station_river_name_field])[station_river_name_field][0].lower()
-    arcpy.SelectLayerByLocation_management(qc2_streams, 'WITHIN_A_DISTANCE', qc2_stations, search_radius)
-    #n.append(int(arcpy.GetCount_management(qc2_streams).getOutput(0)))
-    #print(n)
-    #The REPLACE statement is not included in SQL-92, which is the standard used by file geodatabases, so I use TRIM instead
-    arcpy.SelectLayerByAttribute_management(qc2_streams, "SUBSET_SELECTION", """ TRIM(BOTH ' ' FROM LOWER("{0}")) = '{1}' """.format(streams_river_name_field, station_stream_name))
-    if int(arcpy.GetCount_management(qc2_streams).getOutput(0)) == 1:
-        # Execute LocateFeaturesAlongRoutes tool for selected station and stream
-        arcpy.LocateFeaturesAlongRoutes_lr(qc2_stations, qc2_streams, rid, search_radius, temp, 
-                                           properties)
-        if arcpy.Exists(rerun):
-            arcpy.Merge_management([temp, reruns])
-        else:
-            arcpy.TableToTable_conversion(temp, reruns[:-7], reruns[-6:])
-    n2.append(int(arcpy.GetCount_management(qc2_streams).getOutput(0)))
-    #print(n2)
-
-n2s = pd.Series(n2)
-index = n2s[n2s == 1].index
-#Unique IDs that match and can be rerun through selection
-qced = unique_ids_needing_review[index]
-
-#Create two new copies of the reviewed shapefile
+#
+# unique_ids_needing_review = arcpy.da.TableToNumPyArray((temp_location + temp_gdb + "/" + qc_review), ['Unique_ID'])['Unique_ID']
+# unique_ids_needing_review2 = unique_ids_needing_review[660:670]
+#
+# #n=[]
+# n2=[]
+# for uid in unique_ids_needing_review:
+#     #uid = unique_ids_needing_review[0]
+#     arcpy.MakeFeatureLayer_management((temp_location + temp_gdb + "/" + qc_review), qc2_stations)
+#     arcpy.MakeFeatureLayer_management(stream_network, qc2_streams)
+#     arcpy.SelectLayerByAttribute_management(qc2_stations, "NEW_SELECTION", """ "UNIQUE_ID" = {} """.format(uid))
+#     station_stream_name = arcpy.da.TableToNumPyArray(qc2_stations, [station_river_name_field])[station_river_name_field][0].lower()
+#     arcpy.SelectLayerByLocation_management(qc2_streams, 'WITHIN_A_DISTANCE', qc2_stations, search_radius)
+#     #n.append(int(arcpy.GetCount_management(qc2_streams).getOutput(0)))
+#     #print(n)
+#     #The REPLACE statement is not included in SQL-92, which is the standard used by file geodatabases, so I use TRIM instead
+#     arcpy.SelectLayerByAttribute_management(qc2_streams, "SUBSET_SELECTION", """ TRIM(BOTH ' ' FROM LOWER("{0}")) = '{1}' """.format(streams_river_name_field, station_stream_name))
+#     if int(arcpy.GetCount_management(qc2_streams).getOutput(0)) == 1:
+#         # Execute LocateFeaturesAlongRoutes tool for selected station and stream
+#         arcpy.LocateFeaturesAlongRoutes_lr(qc2_stations, qc2_streams, rid, search_radius, temp,
+#                                            properties)
+#         if arcpy.Exists(rerun):
+#             arcpy.Merge_management([temp, reruns])
+#         else:
+#             arcpy.TableToTable_conversion(temp, reruns[:-7], reruns[-6:])
+#     n2.append(int(arcpy.GetCount_management(qc2_streams).getOutput(0)))
+#     #print(n2)
+#
+# n2s = pd.Series(n2)
+# index = n2s[n2s == 1].index
+# #Unique IDs that match and can be rerun through selection
+# qced = unique_ids_needing_review[index]
+#
+# #Create two new copies of the reviewed shapefile
 

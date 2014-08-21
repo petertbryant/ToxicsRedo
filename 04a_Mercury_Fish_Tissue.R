@@ -2,9 +2,15 @@ library(plyr)
 library(RODBC)
 library(psych)
 
+<<<<<<< HEAD
+con <- odbcConnect('WQAssessment')
+sul2010 <- sqlFetch(con, 'StationUseList_2010')
+sul2012 <- sqlFetch(con, 'StationUseList')
+=======
 ref.con <- odbcConnect('WQAssessment')
 sul2012 <- sqlFetch(ref.con, 'StationUseList')
 sul2010 <- sqlFetch(ref.con, 'StationUseList_2010')
+>>>>>>> ffc1c233efa90ce527ce89d995ab8e55cdd7c8f4
 odbcCloseAll()
 
 

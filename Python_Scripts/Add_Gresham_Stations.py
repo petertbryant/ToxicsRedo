@@ -9,6 +9,7 @@ import arcpy
 from arcpy import env
 import os.path
 import pyodbc
+import numpy
 
 arcpy.env.overwriteOutput = True
 location = r"E:\GitHub\ToxicsRedo\StationsToLocate\FinalList"
@@ -19,13 +20,14 @@ if not arcpy.Exists(workspace):
 
 arcpy.env.workspace = workspace
 
+# Pull data from database
 accb = r"\\deqhq1\wqassessment\2012_WqAssessment\WQ_2012_Assessment_Working\2012_303d_Toxics.accdb"
 access_con_string = r"Driver={Microsoft Access Driver (*.mdb, *.accdb)};Dbq=%s" % accb
-cnxn   = pyodbc.connect(access_con_string)
+cnxn = pyodbc.connect(access_con_string)
 cursor = cnxn.cursor()
 cursor.execute("select * from Gresham_STATIONS")
 rows = cursor.fetchall()
-array = rec.fromrecords(rows)
+array = numpy.rec.fromrecords(rows)
 array.dtype.names = attribute_array
 
 table = workspace + '/' + 'xydata'

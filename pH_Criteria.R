@@ -2,7 +2,7 @@ library(plyr)
 require(RODBC)
 require(lubridate)
 
-
+source('//Deqhq1/wqassessment/2012_WQAssessment/ToxicsRedo/Station_Use_List.R')
 #Get sul from Stations_Use_List.R
 pHdata<-'I:/2012_WQAssessment/ToxicsRedo/allph.RData'
 load(pHdata) #pH
@@ -11,7 +11,10 @@ pH$Date<-as.Date(substr(pH$Sampled, 1, 10))
 pH$Season<-ifelse(month(pH$Date) %in% 6:9, 'S', 'FWS')
 pH$stationSeason<-paste(pH$STATION, pH$Season, sep='')
 pH$Date<-as.character(pH$Date)
-sul<-sul2012
+#sul<-sul2012
+wqa<-odbcConnect('WQAssessment')
+sul<-sqlFetch(channel = wqa, sqtable = 'StationUseList')
+sul<-sul[sul$USE_Final==1,]
 pH<-pH[!(pH$STATION=='13417' & pH$Date == '2007-03-14' & pH$tResult == 3),] #Remove outlier
 ph.agg<-ddply(pH, .(STATION, Date), summarize, phmin = min(tResult), phmax=max(tResult))
 ph2012<-join(sul[,c('STATION', 'DESCRIPTION','Water_Type')], ph.agg, 'STATION', type='inner')
@@ -44,13 +47,16 @@ ph2012$High.exceed<-ifelse(rowSums(ph2012[,c('phMinStatus', 'phMaxStatus')])>0, 
 ph2012.not.meeting<-ph2012[ph2012$Outside.Range.Count>0 & !is.na(ph2012$Outside.Range.Count),!names(ph2012) %in% c('phMinStatus', 'phMaxStatus', 'Outside.Range.Count')]
 ph2012.odd.results<-ph2012[ph2012$Outside.Range.Count>1 & !is.na(ph2012$Outside.Range.Count),]
 ph2012.sampleDay.different<-ph2012[ph2012$phMaxStatus != ph2012$phMinStatus & !is.na(ph2012$Outside.Range.Count),]
-View(pH[pH$STATION %in% ph2012.not.meeting$STATION & pH$Date %in% ph2012.not.meeting$Date,])
-View(pH[pH$STATION == '11241' & pH$Date == '2011-03-07',])
+#View(pH[pH$STATION %in% ph2012.not.meeting$STATION & pH$Date %in% ph2012.not.meeting$Date,])
+#View(pH[pH$STATION == '11241' & pH$Date == '2011-03-07',])
+
+station.summary<-ph2012[!duplicated(ph2012$STATION),c('STATION', 'Water_Type')]
+table(station.summary$Water_Type)
 
 ph.allyear<-ddply(ph2012, .(STATION, DESCRIPTION), summarize, Outside.Range=sum(Outside.Range.Count), 
                   Low.exceed=sum(Low.exceed), High.exceed=sum(High.exceed),
                   Inside.Range=(length(Outside.Range.Count)-sum(Outside.Range.Count)),
-                  n=length(phMaxStatus), pcnt.exceed=round(sum(Outside.Range.Count)*100/length(phMaxStatus), 1))
+                  n=length(phMaxStatus), pcnt.exceed=round(sum(Outside.Range.Count)*100/length(phMaxStatus)))
 ph.ay.not.meeting<-ph.allyear[!is.na(ph.allyear$Outside.Range) & ph.allyear$Outside.Range > 0,]
 ph.ay.not.meeting<-arrange(join(ph.ay.not.meeting, ph2012[,c('STATION', 'CritMin', 'CritMax', 'Water_Type')], 
                                 'STATION', match='first'),
@@ -66,23 +72,26 @@ ph.ay.not.meeting<-arrange(join(ph.ay.not.meeting, ph2012[,c('STATION', 'CritMin
 ph.seasonal<-ddply(ph2012, .(STATION, DESCRIPTION, Season), summarize, Outside.Range=sum(Outside.Range.Count), 
                   Low.exceed=sum(Low.exceed), High.exceed=sum(High.exceed),
                   Inside.Range=(length(Outside.Range.Count)-sum(Outside.Range.Count)),
-                  n=length(phMaxStatus), pcnt.exceed=round(sum(Outside.Range.Count)*100/length(phMaxStatus), 1))
+                  n=length(phMaxStatus), pcnt.exceed=round(sum(Outside.Range.Count)*100/length(phMaxStatus)))
+ph.seasonal$stationSeason<-paste(ph.seasonal$STATION, ph.seasonal$Season, sep='')
 ph.s.not.meeting<-ph.seasonal[!is.na(ph.seasonal$Outside.Range) & ph.seasonal$Outside.Range > 0,]
 ph.s.not.meeting<-arrange(join(ph.s.not.meeting, ph2012[,c('STATION', 'CritMin', 'CritMax', 'Water_Type')], 
                                'STATION', match='first'),
                           Season, desc(Outside.Range))
 ph.s.not.meeting$stationSeason<-paste(ph.s.not.meeting$STATION, ph.s.not.meeting$Season, sep='')
+#View(arrange(ph.allyear, DESCRIPTION))
+#View(arrange(ph.seasonal, DESCRIPTION))
 
-
-accdb<-'//deqhq1/WQAssessment/2012_WQAssessment/2012_WorkingTables.mdb'
-con<-odbcConnectAccess2007(accdb)
-# sqlSave(con, ph.not.meeting, 'pH_2012')
-sqlSave(con, pH, 'pH_2012_data')
-sqlSave(con, ph.ay.not.meeting, 'pH_2012_AllYear')
-sqlSave(con, ph.s.not.meeting, 'pH_2012_Seasonal')
-
-test<-sul[sul$STATION=='36228',c('STATION', 'STREAM_LLID')]
-sqlUpdate(con, test, 'dbo_StationUseList_2012','STATION')
-
-write.csv(ph.not.meeting, 'I:/2012_WQAssessment/ToxicsRedo/pH2012.csv', row.names=F)
-write.csv(pH, 'I:/2012_WQAssessment/ToxicsRedo/pH2012_data.csv', row.names=F)
+# accdb<-'//deqhq1/WQAssessment/2012_WQAssessment/2012_WorkingTables.mdb'
+# con<-odbcConnectAccess2007(accdb)
+# # sqlSave(con, ph.not.meeting, 'pH_2012')
+# sqlSave(con, pH, 'pH_2012_data')
+# sqlSave(con, ph.allyear, 'pH_2012_AllYear')
+# sqlSave(con, ph.seasonal, 'pH_2012_Seasonal')
+# odbcCloseAll()
+# 
+# test<-sul[sul$STATION=='36228',c('STATION', 'STREAM_LLID')]
+# sqlUpdate(con, test, 'dbo_StationUseList_2012','STATION')
+# 
+# write.csv(ph.not.meeting, 'I:/2012_WQAssessment/ToxicsRedo/pH2012.csv', row.names=F)
+# write.csv(pH, 'I:/2012_WQAssessment/ToxicsRedo/pH2012_data.csv', row.names=F)
