@@ -268,6 +268,23 @@ gresham.sub <- gresham[,names(wqp.data.sub)]
 data.complete <- rbind(lasar.new.names, wqp.data.sub, gresham.sub)
 #I had vector allocation issues so I am keeping my workingspace a little lighter
 rm(wqp.data, wqp.stations, gresham, lasar)
+#This makes a data frame with these column names. If you were to pick this code up this is where
+#you could make sure you have these fields and start from here to run with a new dataset.
+#   "SampleRegID" = Station Key
+#        "Agency" = Sampling Agency
+#       "Sampled" = Sample Date time
+#          "Name" = Characteristic Name from respective source
+#      "Fraction" = Sample fraction
+#       "tResult" = Result value
+#          "Unit" = Result unit 
+#        "Status" = DEQ Data Quality Level
+#    "SampleType" = Primary/Duplicate identifier
+#          "tMRL" = Minimum reporting limit
+#      "tMRLUnit" = Minimum reporting limit unit
+#   "SampleAlias" = Station description
+#  "criterianame" = Name as it appears in criteria table
+#"SpecificMethod" = Analytis method
+#           "dnd" = Detect/nondetect indicator (1 = detected, 0 = nondetect)
 
 #makes sure orthophosphate can match to the criteria
 data.complete[grep('hospha',data.complete$Name),c('criterianame')] <- 'Phosphate Phosphorus'
@@ -344,6 +361,10 @@ data.complete.wo.dups <- remove.dups(data.complete.wo.dup.MRLs)
 
 #### Select only those stations that mapped to a stream or lake ####
 #This section also serves the purpose of adding in the Matrix (or station type)
+#If you were to pick this up and not be connected to DEQ servers you should just need 
+#a table with a USE_Final determination for each station and a Station/Water type column
+#called Matrix to indicate if the samples from the station should be compared to the freshwater
+# or the saltwater criteria.
 con <- odbcConnect('WQAssessment')
 sul2012 <- sqlFetch(con, 'StationUseList')
 odbcCloseAll()
