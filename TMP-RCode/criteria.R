@@ -4,6 +4,8 @@ require(stringr)
 options('scipen' = 100)
 
 criteria <- read.csv('//deqlab1/wqm/TOXICS_2012/Data/Criteria_benchmarks_etc/Criteria.csv', stringsAsFactors = FALSE)
+#alternative location as of 11/17/2014 if you don't have access to deq servers
+#criteria <- read.csv('TMP-RCode/criteria_20141117.csv')
 
 criteria$Pollutant <- str_trim(criteria$Pollutant)
 
